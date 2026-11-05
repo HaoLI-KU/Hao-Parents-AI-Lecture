@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 330" role="img" aria-labelledby="title">
+<title id="title">任务通过 Codex 界面发送给 DeepSeek 模型，回答显示在界面上</title>
+<rect width="840" height="330" fill="#f1f5f9"/>
+<g font-family="system-ui, PingFang SC, sans-serif" fill="#1d2935">
+<rect x="135" y="32" width="570" height="103" rx="18" fill="white" stroke="#b8cadb"/>
+<rect x="159" y="54" width="60" height="54" rx="9" fill="#eaf1f7"/>
+<path d="M175 70h28m-28 10h20m-20 10h25" fill="none" stroke="#244f77" stroke-width="3" stroke-linecap="round"/>
+<text x="243" y="77" font-size="25" font-weight="700">Codex · 界面</text>
+<text x="243" y="109" font-size="19" fill="#4b5968">你输入任务，也在这里看回答</text>
+<g stroke="#315f8a" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M370 144v43m-7-7 7 7 7-7M470 187v-43m-7 7 7-7 7 7"/>
+</g>
+<text x="344" y="171" text-anchor="end" font-size="16" fill="#4b5968">任务</text>
+<text x="494" y="171" font-size="16" fill="#4b5968">回答</text>
+<rect x="135" y="197" width="570" height="103" rx="18" fill="#e1ebf4" stroke="#b8cadb"/>
+<rect x="159" y="220" width="60" height="54" rx="9" fill="white"/>
+<path d="M175 246l14-11 14 11-14 11z" fill="none" stroke="#244f77" stroke-width="3"/>
+<text x="243" y="242" font-size="25" font-weight="700">DeepSeek · 模型</text>
+<text x="243" y="274" font-size="19" fill="#4b5968">处理你交给它的任务，生成回答</text>
+</g>
+</svg>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 1 节 · 爸爸 · 爸妈的 Mac 与 AI 课</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="bar"><div class="wrap">
+<a class="brand" href="../index.html">爸妈的 Mac 与 AI 课</a>
+<span class="quiet">家庭课程</span>
+</div></header>
+<main class="wrap"><article class="lesson">
+<section class="intro"><p><a href="index.html">← 返回爸爸的课表</a></p>
+<p class="kicker"><span lang="en-GB">Lesson 1</span> · 爸爸 · 上海</p>
+<h1>认识 AI，跑通 DeepSeek</h1><p class="lead">分清工具与模型，用自己的 DeepSeek 账户在 Codex 收到第一条回复。</p></section>
+<div class="callout"><p><strong>课前准备</strong>　自己的 Mac、DeepSeek 开放平台账户（可现场注册）、一段可独立操作的时间。</p></div><nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 用两层来理解 AI</a></li><li><a href="#step-2">2. 用自己的 DeepSeek 账户跑通 Codex</a></li><li><a href="#step-3">3. 从手头的事挑入口</a></li><li><a href="#step-4">收尾</a></li></ul></nav>
+<div class="content" id="dad"><h2 id="step-1">1. 用两层来理解 AI</h2>
+<ol>
+<li><strong>界面是操作入口。</strong> 你打开 Codex，在里面输入任务。</li>
+<li><strong>模型负责生成回答。</strong> 爸爸这台 Mac 的 Codex 接的是 DeepSeek。</li>
+<li><strong>界面把结果显示给你。</strong> 先试一句简单的问题，看看能否收到回复。</li>
+<li><strong>最后自己核对。</strong> 如果问的是事实，就对照原文。如果问的是操作，就亲手试一步。</li>
+</ol>
+<figure>
+<img class="diagram" src="../assets/ai-two-layers.svg" alt="上层是用来交代任务的电脑界面，下层是处理输入并生成回答的模型。" width="840" height="330">
+<figcaption>上层负责交互，下层生成回答。爸爸这台 Mac 的连接方式如下。</figcaption>
+<div class="model-line"><span>上层 · Codex 界面</span><b aria-label="接入">→</b><span>下层 · DeepSeek 模型</span></div>
+</figure>
+
+<p>备查：在中国大陆，普通对话用当地可用的 DeepSeek 入口。本地 Codex 接入是否正常，用测试请求和 DeepSeek 账户用量核对。 <a href="https://help.openai.com/en/articles/7947663-chatgpt-supported-countries">OpenAI 服务支持地区</a></p>
+<h2 id="step-2">2. 用自己的 DeepSeek 账户跑通 Codex</h2>
+<p>今天要做的是亲手从「有自己的账户」走到「在 Codex 收到一条回复，并能回开放平台找这次用量」。</p>
+<ol>
+<li><strong>登录开放平台。</strong> 在浏览器打开 <a href="https://platform.deepseek.com/">DeepSeek 开放平台</a>，注册或登录爸爸自己的账户，按页面完成验证。打开账户余额和用量页面，记下测试前的余额与时间。</li>
+<li><strong>小额充值。</strong> 进入充值页面，先核对金额和账户。若页面允许，充约 10 元作为练习预算，支付后回到账户页确认余额。以页面实际可选金额为准，金额不合适就把这一步留待确认。</li>
+<li><strong>创建 API Key。</strong> 在「API Keys」创建一把专用于爸爸这台 Mac 的密钥，可命名为 <code>dad-codex</code>。它像给这个工具使用账户的一把钥匙。创建时在本机妥善保存。暂停屏幕共享，密钥只填入本机接入配置，避开聊天输入框、截图和课程仓库。</li>
+<li><strong>把新密钥接到已跑通的 Codex。</strong> 和家人一起确认这台 Mac 现有 DeepSeek 接入方式及密钥存放位置，保留可恢复的原设置，再把接入所用的密钥换成爸爸新建的那把。模型和接入地址先沿用已验证的配置。DeepSeek 官方方案使用 Responses API，配置示例将密钥存于本机配置文件。实际换密钥前先核对本机接入方式，勿共享配置文件或把备份存进课程目录。改好后完全退出桌面应用、重新打开 Codex，确认当前使用 DeepSeek 配置。若发现本机配置与预期不同，先按 <a href="https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/codex/">DeepSeek 官方 Codex 接入说明</a>核对，再决定是否调整现有配置。</li>
+<li><strong>发一条短测试。</strong> 在 Codex 新对话输入「请只回复：连接成功。」看到回复后记下发送时间。若提示认证失败，先核对密钥和当前配置。若提示余额不足，回开放平台检查余额。先修正原因，再发下一次测试。</li>
+<li><strong>回开放平台核对。</strong> 打开用量明细，选测试当天，若页面提供按 API Key 筛选，就选新建密钥和测试日期。用当时可见的时间、模型和用量粒度核对，页面只有汇总时就比较测试前后。读一读页面实际提供的输入、输出 token 和费用。Token 是模型处理文字时用的小单位，和屏幕上看到的字数可以不同。余额只显示到有限位数时，优先看用量明细。若暂时没看到记录，记下测试时间和密钥名称，下次刷新再查。</li>
+</ol>
+<p>首课优先走到收到测试回复。用量还没核对到，或注册、支付、接入中途停住，就在第 2 节从该步骤继续。</p>
+<h2 id="step-3">3. 从手头的事挑入口</h2>
+<table>
+<thead>
+<tr>
+<th>想做什么</th>
+<th>先试哪个入口</th>
+<th>一个生活例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>边看着 Mac 边问怎么操作</td>
+<td>豆包 Mac 客户端的语音通话与屏幕共享</td>
+<td>「怎么在 Finder 里快速看一眼照片？」</td>
+</tr>
+<tr>
+<td>问问题、想办法、先看一段文字</td>
+<td>在大陆优先用可用的 DeepSeek 或 Kimi 对话入口</td>
+<td>「把这三件事写成一条发给家人的周末提醒。」</td>
+</tr>
+<tr>
+<td>给一个练习项目做出或修改具体文件</td>
+<td>Codex</td>
+<td>「在练习目录新建一个能在浏览器打开的家庭菜单网页。」</td>
+</tr>
+<tr>
+<td>把几份材料交给工作助手整理成一个成果</td>
+<td>了解 ChatGPT Work 和 Kimi Work</td>
+<td>「把几份虚构菜谱整理成一张分类表。」首课认识用途即可。</td>
+</tr>
+</tbody>
+</table>
+<p>这里按学习场景选入口。有的工具能做相似的事，课堂上先用最容易开始的那个。Codex 云端执行是运行位置的概念，和 ChatGPT Work 这样的工作入口分别理解即可。</p>
+<h2 id="step-4">收尾</h2>
+<p>用一句话说出「我打开的是哪个工具，背后用的是哪个模型」。再从上表选一个自己平时会遇到的场景，说说为什么会先打开那个工具。提示词实操放到第 2 节。</p>
+<p>备查：<a href="https://learn.chatgpt.com/docs/prompting">OpenAI Docs 提示词指南</a> · <a href="https://www.kimi.com/en/help/kimi-work/overview">Kimi Work 官方介绍</a> · <a href="https://api-docs.deepseek.com/">DeepSeek 官方文档</a></p></div>
+<aside class="callout"><p><strong>做到这里就可以</strong>　Codex 收到测试回复。若用量尚未显示，记下时间，下次再核对。</p></aside>
+<nav class="lesson-nav" aria-label="课次导航"><a href="index.html">返回爸爸的课表</a><a href="lesson-02.html">第 2 节 →</a><a href="../mom/lesson-05.html">返回妈妈第 5 节</a></nav>
+</article></main>
+<footer class="wrap footer"><a href="../index.html">返回首页</a><span lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</span></footer>
+</body>
+</html>

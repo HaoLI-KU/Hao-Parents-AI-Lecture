@@ -1,0 +1,16 @@
+.DS_Store
+.AppleDouble
+._*
+
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local LaTeX build files
+*.aux
+*.log
+*.toc
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 4 节 · 爸爸 · 爸妈的 Mac 与 AI 课</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="bar"><div class="wrap">
+<a class="brand" href="../index.html">爸妈的 Mac 与 AI 课</a>
+<span class="quiet">家庭课程</span>
+</div></header>
+<main class="wrap"><article class="lesson">
+<section class="intro"><p><a href="index.html">← 返回爸爸的课表</a></p>
+<p class="kicker"><span lang="en-GB">Lesson 4</span> · 爸爸 · 腾讯会议</p>
+<h1>用 Codex 编译多章节中文手册</h1></section>
+<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 下载项目并打开整个文件夹</a></li><li><a href="#step-2">2. 让 Codex 编译并核对中文 PDF</a></li><li><a href="#step-3">3. 制造一次小故障，再让 Codex 排查</a></li></ul></nav>
+<div class="content" id="dad"><p>今天从现成项目开始。你要找到入口文件、生成一份有目录和两个中文章节的 PDF，再观察 Codex 怎样诊断并修复一次编译失败。</p>
+<h2 id="step-1">1. 下载项目并打开整个文件夹</h2>
+<ol>
+<li>下载<a href="../assets/lessons/04/examples/chinese-manual.zip" download>中文手册练习项目（ZIP）</a>，在 Finder 双击解压，把解压后的 <code>chinese-manual</code> 文件夹放进「文稿」。保留 ZIP 作为原件，后面在解压出来的练习副本里操作。</li>
+<li>打开文件夹，找到 <code>main.tex</code> 和 <code>chapters/</code> 下的 <code>chapter-01.tex</code>、<code>chapter-02.tex</code>。<code>main.tex</code> 放封面、目录和章节顺序。两份章节文件各放一章内容。</li>
+<li>在 Codex 中选择整个 <code>chinese-manual</code> 文件夹作为项目，开一个新对话。可以先问：「请告诉我从哪一个文件编译，这个文件引用了哪些章节？」</li>
+</ol>
+<h2 id="step-2">2. 让 Codex 编译并核对中文 PDF</h2>
+<blockquote>
+<p>请检查当前项目的 main.tex 和 chapters 文件夹。用本机已有的 MacTeX，在项目根目录以 XeLaTeX 编译 main.tex，运行两遍以更新目录。请实际运行编译并告诉我 PDF 的位置。遇到失败，先读第一条关键报错并解释原因，只在练习目录里做必要修复，修完再试。遇到需要安装软件或修改系统设置的情况，先告诉我。</p>
+</blockquote>
+<p>用 Finder 打开生成的 <code>main.pdf</code>，核对封面「家庭设备使用手册」、目录页，以及「准备设备」「记录与复查」两个中文章节。如果 Codex 会话找不到 <code>xelatex</code>，可以请它检查 MacTeX 的常用入口 <code>/Library/TeX/texbin/xelatex</code>。</p>
+<h2 id="step-3">3. 制造一次小故障，再让 Codex 排查</h2>
+<ol>
+<li>在练习副本的 <code>chapters/</code> 里，把 <code>chapter-02.tex</code> 改名为 <code>chapter-02-hold.tex</code>。主文件仍引用旧名称。先关闭已有 PDF，在 Finder 里记下它的修改时间。</li>
+<li>请 Codex：「重新编译 main.tex。如果失败，先告诉我日志里的关键错误和涉及的文件。保留两章内容，用最小改动修复引用，再重新编译并更新目录。」</li>
+<li>看它能否指出主文件引用了找不到的章节。恢复原文件名或让引用与实际文件名一致，都可以修好。请它说清采取了哪种办法。</li>
+<li>确认最后一次编译成功，打开新生成的 PDF，核对修改时间、目录和两章内容。看到之前的 PDF 仍在，只能说明曾经编译成功过。卡住时保留日志，也可以重新解压 ZIP 回到原始状态。</li>
+</ol></div>
+
+<nav class="lesson-nav" aria-label="课次导航"><a href="lesson-03.html">← 第 3 节</a><a href="index.html">返回爸爸的课表</a><a href="lesson-05.html">第 5 节 →</a></nav>
+</article></main>
+<footer class="wrap footer"><a href="../index.html">返回首页</a><span lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</span></footer>
+</body>
+</html>
