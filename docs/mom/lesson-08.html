@@ -3,34 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>第 8 节 · 妈妈 · 爸妈的 Mac 与 AI 课</title>
+<title>用 DeepSeek Harness 做一个「我的养花笔记」 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="这周先用 DeepSeek Harness 做一张网页，里面有两条示例养花记录；随后只改一条记录，看看网页怎样跟着更新。">
+<meta name="theme-color" content="#f7f6f2">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
-<header class="bar"><div class="wrap">
-<a class="brand" href="../index.html">爸妈的 Mac 与 AI 课</a>
-<span class="quiet">家庭课程</span>
-</div></header>
-<main class="wrap"><article class="lesson">
-<section class="intro"><p><a href="index.html">← 返回妈妈的课表</a></p>
-<p class="kicker"><span lang="en-GB">Lesson 8</span> · 妈妈 · 上海家中 · 草稿</p>
-<h1>用 DeepSeek Harness 做一个「我的养花笔记」</h1></section>
-<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">第 0 步：装好 DeepSeek Harness</a></li><li><a href="#step-2">第 1 步：把想要的网页说清楚</a></li><li><a href="#step-3">第 2 步：在 Finder 和浏览器里检查</a></li></ul></nav>
-<div class="content" id="mom"><p>这周先用 DeepSeek Harness 做一张网页，里面有两条示例养花记录；随后只改一条记录，看看网页怎样跟着更新。</p>
+<body class="page-lesson route-mom">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html" class="is-active" aria-current="true">妈妈的课程</a><a href="../practice/github.html">共同练习</a></nav>
+<form class="header-search" action="../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-mom"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="index.html">妈妈的课程</a><span aria-hidden="true">/</span><span>第 8 节</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow"><span lang="en-GB">Lesson 08</span> · 妈妈 · 上海家中 <span class="chip chip-status">草稿</span></p>
+<h1>用 DeepSeek Harness 做一个「我的养花笔记」</h1><p class="lesson-summary">做可本地预览的养花小站</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>第 0 步：装好 DeepSeek Harness</span></a><a href="#step-2"><span class="toc-num">02</span><span>第 1 步：把想要的网页说清楚</span></a><a href="#step-3"><span class="toc-num">03</span><span>第 2 步：在 Finder 和浏览器里检查</span></a></nav></aside>
+<div class="lesson-body" id="mom"><p>这周先用 DeepSeek Harness 做一张网页，里面有两条示例养花记录；随后只改一条记录，看看网页怎样跟着更新。</p>
 <h2 id="step-1">第 0 步：装好 DeepSeek Harness</h2>
 <ol>
-<li>打开 <a href="https://github.com/DeepSeek-ai/deepseek-harness/releases">DeepSeek Harness 官方发布页</a>，在所选版本的 Assets 里找适用于 macOS Apple Silicon 的桌面安装文件，安装到「应用程序」并打开。若页面只有源码，先核对家里已安装的桌面版和更新入口。</li>
-<li>准备自己的 DeepSeek 开放平台账户。打开 <a href="https://platform.deepseek.com/">DeepSeek 开放平台</a>，注册或登录妈妈自己的账户，按页面完成验证；还没有余额时按页面提示小额充值。</li>
+<li>打开 <a href="https://github.com/DeepSeek-ai/deepseek-harness/releases" target="_blank" rel="noopener">DeepSeek Harness 官方发布页</a>，在所选版本的 Assets 里找适用于 macOS Apple Silicon 的桌面安装文件，安装到「应用程序」并打开。若页面只有源码，先核对家里已安装的桌面版和更新入口。</li>
+<li>准备自己的 DeepSeek 开放平台账户。打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">DeepSeek 开放平台</a>，注册或登录妈妈自己的账户，按页面完成验证；还没有余额时按页面提示小额充值。</li>
 <li>在 Harness 的模型设置里配置提供方和自己的 API Key。先停止屏幕共享，再由妈妈本人粘贴密钥；密钥不写进聊天、截图或课程仓库，也不要用爸爸的密钥。</li>
 <li>新建一个对话，输入「请只回复：连接成功。」看到回复再继续。若提示认证失败，核对密钥和提供方；若提示余额不足，回开放平台查看余额。</li>
 <li>找不到安装文件或模型设置时，先记下显示的名称、版本和按钮，不要跳过。爸爸第 2 节的安装清单可以对照，但账户和密钥各自用自己的。</li>
 </ol>
 <h2 id="step-2">第 1 步：把想要的网页说清楚</h2>
 <p>在「文稿」新建空文件夹 <code>plant-notes</code>，在 DeepSeek Harness 里选它作为当前项目。可以直接口述下面的提示词：</p>
-<pre><code class="language-text">请在当前文件夹做一个简体中文单页网站，标题叫「我的养花笔记」。只创建三个文件：`index.html`、`plants.json`、`app.js`。HTML 放标题和卡片区域，样式简单清楚，写在 HTML 里。JSON 放两条示例记录：绿萝和薄荷，每条有名称、位置和观察笔记。JavaScript 用相对路径读取 JSON，把两条记录显示成卡片。用本机已有的工具启动仅本机可访问的预览，告诉我在浏览器打开哪个地址。如果预览需要额外安装软件，先告诉我。请只在这个练习目录工作，做到本地预览为止。
-</code></pre>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请在当前文件夹做一个简体中文单页网站，标题叫「我的养花笔记」。只创建三个文件：`index.html`、`plants.json`、`app.js`。HTML 放标题和卡片区域，样式简单清楚，写在 HTML 里。JSON 放两条示例记录：绿萝和薄荷，每条有名称、位置和观察笔记。JavaScript 用相对路径读取 JSON，把两条记录显示成卡片。用本机已有的工具启动仅本机可访问的预览，告诉我在浏览器打开哪个地址。如果预览需要额外安装软件，先告诉我。请只在这个练习目录工作，做到本地预览为止。
+</code></pre></div>
 <h2 id="step-3">第 2 步：在 Finder 和浏览器里检查</h2>
-<table>
+<div class="table-wrap"><table>
 <thead>
 <tr>
 <th>文件</th>
@@ -51,16 +66,25 @@
 <td>读入植物记录，再把它们显示到网页上</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <ol>
 <li>在 Finder 找到三个文件。请 Harness 给出本地预览地址，用浏览器打开，确认出现绿萝和薄荷两张卡片。网页通过本地预览读取 JSON，直接双击 HTML 时可能读不到数据。</li>
 <li>再说一句：「只改 <code>plants.json</code>，把薄荷的观察笔记改成『今天长出了两片新叶』。」刷新浏览器，检查只有薄荷的那条文字变了。</li>
 <li>看着 Finder 里的文件，说出下次要加一种植物应该改哪一个文件。以后想加照片或视频，可以从现有的卡片继续扩展。</li>
 </ol>
 <p>本节做到本机可以预览、修改一条记录并看到更新。</p></div>
-
-<nav class="lesson-nav" aria-label="课次导航"><a href="lesson-07.html">← 第 7 节</a><a href="index.html">返回妈妈的课表</a><a href="lesson-09.html">第 9 节 →</a></nav>
-</article></main>
-<footer class="wrap footer"><a href="../index.html">返回首页</a><span lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</span></footer>
+</div>
+<nav class="lesson-pager" aria-label="课次导航">
+<a class="pager-link" href="lesson-07.html"><span class="pager-label">上一节</span><span class="pager-title">第 7 节</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">课表</span><span class="pager-title">返回妈妈的课程</span></a>
+<a class="pager-link" href="lesson-09.html"><span class="pager-label">下一节</span><span class="pager-title">第 9 节 <span class="pager-status">草稿</span></span></a>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/github.html">共同练习</a><a href="../search.html">搜索</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../assets/ui.js"></script>
 </body>
 </html>
