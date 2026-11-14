@@ -35,14 +35,21 @@
 
 ## 本地预览与发布
 
-直接用浏览器打开 `docs/index.html` 即可预览。修改课程 Markdown、课程总览或站点样式后，在仓库根目录执行以下命令重建。已有虚拟环境时，可直接运行最后一条。
+页面由 `site/build.py` 从 `course/lessons/` 和 `README.md` 的课表生成；`docs/` 是生成物，不要手改。首次使用时安装依赖：
 
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r site/requirements.txt
-.venv/bin/python site/build.py
 ```
 
-`.venv` 仅用于本机。生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿及重建后的网页，再推送到 `main`。原始插图在 `assets/`，样式与生成脚本在 `site/`。
+日常改完课稿或样式后，在仓库根目录运行：
+
+```sh
+make all                        # 重建并检查链接、锚点、搜索覆盖和快捷键
+make serve                      # 打开 http://localhost:8000 预览
+make PYTHON=.venv/bin/python all  # 使用虚拟环境
+```
+
+`make build` 只重建，`make check` 只检查。生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿、课表和重建后的网页，再推送到 `main`。原始插图和练习文件在 `assets/`，样式、脚本和自托管字体在 `site/`。
 
 需要清理本地临时文件时，在仓库根目录运行 `make clean`，可移除 `.DS_Store` 和 Python 缓存。
