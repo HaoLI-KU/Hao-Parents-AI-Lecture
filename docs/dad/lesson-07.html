@@ -13,23 +13,51 @@
 </div></header>
 <main class="wrap"><article class="lesson">
 <section class="intro"><p><a href="index.html">← 返回爸爸的课表</a></p>
-<p class="kicker"><span lang="en-GB">Lesson 7</span> · 爸爸 · 上海</p>
-<h1>一起把想做的项目定下来</h1></section>
-<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">选定项目和第一章</a></li><li><a href="#step-2">比较并选定模板</a></li></ul></nav>
-<div class="content" id="dad"><p>拿出第 5 节的文档愿景和第 6 节的练习目录。这次从你真实想整理的资料里，选一件可以先做出样章的事。</p>
-<h2 id="step-1">选定项目和第一章</h2>
+<p class="kicker"><span lang="en-GB">Lesson 7</span> · 爸爸 · 腾讯会议</p>
+<h1>把通用模板和每份文档分开放</h1></section>
+<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 先看完整目标，再建今天要用的部分</a></li><li><a href="#step-2">2. 在 Finder 找回来源、模板和 Word</a></li><li><a href="#step-3">3. 用只读提示词检查目录</a></li></ul></nav>
+<div class="content" id="dad"><p>第 6 节已在本机保存选中的 Overleaf 来源副本和通过检查的中文技术书模板。今天把它们放进长期项目结构，并为第一份 Word 建独立工作区。真实文件、路径和第 6 节的检查记录留在爸爸本机。</p>
+<h2 id="step-1">1. 先看完整目标，再建今天要用的部分</h2>
+<p><code>template/technical-book/</code> 是以后还能复制给第二份文档的通用模板；<code>projects/book-001/latex/</code> 将是第一份文档自己的模板实例和章节。今天只增加下图标「第 7 节」的 Word 留存目录；其他文件在对应课次再建立。</p>
+<pre><code class="language-text">Technical-Publishing/
+  AGENTS.md                         第 8 节：项目入口
+  ROADMAP.md                        第 8 节：阶段路线
+  .agents/skills/
+    word-to-latex/SKILL.md          第 9 节验证后建立
+    latex-template-engineering/     以后维护模板时再建立
+    technical-writing-review/       以后独立审校时再建立
+  standards/
+    word-conversion.md              第 8 节：内容保持规则
+    latex-writing.md                模板版式规则稳定后再建立
+  template/
+    original-overleaf/              第 6 节：选中模板的来源和只读副本
+    technical-book/                 第 6 节：已通过检查的中文通用模板
+  projects/
+    book-001/
+      original/                     第 7 节：Word 留存副本
+      latex/                        第 9 节：模板实例与转换的章节
+      review/                       第 9 节：内容核对记录
+      output/                       第 9 节：编译出的 PDF
+    book-002/                       第二份文档出现时才创建
+  development/                      有重要技术决定时再创建
+  tests/                            第 9 节：可重复的转换检查
+</code></pre>
+<p><code>original-overleaf/</code> 保留下载的原始 ZIP、来源与许可记录，不因后续修改而覆盖。<code>technical-book/</code> 是中文模板的工作成果，不放第一份 Word 的私人内容。选中的模板虽在 Overleaf 上可以编辑，真实 Word 仍只在本机项目里处理。</p>
+<h2 id="step-2">2. 在 Finder 找回来源、模板和 Word</h2>
 <ol>
-<li><strong>说清需求。</strong> 你想整理哪一批材料？谁会读？希望读者看完能找到什么？是一本书、技术手册，还是先做一份专题文档？我来记下你的答案。</li>
-<li><strong>选第一章。</strong> 从已有资料里选一小段，写下工作标题、原件在哪、最想放进去的内容、还需核实的事。先用可分享的素材浏览和试模板，实际资料留在本机。</li>
+<li>关闭窗口后自己重新打开 <code>Technical-Publishing/</code>，在 <code>template/original-overleaf/</code> 找到选中模板的原始 ZIP 与来源记录，在 <code>template/technical-book/</code> 找到主 <code>.tex</code>、两章和第 6 节通过的测试样稿。若第 6 节的工作副本目前在别处，先把完整文件夹复制到这两个约定位置，保留能恢复的原文件。</li>
+<li>回到第 4 节确认的 Word 原件，试着打开。创建 <code>projects/book-001/original/</code>，把整份 Word 复制一份到这里供对照。示例名称是 <code>source-document.docx</code>；实际文件名保持爸爸自己的，不上传这个仓库，也不覆盖本机原位置。</li>
+<li>在本机写一张简短路径表，分别记下原始 Word、项目内 Word 留存副本、Overleaf 来源副本、中文模板主文件和第 6 节最新 PDF 的实际位置。关掉 Finder 再自己找回一次。</li>
 </ol>
-<h2 id="step-2">比较并选定模板</h2>
-<ol>
-<li><strong>一起看模板。</strong> 打开 <a href="https://www.overleaf.com/gallery">Overleaf 模板库</a>，从 Books 分类或搜索 <code>technical report</code>、<code>manual</code> 看两三个。先看封面、目录、章节页、图表和字号，你挑出喜欢的两三处。再看模板是否有图表样式，记录主文件、编译器、字体和许可。在线能显示样例只说明模板示例可浏览。中文和本机 MacTeX 兼容性要用一份不含私有资料的模板副本试编译，留到第 8 节验证。</li>
-<li><strong>选定一个起点。</strong> 留下模板名称、链接、喜欢的样式和预计要调整的地方。有合适的备选也记一份。把项目需求、第一章素材和模板信息存在自己的工作笔记，第 8 节可以直接找回。</li>
-</ol>
-<p>这次线下见面先把真实选题和审美方向说清楚。模板编译和项目搭建接到第 8 节。</p></div>
+<h2 id="step-3">3. 用只读提示词检查目录</h2>
+<p>在 Harness 打开 <code>Technical-Publishing/</code> 为工作区，发送下面的提示词。今天不开始转换，也不重写模板。</p>
+<pre><code class="language-text">请只读清点当前项目中的 template/original-overleaf/、template/technical-book/ 和 projects/book-001/original/，不要修改、移动、上传或删除任何文件。
+报告 Overleaf 来源记录和原始 ZIP 是否在位、中文模板主文件与两个独立章节的相对路径、Word 留存副本的文件名；再指出以后复制模板到 projects/book-001/latex/ 时应保留哪些依赖文件。只报告项目内相对路径，不抄录 Word 正文或私人绝对路径。
+我会在 Finder 逐项找回并核对。若实际目录与课稿示例不同，请列为待确认，不要猜测。
+</code></pre>
+<p>爸爸在 Finder 对照 Harness 报告，打开中文模板主文件，确认它没有引用 <code>book-001</code>。完成时，能说清为什么通用模板、模板来源和第一份文档分别存放；留下一张实际路径表。第 8 节再写项目入口、阶段路线和内容保持规则。</p></div>
 
-<nav class="lesson-nav" aria-label="课次导航"><a href="lesson-06.html">← 第 6 节</a><a href="index.html">返回爸爸的课表</a></nav>
+<nav class="lesson-nav" aria-label="课次导航"><a href="lesson-06.html">← 第 6 节</a><a href="index.html">返回爸爸的课表</a><a href="lesson-08.html">第 8 节 →</a></nav>
 </article></main>
 <footer class="wrap footer"><a href="../index.html">返回首页</a><span lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</span></footer>
 </body>

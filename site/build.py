@@ -1,4 +1,4 @@
-"""Build both seven-lesson routes from the course Markdown."""
+"""Build both routes from the course Markdown."""
 from html import escape, unescape
 import json
 from pathlib import Path
@@ -12,6 +12,7 @@ DOCS = ROOT / "docs"
 ART = ROOT / "assets/lessons/01/illustrations/ai-two-layers.svg"
 SITE_NAME = "爸妈的 Mac 与 AI 课"
 ROUTES = {"dad": "爸爸", "mom": "妈妈"}
+LESSON_LINK = re.compile(r"(\d{2})\.md(?:#(dad|mom))?")
 HEADINGS = {
     "dad": ("认识 AI，跑通 DeepSeek", "分清工具与模型，用自己的 DeepSeek 账户在 Codex 收到第一条回复。"),
     "mom": ("把新 Mac 用起来", "装好豆包，试一次屏幕共享，再确认腾讯会议可以入会。"),
@@ -66,7 +67,7 @@ def schedule(route, name, rows):
         f'<li><span lang="en-GB">Lesson {number}</span>'
         f'<span><a href="lesson-{number:02}.html">{escape(title)}</a></span>'
         f'<small>{escape(mode)}</small></li>'
-        for number, (mode, title) in enumerate(rows, 1)
+        for number, mode, title in rows
     ]
     write(f"{route}/index.html", f"{name}的课表", f'''<section class="intro">
 <p class="kicker">学习路线</p><h1>{name}的课程</h1>
@@ -77,12 +78,14 @@ def schedule(route, name, rows):
 def course_links(body, route, source_path):
     def convert(match):
         url = unescape(match[1])
-        lesson = re.fullmatch(r"(0[1-7])\.md(?:#(dad|mom))?", url)
+        lesson = LESSON_LINK.fullmatch(url)
         if lesson:
             number, target = lesson.groups()
             path = f"lesson-{number}.html"
             if target and target != route:
                 path = f"../{target}/{path}"
+            if target:
+                path += f"#{target}"
             return f'href="{path}"'
         if url.startswith("../../assets/"):
             asset = (source_path.parent / url).resolve()
@@ -96,7 +99,7 @@ def course_links(body, route, source_path):
     return re.sub(r'href="([^"]+)"', convert, body)
 
 
-def lesson(route, name, source, source_path, number, mode, heading, count):
+def lesson(route, name, source, source_path, number, mode, heading, neighbours):
     title, description = HEADINGS[route] if number == 1 else (heading, "")
     sections = re.split(r"(?m)^### (.+)\n", source.strip())
     jump = [
@@ -122,14 +125,13 @@ def lesson(route, name, source, source_path, number, mode, heading, count):
         prep = f'<div class="callout"><p><strong>课前准备</strong>　{need}</p></div>'
         result = f'<aside class="callout"><p><strong>做到这里就可以</strong>　{done}</p></aside>'
     toc = f'<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul>{"".join(jump)}</ul></nav>' if jump else ""
-    neighbours = []
-    if number > 1:
-        neighbours.append(f'<a href="lesson-{number - 1:02}.html">← 第 {number - 1} 节</a>')
-    neighbours.append(f'<a href="index.html">返回{name}的课表</a>')
-    if number < count:
-        neighbours.append(f'<a href="lesson-{number + 1:02}.html">第 {number + 1} 节 →</a>')
-    if route == "dad" and number <= 3:
-        neighbours.append(f'<a href="../mom/lesson-{number + 4:02}.html">返回妈妈第 {number + 4} 节</a>')
+    navigation = []
+    previous, following = neighbours
+    if previous is not None:
+        navigation.append(f'<a href="lesson-{previous:02}.html">← 第 {previous} 节</a>')
+    navigation.append(f'<a href="index.html">返回{name}的课表</a>')
+    if following is not None:
+        navigation.append(f'<a href="lesson-{following:02}.html">第 {following} 节 →</a>')
     summary = f'<p class="lead">{escape(description)}</p>' if description else ""
     write(f"{route}/lesson-{number:02}.html", f"第 {number} 节 · {name}", f'''<article class="lesson">
 <section class="intro"><p><a href="index.html">← 返回{name}的课表</a></p>
@@ -138,7 +140,7 @@ def lesson(route, name, source, source_path, number, mode, heading, count):
 {prep}{toc}
 <div class="content" id="{route}">{body}</div>
 {result}
-<nav class="lesson-nav" aria-label="课次导航">{"".join(neighbours)}</nav>
+<nav class="lesson-nav" aria-label="课次导航">{"".join(navigation)}</nav>
 </article>''')
 
     index = []
@@ -157,6 +159,11 @@ def lesson(route, name, source, source_path, number, mode, heading, count):
     return index
 
 
+def route_content(source, name):
+    match = re.search(rf"(?ms)^## {name}｜([^\n]+)\n(.*?)(?=^## |\Z)", source)
+    return match.groups()
+
+
 def main():
     (DOCS / "assets").mkdir(parents=True, exist_ok=True)
     copyfile(ROOT / "site/style.css", DOCS / "assets/style.css")
@@ -167,15 +174,30 @@ def main():
              if line.startswith("| [第 ")]
     search_entries = []
     copyfile(ROOT / "site/search.js", DOCS / "assets/search.js")
-    for index, (route, name) in enumerate(ROUTES.items()):
+    route_columns = {"dad": (1, 2), "mom": (3, 4)}
+    route_rows = {
+        route: [(int(re.search(r"(\d{2})\.md", row[0]).group(1)),
+                 row[mode_column].strip(), row[title_column].strip())
+                for row in table
+                if row[title_column].strip() != "—"]
+        for route, (mode_column, title_column) in route_columns.items()
+    }
+    sources = {
+        number: (ROOT / f"course/lessons/{number:02}.md").read_text(encoding="utf-8")
+        for number in {number for rows in route_rows.values() for number, _, _ in rows}
+    }
+    for route, name in ROUTES.items():
+        for stale_page in (DOCS / route).glob("lesson-*.html"):
+            stale_page.unlink()
         copyfile(ROOT / f"assets/site/{route}.svg", DOCS / f"assets/{route}.svg")
-        schedule(route, name, [(row[1].strip(), row[index + 2].strip()) for row in table])
-        for number, row in enumerate(table, 1):
+        rows = route_rows[route]
+        schedule(route, name, rows)
+        for position, (number, mode, _) in enumerate(rows):
             path = ROOT / f"course/lessons/{number:02}.md"
-            source = path.read_text(encoding="utf-8")
-            match = re.search(rf"(?ms)^## {name}｜([^\n]+)\n(.*?)(?=^## |\Z)", source)
-            heading, body = match.groups()
-            search_entries.extend(lesson(route, name, body, path, number, row[1].strip(), heading, len(table)))
+            heading, body = route_content(sources[number], name)
+            neighbours = (rows[position - 1][0] if position else None,
+                          rows[position + 1][0] if position + 1 < len(rows) else None)
+            search_entries.extend(lesson(route, name, body, path, number, mode, heading, neighbours))
     index_js = "window.courseSearchIndex = " + json.dumps(search_entries, ensure_ascii=False) + ";\n"
     (DOCS / "assets/search-index.js").write_text(index_js, encoding="utf-8")
 

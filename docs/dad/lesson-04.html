@@ -14,27 +14,48 @@
 <main class="wrap"><article class="lesson">
 <section class="intro"><p><a href="index.html">← 返回爸爸的课表</a></p>
 <p class="kicker"><span lang="en-GB">Lesson 4</span> · 爸爸 · 腾讯会议</p>
-<h1>用 Codex 编译多章节中文手册</h1></section>
-<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 下载项目并打开整个文件夹</a></li><li><a href="#step-2">2. 让 Codex 编译并核对中文 PDF</a></li><li><a href="#step-3">3. 制造一次小故障，再让 Codex 排查</a></li></ul></nav>
-<div class="content" id="dad"><p>今天从现成项目开始。你要找到入口文件、生成一份有目录和两个中文章节的 PDF，再观察 Codex 怎样诊断并修复一次编译失败。</p>
-<h2 id="step-1">1. 下载项目并打开整个文件夹</h2>
+<h1>说清项目和这门课要学什么</h1></section>
+<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 指出项目的输入</a></li><li><a href="#step-2">2. 写下产出和学习目标</a></li></ul></nav>
+<div class="content" id="dad"><p>我们已经选定第一份项目：把一份一百多页的中文 Word 技术文档忠实转换成 LaTeX。排版模板将在第 6 节由爸爸从 Overleaf 选定，再改造成可复用的中文多章节模板。今天先把已确定的输入、预期产出和学习目标写成一页项目说明；公开课稿只用占位名称。</p>
+<h2 id="step-1">1. 指出项目的输入</h2>
 <ol>
-<li>下载<a href="../assets/lessons/04/examples/chinese-manual.zip" download>中文手册练习项目（ZIP）</a>，在 Finder 双击解压，把解压后的 <code>chinese-manual</code> 文件夹放进「文稿」。保留 ZIP 作为原件，后面在解压出来的练习副本里操作。</li>
-<li>打开文件夹，找到 <code>main.tex</code> 和 <code>chapters/</code> 下的 <code>chapter-01.tex</code>、<code>chapter-02.tex</code>。<code>main.tex</code> 放封面、目录和章节顺序。两份章节文件各放一章内容。</li>
-<li>在 Codex 中选择整个 <code>chinese-manual</code> 文件夹作为项目，开一个新对话。可以先问：「请告诉我从哪一个文件编译，这个文件引用了哪些章节？」</li>
+<li>在 Finder 找到 Word 原件并打开，确认这就是要转换的技术文档。公开课稿用 <code>source-document.docx</code> 作占位名称；实际文件名和位置只记在爸爸本机。</li>
+<li>说清 Word 提供需要忠实保留的技术内容。模板现在尚未选定，第 6 节再从 Overleaf 模板库比较、选择和改造；今天不把某一份模板写成已确定输入。</li>
 </ol>
-<h2 id="step-2">2. 让 Codex 编译并核对中文 PDF</h2>
-<blockquote>
-<p>请检查当前项目的 main.tex 和 chapters 文件夹。用本机已有的 MacTeX，在项目根目录以 XeLaTeX 编译 main.tex，运行两遍以更新目录。请实际运行编译并告诉我 PDF 的位置。遇到失败，先读第一条关键报错并解释原因，只在练习目录里做必要修复，修完再试。遇到需要安装软件或修改系统设置的情况，先告诉我。</p>
-</blockquote>
-<p>用 Finder 打开生成的 <code>main.pdf</code>，核对封面「家庭设备使用手册」、目录页，以及「准备设备」「记录与复查」两个中文章节。如果 Codex 会话找不到 <code>xelatex</code>，可以请它检查 MacTeX 的常用入口 <code>/Library/TeX/texbin/xelatex</code>。</p>
-<h2 id="step-3">3. 制造一次小故障，再让 Codex 排查</h2>
-<ol>
-<li>在练习副本的 <code>chapters/</code> 里，把 <code>chapter-02.tex</code> 改名为 <code>chapter-02-hold.tex</code>。主文件仍引用旧名称。先关闭已有 PDF，在 Finder 里记下它的修改时间。</li>
-<li>请 Codex：「重新编译 main.tex。如果失败，先告诉我日志里的关键错误和涉及的文件。保留两章内容，用最小改动修复引用，再重新编译并更新目录。」</li>
-<li>看它能否指出主文件引用了找不到的章节。恢复原文件名或让引用与实际文件名一致，都可以修好。请它说清采取了哪种办法。</li>
-<li>确认最后一次编译成功，打开新生成的 PDF，核对修改时间、目录和两章内容。看到之前的 PDF 仍在，只能说明曾经编译成功过。卡住时保留日志，也可以重新解压 ZIP 回到原始状态。</li>
-</ol></div>
+<h2 id="step-2">2. 写下产出和学习目标</h2>
+<p>请爸爸用自己的话确认下表，再在本机写成一页项目说明。</p>
+<table>
+<thead>
+<tr>
+<th>要确认的事</th>
+<th>本项目已经确定的方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已确定的输入</td>
+<td>一百多页的中文 Word 原件</td>
+</tr>
+<tr>
+<td>待选的排版起点</td>
+<td>第 6 节和爸爸一起选定的 Overleaf 书籍模板</td>
+</tr>
+<tr>
+<td>产出</td>
+<td>可编译、便于以后修改的 LaTeX 源文件和排版更精美的中文 PDF</td>
+</tr>
+<tr>
+<td>内容要求</td>
+<td>保留原稿的正文、技术结论、参数、单位、公式和表格数据；改善模板与格式，文字修改另行确认</td>
+</tr>
+<tr>
+<td>学习目标</td>
+<td>借这份文档学习如何让 AI 按项目目标、文件规则和验证办法持续工作，并把有效做法留给下一份文档复用</td>
+</tr>
+</tbody>
+</table>
+<p>前几节已经试过直接写提示词让 AI 完成一次任务。接下来会用同一个文档项目练习更有结构的做法：第 5 节练中文 LaTeX 编译与 PDF 批注，第 6 节选并制作中文多章节模板，第 7 节建立长期项目目录，第 8 节写项目入口、路线和规则，第 9 节转换 Word 的一小段并核对、记录可复用的方法。具体字体、图表样式和读者使用场景，以爸爸确认的版本记在项目说明里，尚未决定的标「待定」。</p>
+<p>完成时，爸爸能找回 Word 输入，在一页项目说明里写清预期的 LaTeX 源文件、中文 PDF 和工作流学习目标，并说明模板将在第 6 节一起选定。</p></div>
 
 <nav class="lesson-nav" aria-label="课次导航"><a href="lesson-03.html">← 第 3 节</a><a href="index.html">返回爸爸的课表</a><a href="lesson-05.html">第 5 节 →</a></nav>
 </article></main>

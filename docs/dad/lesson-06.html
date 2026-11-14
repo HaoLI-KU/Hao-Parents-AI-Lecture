@@ -13,38 +13,106 @@
 </div></header>
 <main class="wrap"><article class="lesson">
 <section class="intro"><p><a href="index.html">← 返回爸爸的课表</a></p>
-<p class="kicker"><span lang="en-GB">Lesson 6</span> · 爸爸 · 上海</p>
-<h1>把第 5 节聊出的愿景变成项目骨架</h1></section>
-<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 看懂目录和四份规则各管什么</a></li><li><a href="#step-2">2. 先让 Codex 提案，再让它落文件</a></li><li><a href="#step-3">3. 开一个新对话，验证下次还能用</a></li></ul></nav>
-<div class="content" id="dad"><p>拿出上节记下的读者、成品样式、第一批素材和经常要改的地方。用这四项决定哪些目录和规则现在就有用。今天的成果是一套能打开、看懂、交给下一次 Codex 会话使用的骨架。</p>
-<h2 id="step-1">1. 看懂目录和四份规则各管什么</h2>
-<p>在「文稿」新建独立的技术手册练习目录。下面是可讨论的起点：</p>
-<pre><code class="language-text">technical-manual/
-  AGENTS.md              每次开工先读的入口
-  guide/
-    structure.md         文件放哪、怎么命名、怎么加新章
-    formatting.md        章节骨架、标题、图表说明与引用格式
-    language.md          读者、语气、术语、单位及未确认信息的写法
-  sources/               原始素材
-  chapters/              可继续编辑的章节稿
-  assets/                正式稿使用的图表和照片
-  output/                编译生成的 PDF
+<p class="kicker"><span lang="en-GB">Lesson 6</span> · 爸爸 · 腾讯会议</p>
+<h1>从喜欢的版式做出可复用的中文模板</h1></section>
+<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 在 Overleaf 选一份愿意长期看的模板</a></li><li><a href="#step-2">2. 先审查，再跑通中文和两章</a></li><li><a href="#step-3">3. 用虚构样稿逐组补功能</a></li><li><a href="#step-4">4. 双处编译并留给下一节</a></li></ul></nav>
+<div class="content" id="dad"><p>第 5 节已编译两章中文练习，并认识 Overleaf 模板库。今天和家人一起挑一份爸爸喜欢、结构不太复杂的书籍模板，再用 DeepSeek Harness 把它做成后续 Word 转 LaTeX 项目的通用模板。全程只用虚构文字、示例图片和参考文献；真实 Word 不上传 Overleaf，也不放进课程仓库。本节功能较多，按下面四关逐项做，没完成就下次从检查表继续。</p>
+<h2 id="step-1">1. 在 Overleaf 选一份愿意长期看的模板</h2>
+<p>打开 <a href="https://www.overleaf.com/gallery/tagged/book">Overleaf Books 模板库</a>，一起看两三份候选。爸爸先挑喜欢的封面、正文、章节标题和页眉，再核对是否能在 Overleaf 正常编译、能否下载完整源码、文件和依赖是否容易看懂、页面是否说明许可。把候选链接、喜欢的地方、疑问和最终选择记在爸爸本机。若候选只有复杂的学校专用格式、改中文会破坏版式，换一份较简单的，不在这一份上耗费整节课。</p>
+<p>在选中的项目里找到下载源码 ZIP 的入口，按 <a href="https://docs.overleaf.com/managing-projects-and-files/downloading-a-project">Overleaf 下载项目说明</a>下载。源码 ZIP 与 PDF 是两次下载，不能把 PDF 当成模板源码。在爸爸本机的私有位置建立 <code>Technical-Publishing/template/original-overleaf/</code> 和 <code>template/technical-book/</code>：前者保存原始 ZIP、来源链接和解压后的只读副本，后者从它复制一套供 Harness 修改。第 7 节再扩展完整项目目录。实际许可和是否允许再发布要看选中模板的页面；本课程不公开选中的源码。</p>
+<h2 id="step-2">2. 先审查，再跑通中文和两章</h2>
+<p>在 Harness 中以 <code>Technical-Publishing/</code> 为工作区。先只读检查工作副本，让它给出小步计划：</p>
+<pre><code class="language-text">当前工作区的 template/original-overleaf/ 是选中 Overleaf 模板的留存副本，template/technical-book/ 是可修改副本。请只读查看两处的文件清单及 technical-book/ 中的主 .tex、文档类、编译器设置、章节引用和已加载的宏包，不要读取本机其他目录，不要修改或上传文件。
+请报告模板已有的编译说明或记录、哪里决定封面和正文样式、哪些宏包已有，以及用 XeLaTeX 支持简体中文和独立章节时可能冲突的地方。没有实际编译就标为「待验证」。只提出分步修改计划和需要我确认的选择，不要一次引入所有功能。
+我会打开对应源文件和 Overleaf 原项目，核对你说的主文件与版式。
 </code></pre>
-<p>目录够用就好。先决定第一篇的主稿放哪、用什么格式。可以先用 Markdown 写章节草稿，等第一篇试写后再决定是否以 LaTeX 为正式源稿。每个阶段都说清哪份是当前主稿，避免同一段长期在两处修改。</p>
-<ul>
-<li><code>AGENTS.md</code> 简短写明工作顺序。先按任务读 <code>guide/</code> 里明确列出的规则，再说明准备改哪些文件。章节工作会用到目录、格式和语言三份规则。</li>
-<li><code>structure.md</code> 写一条实际例子，例如经确认的新素材放 <code>sources/</code>，第一篇工作稿叫 <code>chapters/01-first-case.md</code>。已经存在的章节号保留，新增时按下一可用编号。</li>
-<li><code>formatting.md</code> 写一份短章节骨架，例如「背景、观察、处理、结果、待核实」，再定标题和图注格式。</li>
-<li><code>language.md</code> 用第 5 节确定的读者来定语气。约定术语首次出现怎样解释，原始数字和单位怎样保留，缺证据的地方统一标［待核实］。</li>
-</ul>
-<h2 id="step-2">2. 先让 Codex 提案，再让它落文件</h2>
-<p>在 Codex 打开刚建的练习目录，口述或粘贴：</p>
-<blockquote>
-<p>我要长期维护一本技术手册。读者是［填读者］，希望成品像［填愿景］，第一批材料是［填材料类型］，以后经常添加［填内容类型］。请先给我一棵小目录树，并用表格说明根目录的 AGENTS.md、guide/structure.md、guide/formatting.md、guide/language.md 各管什么。每份规则请写一条可执行的约定和一个例子。告诉我以后收到一条新素材时，先读哪份规则、原件和工作稿各放哪里、怎么检查结果。缺的信息标待定。请先给提案，等我确认目录和规则后再创建文件。今天先做到骨架和规则草稿。</p>
-</blockquote>
-<p>看完提案，自己删掉一项暂时用不到的安排，或把一条空泛的规则改具体。确认后，请 Codex 按清单落文件。从 Finder 打开四份 Markdown，检查里面的路径、标题和例子与讨论一致。</p>
-<h2 id="step-3">3. 开一个新对话，验证下次还能用</h2>
-<p>在同一项目根目录开新对话，问：「如果明天我交给你一条新素材，你会先读哪些文件？工作稿会放哪？请列出你实际读到的一条格式规则和一条语言规则。」自己对照 Markdown。若它漏读某份规则，把「什么任务要读哪份」补进 <code>AGENTS.md</code>，再试一次。Codex 在开始新会话时查找项目指令；从练习项目根目录开新对话，核对它实际识别了哪份 <code>AGENTS.md</code>。其他 Markdown 要由入口明确指示读取，仍以它在本机实际找到并复述的内容为准。 <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">OpenAI Docs：AGENTS.md</a></p></div>
+<p>爸爸先对照 Finder 和 Overleaf 核对报告。确认后让 Harness <strong>只在 <code>technical-book/</code></strong> 做第一步：沿用选中模板的文档类，按实际兼容性配置 <code>ctex</code> 和 XeLaTeX；建立主文件与 <code>chapters/chapter-01.tex</code>、<code>chapters/chapter-02.tex</code>，用 <code>\include</code> 或模板已有的等效方式接入。章节文件各自放标题和一段虚构中文，生成目录。不要把宏包与全局样式复制进每章。先在爸爸 Mac 上编译，检查目录、两章、中文标点和中英文混排；字体只用当前两处编译环境都可用的字体。若模板本身不适合中文，回到第 1 步换候选。<a href="https://www.overleaf.com/learn/latex/Chinese">Overleaf 中文排版</a> · <a href="https://www.overleaf.com/learn/latex/Management_in_a_large_project">大型项目分文件</a></p>
+<pre><code class="language-text">请按我确认的计划，只修改 template/technical-book/，保留选中模板原有的文档类和主要版式；template/original-overleaf/ 始终只读。先核对现有中文支持，再做最小的 XeLaTeX 与 ctex 适配；建立主文件和 chapters/chapter-01.tex、chapters/chapter-02.tex 两个独立章节，用虚构中文文字生成目录。
+请实际用本机 MacTeX 编译，报告改动文件、编译命令、最新 PDF 路径和第一条关键错误。若文档类、字体或宏包冲突，先说明原因和最小修复，不要改动来源副本或本机其他项目。
+我会在 Finder 找到两章，并打开本次 PDF 核对目录、中文标点和中英文混排；若仍不能稳定编译，我们回到候选列表。
+</code></pre>
+<h2 id="step-3">3. 用虚构样稿逐组补功能</h2>
+<p>把下面项目做成模板里的示例页或示例章节。每一组先让 Harness 核对现有能力，再只补缺少的部分、编译和检查，不让它一次改完整个项目。宏包是实现候选，以实际模板的文档类、已有设置和编译结果为准。</p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>用什么虚构内容试</th>
+<th>打开 PDF 核对什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>书籍结构</td>
+<td>封面、目录、两章各一个 <code>.tex</code>、附录</td>
+<td>目录跳转、章节页码和附录标题正确</td>
+</tr>
+<tr>
+<td>中文与版式</td>
+<td>中英文混排、中文标点、标题层级、页眉页脚、脚注</td>
+<td>无缺字，留白、行距、字号和脚注清晰</td>
+</tr>
+<tr>
+<td>图片</td>
+<td>一张示例图、两张子图及各自图注</td>
+<td>清晰度、子图编号、主图标题与正文引用正确；可考虑 <code>graphicx</code>、<code>subcaption</code></td>
+</tr>
+<tr>
+<td>公式与单位</td>
+<td>一个带编号公式、一处带单位的数值</td>
+<td>公式排版与编号、数字和 SI 单位一致；可考虑 <code>amsmath</code>、<code>siunitx</code></td>
+</tr>
+<tr>
+<td>常用表格</td>
+<td>三线表、宽度受控的表、带数值列的表</td>
+<td>表头、每格数据、数值对齐和跨页附近的留白；可考虑 <code>booktabs</code>、<code>tabularx</code>、<code>siunitx</code></td>
+</tr>
+<tr>
+<td>特殊表格</td>
+<td>一张横向宽表、一张跨页长表</td>
+<td>PDF 横向页会旋转显示，长表能续页且表头可读；分别考虑 <code>pdflscape</code>、<code>longtable</code></td>
+</tr>
+<tr>
+<td>引用</td>
+<td>章节、图、表、公式各一个标签，两条虚构 <code>.bib</code> 条目</td>
+<td>中文“图／表／公式”称呼、链接目标和参考文献均正确；检查 <code>hyperref</code>、<code>cleveref</code>、现有文献方案</td>
+</tr>
+<tr>
+<td>阅读辅助</td>
+<td>少量一致的颜色、代码清单、术语或缩略语示例</td>
+<td>彩色与黑白下正文都清楚，代码不断行失控，术语能找到解释</td>
+</tr>
+</tbody>
+</table>
+<p>例如，样稿可以写成「第一章介绍虚构设备，含一张设备示意图与两幅子图；第二章给出 <code>E = mc²</code> 这样的编号公式、<code>12.5 mm</code> 的单位写法、一张带小数的三线表；附录解释两个缩略语」。再单独放一张字段较多的横向表、一张多页数据表和两条虚构参考文献。正文至少实际出现一次「见图 1.1」「见表 2.1」「见式（2.1）」的可点击引用。这样爸爸能从源文件找到示例，再在 PDF 逐项核对；编号以实际编译结果为准。</p>
+<p>下面是一小段<strong>虚构章节内容</strong>的形状，用来认识源文件里的命令；它依赖模板已正确配置 <code>siunitx</code> 和 <code>cleveref</code>，不能直接当成整份模板粘贴：</p>
+<pre><code class="language-latex">\chapter{示例设备}
+\label{ch:device}
+一根示例杆长 \qty{12.5}{\milli\metre}。
+\begin{equation}\label{eq:demo}
+  a+b=c
+\end{equation}
+计算关系见\cref{eq:demo}；实际技术数据以后从 Word 核对后再填。
+</code></pre>
+<p>本节只用虚构文字测试排版；第 9 节才会在私人项目里对照 Word 填入真实内容。<code>\qty</code> 需核对本机 <code>siunitx</code> 版本，旧模板若采用其他单位写法，就按实际版本调整，先编译验证。</p>
+<p><code>cleveref</code> 的中文“图、表、公式”等名称需按本模板显式配置，不能把默认英文称呼当成完成。参考文献只选一种能在本模板稳定编译的方案，不并装相互冲突的方案。代码清单先用可分享的短示例，复杂中文代码显示留待实际需要时再扩展。图表和公式的示例都要给标签，并在正文真正引用一次。<a href="https://ctan.org/pkg/subcaption">子图说明</a> · <a href="https://ctan.org/pkg/siunitx">SI 单位说明</a> · <a href="https://ctan.org/pkg/pdflscape">横向 PDF 页面说明</a> · <a href="https://ctan.org/pkg/cleveref">智能交叉引用说明</a> · <a href="https://www.overleaf.com/learn/latex/Bibliography_management_with_biblatex">Overleaf 参考文献说明</a></p>
+<p>每做一组，可以替换方括号中的组名，再发这段提示词：</p>
+<pre><code class="language-text">现在只处理检查表的［组名］，工作范围仅为 template/technical-book/。先读主文件、有关示例章节和已有宏包，指出本组哪些已具备、哪些缺失，再做必要的最小修改；不要改 original-overleaf/，也不要加入真实 Word 内容。
+请用虚构材料完成本组示例，实际编译，报告改动文件、命令、生成 PDF 路径、第一条关键报错或通过结果，并指出我应看哪一页、核对哪一项。遇到与现有模板冲突的宏包时先说明，不要盲目叠加。
+我会打开源文件和新 PDF，对照检查表填写实际结果，再决定是否进入下一组。
+</code></pre>
+<p>编译失败时先停在这一组，用日志定位，不继续加下一组功能：</p>
+<pre><code class="language-text">这次只处理刚才编译失败的［组名］。请读取 template/technical-book/ 中本次编译日志的第一条关键错误和相关源文件，说明原因；只在该工作副本做一处必要修复，再用相同命令重编。
+请报告错误前后变化、新 PDF 路径和仍未解决的问题。不要改 original-overleaf/，也不要为了让编译通过而删除原有章节或跳过这一组功能。我会打开修改的源文件与新 PDF 核对。
+</code></pre>
+<p>爸爸在本机检查表逐行填“源文件位置、PDF 页码、通过／待修复”，遇到未通过项记录错误与下一步。检查表用真实测试结果填，不凭 AI 的一句“已完成”打勾。颜色、字体、封面、页眉页脚由爸爸看 PDF 后决定；一组太长可以下次接着做。</p>
+<h2 id="step-4">4. 双处编译并留给下一节</h2>
+<p>全部功能在本机通过后，再让 Harness 复查并重编。爸爸打开最新 PDF 逐项核对检查表。把这个<strong>只有虚构内容</strong>的模板工作副本按 Overleaf 的项目上传方式在自己的 Overleaf 项目再编译一次，比较目录、中文、横向页和引用；若两边字体或宏包不同，记录差异并修到两边都能复现。<a href="https://www.overleaf.com/learn/latex/Kb/Uploading_a_project">Overleaf 上传 ZIP 项目</a></p>
+<pre><code class="language-text">请只在 template/technical-book/ 检查已完成的虚构样稿，不读取 Word 或其他私人目录。列出主文件、两个独立章节、示例图片、参考文献文件及各功能的源文件位置。用本机 MacTeX 重新编译，报告实际命令、新 PDF 路径、警告、未解析引用或缺字；不要把未运行的检查说成通过。
+请给出检查表：每项功能对应的源码相对路径、应查看的 PDF 页码、你观察到的结果和仍需我人工确认的地方。不要修改 template/original-overleaf/，也不要替我填“通过”。
+我会打开本次 PDF，逐项核对，再把只有虚构内容的工作副本放到 Overleaf 复编。
+</code></pre>
+<p>完成时，爸爸能从 <code>technical-book/</code> 找到主文件、两章和测试样稿，在 MacTeX 与 Overleaf 都能打开新版中文 PDF，检查表没有未解决的必做项。保留原始 ZIP 与工作副本，不把虚构样稿当成 Word 正文。第 7 节把这份已验证模板放进长期项目目录，并为第一份 Word 单独建立工作区。</p></div>
 
 <nav class="lesson-nav" aria-label="课次导航"><a href="lesson-05.html">← 第 5 节</a><a href="index.html">返回爸爸的课表</a><a href="lesson-07.html">第 7 节 →</a></nav>
 </article></main>

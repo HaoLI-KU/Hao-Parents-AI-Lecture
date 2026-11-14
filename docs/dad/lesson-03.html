@@ -14,32 +14,56 @@
 <main class="wrap"><article class="lesson">
 <section class="intro"><p><a href="index.html">← 返回爸爸的课表</a></p>
 <p class="kicker"><span lang="en-GB">Lesson 3</span> · 爸爸 · 腾讯会议</p>
-<h1>给 Codex 一个文件夹、一项任务、一个检查办法</h1></section>
-<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">整理三个乱命名的文件</a></li><li><a href="#step-2">同一句指令，看看权限有什么不同</a></li></ul></nav>
-<div class="content" id="dad"><p>第 2 节用 Chat 查资料、对比和核查结论。今天用 Codex，因为希望它在指定目录里实际改变文件，随后由自己检查。这节只做归档，LaTeX 放到第 4 节。</p>
-<h2 id="step-1">整理三个乱命名的文件</h2>
+<h1>在 DeepSeek Harness 里比较推理强度与用量</h1></section>
+<nav class="jump" aria-label="本节步骤"><strong>本节步骤</strong><ul><li><a href="#step-1">1. 先认清模型与推理强度</a></li><li><a href="#step-2">2. 用同一道题比较两个档位</a></li><li><a href="#step-3">3. 回开放平台找这两次用量</a></li><li><a href="#step-4">4. 用微信输入法口述一条真实提示词</a></li><li><a href="#step-5">收尾</a></li></ul></nav>
+<div class="content" id="dad"><p>第 2 节已经完成 Harness、微信输入法和插件安装。这节在 <strong>DeepSeek Harness</strong> 中练习模型、推理强度和开放平台用量，再用已验证的浏览器与日程工具完成一项真实查询。</p>
+<h2 id="step-1">1. 先认清模型与推理强度</h2>
 <ol>
-<li>在「文稿」新建「AI练习」，里面建「归档原样」和「归档工作」。打开并保存这三个练习文件到「归档原样」：<a href="../assets/lessons/03/examples/a.txt" download>文件一</a>、<a href="../assets/lessons/03/examples/notes2.txt" download>文件二</a>、<a href="../assets/lessons/03/examples/tmp.txt" download>文件三</a>。把三个文件复制到「归档工作」。</li>
-<li>在 Codex 新开练习会话，选中「归档工作」作为项目目录。先发：</li>
+<li>打开 DeepSeek Harness，新建一个空练习会话。</li>
+<li>打开模型选择器，确认提供方是 DeepSeek，并记下当前模型名。模型列表以本机实际显示为准；若能选择 <code>deepseek-flash</code> 和 <code>deepseek-v4-pro</code>，先用 Flash 做简单练习，需要更复杂推理时再比较 Pro。</li>
+<li>找到 Effort 或推理强度。Harness 的 DeepSeek 直连可能显示 <code>off</code>、<code>low</code>、<code>high</code>、<code>max</code>。先说出它控制的是「模型愿意投入多少推理」，不是文件权限，也不会自动开启联网搜索。</li>
+<li>复杂问题不一定总要最高档。简单整理先用低档；条件多、需要比较时再提高，并通过结果判断是否值得。</li>
 </ol>
-<blockquote>
-<p>只读当前练习目录中的三个文本，按正文内容判断是什么。请先列出「原文件名 → 分类子目录/新文件名」，用正文日期和主题命名。内容不明确就标待确认。先给清单，等我确认再修改。</p>
-</blockquote>
+<p><a href="https://deepseek-harness.github.io/deepseek-harness/guide/providers.html">DeepSeek Harness 模型配置说明</a> · <a href="https://api-docs.deepseek.com/zh-cn/guides/thinking_mode/">DeepSeek 思考模式</a></p>
+<h2 id="step-2">2. 用同一道题比较两个档位</h2>
+<p>在两个新会话里使用同一个模型和完全相同的问题，只改变推理强度。下面用虚构行程练习，比较时不要改动提示词中的条件。</p>
+<pre><code class="language-text">我要安排一次半天家庭出行。两位长辈不想走太多路，上午 9:30 从上海长宁区出发，12:30 前回家。
+请先列出你还缺少的三个关键信息，再给一份暂定安排。
+交通时间未经核实的地方请标「待核实」。最后列出我需要亲自核对的两件事。
+</code></pre>
 <ol>
-<li>核对三个原文件都在清单里，分类分别与出行、购物、家庭日程匹配。选一个文件，自己打开原文确认日期和主题。改掉不满意的名字，再让 Codex 只按确认清单执行。保留扩展名和内容，遇到同名先停下。</li>
-<li>用 Finder 打开三个子目录，数一数仍有三个文件，检查三个日期依次是 12 月 12 日、13 日和 14 日，再抽查一个正文。新文件名允许有不同写法，日期、主题和文件内容要对得上。若结果有误，从「归档原样」重新复制到空工作目录再练。</li>
+<li>第一次选择 <code>low</code>；记录发送时间、回复所用时间、追问是否有针对性，以及有没有忽略条件。</li>
+<li>第二次选择 <code>high</code> 或 <code>max</code>；其余内容不变，再记录同样四项。</li>
+<li>把两次结果并排看。重点不是哪一份更长，而是哪一份更准确地使用了条件、清楚区分了待核实信息。</li>
 </ol>
-<h2 id="step-2">同一句指令，看看权限有什么不同</h2>
-<p>在 Codex 输入框下方找权限菜单。<strong>Ask for approval</strong> 通常允许在当前工作区内做常规操作，超出边界的动作可能弹出 Allow 或 Allow Once。<strong>Full access</strong> 允许 Codex 在本机更大范围内读写文件和运行联网命令，通常会省去这类逐次确认。桌面端可在「设置 → 通用 → 权限」启用 Full access 选项，再到当次会话的权限菜单选择。这里的审批和文件边界由 Codex 客户端控制，和 DeepSeek 推理档位是两回事。本机可能用不同的权限配置或隐藏 Full access。实验只对课堂副本；若该模式不可用，就用默认模式观察一次边界提示。</p>
+<p>做自己的出行安排时，可以替换人数、出发地和时间。比较两个推理档位时，两次仍须使用完全相同的文字。</p>
+<h2 id="step-3">3. 回开放平台找这两次用量</h2>
 <ol>
-<li>由家人陪同，在 <code>AI练习</code> 下准备两个空的相邻文件夹「权限练习工作区」和「权限练习输出」。只打开前一个作为 Codex 工作区，确认「AI练习」父目录没有同时获准写入，否则这个对比可能不会触发提示。两处都用课堂临时文件。</li>
-<li>选 <strong>Ask for approval</strong>，发送：「只在同级的『权限练习输出』中新建 <code>permission-test.txt</code>，内容写『权限练习』。文件已存在就停下。别改其他文件，也别联网。」观察它是在请求一次批准、说明受限，还是能直接完成。若弹窗，先确认它只涉及这个临时文件。结束后手动清掉测试文件，恢复两处初始状态。</li>
-<li>若本机允许，在新对话中选 <strong>Full access</strong>，打开同一工作区，发送完全一样的指令。观察是否需要点确认，再在 Finder 核对文件位置和内容。完成后结束 Full access 会话，并在下一次实际任务开始前确认权限已切回 <strong>Ask for approval</strong>。</li>
-<li>说出你看到的区别。只在工作区内改名时，两种模式可能看起来一样，所以这里特意用旁边的空练习目录。Full access 减少确认弹窗，也扩大了可操作范围。即便任务能自己跑完，仍要检查结果。</li>
+<li>打开 <a href="https://platform.deepseek.com/">DeepSeek 开放平台</a>的用量或账单页面，选当天和爸爸用于 Harness 的 API Key。</li>
+<li>对照刚才记录的时间，观察平台能否区分两次请求。页面显示哪些字段就读哪些字段，例如输入 token、输出 token、思考 token、缓存或费用；不要用屏幕字数猜 token。</li>
+<li>记录两次请求能确认的模型、档位、耗时和用量。若明细延迟出现，先记下时间，稍后刷新，不重复发送许多测试。</li>
+<li>说出结论：「高档是否更慢？是否用了更多 token？这道题的答案是否真的更好？」一次练习只说明本次任务，不代表所有问题。</li>
 </ol>
-<p><a href="https://learn.chatgpt.com/docs/permission-modes">OpenAI Docs 权限说明</a></p></div>
+<p><a href="https://api-docs.deepseek.com/zh-cn/quick_start/token_usage/">DeepSeek Token 用量说明</a> · <a href="https://api-docs.deepseek.com/zh-cn/quick_start/pricing/">DeepSeek 定价页</a></p>
+<h2 id="step-4">4. 用微信输入法口述一条真实提示词</h2>
+<p>从机票、商品比价或上海便民信息中挑一个需求，用微信输入法口述进 Harness。先用公开网页练浏览器读取。可以按自己的兴趣改成另一项公开政策，仍要求它给出原文链接和待核实之处。<a href="https://www.shanghai.gov.cn/">上海市人民政府</a></p>
+<pre><code class="language-text">请用当前可用的浏览器工具，在上海市人民政府网站找一条与长者服务有关的公开办事指南。
+给出标题、发布单位、发布日期、正文链接和一条适用条件，并指出支持这条条件的正文位置。
+先报告你实际打开了哪些页面、读到了哪些正文。只看到搜索摘要或读不到正文时请说明，不要补猜。
+我会打开原链接，核对域名、日期和适用条件。
+</code></pre>
+<p>爸爸打开同一链接，核对域名、日期与适用条件，并查看 Harness 是否确实调用了浏览器。若工具打不开正文，就由爸爸打开官方页面，把可公开的段落复制进会话，让 Harness 只根据这段文字整理。</p>
+<p>再用一条测试日程练习只读本机日历。先由爸爸在已授权的日历中新建一条标题为「家庭出行测试」的练习日程，设置当天的开始、结束时间并记下来，再发送下面的提示词。若日历只有读取权限，就请有权限的家人创建这条测试日程。</p>
+<pre><code class="language-text">请只读取我当前已授权日历里标题为「家庭出行测试」的那条测试日程，不要创建或修改日程。
+报告它的日期、开始和结束时间、时区，并按时间顺序整理成一行行程。
+如果找不到、遇到多条同名日程或看不到时区，请说明实际查到什么，再问我下一步。
+我会回到日历原记录，逐项核对。
+</code></pre>
+<p>爸爸对照日历原记录核对时间和时区。若读取失败，记录日历名称和权限提示，先完成网页练习。想换成机票或商品比价时，可以把目标、日期或型号、预算、希望读取的公开来源写进同样的提示词，要求列出实际打开的页面和无法确认的价格或规格。登录、提交资料、下单和付款由本人操作。</p>
+<h2 id="step-5">收尾</h2>
+<p>完成时，爸爸应能在 Harness 里指出模型名和 Effort，从开放平台找到至少一条对应的用量记录，并对照实际调用与原页面或日历核对一项结果。</p></div>
 
-<nav class="lesson-nav" aria-label="课次导航"><a href="lesson-02.html">← 第 2 节</a><a href="index.html">返回爸爸的课表</a><a href="lesson-04.html">第 4 节 →</a><a href="../mom/lesson-07.html">返回妈妈第 7 节</a></nav>
+<nav class="lesson-nav" aria-label="课次导航"><a href="lesson-02.html">← 第 2 节</a><a href="index.html">返回爸爸的课表</a><a href="lesson-04.html">第 4 节 →</a></nav>
 </article></main>
 <footer class="wrap footer"><a href="../index.html">返回首页</a><span lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</span></footer>
 </body>
