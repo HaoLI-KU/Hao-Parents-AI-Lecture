@@ -12,6 +12,7 @@ DOCS = ROOT / "docs"
 ART = ROOT / "assets/lessons/01/illustrations/ai-two-layers.svg"
 SITE_NAME = "爸妈的 Mac 与 AI 课"
 ROUTES = {"dad": "爸爸", "mom": "妈妈"}
+PRACTICE = {"slug": "github", "file": "github.md", "mode": "后续课 · 草稿"}
 LESSON_LINK = re.compile(r"(\d{2})\.md(?:#(dad|mom))?")
 HEADINGS = {
     "dad": ("认识 AI，跑通 DeepSeek", "分清工具与模型，用自己的 DeepSeek 账户在 Codex 收到第一条回复。"),
@@ -72,12 +73,15 @@ def schedule(route, name, rows):
     write(f"{route}/index.html", f"{name}的课表", f'''<section class="intro">
 <p class="kicker">学习路线</p><h1>{name}的课程</h1>
 <p class="lead">选择一节课开始，也可以从首页搜索课程里的操作和概念。</p>
-</section><ol class="schedule">{''.join(items)}</ol>''')
+</section><ol class="schedule">{''.join(items)}</ol>
+<p class="lead"><a href="../practice/github.html">共同练习：爸妈第一次用 GitHub</a>（后续课 · 草稿）</p>''')
 
 
 def course_links(body, route, source_path):
     def convert(match):
         url = unescape(match[1])
+        if url == PRACTICE["file"]:
+            return 'href="../practice/github.html"'
         lesson = LESSON_LINK.fullmatch(url)
         if lesson:
             number, target = lesson.groups()
@@ -159,6 +163,29 @@ def lesson(route, name, source, source_path, number, mode, heading, neighbours):
     return index
 
 
+def practice():
+    path = ROOT / f"course/lessons/{PRACTICE['file']}"
+    source = path.read_text(encoding="utf-8")
+    heading = re.search(r"(?m)^# (.+)$", source).group(1)
+    source = re.sub(r"(?m)^# .+\n", "", source, count=1)
+    body = markdown(source, extensions=["tables", "fenced_code"])
+    body = course_links(body, "practice", path)
+    write(f"practice/{PRACTICE['slug']}.html", "共同练习", f'''<article class="lesson">
+<section class="intro"><p><a href="../index.html">← 返回首页</a></p>
+<p class="kicker">共同练习 · {PRACTICE["mode"]}</p>
+<h1>{escape(heading)}</h1></section>
+<div class="content" id="practice">{body}</div>
+<nav class="lesson-nav" aria-label="课次导航"><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a></nav>
+</article>''')
+    plain = unescape(re.sub(r"<[^>]+>", " ", body))
+    return [{
+        "title": heading,
+        "heading": "",
+        "text": " ".join(plain.split()),
+        "url": f"practice/{PRACTICE['slug']}.html#practice",
+    }]
+
+
 def route_content(source, name):
     match = re.search(rf"(?ms)^## {name}｜([^\n]+)\n(.*?)(?=^## |\Z)", source)
     return match.groups()
@@ -198,6 +225,7 @@ def main():
             neighbours = (rows[position - 1][0] if position else None,
                           rows[position + 1][0] if position + 1 < len(rows) else None)
             search_entries.extend(lesson(route, name, body, path, number, mode, heading, neighbours))
+    search_entries.extend(practice())
     index_js = "window.courseSearchIndex = " + json.dumps(search_entries, ensure_ascii=False) + ";\n"
     (DOCS / "assets/search-index.js").write_text(index_js, encoding="utf-8")
 

@@ -2,29 +2,30 @@
 
 **[打开公开课程网站](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/)** · [爸爸的课表](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/dad/) · [妈妈的课表](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/mom/)
 
-网站通过 GitHub Pages 发布，首页可搜索课名和正文。课程正文维护在 Markdown 课稿中，网页由课稿生成。[网站设计](website.md)
+网站通过 GitHub Pages 发布，全站可搜索课名、步骤和正文。课程正文维护在 Markdown 课稿中，网页由课稿生成。[网站设计](website.md)
 
 ## 2026 年 12 月家庭试讲
 
-爸爸目前进度较快，第 1–8 节安排腾讯会议，第 9 节作为后续课继续推进；制作模板的第 6 节可分多次完成。妈妈仍按原安排进行：第 1 节在上海家中，第 2–4 节腾讯会议，第 5–7 节在上海家中。两条路线不要求同步。
+爸爸目前进度较快，第 1–8 节安排腾讯会议，第 9 节作为后续课继续推进；制作模板的第 6 节可分多次完成。妈妈第 1 节在上海家中，第 2–4 节腾讯会议，第 5–7 节在上海家中；第 8–10 节和 GitHub 共同练习作为后续草稿，网站上单独分组。两条路线不要求同步。
 
-| 课稿 | 爸爸方式 | 爸爸 | 妈妈方式 | 妈妈 |
-|---|---|---|---|---|
-| [第 1 节](course/lessons/01.md) | 腾讯会议 | 认识模型和工具，用自己的 DeepSeek 账户跑通 Codex | 上海家中 | 新 Mac 联网后先装豆包桌面版，试语音通话和屏幕共享，再更新和验证入会 |
-| [第 2 节](course/lessons/02.md) | 腾讯会议 | 初始化 DeepSeek Harness，安装微信输入法与六个指定插件 | 腾讯会议 | 安装应用、配邮箱并核对同步 |
-| [第 3 节](course/lessons/03.md) | 腾讯会议 | 在 DeepSeek Harness 比较推理强度与用量，练习读网页和日程 | 腾讯会议 | 快捷键和触控板，验证共享日历、备忘录和相册 |
-| [第 4 节](course/lessons/04.md) | 腾讯会议 | 说清 Word 转 LaTeX 的输入、产出和长期工作流目标 | 腾讯会议 | 会议预约与分享、语音输入、MacTeX 验证 |
-| [第 5 节](course/lessons/05.md) | 腾讯会议 | 编译中文 LaTeX，练习 PDF 批注并认识 Overleaf 模板库 | 上海家中 | 请参考爸爸第 1 节 |
-| [第 6 节](course/lessons/06.md) | 腾讯会议 | 在 Overleaf 选模板，做可编译的中文多章节技术书并逐项验收 | 上海家中 | 请参考爸爸第 3 节 |
-| [第 7 节](course/lessons/07.md) | 腾讯会议 | 分开放 Overleaf 模板来源、通用模板和第一份 Word，建立项目目录 | 上海家中 | 后续内容待重新安排 |
-| [第 8 节](course/lessons/08.md) | 腾讯会议 | 写项目指令、阶段路线与内容保持规则，并开新会话核对 | — | — |
-| [第 9 节](course/lessons/09.md) | 后续课 | 用已验证模板转换一小段 Word，编译、核对并沉淀流程 | — | — |
+| 课稿 | 爸爸方式 | 爸爸 | 妈妈方式 | 妈妈 | 说明 |
+|---|---|---|---|---|---|
+| [第 1 节](course/lessons/01.md) | 腾讯会议 | 认识模型和工具，用自己的 DeepSeek 账户跑通 Codex | 上海家中 | 新 Mac 联网后先装豆包桌面版，试语音通话和屏幕共享，再更新和验证入会 | 首课 |
+| [第 2 节](course/lessons/02.md) | 腾讯会议 | 初始化 DeepSeek Harness，安装微信输入法与六个指定插件 | 腾讯会议 | 安装应用、配邮箱并核对同步 |  |
+| [第 3 节](course/lessons/03.md) | 腾讯会议 | 在 DeepSeek Harness 比较推理强度与用量，练习读网页和日程 | 腾讯会议 | 快捷键和触控板，验证共享日历、备忘录和相册 |  |
+| [第 4 节](course/lessons/04.md) | 腾讯会议 | 说清 Word 转 LaTeX 的输入、产出和长期工作流目标 | 腾讯会议 | 会议预约与分享、语音输入、MacTeX 验证 | 妈妈用 TeXShop 验证，不需要 Harness |
+| [第 5 节](course/lessons/05.md) | 腾讯会议 | 编译中文 LaTeX，练习 PDF 批注并认识 Overleaf 模板库 | 上海家中 | 认识 AI 的两层与工具入口 | 妈妈用豆包实操；爸爸第 1 节作进阶阅读 |
+| [第 6 节](course/lessons/06.md) | 腾讯会议 | 在 Overleaf 选模板，做可编译的中文多章节技术书并逐项验收 | 上海家中 | 用豆包查生活信息并核对原始来源 | 参考爸爸第 3 节的查证方法 |
+| [第 7 节](course/lessons/07.md) | 腾讯会议 | 分开放 Overleaf 模板来源、通用模板和第一份 Word，建立项目目录 | 上海家中 | 补练与验收：把前六节的操作连起来 | 妈妈进入第 8 节前的检查点 |
+| [第 8 节](course/lessons/08.md) | 腾讯会议 | 写项目指令、阶段路线与内容保持规则，并开新会话核对 | 上海家中 · 草稿 | 做可本地预览的养花小站 | 妈妈草稿；先装 Harness |
+| [第 9 节](course/lessons/09.md) | 后续课 | 用已验证模板转换一小段 Word，编译、核对并沉淀流程 | 后续课 · 草稿 | 见共同练习：GitHub 私有仓库与第一次推送 | 妈妈草稿 |
+| [第 10 节](course/lessons/10.md) | — | — | 后续课 · 草稿 | 给养花小站写维护规则 | 妈妈草稿 |
 
-后续草稿保留在仓库中。
+后续草稿保留在仓库中，网站会在各自路线下单独列出。
 
-- [妈妈第 8 节](course/lessons/08.md)｜做可本地预览的养花小站。
-- [妈妈第 9 节及 GitHub 共同练习](course/lessons/github.md)｜各自的项目起步后，注册 GitHub、建立私有仓库，用 Codex 帮忙提交与推送。
-- [妈妈第 10 节](course/lessons/10.md)｜给养花小站写维护规则。
+- [妈妈第 8 节](course/lessons/08.md)｜装好 DeepSeek Harness，做可本地预览的养花小站。
+- [妈妈第 9 节及 GitHub 共同练习](course/lessons/github.md)｜各自的项目起步后，注册 GitHub、建立私有仓库，用 Harness 帮忙提交与推送。
+- [妈妈第 10 节](course/lessons/10.md)｜给养花小站写维护规则，并在新会话里验证规则被读取。
 
 备课可参照[家庭带练方式](teaching.md)和[长期技能地图](skills.md)。[AGENTS.md](AGENTS.md)与 [CLAUDE.md](CLAUDE.md)供后续维护使用。
 

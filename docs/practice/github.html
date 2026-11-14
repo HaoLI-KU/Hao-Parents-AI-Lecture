@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共同练习 · 爸妈的 Mac 与 AI 课</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="bar"><div class="wrap">
+<a class="brand" href="../index.html">爸妈的 Mac 与 AI 课</a>
+<span class="quiet">家庭课程</span>
+</div></header>
+<main class="wrap"><article class="lesson">
+<section class="intro"><p><a href="../index.html">← 返回首页</a></p>
+<p class="kicker">共同练习 · 后续课 · 草稿</p>
+<h1>共同练习｜爸妈第一次用 GitHub</h1></section>
+<div class="content" id="practice"><p>状态：后续课草稿</p>
+<h2>1. 各自注册并登录</h2>
+<p>两人在自己的 Mac 上打开 <a href="https://github.com/signup">GitHub 注册页</a>，各自注册个人账号，按网页提示完成邮箱验证。登录后点右上角头像，确认用户名是自己的。登录、验证码和授权由本人完成，遇到卡点先停下来一起看。 <a href="https://docs.github.com/en/account-and-profile/how-tos/account-management/creating-an-account-on-github">GitHub 账号注册说明</a></p>
+<h2>2. 新建仓库时，先看可见性</h2>
+<p>各自打开 <a href="https://github.com/new">新建 GitHub 仓库</a>，确认 Owner 是自己的账号。爸爸可取名 <code>technical-manual</code>，妈妈可取名 <code>plant-notes</code>。课堂先选 <strong>Private</strong>，创建后检查仓库名称旁是否显示 Private。</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>谁能看到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Private（私有）</td>
+<td>自己和获授权的人。爸爸的手册和妈妈的练习站先用这个选项。</td>
+</tr>
+<tr>
+<td>Public（公开）</td>
+<td>任何人都可以查看仓库里的文件和公开提交历史。以后要公开养花小站时，再一起核对素材和发布范围。</td>
+</tr>
+</tbody>
+</table>
+<p>私有仓库里也只放有权上传的文件。手册先选已确认可上传的 <code>.tex</code>、Markdown 规则和示例图表。账号信息、密钥、无权上传的内部资料留在本机。妈妈先用两条虚构植物记录。 <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories">GitHub 仓库可见性说明</a></p>
+<h2>3. 认三个词，让 Harness 帮忙执行</h2>
+<p>本节默认已经装好 DeepSeek Harness（爸爸第 2 节、妈妈第 8 节）。</p>
+<ul>
+<li><strong>clone（克隆）</strong>：把 GitHub 仓库复制到电脑，得到可以编辑的本地项目。</li>
+<li><strong>commit（提交）</strong>：在本地保存一份带说明的版本记录。</li>
+<li>
+<p><strong>push（推送）</strong>：把已提交的版本送到指定的 GitHub 仓库。</p>
+</li>
+<li>
+<p>在新仓库复制地址。各自在 Mac 选一个空练习位置，让 Harness 把仓库克隆到那里。若 GitHub 要求本机登录或授权，按提示由本人完成，再让 Harness 继续。</p>
+</li>
+<li>打开克隆得到的文件夹。爸爸复制选好的手册文件，妈妈复制 <code>index.html</code>、<code>plants.json</code>、<code>app.js</code>。原来的本地项目仍可直接打开。复制前先看仓库里有没有 <code>.gitignore</code>；没有就建一个，至少排除 <code>.DS_Store</code>、密钥文件和私人草稿。</li>
+<li>用自然语言交代任务。先让 Harness 列出要上传的内容，自己检查后再同意推送。若 Harness 不能直接执行 git，就让它给出命令，由本人打开「终端」逐条执行并核对输出。</li>
+</ul>
+<blockquote>
+<p>这个本地文件夹来自我刚建立的私有 GitHub 仓库。请核对远端地址和仓库所有者，列出准备提交的文件、分支和提交说明。只提交我刚复制进去、确认可上传的项目文件。不要提交密钥、账号资料或私人原件。等我确认后再提交和推送。需要登录或权限时先停下来告诉我。</p>
+</blockquote>
+<ol>
+<li>回到浏览器刷新各自的仓库，检查仍显示 Private，文件和提交说明都出现了。爸爸打开一份手册源文件，妈妈打开 <code>plants.json</code>。看得见文件，就完成了第一次推送。</li>
+</ol>
+<p><a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository">克隆仓库</a> · <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories">提交和推送入门</a></p>
+<p>本节先练文件推送。妈妈要让家人从网址打开网站时，再一起配置 GitHub Pages 和确认发布范围。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHub Pages 说明</a></p></div>
+<nav class="lesson-nav" aria-label="课次导航"><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a></nav>
+</article></main>
+<footer class="wrap footer"><a href="../index.html">返回首页</a><span lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</span></footer>
+</body>
+</html>
