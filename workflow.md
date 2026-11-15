@@ -43,8 +43,11 @@ docs/                              生成物，GitHub Pages 从这里发布
 ## 拾趣
 
 - `/gallery/index.html` 是拾趣首页；`/gallery/<slug>.html` 是作品页。拾趣不占课号，不进路线课表。
-- 每件作品一份 `course/gallery/<slug>.md`，frontmatter 至少写 `title`、`date`、`summary`、`image`、`alt`、`credit`；可选 `original_image`、`relation`、`credit_en`、`affiliation`、`email`、`location`、`medium`。
+- 每件作品一份 `course/gallery/<slug>.md`，frontmatter 至少写 `title`、`date`、`summary`、`image`、`alt`、`credit`；可选 `original_image`、`image_credit`、`relation`、`credit_en`、`affiliation`、`email`、`location`、`medium`。
 - 图片放 `assets/gallery/`，构建时复制到 `docs/assets/gallery/`；`image` 和 `original_image` 写 `docs` 相对路径，例如 `assets/gallery/example.jpg`。
+- `credit` 写原画作者；`image_credit` 写整理版/生成者。两件事不能混写。
+- 有 `original_image` 时，页面自动生成双图切换：默认显示 `image`，点击显示 `original_image`；caption 和 `aria-pressed` 同步更新，按钮支持点击、触屏、Enter 和 Space。
+- 双图切换和布局由构建器统一生成，不写进每件作品的 Markdown。
 - 第一件作品的原图 `assets/gallery/whiteboard-original.jpeg` 已经本人确认公开，是本仓库私人素材规则的明确例外；新增作品涉及真人、姓名或邮箱时，先确认再发布。
 - 新增作品后运行 `make build && make check`；搜索筛选和首页 teaser 会自动更新，不需要手改 `docs/`。
 
@@ -61,6 +64,7 @@ docs/                              生成物，GitHub Pages 从这里发布
 - 不要手写 `docs/` 里的路径，也不要手改 `docs/` 页面。
 - 搜索索引由构建器按每个 `###` 段落生成；共同练习按 `##` 段落生成；新增或改写步骤后重新 `make build`。
 - 搜索页的查询用 `?q=`，路线筛选用 `?route=dad|mom|practice|gallery`；不要手工维护结果列表。
+- CSS/JS 引用带内容版本号 `?v=`；修改样式、脚本或课稿后重新构建，避免浏览器或 GitHub Pages 缓存旧布局。
 - 课稿里引用 `../../assets/...` 的练习文件会在构建时复制到 `docs/assets/`；没有引用的素材不会进入发布目录。
 - 外部链接在页面上自动加 `target="_blank" rel="noopener"`；发布前人工抽查官方域名、页面用途和下载平台。
 

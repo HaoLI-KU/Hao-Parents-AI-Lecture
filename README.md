@@ -29,7 +29,7 @@
 
 ## 拾趣
 
-课程之外的小作品、画和家里好玩的东西。第一件是[办公室白板上的画](course/gallery/whiteboard.md)，由**我的妻子赵诗雅博士**手绘；页面同时保留原始白板照片和整理后的矢量线稿。以后新增展品只需在 `course/gallery/` 加一份 Markdown，不需要改课表。
+课程之外的小作品、画和家里好玩的东西。第一件是[办公室白板上的画](course/gallery/whiteboard.md)：原画由**我的妻子赵诗雅博士**手绘，整理版线稿由 **DeepSeek 调用 ChatGPT** 生成；页面可以点击切换原图和线稿。以后新增展品只需在 `course/gallery/` 加一份 Markdown，不需要改课表。
 
 备课可参照[家庭带练方式](teaching.md)和[长期技能地图](skills.md)。[AGENTS.md](AGENTS.md)与 [CLAUDE.md](CLAUDE.md)供后续维护使用。
 
