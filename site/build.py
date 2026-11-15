@@ -15,6 +15,7 @@ SITE_FULL = "爸妈的 Mac 与 AI 课"
 SITE_TAGLINE = "家庭课程 · 持续更新"
 SITE_URL = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/"
 ROUTES = ("dad", "mom")
+GALLERY_DIR = ROOT / "course/gallery"
 ROUTE_META = {
     "dad": {
         "name": "爸爸",
@@ -52,6 +53,7 @@ NAV_ITEMS = (
     ("dad", "爸爸的课程", "dad/index.html"),
     ("mom", "妈妈的课程", "mom/index.html"),
     ("practice", "共同练习", "practice/index.html"),
+    ("gallery", "拾趣", "gallery/index.html"),
 )
 
 
@@ -82,7 +84,7 @@ def write_page(path, title, description, body, active, route=None,
         attributes = f' href="{prefix}{href}"'
         if active == key:
             attributes += ' class="is-active"'
-            attributes += ' aria-current="page"' if page_type in ("home", "schedule", "practice") else ' aria-current="true"'
+            attributes += ' aria-current="page"' if page_type in ("home", "schedule", "practice", "gallery") else ' aria-current="true"'
         nav.append(f"<a{attributes}>{label}</a>")
     footer_nav = "".join(
         f'<a href="{prefix}{href}">{label}</a>'
@@ -396,7 +398,190 @@ def search_entries_for(title, route, route_name, number, status, headings, bodie
     return entries
 
 
-def home(rows):
+def display_gallery_date(value):
+    match = re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", value.strip())
+    if match:
+        return f"{match.group(1)} 年 {int(match.group(2))} 月"
+    return value.strip()
+
+
+def parse_gallery():
+    items = []
+    if not GALLERY_DIR.is_dir():
+        return items
+    required = ("title", "date", "summary", "image", "alt", "credit")
+    for path in sorted(GALLERY_DIR.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        match = re.match(r"(?s)^---\s*\n(.*?)\n---\s*\n?(.*)$", text)
+        if not match:
+            raise SystemExit(f"{path} 缺少 gallery frontmatter")
+        metadata = {}
+        for line in match.group(1).splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            key, separator, value = line.partition(":")
+            if not separator:
+                raise SystemExit(f"{path} 的 frontmatter 行无法解析：{line}")
+            metadata[key.strip()] = value.strip().strip('"').strip("'")
+        missing = [key for key in required if not metadata.get(key)]
+        if missing:
+            raise SystemExit(f"{path} 缺少 frontmatter 字段：{', '.join(missing)}")
+        item = dict(metadata)
+        item["slug"] = path.stem
+        item["source_path"] = path
+        item["body"] = match.group(2).strip()
+        item["date_label"] = display_gallery_date(item["date"])
+        items.append(item)
+    items.sort(key=lambda item: item["date"], reverse=True)
+    return items
+
+
+def gallery_credit(item):
+    relation = item.get("relation", "").strip()
+    credit = item.get("credit", "").strip()
+    return f"{relation}{credit}" if relation else credit
+
+
+def gallery_credit_line(item):
+    credit = gallery_credit(item)
+    extra = [value for value in (item.get("credit_en", ""), item.get("affiliation", "")) if value]
+    if extra:
+        return f"{credit}（{'，'.join(extra)}）"
+    return credit
+
+
+def gallery_name_line(item):
+    credit = item.get("credit", "").strip()
+    extra = [value for value in (item.get("credit_en", ""), item.get("affiliation", "")) if value]
+    if extra:
+        return f"{credit}（{'，'.join(extra)}）"
+    return credit
+
+
+def gallery_index(items):
+    cards = []
+    for item in items:
+        image = "../" + item["image"]
+        cards.append(f'''<a class="gallery-card" href="{item['slug']}.html">
+<figure class="gallery-card-art"><img src="{escape(image)}" alt="{escape(item['alt'])}" loading="lazy"></figure>
+<div class="gallery-card-copy">
+<p class="eyebrow">拾趣 · {escape(item['date_label'])}</p>
+<h2>{escape(item['title'])}</h2>
+<p>{escape(item['summary'])}</p>
+<span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span>
+</div>
+</a>''')
+    empty = ""
+    if not cards:
+        empty = '<p class="empty-state">这里还没有展品。等下一件好玩的东西。</p>'
+    body = f'''<section class="hero hero-route"><div class="wrap">
+<p class="eyebrow">拾趣</p>
+<h1>拾趣</h1>
+<p class="lead">课程之外的小作品、画和家里好玩的东西。第一件是赵诗雅博士在我办公室白板上留下的一幅画。</p>
+</div></section>
+<section class="wrap lesson-section">
+<div class="gallery-grid{' is-single' if len(items) == 1 else ''}">{''.join(cards)}</div>
+{empty}
+</section>'''
+    write_page("gallery/index.html", "拾趣",
+               "课程之外的小作品、画和家里好玩的东西。",
+               body, "gallery", page_type="gallery")
+
+
+def gallery_pager(items, item):
+    position = items.index(item)
+    previous = items[position - 1] if position > 0 else None
+    following = items[position + 1] if position + 1 < len(items) else None
+
+    def pager_link(target, label):
+        if target is None:
+            return '<span class="pager-link is-empty" aria-hidden="true"></span>'
+        return (
+            f'<a class="pager-link" href="{target["slug"]}.html">'
+            f'<span class="pager-label">{label}</span>'
+            f'<span class="pager-title">{escape(target["title"])}</span></a>'
+        )
+
+    return f'''<nav class="lesson-pager" aria-label="展品导航">
+{pager_link(previous, "上一件")}
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">拾趣</span><span class="pager-title">返回拾趣</span></a>
+{pager_link(following, "下一件")}
+</nav>'''
+
+
+def gallery_page(item, items):
+    credit = gallery_credit_line(item)
+    email = item.get("email", "").strip()
+    email_html = f'<a href="mailto:{escape(email)}">{escape(email)}</a>' if email else ""
+    details = [value for value in (item.get("credit_en", ""), item.get("affiliation", "")) if value]
+    ack_detail = f"（{'，'.join(details)}）" if details else ""
+    image = "../" + item["image"]
+    original_image = "../" + item["original_image"] if item.get("original_image") else ""
+    original_alt = item.get("original_alt", "原始白板照片")
+    meta_rows = []
+    for label, value in (
+        ("作者", gallery_name_line(item)),
+        ("时间", item["date_label"]),
+        ("地点", item.get("location", "")),
+        ("媒介", item.get("medium", "")),
+        ("联系", email_html),
+    ):
+        if value:
+            meta_rows.append(f"<div><dt>{label}</dt><dd>{value}</dd></div>")
+    original_figure = ""
+    if original_image:
+        original_figure = f'''<section class="gallery-original-section">
+<p class="eyebrow">原始白板照片</p>
+<figure class="gallery-original">
+<img src="{escape(original_image)}" alt="{escape(original_alt)}" loading="lazy">
+<figcaption>{escape(item['credit'])}，{escape(item['date_label'])}</figcaption>
+</figure>
+</section>'''
+    body = f'''<article class="gallery-page" id="gallery"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">首页</a><span aria-hidden="true">/</span><a href="index.html">拾趣</a><span aria-hidden="true">/</span><span>{escape(item['title'])}</span></nav>
+<header class="gallery-hero">
+<p class="eyebrow">拾趣 · {escape(item['date_label'])}</p>
+<h1>{escape(item['title'])}</h1>
+<p class="lead">{escape(item['summary'])}</p>
+</header>
+<div class="gallery-layout">
+<figure class="gallery-art">
+<img src="{escape(image)}" alt="{escape(item['alt'])}">
+<figcaption>整理版线稿 · {escape(item['credit'])}手绘</figcaption>
+</figure>
+<div class="gallery-side">
+<div class="acknowledgement">
+<p class="eyebrow">Acknowledgement · 致谢</p>
+<p>这幅白板画由<strong>{escape(gallery_credit(item))}</strong>{escape(ack_detail)}手绘。{escape(item['date_label'])}，她来丹麦南丹麦大学（SDU）看我，在我办公室的白板上留下这幅画。</p>
+{email_html}
+</div>
+<dl class="gallery-meta">{''.join(meta_rows)}</dl>
+<div class="gallery-copy">{markdown_html(item['body'])}</div>
+</div>
+</div>
+{original_figure}
+{gallery_pager(items, item)}
+</div></article>'''
+    write_page(f"gallery/{item['slug']}.html", item['title'], item['summary'], body,
+               "gallery", page_type="gallery")
+    return {
+        "title": item['title'],
+        "heading": "拾趣",
+        "text": " ".join(value for value in (
+            plain(item['body']), gallery_credit_line(item), item.get('affiliation', ''),
+            item.get('email', ''), item.get('location', ''), item.get('medium', ''),
+        ) if value),
+        "url": f"gallery/{item['slug']}.html#gallery",
+        "route": "gallery",
+        "routeName": "拾趣",
+        "lesson": None,
+        "status": "active",
+    }
+
+
+
+def home(rows, gallery):
     route_cards = []
     for route in ROUTES:
         meta = ROUTE_META[route]
@@ -420,6 +605,16 @@ def home(rows):
         f'<a class="chip" href="search.html?q={quote(word)}">{escape(word)}</a>'
         for word in ("屏幕共享", "API Key", "LaTeX", "GitHub")
     )
+    gallery_section = ""
+    if gallery:
+        feature = gallery[0]
+        gallery_section = f'''<section class="wrap home-section" aria-label="拾趣">
+<div class="section-head"><div class="section-title"><p class="eyebrow">拾趣</p><h2>课程之外的小作品</h2></div><a class="section-link" href="gallery/index.html">全部 <span aria-hidden="true">→</span></a></div>
+<a class="gallery-feature" href="gallery/{feature['slug']}.html">
+<figure class="gallery-feature-art"><img src="{feature['image']}" alt="{escape(feature['alt'])}" loading="lazy"></figure>
+<div class="gallery-feature-copy"><p class="eyebrow">拾趣 · {escape(feature['date_label'])}</p><h3>{escape(feature['title'])}</h3><p>{escape(feature['summary'])}</p><span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span></div>
+</a>
+</section>'''
     body = f'''<section class="hero home-hero"><div class="hero-sketch" aria-hidden="true"><img src="assets/whiteboard-lineart.svg" alt=""></div><div class="wrap">
 <p class="eyebrow">{SITE_TAGLINE}</p>
 <h1>爸妈的 <em>Mac 与 AI 课</em></h1>
@@ -439,6 +634,7 @@ def home(rows):
 </section>
 <section class="wrap route-grid" aria-label="选择学习路线">{''.join(route_cards)}</section>
 <section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">共用练习</p><h2>共同练习</h2></div></div><div class="practice-grid">{practice_cards}</div></section>
+{gallery_section}
 <section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">怎么用</p><h2>三步开始</h2></div></div>
 <div class="card-grid">
 <article class="card"><span class="card-kicker">01</span><h3>选自己的路线</h3><p>爸爸和妈妈各自从自己的课表开始，课次不要求同步。第一次来，先看一节里要做什么。</p></article>
@@ -620,12 +816,13 @@ def practice_page(item):
     )
 
 
-def search_page(rows):
+def search_page(rows, gallery):
     counts = {
         "all": None,
         "dad": len(rows["dad"]),
         "mom": len(rows["mom"]),
         "practice": len(PRACTICES),
+        "gallery": len(gallery),
     }
     def filter_button(key, label, count):
         count_html = f'<span class="chip-count">{count}</span>' if count is not None else ""
@@ -642,12 +839,13 @@ def search_page(rows):
             ("dad", "爸爸", counts["dad"]),
             ("mom", "妈妈", counts["mom"]),
             ("practice", "共同练习", counts["practice"]),
+            ("gallery", "拾趣", counts["gallery"]),
         )
     )
     body = f'''<section class="hero hero-search-page"><div class="wrap">
 <p class="eyebrow">全站搜索</p>
 <h1>搜索课程</h1>
-<p class="lead">输入一个操作名、工具名或概念。结果会标出路线、课次和具体步骤，点开就能回到原文。</p>
+<p class="lead">输入一个操作名、工具名、概念或展品名。结果会标出路线、课次或拾趣作品，点开就能回到原文。</p>
 <form class="search-form" id="search-form" action="search.html" method="get" role="search">
 <label class="sr-only" for="course-query">关键词</label>
 <input id="course-query" name="q" type="search" placeholder="例如：屏幕共享、API Key、LaTeX、GitHub" autocomplete="off">
@@ -660,7 +858,7 @@ def search_page(rows):
 <div id="search-empty" class="empty-state" hidden><strong>没有找到相关内容</strong><p>试试更短的关键词，或换一个说法。</p></div>
 <noscript><p class="notice">搜索需要启用 JavaScript。也可以直接打开<a href="dad/index.html">爸爸的课程</a>或<a href="mom/index.html">妈妈的课程</a>。</p></noscript>
 </div></section>'''
-    write_page("search.html", "搜索课程", "搜索爸妈课程里的操作、工具和概念。",
+    write_page("search.html", "搜索课程", "搜索课程、共同练习和拾趣里的操作、工具、概念和作品。",
                body, "search", page_type="search",
                scripts=("search-index.js", "search.js"))
 
@@ -674,6 +872,10 @@ def clean_docs():
     practice = DOCS / "practice"
     practice.mkdir(parents=True, exist_ok=True)
     for page in practice.glob("*.html"):
+        page.unlink()
+    gallery = DOCS / "gallery"
+    gallery.mkdir(parents=True, exist_ok=True)
+    for page in gallery.glob("*.html"):
         page.unlink()
     assets = DOCS / "assets"
     assets.mkdir(parents=True, exist_ok=True)
@@ -690,6 +892,14 @@ def copy_static():
     copyfile(ROOT / "assets/site/whiteboard-lineart.svg", DOCS / "assets/whiteboard-lineart.svg")
     for route in ROUTES:
         copyfile(ROOT / f"assets/site/{route}.svg", DOCS / f"assets/{route}.svg")
+    gallery_assets = ROOT / "assets/gallery"
+    if gallery_assets.is_dir():
+        for asset in gallery_assets.rglob("*"):
+            if not asset.is_file():
+                continue
+            destination = DOCS / "assets/gallery" / asset.relative_to(gallery_assets)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            copyfile(asset, destination)
     diagram = ROOT / "assets/lessons/01/illustrations/ai-two-layers.svg"
     if diagram.is_file():
         copyfile(diagram, DOCS / "assets/ai-two-layers.svg")
@@ -705,9 +915,10 @@ def main():
     if not (ROOT / "README.md").is_file():
         raise SystemExit("找不到 README.md")
     rows = parse_schedule()
+    gallery = parse_gallery()
     clean_docs()
     copy_static()
-    home(rows)
+    home(rows, gallery)
     entries = []
     for route in ROUTES:
         schedule_page(route, rows[route])
@@ -716,14 +927,17 @@ def main():
     practice_index()
     for item in PRACTICES:
         entries.extend(practice_page(item))
-    search_page(rows)
+    gallery_index(gallery)
+    for item in gallery:
+        entries.append(gallery_page(item, gallery))
+    search_page(rows, gallery)
     (DOCS / "assets/search-index.js").write_text(
         "window.courseSearchIndex = " + json.dumps(entries, ensure_ascii=False) + ";\n",
         encoding="utf-8",
     )
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
     print(f"Built {len(entries)} search entries, "
-          f"{sum(len(items) for items in rows.values())} lesson pages, {len(PRACTICES)} practice pages.")
+          f"{sum(len(items) for items in rows.values())} lesson pages, {len(PRACTICES)} practice pages, {len(gallery)} gallery pages.")
 
 
 if __name__ == "__main__":

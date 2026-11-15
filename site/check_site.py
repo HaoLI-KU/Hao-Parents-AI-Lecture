@@ -133,6 +133,12 @@ def main():
         fail(str(error))
         rows = {route: [] for route in build.ROUTES}
 
+    try:
+        gallery = build.parse_gallery()
+    except SystemExit as error:
+        fail(str(error))
+        gallery = []
+
     expected_pages = set()
     referenced_files = set()
     for route, items in rows.items():
@@ -155,6 +161,23 @@ def main():
             fail(f"搜索索引没有覆盖共同练习页：{practice_page}")
     if not (DOCS / "practice/index.html").is_file():
         fail("缺少共同练习首页：practice/index.html")
+
+    expected_pages.add("gallery/index.html")
+    if not (DOCS / "gallery/index.html").is_file():
+        fail("缺少拾趣首页：gallery/index.html")
+    gallery_slugs = set()
+    for item in gallery:
+        slug = item["slug"]
+        gallery_slugs.add(slug)
+        page = f"gallery/{slug}.html"
+        expected_pages.add(page)
+        if not (DOCS / page).is_file():
+            fail(f"缺少拾趣作品页：{page}")
+        if page not in entry_pages:
+            fail(f"搜索索引没有覆盖拾趣作品页：{page}")
+    for path in sorted((ROOT / "course/gallery").glob("*.md")):
+        if path.stem not in gallery_slugs:
+            fail(f"拾趣稿件没有进入构建：course/gallery/{path.name}")
 
     for path in sorted((ROOT / "course/lessons").glob("*.md")):
         if path.name in referenced_files or path.name == "audit-01-07.md":

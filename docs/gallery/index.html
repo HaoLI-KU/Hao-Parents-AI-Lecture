@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="gallery/" data-page-path="gallery/index.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拾趣 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="课程之外的小作品、画和家里好玩的东西。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "gallery/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="page-gallery">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../gallery/index.html" class="is-active" aria-current="page">拾趣</a></nav>
+<form class="header-search" action="../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><section class="hero hero-route"><div class="wrap">
+<p class="eyebrow">拾趣</p>
+<h1>拾趣</h1>
+<p class="lead">课程之外的小作品、画和家里好玩的东西。第一件是赵诗雅博士在我办公室白板上留下的一幅画。</p>
+</div></section>
+<section class="wrap lesson-section">
+<div class="gallery-grid is-single"><a class="gallery-card" href="whiteboard.html">
+<figure class="gallery-card-art"><img src="../assets/whiteboard-lineart.svg" alt="白板画中的人物线稿和阴阳符号" loading="lazy"></figure>
+<div class="gallery-card-copy">
+<p class="eyebrow">拾趣 · 2026 年 9 月</p>
+<h2>办公室白板上的画</h2>
+<p>我的妻子赵诗雅博士来南丹麦大学看我时，在我办公室白板上留下的一幅画。</p>
+<span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span>
+</div>
+</a></div>
+
+</section></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../gallery/index.html">拾趣</a><a href="../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/gallery/index.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../assets/ui.js"></script>
+</body>
+</html>
