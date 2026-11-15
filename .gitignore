@@ -26,6 +26,8 @@ __pycache__/
 *.xdv
 
 # Local image working files
-Hao_whiteboard.jpeg
+assets/source/**
+!assets/source/README.md
+!assets/source/**/README.md
 dsh-image-gen/
 assets/site/_whiteboard-*.png
