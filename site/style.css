@@ -294,6 +294,8 @@ button { cursor: pointer; background: none; border: 0; }
   opacity: .9;
   pointer-events: none;
 }
+
+.home-hero::before { display: none; }
 .hero::after {
   content: "";
   position: absolute;
