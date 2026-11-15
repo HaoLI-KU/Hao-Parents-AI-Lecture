@@ -1,0 +1,62 @@
+\chapter{安装、检查与记录}\label{ch:install}
+\index{安装}
+
+\section{安装步骤}
+
+安装示例设备时，先确认电源、网络和记录目录，再按\cref{fig:install-steps}的顺序操作。每一步都要留下可复查的记录。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{0.46\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.7,transform shape]
+      \draw[bookteal,thick,rounded corners] (0,0) rectangle (4.2,2.4);
+      \node[font=\small,align=center] at (2.1,1.2) {检查电源\\与网络};
+    \end{tikzpicture}
+    \caption{准备}
+  \end{subfigure}\hfill
+  \begin{subfigure}[b]{0.46\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.7,transform shape]
+      \draw[bookteal,thick,rounded corners] (0,0) rectangle (4.2,2.4);
+      \node[font=\small,align=center] at (2.1,1.2) {启动记录\\并复核};
+    \end{tikzpicture}
+    \caption{记录}
+  \end{subfigure}
+  \caption{安装流程的两个检查点}\label{fig:install-steps}
+\end{figure}
+
+\section{横向宽表与长表}
+
+当表格列较多时，可以单独放一页横向页面，见\cref{tab:landscape}。横向页只用于确实需要宽表的场合，正文仍保持纵向阅读。
+
+\input{tables/landscape-table}
+
+安装完成后，按\cref{tab:checklist}逐项检查。长表允许跨页，表头会在续页重复。
+
+\begin{longtable}{@{}p{0.08\textwidth}p{0.42\textwidth}p{0.38\textwidth}@{}}
+\caption{安装检查表}\label{tab:checklist}\\
+\toprule
+序号 & 检查项 & 记录方式 \\
+\midrule
+\endfirsthead
+\toprule
+序号 & 检查项 & 记录方式 \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 & 电源和网络是否稳定 & 记录时间与现象 \\
+2 & 记录目录是否可写 & 保存一张测试记录 \\
+3 & 传感器读数是否合理 & 对照量程和单位 \\
+4 & 重启后能否继续 & 记录恢复步骤 \\
+5 & 真实文件是否留在本机 & 不上传公开仓库 \\
+\end{longtable}
+
+\section{引用与索引}
+
+示例设备的来源见\cite{example2026}，单位写法的讨论见\cite{unit2025}，图示工具见\cite{tikz2026}。索引条目可以在正文中用 \code{\textbackslash index} 标记，例如\index{检查表}、\index{横向页}。
+
+\begin{tcolorbox}[bookbox,title=注意]
+  横向页、长表和子图都要在 PDF 里实际翻看；只看源码不能确认旋转方向、续页表头和子图编号。
+\end{tcolorbox}

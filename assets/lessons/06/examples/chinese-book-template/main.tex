@@ -1,0 +1,124 @@
+% !TEX program = xelatex
+% 课程示例模板：只使用虚构内容，可离线编译。
+\documentclass[UTF8,fontset=fandol,openany,oneside]{ctexbook}
+
+\usepackage[a4paper,left=2.6cm,right=2.4cm,top=2.6cm,bottom=2.6cm,bindingoffset=0.4cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{siunitx}
+\usepackage{amsmath,amsthm}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{references.bib}
+\usepackage{imakeidx}
+
+\definecolor{bookteal}{HTML}{0A6B60}
+\definecolor{bookink}{HTML}{16201E}
+\definecolor{booksoft}{HTML}{E4F1EE}
+\hypersetup{
+  bookmarksnumbered=true,
+  colorlinks=true,
+  linkcolor=bookteal,
+  urlcolor=bookteal,
+  citecolor=bookteal,
+  pdftitle={示例中文技术书模板},
+  pdfauthor={课堂示例},
+  pdfsubject={中文技术书排版示例}
+}
+
+\makeindex[intoc]
+
+\ctexset{
+  chapter/format = \Large\bfseries\sffamily,
+  chapter/name = {第,章},
+  section/format = \large\bfseries\sffamily,
+  subsection/format = \normalsize\bfseries\sffamily
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.35em}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\newtheorem{definition}{定义}[chapter]
+\newtheorem{example}{例}[chapter]
+
+\crefname{figure}{图}{图}
+\crefname{table}{表}{表}
+\crefname{equation}{式}{式}
+\crefname{chapter}{章}{章}
+\crefname{section}{节}{节}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{bookteal}\bfseries,
+  commentstyle=\color{gray},
+  stringstyle=\color{bookink},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  captionpos=b
+}
+
+\tcbset{
+  bookbox/.style={
+    colback=booksoft,
+    colframe=bookteal,
+    arc=2mm,
+    boxrule=0.6pt,
+    left=3mm,
+    right=3mm,
+    top=2mm,
+    bottom=2mm,
+    breakable
+  }
+}
+
+\begin{document}
+
+\frontmatter
+\pagestyle{plain}
+\input{frontmatter/titlepage}
+\input{frontmatter/copyright}
+\input{frontmatter/preface}
+\tableofcontents
+\listoffigures
+\listoftables
+\input{frontmatter/notation}
+
+\mainmatter
+\pagestyle{fancy}
+\input{chapters/chapter-01}
+\input{chapters/chapter-02}
+
+\appendix
+\input{appendix/appendix-a}
+\input{appendix/appendix-b}
+
+\backmatter
+\printbibliography[title=参考文献]
+\printindex
+
+\end{document}

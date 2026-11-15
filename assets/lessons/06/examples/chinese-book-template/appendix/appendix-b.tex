@@ -1,0 +1,32 @@
+\chapter{术语与检查表}\label{app:checklist}
+\index{术语}
+
+\begin{description}[leftmargin=2.4em,style=nextline]
+  \item[SI 单位] 国际单位制；本模板用 \code{siunitx} 统一数字和单位。
+  \item[TikZ] \LaTeX{} 的矢量绘图工具；图源单独放在 \code{figures/tikz/}。
+  \item[横向页] 用 \code{pdflscape} 旋转的页面，适合列数较多的表。
+  \item[长表] 用 \code{longtable} 跨页，续页自动重复表头。
+\end{description}
+
+\section{交付前检查}
+
+\begin{table}[htbp]
+  \centering
+  \caption{模板交付前检查表}\label{tab:delivery}
+  \begin{tabularx}{\textwidth}{@{}p{0.04\textwidth}Xp{0.18\textwidth}@{}}
+    \toprule
+    & 检查项 & 结果 \\
+    \midrule
+    1 & 封面、版权页、前言、目录、图目录、表目录齐全 & 待核对 \\
+    2 & 前言罗马页码、正文阿拉伯页码、附录继续 & 待核对 \\
+    3 & 中文标点、字体嵌入、无缺字 & 待核对 \\
+    4 & 图、子图、图注、正文引用正确 & 待核对 \\
+    5 & 三线表、数值表、横向表、长表可读 & 待核对 \\
+    6 & 公式、SI 单位、交叉引用正确 & 待核对 \\
+    7 & TikZ 箭头、标签和打印尺寸清楚 & 待核对 \\
+    8 & 参考文献、索引、PDF 书签完整 & 待核对 \\
+    9 & 本机与 Overleaf 都能编译 & 待核对 \\
+    10 & 模板 README、版本和许可已写 & 待核对 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

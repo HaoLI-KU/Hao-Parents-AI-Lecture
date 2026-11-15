@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+  \begin{axis}[
+    width=0.78\linewidth,
+    height=6cm,
+    xlabel={时间 / \si{\second}},
+    ylabel={温度 / \si{\celsius}},
+    xmin=0, xmax=6,
+    ymin=18, ymax=26,
+    grid=major,
+    grid style={draw=gray!20},
+    legend style={draw=none, font=\small},
+  ]
+    \addplot[bookteal, thick, mark=*] coordinates {
+      (0,20.1) (1,20.8) (2,21.9) (3,23.2) (4,24.1) (5,24.6)
+    };
+    \addlegendentry{示例测量}
+    \addplot[gray, dashed, thick, domain=0:5.5] {0.85*x + 19.7};
+    \addlegendentry{参考线}
+    \node[font=\small, align=left, anchor=west] at (axis cs:3.4,19.1) {示例标注：\\趋势仅供排版};
+  \end{axis}
+\end{tikzpicture}

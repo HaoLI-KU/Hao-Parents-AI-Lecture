@@ -1,0 +1,54 @@
+\chapter{示例设备与工作流程}\label{ch:device}
+\index{示例设备}
+
+本章用一个虚构的设备说明技术书里最常见的“结构、图、表、公式和单位”如何排在一起。所有数据只用于排版练习，不代表真实设备。
+
+\section{设备组成}
+
+示例设备由控制器、传感器、执行器和记录单元组成，工作流程见\cref{fig:process}。图中不写真实型号，只保留关系。
+
+\begin{figure}[htbp]
+  \centering
+  \input{figures/tikz/process-diagram}
+  \caption{示例设备的任务流程}\label{fig:process}
+\end{figure}
+
+\section{单位与数值}
+
+示例杆件长度记为 \qty{12.5}{\milli\metre}，环境温度记为 \qty{23}{\celsius}，热流密度记为 \qty{4.2}{\kilo\watt\per\square\metre}。表格中的数值用 \code{siunitx} 的 S 列对齐，见\cref{tab:si}。
+
+\begin{table}[htbp]
+  \centering
+  \caption{示例测量值与单位}\label{tab:si}
+  \input{tables/si-table}
+\end{table}
+
+\section{公式与定义}
+
+示例关系用\cref{eq:demo}表示：
+\begin{equation}\label{eq:demo}
+  q = \frac{P}{A},
+\end{equation}
+其中 $q$ 是热流密度，$P$ 是功率，$A$ 是面积。
+
+\begin{definition}[示例杆件]
+  示例杆件是一根只承受轴向载荷的虚构杆件，长度记为 $L$。
+\end{definition}
+
+\begin{example}
+  若 $P=\qty{50}{\watt}$、$A=\qty{0.02}{\square\metre}$，则 $q=\qty{2500}{\watt\per\square\metre}$。计算过程要保留单位，不能只写数字。
+\end{example}
+
+\section{提示框与代码}
+
+\begin{tcolorbox}[bookbox,title=课堂提示]
+  正式项目里，单位、数字和技术结论必须回到原始 Word 或测试记录核对；排版改善不等于内容改写。\index{核对}
+\end{tcolorbox}
+
+下面的代码只演示等宽排版和行号，不包含真实项目逻辑：
+
+\input{code/example-listing}
+
+\section{本章小结}
+
+本章把TikZ 流程图、\code{siunitx} 单位、编号公式、定义、示例、提示框和代码放在同一章里。下一章再补安装、子图、横向页和长表。\index{流程图}

@@ -1,0 +1,30 @@
+\chapter{图示与公式速查}\label{app:figures}
+\index{附录}
+
+\section{TikZ 标注图}
+
+下面是一张带坐标和标注的虚构图，用来说明“图源单独文件、正文引用、图注和坐标标签”如何配合。
+
+\begin{figure}[htbp]
+  \centering
+  \input{figures/tikz/annotated-plot}
+  \caption{示例测量点与参考线}\label{fig:annotated}
+\end{figure}
+
+\section{常用命令}
+
+\begin{itemize}[leftmargin=1.6em]
+  \item 单位：\code{\textbackslash qty\{12.5\}\{\textbackslash milli\textbackslash metre\}}
+  \item 交叉引用：\code{\textbackslash cref\{fig:process\}}
+  \item 索引：\code{\textbackslash index\{术语\}}
+  \item 文献：\code{\textbackslash cite\{example2026\}}
+\end{itemize}
+
+\section{图示检查}
+
+\begin{enumerate}[leftmargin=1.8em]
+  \item 箭头方向和连接关系是否与文字一致。
+  \item 标签在打印尺寸下是否可读。
+  \item 图注是否说明“这张图在讲什么”。
+  \item 正文是否至少引用图一次，例如\cref{fig:annotated}。
+\end{enumerate}

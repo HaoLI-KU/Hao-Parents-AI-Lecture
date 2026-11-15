@@ -1,0 +1,14 @@
+\begin{tikzpicture}[
+  node distance=1.1cm and 1.2cm,
+  box/.style={draw=bookteal, fill=booksoft, rounded corners=2pt, minimum width=2.7cm, minimum height=1.1cm, align=center, font=\small},
+  arrow/.style={-{Latex[length=2.4mm]}, thick, draw=bookteal}
+]
+  \node[box] (input) {采集输入};
+  \node[box, right=of input] (check) {检查条件};
+  \node[box, right=of check] (run) {执行任务};
+  \node[box, below=of run] (record) {记录结果};
+  \draw[arrow] (input) -- (check);
+  \draw[arrow] (check) -- (run);
+  \draw[arrow] (run) -- (record);
+  \draw[arrow] (record.west) -- ++(-5.3,0) |- (input.south);
+\end{tikzpicture}
