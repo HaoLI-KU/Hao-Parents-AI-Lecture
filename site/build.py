@@ -536,6 +536,7 @@ def gallery_page(item, items):
     image = "../" + item["image"]
     original_image = "../" + item["original_image"] if item.get("original_image") else ""
     original_alt = item.get("original_alt", "原始白板照片")
+    peek_image = "../" + item.get("peek_image", item.get("original_image", "")) if item.get("peek_image") or item.get("original_image") else ""
     vector_caption = f"整理版线稿 · {image_credit}"
     original_caption = f"原始白板照片 · {item['credit']}手绘"
     meta_rows = []
@@ -552,6 +553,8 @@ def gallery_page(item, items):
 
     if original_image:
         art = f'''<figure class="gallery-art">
+<span class="gallery-peek gallery-peek-vector" aria-hidden="true"><img src="{escape(image)}" alt=""></span>
+<span class="gallery-peek gallery-peek-original" aria-hidden="true"><img src="{escape(peek_image)}" alt="" loading="lazy" decoding="async"></span>
 <button class="gallery-switch" type="button" aria-pressed="false" aria-label="切换整理版线稿和原始白板照片"
         data-gallery-switch
         data-vector-caption="{escape(vector_caption)}"

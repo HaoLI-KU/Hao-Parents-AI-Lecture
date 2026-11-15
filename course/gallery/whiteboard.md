@@ -6,6 +6,7 @@ image: assets/whiteboard-lineart.svg
 alt: 白板画中的人物线稿和阴阳符号
 original_image: assets/gallery/whiteboard-original.jpeg
 original_alt: 赵诗雅博士在办公室白板上手绘的原图
+peek_image: assets/gallery/whiteboard-peek.jpg
 image_credit: ChatGPT 生成（由 DeepSeek 调用）
 credit: 赵诗雅博士
 credit_en: Dr Shiya Zhao

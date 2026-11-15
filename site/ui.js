@@ -120,7 +120,9 @@ absolutiseSiteLinks();
     const caption = button.querySelector('[data-gallery-caption]');
     button.addEventListener('click', () => {
       const original = button.classList.toggle('is-original');
+      const art = button.closest('.gallery-art');
       button.setAttribute('aria-pressed', String(original));
+      if (art) art.classList.toggle('is-original', original);
       if (caption) {
         caption.textContent = button.getAttribute(
           original ? 'data-original-caption' : 'data-vector-caption',

@@ -1368,26 +1368,83 @@ mark {
   padding-block: 2rem;
 }
 .gallery-art {
+  position: relative;
   margin: 0;
+  padding: 58px 64px 18px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.gallery-art::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 34px 0 0 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(2.2deg);
+  transform-origin: center;
+  transition: transform .25s var(--ease);
+}
+.gallery-art:hover::before,
+.gallery-art:focus-within::before { transform: rotate(3deg); }
+.gallery-peek {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  width: 104px;
+  height: 136px;
   overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 4px 12px 4px 4px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(5deg);
+  transform-origin: top right;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+  pointer-events: none;
+}
+.gallery-peek img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 34%;
+}
+.gallery-peek-vector { opacity: 0; }
+.gallery-peek-original { opacity: 1; }
+.gallery-art.is-original .gallery-peek-vector { opacity: 1; }
+.gallery-art.is-original .gallery-peek-original { opacity: 0; }
+.gallery-art:hover .gallery-peek,
+.gallery-art:focus-within .gallery-peek { transform: rotate(7deg) translate(2px, -2px); }
+.gallery-switch {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  padding: clamp(1.2rem, 3vw, 2rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
-}
-.gallery-switch {
-  display: block;
-  width: 100%;
-  padding: clamp(1.2rem, 3vw, 2rem);
-  border: 0;
-  background: transparent;
   color: inherit;
   text-align: left;
   cursor: pointer;
+  transform: rotate(-.35deg);
+  transition: transform .25s var(--ease), border-color .25s var(--ease);
+}
+.gallery-switch:hover,
+.gallery-switch:focus-visible {
+  transform: rotate(-.1deg) translateY(-2px);
+  border-color: var(--line-strong);
 }
 .gallery-switch:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: -4px;
+  outline-offset: 4px;
 }
 .gallery-stack {
   position: relative;
@@ -1475,4 +1532,16 @@ mark {
 
 @media (prefers-reduced-motion: reduce) {
   .gallery-layer { transition: none; }
+}
+
+@media (max-width: 900px) {
+  .gallery-art { padding: 34px 42px 14px 0; }
+  .gallery-art::before { inset: 20px 0 0 12px; }
+  .gallery-peek { width: 64px; height: 84px; }
+  .gallery-switch { transform: rotate(-.2deg); }
+}
+
+@media (max-width: 500px) {
+  .gallery-art { padding: 22px 30px 10px 0; }
+  .gallery-peek { width: 46px; height: 62px; }
 }
