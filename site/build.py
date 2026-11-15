@@ -420,7 +420,7 @@ def home(rows):
         f'<a class="chip" href="search.html?q={quote(word)}">{escape(word)}</a>'
         for word in ("屏幕共享", "API Key", "LaTeX", "GitHub")
     )
-    body = f'''<section class="hero home-hero"><div class="wrap">
+    body = f'''<section class="hero home-hero"><div class="hero-sketch" aria-hidden="true"><img src="assets/whiteboard-lineart.svg" alt=""></div><div class="wrap">
 <p class="eyebrow">{SITE_TAGLINE}</p>
 <h1>爸妈的 <em>Mac 与 AI 课</em></h1>
 <p class="lead">按学习路线浏览，或搜索课里的操作和概念。两条路线各自编号，不必同步。</p>
@@ -687,6 +687,7 @@ def copy_static():
     for name in ("style.css", "ui.js", "search.js"):
         copyfile(ROOT / "site" / name, DOCS / "assets" / name)
     copyfile(ROOT / "assets/site/favicon.svg", DOCS / "assets/favicon.svg")
+    copyfile(ROOT / "assets/site/whiteboard-lineart.svg", DOCS / "assets/whiteboard-lineart.svg")
     for route in ROUTES:
         copyfile(ROOT / f"assets/site/{route}.svg", DOCS / f"assets/{route}.svg")
     diagram = ROOT / "assets/lessons/01/illustrations/ai-two-layers.svg"
