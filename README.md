@@ -52,6 +52,6 @@ make PYTHON=.venv/bin/python all  # 使用虚拟环境
 
 `make build` 只重建，`make check` 只检查。生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿、课表和重建后的网页，再推送到 `main`。原始插图和练习文件在 `assets/`，样式、脚本和自托管字体在 `site/`。
 
-需要做网页批注时，从右侧 Files 面板打开 `docs/annotate.html`。它把所有课程页面放在同一个 HTML 文件内切换，批注浮层不会因为跳转而消失；公开站点仍然是多页站点。
+做网页批注时，从右侧 Files 面板直接打开对应的课页文件（例如 `docs/dad/lesson-02.html`）；批注按文件保存，改完发送给 Agent 即可。多页站点本身不提供跨页批注浮层。
 
 需要清理本地临时文件时，在仓库根目录运行 `make clean`，可移除 `.DS_Store` 和 Python 缓存。

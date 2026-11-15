@@ -8,8 +8,11 @@ function absolutiseSiteLinks() {
     const site = new URL(SITE_URL);
     if (location.origin !== site.origin) return;
     const base = new URL(document.documentElement.dataset.pageDir || '', site);
+    const page = new URL(document.documentElement.dataset.pagePath || '', site);
     const absolute = (value) => {
-      if (!value || value.charAt(0) === '#' || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value)) return value;
+      if (!value) return value;
+      if (value.charAt(0) === '#') return page.href + value;
+      if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value)) return value;
       return new URL(value, base).href;
     };
     document.querySelectorAll('a[href]').forEach((link) => {

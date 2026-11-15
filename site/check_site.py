@@ -13,7 +13,7 @@ import build  # noqa: E402
 
 errors = []
 warnings = []
-pages = [page for page in sorted(DOCS.rglob("*.html")) if page.name != "annotate.html"]
+pages = sorted(DOCS.rglob("*.html"))
 links_checked = 0
 
 
@@ -69,6 +69,8 @@ def check_page(page):
         fail(f"{relative}: 缺少跳到正文链接")
     if 'data-page-dir="' not in html:
         fail(f"{relative}: 缺少 data-page-dir")
+    if 'data-page-path="' not in html:
+        fail(f"{relative}: 缺少 data-page-path")
     if 'data-embed-nav' not in html:
         fail(f"{relative}: 缺少嵌入式导航脚本")
     if '在浏览器打开' not in html:
@@ -93,15 +95,6 @@ def main():
     if not (DOCS / ".nojekyll").is_file():
         fail("缺少 docs/.nojekyll")
 
-    annotate = DOCS / "annotate.html"
-    if not annotate.is_file():
-        fail("缺少 docs/annotate.html（批注预览）")
-    else:
-        annotate_html = annotate.read_text(encoding="utf-8")
-        if 'id="views-data"' not in annotate_html:
-            fail("annotate.html 缺少页面数据")
-        if "sessionStorage" not in annotate_html:
-            fail("annotate.html 缺少刷新恢复逻辑")
 
     search = DOCS / "search.html"
     if not search.is_file():

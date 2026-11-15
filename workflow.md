@@ -30,14 +30,6 @@ docs/                              生成物，GitHub Pages 从这里发布
 6. **预览。** 运行 `make serve`，打开 `http://localhost:8000`。对照 1280px、1024px、500px 和 200% 放大看首页、两条课表、共同练习首页和课页；用一份长课检查提示词、表格、清单和打印。
 7. **提交。** 课稿、README 课表、样式、脚本和重建后的 `docs/` 一起提交。推送 `main` 后 GitHub Pages 自动发布，等 1–2 分钟刷新线上地址。
 
-## 批注预览
-
-- `make build` 会生成 `docs/annotate.html`：把所有课程页面放进同一个 HTML 文件，用页内 hash 切换。
-- 需要批注时，从右侧 Files 面板打开 `docs/annotate.html`，不要用 Browser 标签页；`dsh-annotate-sync` 只接管 HTML 文档预览，Browser 页面没有批注浮层。
-- 在批注预览里点“爸爸的课程”“妈妈第 1 节”等链接不会加载新文档，批注浮层会保留；刷新会尽量用 `sessionStorage` 回到上次页面。
-- 公开站点仍是多页 `docs/index.html`、`docs/dad/...`；`annotate.html` 只用于审阅和批注，不放进搜索索引。
-- 如果新增页面，`build_annotate()` 会自动收录；如果页面里的链接写错，批注预览里的链接也会跟着错。
-
 ## 共同练习
 
 - `/practice/index.html` 是共同练习首页；`/practice/github.html` 和 `/practice/image-gen.html` 是两个练习页。
@@ -79,5 +71,7 @@ docs/                              生成物，GitHub Pages 从这里发布
 - README/website/workflow/teaching 没有排课方式标签；课表和课页 eyebrow 也没有；
 - 爸爸第 6 节的模板、ZIP、PDF、检查表和参考模板文件树一致；
 - 共同练习首页、GitHub、Seedream 生图三页互链正确；生图事实和链接可核对。
+
+做网页批注时，从右侧 Files 面板直接打开对应的 `.html` 课页文件（例如 `docs/dad/lesson-02.html`）；批注按文件保存，改完发送给 Agent。跨页批注浮层不在多页站点的设计范围内。
 
 从[第 1 节课稿](course/lessons/01.md)开始。语言、颜色、字体和打印规则见[网站语言与视觉规范](website-style.md)。
