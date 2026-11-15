@@ -24,3 +24,8 @@ __pycache__/
 *.lof
 *.lot
 *.xdv
+
+# Local image working files
+Hao_whiteboard.jpeg
+dsh-image-gen/
+assets/site/_whiteboard-*.png
