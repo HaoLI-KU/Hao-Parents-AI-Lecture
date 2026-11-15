@@ -8,5 +8,6 @@
 6. 需要学员让 AI 完成具体任务时，给出可直接使用的提示词示例，写清任务、可用材料或工具、操作范围、预期结果和亲手核对的方法。使用虚构或测试素材，按实际课堂条件替换占位内容。简单的手动操作保持短步骤。
 7. 网站由 `site/build.py` 从 Markdown 和 README 课表生成，`docs/` 是生成物。修改课稿、课表或样式后运行 `make build && make check`；不要手改 `docs/`。保留课稿里的快捷键写法（如 `⌘C`）和课页的本节步骤、上一节/下一节导航；新增课必须同时更新 README 课表、`skills.md` 和搜索覆盖。
 8. 共同练习不占课号，维护在 `course/lessons/github.md`、`course/lessons/image-gen.md` 和 `site/build.py` 的 `PRACTICES`；不要写排课地点或平台。清理课程时保留 `skills.md` 中妈妈的长期技能地图，除非本人确认再改。
+9. 拾趣是独立栏目，不占课号，内容在 `course/gallery/*.md`，图片放 `assets/gallery/`；页面文案用「拾趣」，技术路径保留 `/gallery/`。公开真人姓名、单位、邮箱或原图前必须获得本人确认；`whiteboard-original.jpeg` 和赵诗雅博士的联系方式已确认公开，是明确例外。
 
 本仓库直接承载爸爸妈妈的公开 HTML 教程网站。根据两人的实际进度维护各自的学习路线。学员页以 course/lessons/ 的 Markdown 为内容源，`docs/` 由构建器生成，发布内容使用可公开的素材和占位信息。编辑前读 workflow.md，涉及站点结构或语言视觉时读 website.md 和 website-style.md。网页反馈涉及内容时回写 Markdown。

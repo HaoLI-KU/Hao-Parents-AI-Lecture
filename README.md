@@ -2,7 +2,7 @@
 
 **[打开公开课程网站](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/)** · [爸爸的课表](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/dad/) · [妈妈的课表](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/mom/)
 
-网站通过 GitHub Pages 发布，全站可搜索课名、步骤和正文。课程正文维护在 Markdown 课稿中，网页由课稿生成。[网站设计](website.md)
+网站通过 GitHub Pages 发布，全站可搜索课名、步骤、正文和拾趣。课程正文维护在 Markdown 课稿中，网页由课稿生成。[网站设计](website.md)
 
 ## 2026 年 12 月家庭试讲
 
@@ -27,6 +27,10 @@
 - [爸妈第一次用 GitHub](course/lessons/github.md)｜备用；注册、私有仓库、克隆、提交和推送。
 - [用 DeepSeek Harness 生成房间软装图](course/lessons/image-gen.md)｜建议安排；配置 Seedream/火山方舟，跑通生图、改图和软装对比。
 
+## 拾趣
+
+课程之外的小作品、画和家里好玩的东西。第一件是[办公室白板上的画](course/gallery/whiteboard.md)，由**我的妻子赵诗雅博士**手绘；页面同时保留原始白板照片和整理后的矢量线稿。以后新增展品只需在 `course/gallery/` 加一份 Markdown，不需要改课表。
+
 备课可参照[家庭带练方式](teaching.md)和[长期技能地图](skills.md)。[AGENTS.md](AGENTS.md)与 [CLAUDE.md](CLAUDE.md)供后续维护使用。
 
 从[第 1 节课稿](course/lessons/01.md)开始。目录、素材和迭代步骤见[工作流程](workflow.md)，简体中文、British English 和视觉规则见[网站语言与视觉规范](website-style.md)。
@@ -35,7 +39,7 @@
 
 ## 本地预览与发布
 
-页面由 `site/build.py` 从 `course/lessons/` 和 `README.md` 的课表生成；`docs/` 是生成物，不要手改。首次使用时安装依赖：
+页面由 `site/build.py` 从 `course/lessons/`、`course/gallery/` 和 `README.md` 的课表生成；`docs/` 是生成物，不要手改。首次使用时安装依赖：
 
 ```sh
 python3 -m venv .venv
