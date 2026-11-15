@@ -1,5 +1,6 @@
 """Build the family course site from the course Markdown."""
 from html import escape, unescape
+import hashlib
 import json
 from pathlib import Path
 from shutil import copyfile, rmtree
@@ -15,6 +16,20 @@ SITE_FULL = "爸妈的 Mac 与 AI 课"
 SITE_TAGLINE = "家庭课程 · 持续更新"
 SITE_URL = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/"
 ROUTES = ("dad", "mom")
+
+
+def compute_asset_version():
+    digest = hashlib.sha1()
+    sources = [ROOT / "site" / name for name in ("style.css", "ui.js", "search.js")]
+    sources.append(ROOT / "README.md")
+    sources.extend(sorted((ROOT / "course").rglob("*.md")))
+    for path in sources:
+        if path.is_file():
+            digest.update(path.read_bytes())
+    return digest.hexdigest()[:10]
+
+
+ASSET_VERSION = compute_asset_version()
 GALLERY_DIR = ROOT / "course/gallery"
 ROUTE_META = {
     "dad": {
@@ -118,7 +133,7 @@ def write_page(path, title, description, body, active, route=None,
         body_class += f" route-{route}"
     document_title = title if title == SITE_FULL else f"{title} · {SITE_FULL}"
     script_tags = "".join(
-        f'<script defer src="{prefix}assets/{name}"></script>' for name in ("ui.js",) + tuple(scripts)
+        f'<script defer src="{prefix}assets/{name}?v={ASSET_VERSION}"></script>' for name in ("ui.js",) + tuple(scripts)
     )
     path.write_text(
         f'''<!doctype html>
@@ -131,7 +146,7 @@ def write_page(path, title, description, body, active, route=None,
 <meta name="theme-color" content="#f7f6f2">
 {embed}
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="{prefix}assets/style.css">
+<link rel="stylesheet" href="{prefix}assets/style.css?v={ASSET_VERSION}">
 </head>
 <body class="{body_class}">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -469,6 +484,7 @@ def gallery_index(items):
 <p class="eyebrow">拾趣 · {escape(item['date_label'])}</p>
 <h2>{escape(item['title'])}</h2>
 <p>{escape(item['summary'])}</p>
+<p class="gallery-credit">原画 · {escape(gallery_credit(item))}手绘 · 线稿 · {escape(item.get('image_credit', 'ChatGPT 生成（由 DeepSeek 调用）'))}</p>
 <span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span>
 </div>
 </a>''')
@@ -512,6 +528,7 @@ def gallery_pager(items, item):
 
 def gallery_page(item, items):
     credit = gallery_credit_line(item)
+    image_credit = item.get("image_credit", "ChatGPT 生成（由 DeepSeek 调用）")
     email = item.get("email", "").strip()
     email_html = f'<a href="mailto:{escape(email)}">{escape(email)}</a>' if email else ""
     details = [value for value in (item.get("credit_en", ""), item.get("affiliation", "")) if value]
@@ -519,9 +536,12 @@ def gallery_page(item, items):
     image = "../" + item["image"]
     original_image = "../" + item["original_image"] if item.get("original_image") else ""
     original_alt = item.get("original_alt", "原始白板照片")
+    vector_caption = f"整理版线稿 · {image_credit}"
+    original_caption = f"原始白板照片 · {item['credit']}手绘"
     meta_rows = []
     for label, value in (
-        ("作者", gallery_name_line(item)),
+        ("原画", f"{gallery_credit(item)}手绘"),
+        ("整理版", image_credit),
         ("时间", item["date_label"]),
         ("地点", item.get("location", "")),
         ("媒介", item.get("medium", "")),
@@ -529,15 +549,28 @@ def gallery_page(item, items):
     ):
         if value:
             meta_rows.append(f"<div><dt>{label}</dt><dd>{value}</dd></div>")
-    original_figure = ""
+
     if original_image:
-        original_figure = f'''<section class="gallery-original-section">
-<p class="eyebrow">原始白板照片</p>
-<figure class="gallery-original">
-<img src="{escape(original_image)}" alt="{escape(original_alt)}" loading="lazy">
-<figcaption>{escape(item['credit'])}，{escape(item['date_label'])}</figcaption>
-</figure>
-</section>'''
+        art = f'''<figure class="gallery-art">
+<button class="gallery-switch" type="button" aria-pressed="false" aria-label="切换整理版线稿和原始白板照片"
+        data-gallery-switch
+        data-vector-caption="{escape(vector_caption)}"
+        data-original-caption="{escape(original_caption)}">
+<span class="gallery-stack">
+<img class="gallery-layer gallery-layer-vector" src="{escape(image)}" alt="{escape(item['alt'])}">
+<img class="gallery-layer gallery-layer-original" src="{escape(original_image)}" alt="{escape(original_alt)}" loading="lazy" decoding="async">
+</span>
+<span class="gallery-caption"><span data-gallery-caption aria-live="polite">{escape(vector_caption)}</span><span class="gallery-hint">点击切换</span></span>
+</button>
+</figure>'''
+    else:
+        art = f'''<figure class="gallery-art">
+<img src="{escape(image)}" alt="{escape(item['alt'])}">
+<figcaption>{escape(vector_caption)}</figcaption>
+</figure>'''
+
+    body_html = markdown_html(item["body"]) if item.get("body") else ""
+    copy_html = f'<div class="gallery-copy">{body_html}</div>' if body_html else ""
     body = f'''<article class="gallery-page" id="gallery"><div class="wrap">
 <nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">首页</a><span aria-hidden="true">/</span><a href="index.html">拾趣</a><span aria-hidden="true">/</span><span>{escape(item['title'])}</span></nav>
 <header class="gallery-hero">
@@ -546,21 +579,18 @@ def gallery_page(item, items):
 <p class="lead">{escape(item['summary'])}</p>
 </header>
 <div class="gallery-layout">
-<figure class="gallery-art">
-<img src="{escape(image)}" alt="{escape(item['alt'])}">
-<figcaption>整理版线稿 · {escape(item['credit'])}手绘</figcaption>
-</figure>
+{art}
 <div class="gallery-side">
 <div class="acknowledgement">
 <p class="eyebrow">Acknowledgement · 致谢</p>
 <p>这幅白板画由<strong>{escape(gallery_credit(item))}</strong>{escape(ack_detail)}手绘。{escape(item['date_label'])}，她来丹麦南丹麦大学（SDU）看我，在我办公室的白板上留下这幅画。</p>
+<p>页面上的整理版线稿由 DeepSeek 调用 ChatGPT 从原图清理生成。</p>
 {email_html}
 </div>
 <dl class="gallery-meta">{''.join(meta_rows)}</dl>
-<div class="gallery-copy">{markdown_html(item['body'])}</div>
+{copy_html}
 </div>
 </div>
-{original_figure}
 {gallery_pager(items, item)}
 </div></article>'''
     write_page(f"gallery/{item['slug']}.html", item['title'], item['summary'], body,
@@ -569,8 +599,9 @@ def gallery_page(item, items):
         "title": item['title'],
         "heading": "拾趣",
         "text": " ".join(value for value in (
-            plain(item['body']), gallery_credit_line(item), item.get('affiliation', ''),
-            item.get('email', ''), item.get('location', ''), item.get('medium', ''),
+            plain(item['body']), gallery_credit_line(item), item.get('image_credit', ''),
+            item.get('affiliation', ''), item.get('email', ''), item.get('location', ''),
+            item.get('medium', ''),
         ) if value),
         "url": f"gallery/{item['slug']}.html#gallery",
         "route": "gallery",
@@ -578,7 +609,6 @@ def gallery_page(item, items):
         "lesson": None,
         "status": "active",
     }
-
 
 
 def home(rows, gallery):
@@ -612,7 +642,7 @@ def home(rows, gallery):
 <div class="section-head"><div class="section-title"><p class="eyebrow">拾趣</p><h2>课程之外的小作品</h2></div><a class="section-link" href="gallery/index.html">全部 <span aria-hidden="true">→</span></a></div>
 <a class="gallery-feature" href="gallery/{feature['slug']}.html">
 <figure class="gallery-feature-art"><img src="{feature['image']}" alt="{escape(feature['alt'])}" loading="lazy"></figure>
-<div class="gallery-feature-copy"><p class="eyebrow">拾趣 · {escape(feature['date_label'])}</p><h3>{escape(feature['title'])}</h3><p>{escape(feature['summary'])}</p><span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span></div>
+<div class="gallery-feature-copy"><p class="eyebrow">拾趣 · {escape(feature['date_label'])}</p><h3>{escape(feature['title'])}</h3><p>{escape(feature['summary'])}</p><p class="gallery-credit">原画 · {escape(gallery_credit(feature))}手绘 · 线稿 · {escape(feature.get('image_credit', 'ChatGPT 生成（由 DeepSeek 调用）'))}</p><span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span></div>
 </a>
 </section>'''
     body = f'''<section class="hero home-hero"><div class="hero-sketch" aria-hidden="true"><img src="assets/whiteboard-lineart.svg" alt=""></div><div class="wrap">

@@ -115,4 +115,17 @@ absolutiseSiteLinks();
       setTimeout(() => { button.textContent = '复制'; }, 2200);
     });
   });
+
+  document.querySelectorAll('[data-gallery-switch]').forEach((button) => {
+    const caption = button.querySelector('[data-gallery-caption]');
+    button.addEventListener('click', () => {
+      const original = button.classList.toggle('is-original');
+      button.setAttribute('aria-pressed', String(original));
+      if (caption) {
+        caption.textContent = button.getAttribute(
+          original ? 'data-original-caption' : 'data-vector-caption',
+        ) || '';
+      }
+    });
+  });
 })();
