@@ -484,7 +484,7 @@ def gallery_index(items):
 <p class="eyebrow">拾趣 · {escape(item['date_label'])}</p>
 <h2>{escape(item['title'])}</h2>
 <p>{escape(item['summary'])}</p>
-<p class="gallery-credit">原画 · {escape(gallery_credit(item))}手绘 · 线稿 · {escape(item.get('image_credit', 'ChatGPT 生成（由 DeepSeek 调用）'))}</p>
+<p class="gallery-credit">原画 · {escape(gallery_credit(item))}手绘 · 线稿 · {escape(item.get('image_credit', 'ChatGPT 生成'))}</p>
 <span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span>
 </div>
 </a>''')
@@ -528,7 +528,7 @@ def gallery_pager(items, item):
 
 def gallery_page(item, items):
     credit = gallery_credit_line(item)
-    image_credit = item.get("image_credit", "ChatGPT 生成（由 DeepSeek 调用）")
+    image_credit = item.get("image_credit", "ChatGPT 生成")
     email = item.get("email", "").strip()
     email_html = f'<a href="mailto:{escape(email)}">{escape(email)}</a>' if email else ""
     details = [value for value in (item.get("credit_en", ""), item.get("affiliation", "")) if value]
@@ -552,10 +552,10 @@ def gallery_page(item, items):
             meta_rows.append(f"<div><dt>{label}</dt><dd>{value}</dd></div>")
 
     if original_image:
-        art = f'''<figure class="gallery-art">
+        art = f'''<figure class="gallery-art is-original">
 <span class="gallery-peek gallery-peek-vector" aria-hidden="true"><img src="{escape(image)}" alt=""></span>
 <span class="gallery-peek gallery-peek-original" aria-hidden="true"><img src="{escape(peek_image)}" alt="" loading="lazy" decoding="async"></span>
-<button class="gallery-switch" type="button" aria-pressed="false" aria-label="切换整理版线稿和原始白板照片"
+<button class="gallery-switch is-original" type="button" aria-pressed="true" aria-label="切换原图和整理版线稿"
         data-gallery-switch
         data-vector-caption="{escape(vector_caption)}"
         data-original-caption="{escape(original_caption)}">
@@ -563,7 +563,7 @@ def gallery_page(item, items):
 <img class="gallery-layer gallery-layer-vector" src="{escape(image)}" alt="{escape(item['alt'])}">
 <img class="gallery-layer gallery-layer-original" src="{escape(original_image)}" alt="{escape(original_alt)}" loading="lazy" decoding="async">
 </span>
-<span class="gallery-caption"><span data-gallery-caption aria-live="polite">{escape(vector_caption)}</span><span class="gallery-hint">点击切换</span></span>
+<span class="gallery-caption"><span data-gallery-caption aria-live="polite">{escape(original_caption)}</span><span class="gallery-hint">点击切换</span></span>
 </button>
 </figure>'''
     else:
@@ -585,10 +585,9 @@ def gallery_page(item, items):
 {art}
 <div class="gallery-side">
 <div class="acknowledgement">
-<p class="eyebrow">Acknowledgement · 致谢</p>
+<p class="eyebrow">致谢</p>
 <p>这幅白板画由<strong>{escape(gallery_credit(item))}</strong>{escape(ack_detail)}手绘。{escape(item['date_label'])}，她来丹麦南丹麦大学（SDU）看我，在我办公室的白板上留下这幅画。</p>
-<p>页面上的整理版线稿由 DeepSeek 调用 ChatGPT 从原图清理生成。</p>
-{email_html}
+<p>页面上的整理版线稿由 ChatGPT 从原图清理生成。</p>
 </div>
 <dl class="gallery-meta">{''.join(meta_rows)}</dl>
 {copy_html}
@@ -645,7 +644,7 @@ def home(rows, gallery):
 <div class="section-head"><div class="section-title"><p class="eyebrow">拾趣</p><h2>课程之外的小作品</h2></div><a class="section-link" href="gallery/index.html">全部 <span aria-hidden="true">→</span></a></div>
 <a class="gallery-feature" href="gallery/{feature['slug']}.html">
 <figure class="gallery-feature-art"><img src="{feature['image']}" alt="{escape(feature['alt'])}" loading="lazy"></figure>
-<div class="gallery-feature-copy"><p class="eyebrow">拾趣 · {escape(feature['date_label'])}</p><h3>{escape(feature['title'])}</h3><p>{escape(feature['summary'])}</p><p class="gallery-credit">原画 · {escape(gallery_credit(feature))}手绘 · 线稿 · {escape(feature.get('image_credit', 'ChatGPT 生成（由 DeepSeek 调用）'))}</p><span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span></div>
+<div class="gallery-feature-copy"><p class="eyebrow">拾趣 · {escape(feature['date_label'])}</p><h3>{escape(feature['title'])}</h3><p>{escape(feature['summary'])}</p><p class="gallery-credit">原画 · {escape(gallery_credit(feature))}手绘 · 线稿 · {escape(feature.get('image_credit', 'ChatGPT 生成'))}</p><span class="route-enter">看这幅画 <span aria-hidden="true">→</span></span></div>
 </a>
 </section>'''
     body = f'''<section class="hero home-hero"><div class="hero-sketch" aria-hidden="true"><img src="assets/whiteboard-lineart.svg" alt=""></div><div class="wrap">
