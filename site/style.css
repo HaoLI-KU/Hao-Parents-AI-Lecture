@@ -327,7 +327,16 @@ button { cursor: pointer; background: none; border: 0; }
   height: auto;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1100px) and (min-width: 761px) {
+  .hero-sketch {
+    width: min(28vw, 280px);
+    top: 2rem;
+    right: 0;
+    opacity: .07;
+  }
+}
+
+@media (max-width: 760px) {
   .hero-sketch { display: none; }
 }
 
