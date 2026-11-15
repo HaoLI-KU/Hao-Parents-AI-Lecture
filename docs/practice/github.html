@@ -1,11 +1,33 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-page-dir="practice/">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>爸妈第一次用 GitHub · 爸妈的 Mac 与 AI 课</title>
-<meta name="description" content="各自注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。">
+<meta name="description" content="备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。">
 <meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "practice/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
@@ -14,7 +36,7 @@
 <header class="site-header" data-site-header>
 <div class="wrap header-inner">
 <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
-<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/github.html" class="is-active" aria-current="page">共同练习</a></nav>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html" class="is-active" aria-current="page">共同练习</a></nav>
 <form class="header-search" action="../search.html" method="get" role="search">
 <label class="sr-only" for="header-q">搜索课程</label>
 <input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
@@ -24,18 +46,18 @@
 </div>
 </header>
 <main id="main"><article class="lesson-page page-practice"><div class="wrap">
-<nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">首页</a><span aria-hidden="true">/</span><span>共同练习</span></nav>
+<nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">首页</a><span aria-hidden="true">/</span><a href="index.html">共同练习</a><span aria-hidden="true">/</span><span>爸妈第一次用 GitHub</span></nav>
 <header class="lesson-hero">
-<p class="eyebrow">共同练习 · 后续课 · <span class="chip chip-status">草稿</span></p>
+<p class="eyebrow">共同练习 · 备用</p>
 <h1>爸妈第一次用 GitHub</h1>
-<p class="lesson-summary">各自注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。</p>
+<p class="lesson-summary">备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。</p>
 </header>
 <div class="lesson-layout">
 <aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>各自注册并登录</span></a><a href="#step-2"><span class="toc-num">02</span><span>新建仓库时，先看可见性</span></a><a href="#step-3"><span class="toc-num">03</span><span>认三个词，让 Harness 帮忙执行</span></a></nav></aside>
 <div class="lesson-body" id="practice"><h2 id="step-1">1. 各自注册并登录</h2>
 <p>两人在自己的 Mac 上打开 <a href="https://github.com/signup" target="_blank" rel="noopener">GitHub 注册页</a>，各自注册个人账号，按网页提示完成邮箱验证。登录后点右上角头像，确认用户名是自己的。登录、验证码和授权由本人完成，遇到卡点先停下来一起看。 <a href="https://docs.github.com/en/account-and-profile/how-tos/account-management/creating-an-account-on-github" target="_blank" rel="noopener">GitHub 账号注册说明</a></p>
 <h2 id="step-2">2. 新建仓库时，先看可见性</h2>
-<p>各自打开 <a href="https://github.com/new" target="_blank" rel="noopener">新建 GitHub 仓库</a>，确认 Owner 是自己的账号。爸爸可取名 <code>technical-manual</code>，妈妈可取名 <code>plant-notes</code>。课堂先选 <strong>Private</strong>，创建后检查仓库名称旁是否显示 Private。</p>
+<p>各自打开 <a href="https://github.com/new" target="_blank" rel="noopener">新建 GitHub 仓库</a>，确认 Owner 是自己的账号。爸爸可取名 <code>technical-manual</code>，妈妈可取名 <code>my-first-repo</code>。课堂先选 <strong>Private</strong>，创建后检查仓库名称旁是否显示 Private。</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -46,17 +68,17 @@
 <tbody>
 <tr>
 <td>Private（私有）</td>
-<td>自己和获授权的人。爸爸的手册和妈妈的练习站先用这个选项。</td>
+<td>自己和获授权的人。爸爸的手册和妈妈的小项目先用这个选项。</td>
 </tr>
 <tr>
 <td>Public（公开）</td>
-<td>任何人都可以查看仓库里的文件和公开提交历史。以后要公开养花小站时，再一起核对素材和发布范围。</td>
+<td>任何人都可以查看仓库里的文件和公开提交历史。以后要公开自己的小项目时，再一起核对素材和发布范围。</td>
 </tr>
 </tbody>
 </table></div>
-<p>私有仓库里也只放有权上传的文件。手册先选已确认可上传的 <code>.tex</code>、Markdown 规则和示例图表。账号信息、密钥、无权上传的内部资料留在本机。妈妈先用两条虚构植物记录。 <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories" target="_blank" rel="noopener">GitHub 仓库可见性说明</a></p>
+<p>私有仓库里也只放有权上传的文件。手册先选已确认可上传的 <code>.tex</code>、Markdown 规则和示例图表。账号信息、密钥、无权上传的内部资料留在本机。妈妈先用自己的一组虚构练习文件。 <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories" target="_blank" rel="noopener">GitHub 仓库可见性说明</a></p>
 <h2 id="step-3">3. 认三个词，让 Harness 帮忙执行</h2>
-<p>本节默认已经装好 DeepSeek Harness（爸爸第 2 节、妈妈第 8 节）。</p>
+<p>本节默认已经装好 DeepSeek Harness（爸爸第 2 节、妈妈第 6 节）。</p>
 <ul>
 <li><strong>clone（克隆）</strong>：把 GitHub 仓库复制到电脑，得到可以编辑的本地项目。</li>
 <li><strong>commit（提交）</strong>：在本地保存一份带说明的版本记录。</li>
@@ -64,26 +86,27 @@
 </ul>
 <ol>
 <li>在新仓库复制地址。各自在 Mac 选一个空练习位置，让 Harness 把仓库克隆到那里。若 GitHub 要求本机登录或授权，按提示由本人完成，再让 Harness 继续。</li>
-<li>打开克隆得到的文件夹。爸爸复制选好的手册文件，妈妈复制 <code>index.html</code>、<code>plants.json</code>、<code>app.js</code>。原来的本地项目仍可直接打开。复制前先看仓库里有没有 <code>.gitignore</code>；没有就建一个，至少排除 <code>.DS_Store</code>、密钥文件和私人草稿。</li>
+<li>打开克隆得到的文件夹。爸爸复制选好的手册文件，妈妈复制自己的 <code>index.html</code> 或那节课用到的练习文件。原来的本地项目仍可直接打开。复制前先看仓库里有没有 <code>.gitignore</code>；没有就建一个，至少排除 <code>.DS_Store</code>、密钥文件和私人草稿。</li>
 <li>用自然语言交代任务。先让 Harness 列出要上传的内容，自己检查后再同意推送。若 Harness 不能直接执行 git，就让它给出命令，由本人打开「终端」逐条执行并核对输出。</li>
 </ol>
 <blockquote>
 <p>这个本地文件夹来自我刚建立的私有 GitHub 仓库。请核对远端地址和仓库所有者，列出准备提交的文件、分支和提交说明。只提交我刚复制进去、确认可上传的项目文件。不要提交密钥、账号资料或私人原件。等我确认后再提交和推送。需要登录或权限时先停下来告诉我。</p>
 </blockquote>
 <ol start="4">
-<li>回到浏览器刷新各自的仓库，检查仍显示 Private，文件和提交说明都出现了。爸爸打开一份手册源文件，妈妈打开 <code>plants.json</code>。看得见文件，就完成了第一次推送。</li>
+<li>回到浏览器刷新各自的仓库，检查仍显示 Private，文件和提交说明都出现了。爸爸打开一份手册源文件，妈妈打开 <code>index.html</code>。看得见文件，就完成了第一次推送。</li>
 </ol>
 <p><a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository" target="_blank" rel="noopener">克隆仓库</a> · <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" target="_blank" rel="noopener">提交和推送入门</a></p>
-<p>本节先练文件推送。妈妈要让家人从网址打开网站时，再一起配置 GitHub Pages 和确认发布范围。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener">GitHub Pages 说明</a></p></div>
+<p>本节只练文件推送。以后要让家人从网址打开自己的页面时，再单独配置 GitHub Pages 和确认发布范围。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages" target="_blank" rel="noopener">GitHub Pages 说明</a></p></div>
 </div>
 <nav class="lesson-pager" aria-label="课次导航">
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">共同练习</span><span class="pager-title">返回共同练习</span></a>
 <a class="pager-link pager-home" href="../dad/index.html"><span class="pager-label">爸爸</span><span class="pager-title">返回爸爸的课表</span></a>
 <a class="pager-link pager-home" href="../mom/index.html"><span class="pager-label">妈妈</span><span class="pager-title">返回妈妈的课表</span></a>
 </nav>
 </div></article></main>
 <footer class="site-footer"><div class="wrap footer-inner">
 <div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
-<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/github.html">共同练习</a><a href="../search.html">搜索</a></nav>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/practice/github.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
 <script defer src="../assets/ui.js"></script>

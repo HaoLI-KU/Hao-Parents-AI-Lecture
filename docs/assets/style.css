@@ -505,6 +505,14 @@ button { cursor: pointer; background: none; border: 0; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 720px) {
+  .practice-grid { grid-template-columns: minmax(0, 1fr); }
+}
 .card {
   padding: 1.3rem;
   border: 1px solid var(--line);
@@ -675,6 +683,7 @@ a.chip:hover { border-color: var(--accent); color: var(--accent); }
   align-items: start;
   padding-block: 2.2rem;
 }
+.lesson-layout.no-toc { grid-template-columns: minmax(0, 1fr); }
 .toc { position: sticky; top: calc(var(--header-h) + 1.5rem); }
 .toc-title {
   margin-bottom: .7rem;

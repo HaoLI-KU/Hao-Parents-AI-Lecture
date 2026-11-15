@@ -1,11 +1,33 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-page-dir="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>爸妈的 Mac 与 AI 课</title>
 <meta name="description" content="爸妈的 Mac 与 AI 课：两条独立的家庭学习路线，可按关键词搜索课里的操作和概念。">
 <meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -14,7 +36,7 @@
 <header class="site-header" data-site-header>
 <div class="wrap header-inner">
 <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
-<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="index.html" class="is-active" aria-current="page">首页</a><a href="dad/index.html">爸爸的课程</a><a href="mom/index.html">妈妈的课程</a><a href="practice/github.html">共同练习</a></nav>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="index.html" class="is-active" aria-current="page">首页</a><a href="dad/index.html">爸爸的课程</a><a href="mom/index.html">妈妈的课程</a><a href="practice/index.html">共同练习</a></nav>
 <form class="header-search" action="search.html" method="get" role="search">
 <label class="sr-only" for="header-q">搜索课程</label>
 <input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
@@ -37,8 +59,8 @@
 <section class="wrap stats" aria-label="课程概况">
 <div class="stat"><span class="stat-value">9</span><span class="stat-label">爸爸的课</span></div>
 <div class="stat"><span class="stat-value">7</span><span class="stat-label">妈妈的课</span></div>
-<div class="stat"><span class="stat-value">3</span><span class="stat-label">后续草稿</span></div>
-<div class="stat"><span class="stat-value">1</span><span class="stat-label">共同练习</span></div>
+<div class="stat"><span class="stat-value">2</span><span class="stat-label">共同练习</span></div>
+<div class="stat"><span class="stat-value">2</span><span class="stat-label">学习路线</span></div>
 </section>
 <section class="wrap route-grid" aria-label="选择学习路线"><a class="route-card route-dad" href="dad/index.html">
 <figure class="route-portrait"><img src="assets/dad.svg" alt="爸爸路线的抽象侧脸线描，用作课程入口" width="300" height="220"></figure>
@@ -46,9 +68,20 @@
 <p class="route-meta"><span class="chip">9 节</span><span class="chip">DeepSeek · Harness · Word → LaTeX</span></p>
 <span class="route-enter">打开课表 <span aria-hidden="true">→</span></span></div></a><a class="route-card route-mom" href="mom/index.html">
 <figure class="route-portrait"><img src="assets/mom.svg" alt="妈妈路线的抽象侧脸线描，用作课程入口" width="300" height="220"></figure>
-<div class="route-copy"><p class="eyebrow">学习路线</p><h2>妈妈的课程</h2><p>先把新 Mac、会议、邮件和家庭共享用顺，再用豆包和 DeepSeek Harness 做出自己的养花小站。</p>
-<p class="route-meta"><span class="chip">10 节</span><span class="chip">Mac 基础 · 豆包 · 养花小站</span></p>
+<div class="route-copy"><p class="eyebrow">学习路线</p><h2>妈妈的课程</h2><p>先把新 Mac、会议、邮件和家庭共享用顺，再按爸爸第 1–3 节完成 DeepSeek 与 Harness 的 AI 入门。</p>
+<p class="route-meta"><span class="chip">7 节</span><span class="chip">Mac 基础 · 豆包 · DeepSeek/Harness</span></p>
 <span class="route-enter">打开课表 <span aria-hidden="true">→</span></span></div></a></section>
+<section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">共用练习</p><h2>共同练习</h2></div></div><div class="practice-grid"><a class="practice-card" href="practice/github.html">
+<p class="eyebrow">共同练习 · 备用</p>
+<h2>爸妈第一次用 GitHub</h2>
+<p>备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。</p>
+<span class="route-enter">打开练习 <span aria-hidden="true">→</span></span>
+</a><a class="practice-card" href="practice/image-gen.html">
+<p class="eyebrow">共同练习 · 建议安排</p>
+<h2>用 Harness 生成房间软装图</h2>
+<p>建议安排：配置 Seedream / 火山方舟，跑通生图、改图和软装对比。</p>
+<span class="route-enter">打开练习 <span aria-hidden="true">→</span></span>
+</a></div></section>
 <section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">怎么用</p><h2>三步开始</h2></div></div>
 <div class="card-grid">
 <article class="card"><span class="card-kicker">01</span><h3>选自己的路线</h3><p>爸爸和妈妈各自从自己的课表开始，课次不要求同步。第一次来，先看一节里要做什么。</p></article>
@@ -57,7 +90,7 @@
 </div></section></main>
 <footer class="site-footer"><div class="wrap footer-inner">
 <div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
-<nav class="footer-nav" aria-label="页脚导航"><a href="index.html">首页</a><a href="dad/index.html">爸爸的课程</a><a href="mom/index.html">妈妈的课程</a><a href="practice/github.html">共同练习</a><a href="search.html">搜索</a></nav>
+<nav class="footer-nav" aria-label="页脚导航"><a href="index.html">首页</a><a href="dad/index.html">爸爸的课程</a><a href="mom/index.html">妈妈的课程</a><a href="practice/index.html">共同练习</a><a href="search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/index.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
 <script defer src="assets/ui.js"></script>

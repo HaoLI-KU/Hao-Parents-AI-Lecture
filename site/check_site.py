@@ -67,6 +67,12 @@ def check_page(page):
         fail(f"{relative}: 应恰好有一个 h1")
     if '<a class="skip-link" href="#main">' not in html:
         fail(f"{relative}: 缺少跳到正文链接")
+    if 'data-page-dir="' not in html:
+        fail(f"{relative}: 缺少 data-page-dir")
+    if 'data-embed-nav' not in html:
+        fail(f"{relative}: 缺少嵌入式导航脚本")
+    if '在浏览器打开' not in html:
+        fail(f"{relative}: 缺少“在浏览器打开”外链")
     ids = page_ids(html)
     duplicates = sorted({value for value in ids if ids.count(value) > 1})
     if duplicates:
@@ -135,18 +141,48 @@ def main():
                 fail(f"课表有但网页没有：{page}")
             if page not in entry_pages:
                 fail(f"搜索索引没有覆盖课页：{page}")
-    practice_page = f"practice/{build.PRACTICE['slug']}.html"
-    expected_pages.add(practice_page)
-    referenced_files.add(build.PRACTICE["file"])
-    if not (DOCS / practice_page).is_file():
-        fail(f"缺少共同练习页：{practice_page}")
-    if practice_page not in entry_pages:
-        fail(f"搜索索引没有覆盖共同练习页：{practice_page}")
+    expected_pages.add("practice/index.html")
+    for item in build.PRACTICES:
+        practice_page = f"practice/{item['slug']}.html"
+        expected_pages.add(practice_page)
+        referenced_files.add(item["file"])
+        if not (DOCS / practice_page).is_file():
+            fail(f"缺少共同练习页：{practice_page}")
+        if practice_page not in entry_pages:
+            fail(f"搜索索引没有覆盖共同练习页：{practice_page}")
+    if not (DOCS / "practice/index.html").is_file():
+        fail("缺少共同练习首页：practice/index.html")
 
     for path in sorted((ROOT / "course/lessons").glob("*.md")):
         if path.name in referenced_files or path.name == "audit-01-07.md":
             continue
         fail(f"课稿没有进入课表或共同练习：course/lessons/{path.name}")
+
+    # 妈妈路线不应再出现养花草稿；skills.md 的长期方向除外。
+    for folder in (ROOT / "course", ROOT / "docs"):
+        for path in folder.rglob("*"):
+            if path.is_file() and path.suffix in {".md", ".html"}:
+                text = path.read_text(encoding="utf-8")
+                if any(word in text for word in ("养花小站", "我的养花笔记", "plant-notes", "plants.json")):
+                    fail(f"仍残留养花草稿：{path.relative_to(ROOT)}")
+    for name in ("README.md", "website.md", "workflow.md", "teaching.md"):
+        text = (ROOT / name).read_text(encoding="utf-8")
+        if any(word in text for word in ("养花小站", "我的养花笔记", "plant-notes", "plants.json")):
+            fail(f"规则文件仍残留养花草稿：{name}")
+
+    # 课表和课页 eyebrow 不再有排课方式；妈妈 1–4 正文里的腾讯会议软件操作不算。
+    for route in build.ROUTES:
+        page = DOCS / route / "index.html"
+        if page.is_file():
+            text = page.read_text(encoding="utf-8")
+            for word in ("腾讯会议", "上海家中"):
+                if word in text:
+                    fail(f"{route}/index.html 仍有排课方式：{word}")
+    for page in DOCS.glob("*/lesson-*.html"):
+        text = page.read_text(encoding="utf-8")
+        eyebrow = re.search(r'<p class="eyebrow">(.*?)</p>', text, re.S)
+        if eyebrow and ("腾讯会议" in eyebrow.group(1) or "上海家中" in eyebrow.group(1)):
+            fail(f"{page.relative_to(DOCS)} 的 eyebrow 仍有排课方式")
 
     shortcuts = {
         "mom/lesson-01.html": ("⌘C", "⌘V", "⌘S"),

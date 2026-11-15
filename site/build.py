@@ -13,6 +13,7 @@ DOCS = ROOT / "docs"
 SITE_NAME = "爸妈的 AI 课"
 SITE_FULL = "爸妈的 Mac 与 AI 课"
 SITE_TAGLINE = "家庭课程 · 持续更新"
+SITE_URL = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/"
 ROUTES = ("dad", "mom")
 ROUTE_META = {
     "dad": {
@@ -24,22 +25,33 @@ ROUTE_META = {
     "mom": {
         "name": "妈妈",
         "title": "妈妈的课程",
-        "blurb": "先把新 Mac、会议、邮件和家庭共享用顺，再用豆包和 DeepSeek Harness 做出自己的养花小站。",
-        "focus": "Mac 基础 · 豆包 · 养花小站",
+        "blurb": "先把新 Mac、会议、邮件和家庭共享用顺，再按爸爸第 1–3 节完成 DeepSeek 与 Harness 的 AI 入门。",
+        "focus": "Mac 基础 · 豆包 · DeepSeek/Harness",
     },
 }
-PRACTICE = {
-    "slug": "github",
-    "file": "github.md",
-    "title": "爸妈第一次用 GitHub",
-    "blurb": "各自注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。",
-}
+PRACTICES = (
+    {
+        "slug": "github",
+        "file": "github.md",
+        "title": "爸妈第一次用 GitHub",
+        "blurb": "备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。",
+        "status": "备用",
+    },
+    {
+        "slug": "image-gen",
+        "file": "image-gen.md",
+        "title": "用 Harness 生成房间软装图",
+        "blurb": "建议安排：配置 Seedream / 火山方舟，跑通生图、改图和软装对比。",
+        "status": "建议安排",
+    },
+)
+PRACTICE_BY_FILE = {item["file"]: item for item in PRACTICES}
 LESSON_LINK = re.compile(r"(\d{2})\.md(?:#(dad|mom))?")
 NAV_ITEMS = (
     ("home", "首页", "index.html"),
     ("dad", "爸爸的课程", "dad/index.html"),
     ("mom", "妈妈的课程", "mom/index.html"),
-    ("practice", "共同练习", "practice/github.html"),
+    ("practice", "共同练习", "practice/index.html"),
 )
 
 
@@ -61,6 +73,10 @@ def write_page(path, title, description, body, active, route=None,
     path = DOCS / path
     path.parent.mkdir(parents=True, exist_ok=True)
     prefix = rel_prefix(path)
+    relative = path.relative_to(DOCS)
+    parent = relative.parent.as_posix()
+    page_dir = "" if parent == "." else parent + "/"
+    page_url = SITE_URL + relative.as_posix()
     nav = []
     for key, label, href in NAV_ITEMS:
         attributes = f' href="{prefix}{href}"'
@@ -72,6 +88,29 @@ def write_page(path, title, description, body, active, route=None,
         f'<a href="{prefix}{href}">{label}</a>'
         for _, label, href in NAV_ITEMS + (("search", "搜索", "search.html"),)
     )
+    footer_nav += f'<a href="{page_url}" target="_blank" rel="noopener">在浏览器打开</a>'
+    embed = f'''<script data-embed-nav>
+(function () {{
+  var site = "{SITE_URL}";
+  var dir = "{page_dir}";
+  var embedded = false;
+  try {{ embedded = window.top !== window.self; }} catch (error) {{ embedded = true; }}
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {{
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }}, true);
+}})();
+</script>'''
     body_class = f"page-{page_type}"
     if route:
         body_class += f" route-{route}"
@@ -81,13 +120,14 @@ def write_page(path, title, description, body, active, route=None,
     )
     path.write_text(
         f'''<!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-page-dir="{page_dir}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(document_title)}</title>
 <meta name="description" content="{escape(description)}">
 <meta name="theme-color" content="#f7f6f2">
+{embed}
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{prefix}assets/style.css">
 </head>
@@ -139,10 +179,6 @@ def excerpt(text, limit=140):
     return text[:limit] + ("…" if len(text) > limit else "")
 
 
-def clean_mode(mode):
-    return re.sub(r"\s*·\s*(?:草稿|后续课)\s*$", "", mode).strip()
-
-
 def status_label(status):
     return {"draft": "草稿", "followup": "后续课"}.get(status, "")
 
@@ -155,7 +191,7 @@ def parse_schedule():
         raise SystemExit("README 里找不到课表表头：| 课稿 |")
     columns = [cell.strip() for cell in lines[header_index].strip().strip("|").split("|")]
     index = {cell: position for position, cell in enumerate(columns)}
-    required = {"课稿", "爸爸方式", "爸爸", "妈妈方式", "妈妈"}
+    required = {"课稿", "爸爸", "妈妈", "状态"}
     missing = required - set(index)
     if missing:
         raise SystemExit("README 课表缺少列：" + "、".join(sorted(missing)))
@@ -170,17 +206,16 @@ def parse_schedule():
         if not number_match:
             continue
         number = int(number_match.group(1))
+        status_text = cells[index["状态"]]
         for route in ROUTES:
             name = ROUTE_META[route]["name"]
-            mode = cells[index[f"{name}方式"]]
             title = cells[index[name]]
             if title in ("", "—"):
                 continue
-            status = "draft" if "草稿" in mode else "followup" if "后续课" in mode else "active"
+            status = "draft" if "草稿" in status_text else "followup" if "后续课" in status_text else "active"
             rows[route].append({
                 "route": route,
                 "number": number,
-                "mode": mode,
                 "title": title,
                 "status": status,
                 "file": f"{number:02}.md",
@@ -226,9 +261,14 @@ def copy_asset(url, source_path):
 def resolve_links(html, route, prefix, source_path):
     def repl(match):
         attribute, url = match.group(1), unescape(match.group(2))
-        if url == PRACTICE["file"] or url.startswith(PRACTICE["file"] + "#"):
-            suffix = url[len(PRACTICE["file"]):]
-            return f'{attribute}="{prefix}practice/{PRACTICE["slug"]}.html{suffix}"'
+        practice = next(
+            (item for item in PRACTICES
+             if url == item["file"] or url.startswith(item["file"] + "#")),
+            None,
+        )
+        if practice:
+            suffix = url[len(practice["file"]):]
+            return f'{attribute}="{prefix}practice/{practice["slug"]}.html{suffix}"'
         lesson = LESSON_LINK.fullmatch(url)
         if lesson and attribute == "href":
             number, target = lesson.groups()
@@ -367,7 +407,15 @@ def home(rows):
 <p class="route-meta"><span class="chip">{len(rows[route])} 节</span><span class="chip">{meta['focus']}</span></p>
 <span class="route-enter">打开课表 <span aria-hidden="true">→</span></span></div></a>'''
         )
-    drafts = sum(1 for route in ROUTES for item in rows[route] if item["status"] == "draft")
+    practice_cards = "".join(
+        f'''<a class="practice-card" href="practice/{item['slug']}.html">
+<p class="eyebrow">共同练习 · {escape(item['status'])}</p>
+<h2>{escape(item['title'])}</h2>
+<p>{escape(item['blurb'])}</p>
+<span class="route-enter">打开练习 <span aria-hidden="true">→</span></span>
+</a>'''
+        for item in PRACTICES
+    )
     examples = "".join(
         f'<a class="chip" href="search.html?q={quote(word)}">{escape(word)}</a>'
         for word in ("屏幕共享", "API Key", "LaTeX", "GitHub")
@@ -386,10 +434,11 @@ def home(rows):
 <section class="wrap stats" aria-label="课程概况">
 <div class="stat"><span class="stat-value">{len(rows['dad'])}</span><span class="stat-label">爸爸的课</span></div>
 <div class="stat"><span class="stat-value">{sum(1 for item in rows['mom'] if item['status'] != 'draft')}</span><span class="stat-label">妈妈的课</span></div>
-<div class="stat"><span class="stat-value">{drafts}</span><span class="stat-label">后续草稿</span></div>
-<div class="stat"><span class="stat-value">1</span><span class="stat-label">共同练习</span></div>
+<div class="stat"><span class="stat-value">{len(PRACTICES)}</span><span class="stat-label">共同练习</span></div>
+<div class="stat"><span class="stat-value">2</span><span class="stat-label">学习路线</span></div>
 </section>
 <section class="wrap route-grid" aria-label="选择学习路线">{''.join(route_cards)}</section>
+<section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">共用练习</p><h2>共同练习</h2></div></div><div class="practice-grid">{practice_cards}</div></section>
 <section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">怎么用</p><h2>三步开始</h2></div></div>
 <div class="card-grid">
 <article class="card"><span class="card-kicker">01</span><h3>选自己的路线</h3><p>爸爸和妈妈各自从自己的课表开始，课次不要求同步。第一次来，先看一节里要做什么。</p></article>
@@ -401,13 +450,8 @@ def home(rows):
 
 
 def route_lesson_row(item, draft=False):
-    tags = []
-    mode = clean_mode(item["mode"])
-    if mode and mode != "—":
-        tags.append(mode)
-    if item["status"] == "draft":
-        tags.append("草稿")
-    tag_html = "".join(f'<span class="chip">{escape(tag)}</span>' for tag in tags)
+    tag = status_label(item["status"])
+    tag_html = f'<span class="chip">{tag}</span>' if tag else ""
     return (
         f'<a class="lesson-row{" is-draft" if draft else ""}" href="lesson-{item["number"]:02}.html">'
         f'<span class="lesson-num" lang="en-GB">Lesson {item["number"]:02}</span>'
@@ -429,31 +473,21 @@ def schedule_page(route, rows):
 <p class="section-intro">这些课还没有正式上过，课前会再核对工具和步骤。</p>
 <div class="lesson-list">{''.join(route_lesson_row(item, draft=True) for item in drafts)}</div>
 </section>'''
-    from collections import Counter
-    mode_counts = Counter(
-        clean_mode(item["mode"]) for item in rows
-        if clean_mode(item["mode"]) not in ("", "—")
-    )
-    mode_chips = "".join(
-        f'<span class="chip">{escape(mode)} {count} 节</span>'
-        for mode, count in mode_counts.items()
-    )
-    draft_chip = f'<span class="chip">{len(drafts)} 节草稿</span>' if drafts else ""
     body = f'''<section class="hero hero-route route-{route}"><div class="wrap">
 <p class="eyebrow">学习路线 · {escape(meta['focus'])}</p>
 <h1>{meta['title']}</h1>
 <p class="lead">{meta['blurb']}</p>
-<p class="hero-meta"><span class="chip">{len(rows)} 节</span>{mode_chips}{draft_chip}</p>
+<p class="hero-meta"><span class="chip">{len(rows)} 节</span></p>
 </div></section>
 <section class="wrap lesson-section">
 <div class="section-head"><div class="section-title"><p class="eyebrow">正在进行</p><h2>课程进度</h2></div><span class="section-note">{len(active)} 节</span></div>
 <div class="lesson-list">{active_html}</div>
 </section>{draft_html}
 <section class="wrap lesson-section">
-<a class="practice-card" href="../practice/{PRACTICE['slug']}.html">
-<p class="eyebrow">共同练习 · 后续课 · 草稿</p>
-<h2>{PRACTICE['title']}</h2>
-<p>{PRACTICE['blurb']}</p>
+<a class="practice-card" href="../practice/index.html">
+<p class="eyebrow">共同练习 · {len(PRACTICES)} 项</p>
+<h2>GitHub 与 Seedream 生图</h2>
+<p>GitHub 先备用；Seedream 生图建议安排，用来跑通 Harness 生图、改图和软装对比。</p>
 <span class="route-enter">打开共同练习 <span aria-hidden="true">→</span></span>
 </a>
 </section>'''
@@ -496,17 +530,21 @@ def lesson_page(route, item, rows):
     summary = ""
     if item["title"] != heading:
         summary = f'<p class="lesson-summary">{escape(item["title"])}</p>'
-    mode = clean_mode(item["mode"])
     status = status_label(item["status"])
     status_chip = f'<span class="chip chip-status">{status}</span>' if status else ""
+    toc_block = ""
+    layout_class = "lesson-layout no-toc"
+    if headings:
+        layout_class = "lesson-layout"
+        toc_block = f'<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav">{toc_html(headings)}</nav></aside>'
     body = f'''<article class="lesson-page route-{route}"><div class="wrap">
 <nav class="breadcrumb" aria-label="面包屑"><a href="index.html">{meta['title']}</a><span aria-hidden="true">/</span><span>第 {item['number']} 节</span></nav>
 <header class="lesson-hero">
-<p class="eyebrow"><span lang="en-GB">Lesson {item['number']:02}</span> · {meta['name']} · {escape(mode)} {status_chip}</p>
+<p class="eyebrow"><span lang="en-GB">Lesson {item['number']:02}</span> · {meta['name']} {status_chip}</p>
 <h1>{escape(heading)}</h1>{summary}
 </header>
-<div class="lesson-layout">
-<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav">{toc_html(headings)}</nav></aside>
+<div class="{layout_class}">
+{toc_block}
 <div class="lesson-body" id="{route}">{content}</div>
 </div>
 {lesson_pager(route, item, rows, meta)}
@@ -521,8 +559,30 @@ def lesson_page(route, item, rows):
     )
 
 
-def practice_page():
-    path = ROOT / "course/lessons" / PRACTICE["file"]
+def practice_index():
+    cards = "".join(
+        f'''<a class="practice-card" href="{item['slug']}.html">
+<p class="eyebrow">共同练习 · {escape(item['status'])}</p>
+<h2>{escape(item['title'])}</h2>
+<p>{escape(item['blurb'])}</p>
+<span class="route-enter">打开练习 <span aria-hidden="true">→</span></span>
+</a>'''
+        for item in PRACTICES
+    )
+    body = f'''<section class="hero hero-route"><div class="wrap">
+<p class="eyebrow">共同练习</p>
+<h1>共同练习</h1>
+<p class="lead">两项共用练习，不占爸爸妈妈的课号。GitHub 先备用；Seedream 生图建议安排，用来跑通 Harness 生图、改图和软装对比。</p>
+</div></section>
+<section class="wrap lesson-section">
+<div class="practice-grid">{cards}</div>
+</section>'''
+    write_page("practice/index.html", "共同练习", "爸妈的共同练习：GitHub 与 Seedream 生图。",
+               body, "practice", page_type="practice")
+
+
+def practice_page(item):
+    path = ROOT / "course/lessons" / item["file"]
     source = path.read_text(encoding="utf-8")
     heading_match = re.search(r"(?m)^# (.+)$", source)
     if not heading_match:
@@ -535,27 +595,28 @@ def practice_page():
     bodies = [section_body for _, section_body in sections]
     content = render_body(body_source, 2, "practice", "../", path)
     body = f'''<article class="lesson-page page-practice"><div class="wrap">
-<nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">首页</a><span aria-hidden="true">/</span><span>共同练习</span></nav>
+<nav class="breadcrumb" aria-label="面包屑"><a href="../index.html">首页</a><span aria-hidden="true">/</span><a href="index.html">共同练习</a><span aria-hidden="true">/</span><span>{escape(item['title'])}</span></nav>
 <header class="lesson-hero">
-<p class="eyebrow">共同练习 · 后续课 · <span class="chip chip-status">草稿</span></p>
+<p class="eyebrow">共同练习 · {escape(item['status'])}</p>
 <h1>{escape(heading)}</h1>
-<p class="lesson-summary">{PRACTICE['blurb']}</p>
+<p class="lesson-summary">{escape(item['blurb'])}</p>
 </header>
 <div class="lesson-layout">
 <aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav">{toc_html(headings)}</nav></aside>
 <div class="lesson-body" id="practice">{content}</div>
 </div>
 <nav class="lesson-pager" aria-label="课次导航">
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">共同练习</span><span class="pager-title">返回共同练习</span></a>
 <a class="pager-link pager-home" href="../dad/index.html"><span class="pager-label">爸爸</span><span class="pager-title">返回爸爸的课表</span></a>
 <a class="pager-link pager-home" href="../mom/index.html"><span class="pager-label">妈妈</span><span class="pager-title">返回妈妈的课表</span></a>
 </nav>
 </div></article>'''
-    write_page(f"practice/{PRACTICE['slug']}.html", heading,
-               PRACTICE["blurb"], body, "practice", page_type="practice")
-    title = "共同练习"
+    write_page(f"practice/{item['slug']}.html", heading,
+               item["blurb"], body, "practice", page_type="practice")
+    title = item["title"]
     return search_entries_for(
-        title, "practice", "共同练习", None, "draft",
-        headings, bodies, intro, f"practice/{PRACTICE['slug']}.html",
+        title, "practice", "共同练习", None, "active",
+        headings, bodies, intro, f"practice/{item['slug']}.html",
     )
 
 
@@ -564,7 +625,7 @@ def search_page(rows):
         "all": None,
         "dad": len(rows["dad"]),
         "mom": len(rows["mom"]),
-        "practice": 1,
+        "practice": len(PRACTICES),
     }
     def filter_button(key, label, count):
         count_html = f'<span class="chip-count">{count}</span>' if count is not None else ""
@@ -651,7 +712,9 @@ def main():
         schedule_page(route, rows[route])
         for item in rows[route]:
             entries.extend(lesson_page(route, item, rows[route]))
-    entries.extend(practice_page())
+    practice_index()
+    for item in PRACTICES:
+        entries.extend(practice_page(item))
     search_page(rows)
     (DOCS / "assets/search-index.js").write_text(
         "window.courseSearchIndex = " + json.dumps(entries, ensure_ascii=False) + ";\n",
@@ -659,7 +722,7 @@ def main():
     )
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
     print(f"Built {len(entries)} search entries, "
-          f"{sum(len(items) for items in rows.values())} lesson pages, 1 practice page.")
+          f"{sum(len(items) for items in rows.values())} lesson pages, {len(PRACTICES)} practice pages.")
 
 
 if __name__ == "__main__":
