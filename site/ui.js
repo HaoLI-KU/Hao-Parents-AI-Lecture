@@ -1,4 +1,32 @@
 (() => {
+
+const SITE_URL = 'https://haoli-ku.github.io/Hao-Parents-AI-Lecture/';
+
+function absolutiseSiteLinks() {
+  try {
+    const site = new URL(SITE_URL);
+    if (location.origin !== site.origin) return;
+    const base = new URL(document.documentElement.dataset.pageDir || '', site);
+    const absolute = (value) => {
+      if (!value || value.charAt(0) === '#' || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(value)) return value;
+      return new URL(value, base).href;
+    };
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const raw = link.getAttribute('href');
+      const next = absolute(raw);
+      if (next !== raw) link.setAttribute('href', next);
+    });
+    document.querySelectorAll('form[action]').forEach((form) => {
+      const raw = form.getAttribute('action');
+      const next = absolute(raw);
+      if (next !== raw) form.setAttribute('action', next);
+    });
+  } catch (error) {
+    /* Keep the authored relative links when the page is not on the production origin. */
+  }
+}
+
+absolutiseSiteLinks();
   document.documentElement.classList.add('js');
 
   const header = document.querySelector('[data-site-header]');

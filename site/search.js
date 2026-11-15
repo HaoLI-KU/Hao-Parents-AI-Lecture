@@ -9,6 +9,10 @@
   const filters = [...document.querySelectorAll('.search-filters [data-route]')];
   const hints = [...document.querySelectorAll('[data-query]')];
   const index = Array.isArray(window.courseSearchIndex) ? window.courseSearchIndex : [];
+  const SITE_URL = 'https://haoli-ku.github.io/Hao-Parents-AI-Lecture/';
+  const production = (() => {
+    try { return location.origin === new URL(SITE_URL).origin; } catch (error) { return false; }
+  })();
   let route = 'all';
 
   const normalise = (text) => String(text || '')
@@ -86,7 +90,7 @@
       const heading = document.createElement('h3');
       heading.className = 'search-result-title';
       const link = document.createElement('a');
-      link.href = entry.url;
+      link.href = production ? new URL(entry.url, SITE_URL).href : entry.url;
       appendHighlighted(
         link,
         entry.heading ? `${entry.title} · ${entry.heading}` : entry.title,
