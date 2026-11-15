@@ -10,6 +10,7 @@
   const hints = [...document.querySelectorAll('[data-query]')];
   const index = Array.isArray(window.courseSearchIndex) ? window.courseSearchIndex : [];
   const SITE_URL = 'https://haoli-ku.github.io/Hao-Parents-AI-Lecture/';
+  const electronCarrier = /Electron/i.test(navigator.userAgent);
   const production = (() => {
     try { return location.origin === new URL(SITE_URL).origin; } catch (error) { return false; }
   })();
@@ -91,6 +92,7 @@
       heading.className = 'search-result-title';
       const link = document.createElement('a');
       link.href = production ? new URL(entry.url, SITE_URL).href : entry.url;
+      if (electronCarrier) { link.target = '_blank'; link.rel = 'noopener'; }
       appendHighlighted(
         link,
         entry.heading ? `${entry.title} · ${entry.heading}` : entry.title,

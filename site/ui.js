@@ -2,6 +2,16 @@
 
 const SITE_URL = 'https://haoli-ku.github.io/Hao-Parents-AI-Lecture/';
 
+
+function openLessonLinksInNewTab() {
+  if (!/Electron/i.test(navigator.userAgent)) return;
+  document.querySelectorAll('.route-card, .lesson-row, .practice-card, .lesson-pager a').forEach((link) => {
+    if (!link.getAttribute('href') || link.target) return;
+    link.target = '_blank';
+    link.rel = 'noopener';
+  });
+}
+
 function absolutiseSiteLinks() {
   try {
     const site = new URL(SITE_URL);
@@ -27,6 +37,7 @@ function absolutiseSiteLinks() {
 }
 
 absolutiseSiteLinks();
+openLessonLinksInNewTab();
   document.documentElement.classList.add('js');
 
   const header = document.querySelector('[data-site-header]');
