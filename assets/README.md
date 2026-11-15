@@ -10,5 +10,6 @@
 
 - `gallery/whiteboard-original.jpeg`：赵诗雅博士在办公室白板上的原图，已经本人确认公开；保留白板边框、照片、磁铁、姓名、日期和手写文字。
 - 对应的整理版线稿在 `site/whiteboard-lineart.svg`，由 DeepSeek 调用 ChatGPT 生成；页面 caption 和作品信息要分别署名，不把线稿归为赵诗雅博士手绘。
+- `gallery/whiteboard-peek.jpg`：从原图裁出的脸部缩略角，只用于后卡露出的 `peek_image`，不替代完整原图。
 - `gallery/` 下的图片由构建器复制到 `docs/assets/gallery/`，供 `/gallery/` 页面使用。
 - 新增展品涉及真人、姓名或邮箱时，先确认再发布；其他私人素材仍留在仓库外的本地私有目录，不进入仓库。
