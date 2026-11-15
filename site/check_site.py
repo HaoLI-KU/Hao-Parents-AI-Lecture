@@ -13,7 +13,7 @@ import build  # noqa: E402
 
 errors = []
 warnings = []
-pages = sorted(DOCS.rglob("*.html"))
+pages = [page for page in sorted(DOCS.rglob("*.html")) if page.name != "annotate.html"]
 links_checked = 0
 
 
@@ -92,6 +92,16 @@ def main():
 
     if not (DOCS / ".nojekyll").is_file():
         fail("缺少 docs/.nojekyll")
+
+    annotate = DOCS / "annotate.html"
+    if not annotate.is_file():
+        fail("缺少 docs/annotate.html（批注预览）")
+    else:
+        annotate_html = annotate.read_text(encoding="utf-8")
+        if 'id="views-data"' not in annotate_html:
+            fail("annotate.html 缺少页面数据")
+        if "sessionStorage" not in annotate_html:
+            fail("annotate.html 缺少刷新恢复逻辑")
 
     search = DOCS / "search.html"
     if not search.is_file():

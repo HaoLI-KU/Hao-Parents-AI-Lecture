@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>批注预览 · 爸妈的 Mac 与 AI 课</title>
+<meta name="theme-color" content="#f7f6f2">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>/* ==========================================================================
+   爸妈的 Mac 与 AI 课
+   暖白纸感、青绿强调、衬线标题、等宽小标签。
+   ========================================================================== */
+
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("assets/fonts/source-serif-4.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  --bg: #f7f6f2;
+  --bg-soft: #f1efe9;
+  --surface: #ffffff;
+  --surface-2: #fbfaf7;
+  --ink: #16201e;
+  --ink-soft: #46514e;
+  --muted: #626d6a;
+  --line: #e2e0d8;
+  --line-strong: #cfccc1;
+
+  --accent: #0a6b60;
+  --accent-strong: #07504a;
+  --accent-soft: #e4f1ee;
+  --accent-ink: #06443e;
+
+  --route-mom: #8a4f3b;
+  --route-mom-soft: #f3e7e0;
+  --route-mom-ink: #6f3e2e;
+
+  --gold: #8a6a2f;
+  --shadow-sm: 0 1px 2px rgba(22, 32, 30, .05), 0 1px 3px rgba(22, 32, 30, .04);
+  --shadow-md: 0 12px 34px -16px rgba(22, 32, 30, .22), 0 2px 6px rgba(22, 32, 30, .05);
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-serif: "Source Serif 4", "Iowan Old Style", "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --wrap: 1180px;
+  --measure: 68ch;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --header-h: 68px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+
+  --route-accent: var(--accent);
+  --route-soft: var(--accent-soft);
+  --route-ink: var(--accent-ink);
+}
+
+body.route-mom,
+.route-card.route-mom {
+  --route-accent: var(--route-mom);
+  --route-soft: var(--route-mom-soft);
+  --route-ink: var(--route-mom-ink);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.7;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { padding-left: 1.5rem; }
+img, svg { display: block; max-width: 100%; }
+a { color: var(--accent); text-underline-offset: .22em; }
+a:hover { color: var(--accent-strong); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; }
+[hidden] { display: none !important; }
+
+::selection { background: var(--accent); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 200;
+  padding: .65rem 1rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform .2s var(--ease);
+}
+.skip-link:focus { transform: translateY(0); }
+
+.wrap { width: min(100% - 3rem, var(--wrap)); margin-inline: auto; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  border-bottom: 1px solid transparent;
+  background: var(--bg);
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.site-header.is-stuck {
+  border-bottom-color: var(--line);
+  box-shadow: 0 6px 24px -20px rgba(22, 32, 30, .5);
+}
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin-right: auto;
+  color: var(--ink);
+  text-decoration: none;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-serif);
+  font-size: .92rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: background-color .2s var(--ease), color .2s var(--ease);
+}
+.brand:hover .brand-mark { background: var(--accent); color: #fff; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-name { font-size: .95rem; font-weight: 650; letter-spacing: -.01em; }
+.brand-role {
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.site-nav { display: flex; align-items: center; gap: .1rem; }
+.site-nav a {
+  position: relative;
+  padding: .52rem .65rem;
+  border-radius: 8px;
+  color: var(--ink-soft);
+  font-size: .86rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .2s var(--ease), background-color .2s var(--ease);
+}
+.site-nav a:hover { color: var(--ink); background: var(--bg-soft); }
+.site-nav a.is-active { color: var(--accent); font-weight: 600; }
+.site-nav a.is-active::after {
+  content: "";
+  position: absolute;
+  left: .65rem;
+  right: .65rem;
+  bottom: .18rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  width: 230px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: .18rem .2rem .18rem .85rem;
+}
+.header-search input {
+  width: 100%;
+  min-width: 0;
+  padding: .35rem 0;
+  border: 0;
+  background: transparent;
+  font-size: .84rem;
+  outline: none;
+}
+.header-search input::placeholder { color: var(--muted); }
+.header-search button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: .76rem;
+  font-weight: 600;
+}
+.header-search button:hover { background: var(--accent-strong); }
+
+.menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  content: "";
+}
+.menu-icon { position: relative; }
+.menu-icon::before { position: absolute; top: -6px; }
+.menu-icon::after { position: absolute; top: 6px; }
+.menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
+.menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  padding: clamp(2.6rem, 6vw, 5.2rem) 0 0;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -35%;
+  right: -12%;
+  width: 58vw;
+  height: 58vw;
+  max-width: 720px;
+  max-height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 66%);
+  opacity: .9;
+  pointer-events: none;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: .28;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 62% 0%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(ellipse 70% 60% at 62% 0%, #000 0%, transparent 72%);
+  pointer-events: none;
+}
+.hero .wrap { position: relative; z-index: 1; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .9rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: .6;
+}
+.route-mom .eyebrow,
+.route-card.route-mom .eyebrow { color: var(--route-mom); }
+
+.hero h1 {
+  margin: .35rem 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.7rem, 6.4vw, 4.9rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+
+.lead {
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  text-wrap: pretty;
+}
+
+.hero-search {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  max-width: 660px;
+  margin-top: 1.7rem;
+  padding: .3rem .3rem .3rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.hero-search input {
+  flex: 1;
+  min-width: 0;
+  padding: .55rem 0;
+  border: 0;
+  background: transparent;
+  font-size: .95rem;
+  outline: none;
+}
+.hero-search input::placeholder { color: var(--muted); }
+.hero-search button,
+.search-form button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: .5rem 1.05rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: .88rem;
+  font-weight: 600;
+  transition: background-color .2s var(--ease);
+}
+.hero-search button:hover,
+.search-form button:hover { background: var(--accent-strong); }
+
+.hero-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  align-items: center;
+  margin-top: .85rem;
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat { padding: 0 1.3rem; border-left: 1px solid var(--line); }
+.stat:first-child { padding-left: 0; border-left: 0; }
+.stat-value {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  display: block;
+  margin-top: .25rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.route-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+}
+.route-card {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.route-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+  color: var(--ink);
+}
+.route-portrait {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--route-soft);
+}
+.route-portrait img { width: 100%; height: auto; }
+.route-copy { padding: 1.35rem 1.45rem 1.35rem 1.2rem; }
+.route-copy h2 {
+  margin: .1rem 0 .5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.route-copy p { color: var(--ink-soft); font-size: .92rem; }
+.route-meta { display: flex; flex-wrap: wrap; gap: .35rem; margin: .85rem 0; }
+.route-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  color: var(--route-accent);
+  font-size: .88rem;
+  font-weight: 650;
+}
+
+.home-section { padding-block: clamp(2rem, 4vw, 3rem); }
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+.section-title { display: flex; flex-direction: column; }
+.section-head .eyebrow { margin-bottom: .35rem; }
+.section-head h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.section-note {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  white-space: nowrap;
+}
+.section-intro { margin: -.5rem 0 1rem; color: var(--muted); font-size: .9rem; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (max-width: 720px) {
+  .practice-grid { grid-template-columns: minmax(0, 1fr); }
+}
+.card {
+  padding: 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.card-kicker {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: .8rem;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+}
+.card h3 { margin-bottom: .35rem; font-size: 1.02rem; font-weight: 650; }
+.card p { color: var(--ink-soft); font-size: .89rem; }
+
+/* ---------- Chips ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .18rem .55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: .7rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+}
+a.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip-count {
+  margin-left: .2rem;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  opacity: .7;
+}
+.chip-status {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+.route-mom .chip-status {
+  background: var(--route-mom-soft);
+  color: var(--route-mom-ink);
+}
+
+/* ---------- Route pages ---------- */
+.hero-route { padding-bottom: clamp(1.6rem, 3vw, 2.6rem); }
+.hero-route h1 { font-size: clamp(2.5rem, 5.4vw, 4.2rem); }
+.hero-route .hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: 1.1rem;
+}
+
+.lesson-section {
+  padding-block: clamp(1.8rem, 3.5vw, 2.6rem);
+  border-top: 1px solid var(--line);
+}
+.hero-route + .lesson-section { border-top: 0; }
+.lesson-list { display: flex; flex-direction: column; gap: .55rem; }
+.lesson-row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) 24px;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.lesson-row:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+  color: var(--ink);
+}
+.route-mom .lesson-row:hover { border-color: var(--route-mom); }
+.lesson-row.is-draft { background: var(--surface-2); border-style: dashed; }
+.lesson-num {
+  color: var(--route-accent);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.lesson-main { display: flex; min-width: 0; flex-direction: column; gap: .35rem; }
+.lesson-title { font-size: 1rem; font-weight: 600; line-height: 1.45; }
+.lesson-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
+.lesson-arrow { justify-self: end; color: var(--muted); font-size: 1.1rem; }
+
+.practice-card {
+  display: block;
+  padding: 1.4rem 1.5rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .2s var(--ease), background-color .2s var(--ease);
+}
+.practice-card:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+  color: var(--ink);
+}
+.practice-card h2 {
+  margin: .1rem 0 .4rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  font-weight: 600;
+}
+.practice-card p { color: var(--ink-soft); font-size: .92rem; }
+.practice-card .route-enter { margin-top: .7rem; }
+
+/* ---------- Lesson pages ---------- */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  align-items: center;
+  padding-top: 1.5rem;
+  color: var(--muted);
+  font-size: .8rem;
+}
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+.lesson-hero {
+  padding: 1rem 0 2rem;
+  border-bottom: 1px solid var(--line);
+}
+.lesson-hero h1 {
+  margin: .35rem 0 .7rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+.lesson-summary {
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  text-wrap: pretty;
+}
+.eyebrow .chip-status { margin-left: .15rem; vertical-align: .08em; }
+
+.lesson-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+  padding-block: 2.2rem;
+}
+.lesson-layout.no-toc { grid-template-columns: minmax(0, 1fr); }
+.toc { position: sticky; top: calc(var(--header-h) + 1.5rem); }
+.toc-title {
+  margin-bottom: .7rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.toc-nav { display: flex; flex-direction: column; gap: .05rem; }
+.toc-nav a {
+  display: flex;
+  gap: .55rem;
+  padding: .4rem 0 .4rem .8rem;
+  border-left: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.toc-nav a:hover { color: var(--ink); }
+.toc-nav a.is-active {
+  border-left-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.route-mom .toc-nav a.is-active {
+  border-left-color: var(--route-mom);
+  color: var(--route-mom);
+}
+.toc-num {
+  padding-top: .1rem;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  opacity: .65;
+}
+
+.lesson-body { min-width: 0; max-width: var(--measure); }
+.lesson-body h2 {
+  margin: 2.6rem 0 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 2.8vw, 1.95rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.015em;
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+.lesson-body > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.lesson-body p { margin-bottom: 1rem; text-wrap: pretty; }
+.lesson-body ul,
+.lesson-body ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+.lesson-body li { padding: .3rem 0; }
+.lesson-body li::marker { color: var(--accent); font-weight: 700; }
+.route-mom .lesson-body li::marker { color: var(--route-mom); }
+.lesson-body strong { font-weight: 650; }
+.lesson-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+.lesson-body code {
+  padding: .08em .3em;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--bg-soft);
+  font-family: var(--font-mono);
+  font-size: .88em;
+  overflow-wrap: anywhere;
+}
+.lesson-body blockquote {
+  margin: 1.2rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+.lesson-body blockquote p:last-child { margin-bottom: 0; }
+
+.table-wrap {
+  margin: 1.2rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.lesson-body table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.lesson-body th,
+.lesson-body td {
+  padding: .6rem .7rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.lesson-body th {
+  background: var(--surface-2);
+  font-weight: 650;
+  white-space: nowrap;
+}
+.lesson-body tr:last-child td { border-bottom: 0; }
+
+.lesson-body figure {
+  margin: 1.2rem 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.lesson-body figure img { width: 100%; height: auto; }
+.lesson-body figcaption { padding: .65rem .9rem; color: var(--muted); font-size: .84rem; }
+.model-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem .7rem;
+  align-items: center;
+  padding: 0 .9rem .9rem;
+}
+.model-line span {
+  padding: .28rem .55rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: .78rem;
+}
+.model-line b { color: var(--accent); font-weight: 600; }
+
+.lesson-body pre {
+  margin: 1.1rem 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  line-height: 1.6;
+}
+.lesson-body pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
+  overflow-wrap: normal;
+}
+
+.prompt {
+  margin: 1.2rem 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.prompt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .45rem .7rem .45rem .9rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+.prompt-label {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.route-mom .prompt-label { color: var(--route-mom); }
+.prompt-copy {
+  padding: .22rem .6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: .72rem;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.prompt-copy:hover { border-color: var(--accent); color: var(--accent); }
+.prompt pre {
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.prompt pre code { white-space: inherit; }
+
+.lesson-body li.task {
+  display: flex;
+  gap: .6rem;
+  align-items: flex-start;
+  margin-left: -1.5rem;
+  padding: .45rem 0;
+  list-style: none;
+}
+.task-box {
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  margin-top: .28rem;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 5px;
+  background: var(--surface);
+}
+.task.is-done .task-box {
+  position: relative;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.task.is-done .task-box::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(42deg);
+}
+.task-text { min-width: 0; }
+
+.lesson-pager {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .7rem;
+  padding: 1.5rem 0 3rem;
+  border-top: 1px solid var(--line);
+}
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.pager-link:hover { border-color: var(--accent); transform: translateY(-2px); color: var(--ink); }
+.pager-link.is-empty { border: 0; background: none; }
+.pager-link.pager-home { background: var(--surface-2); }
+.pager-label {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.pager-title { font-size: .86rem; font-weight: 600; line-height: 1.4; }
+.pager-status {
+  margin-left: .25rem;
+  padding: 0 .3rem;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  font-weight: 500;
+}
+
+/* ---------- Search page ---------- */
+.hero-search-page { padding-bottom: clamp(2rem, 4vw, 3.2rem); }
+.hero-search-page h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+.search-form {
+  display: flex;
+  gap: .5rem;
+  max-width: 720px;
+  margin-top: 1.6rem;
+  padding: .3rem .3rem .3rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.search-form input {
+  flex: 1;
+  min-width: 0;
+  padding: .55rem 0;
+  border: 0;
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+}
+.search-form input::placeholder { color: var(--muted); }
+.search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: 1.1rem;
+}
+.search-filters .chip { padding: .38rem .7rem; font-size: .78rem; }
+.search-filters .chip.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+.search-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  align-items: center;
+  margin-top: .9rem;
+  color: var(--muted);
+  font-size: .8rem;
+}
+.link-chip {
+  padding: .1rem .2rem;
+  color: var(--accent);
+  font-size: .8rem;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+.search-status { margin-top: 1.4rem; color: var(--muted); font-size: .86rem; }
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  margin-top: 1rem;
+  padding: 0;
+  list-style: none;
+}
+.search-result {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.search-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  align-items: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+}
+.search-result-title { margin: .45rem 0 .25rem; font-size: .98rem; font-weight: 600; line-height: 1.45; }
+.search-result-title a { color: var(--ink); text-decoration: none; }
+.search-result-title a:hover { color: var(--accent); text-decoration: underline; }
+.search-result-text { color: var(--ink-soft); font-size: .87rem; }
+mark {
+  padding: 0 .1em;
+  border-radius: 2px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+.empty-state { padding: 2rem 0; color: var(--muted); }
+.empty-state strong { display: block; margin-bottom: .3rem; color: var(--ink); font-size: 1rem; }
+.notice {
+  margin-top: 1.2rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: .88rem;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 2rem;
+  padding: 2rem 0 2.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .8rem;
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand { display: flex; align-items: center; gap: .7rem; color: var(--ink); }
+.footer-brand .brand-mark { width: 34px; height: 34px; font-size: .8rem; }
+.footer-brand strong { display: block; font-size: .84rem; font-weight: 650; }
+.footer-brand small {
+  display: block;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.footer-nav { display: flex; flex-wrap: wrap; gap: 1rem; }
+.footer-nav a { color: var(--ink-soft); text-decoration: none; }
+.footer-nav a:hover { color: var(--accent); }
+.footer-copy { flex-basis: 100%; margin-top: .4rem; color: var(--muted); font-size: .72rem; }
+.footer-copy a { color: var(--ink-soft); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1060px) {
+  .lesson-layout { grid-template-columns: minmax(0, 1fr); }
+  .toc {
+    position: static;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+  }
+  .toc-nav { flex-direction: row; flex-wrap: wrap; gap: .15rem .9rem; }
+  .toc-nav a { padding: .25rem 0 .25rem .55rem; border-left: 0; border-bottom: 1px solid var(--line); }
+  .toc-nav a.is-active { border-bottom-color: currentColor; }
+  .toc-num { display: none; }
+}
+
+@media (max-width: 1020px) {
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: .5rem 1rem 1rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: var(--shadow-md);
+  }
+  .site-nav.is-open { display: flex; }
+  .site-nav a { padding: .75rem .6rem; border-radius: 6px; font-size: .95rem; }
+  .site-nav a.is-active::after { display: none; }
+  .menu-toggle { display: inline-grid; }
+  .header-search { width: 200px; }
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .route-grid { grid-template-columns: minmax(0, 1fr); }
+  .route-card { grid-template-columns: 150px minmax(0, 1fr); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.1rem; }
+  .stat:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .stat:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+
+@media (max-width: 720px) {
+  .wrap { width: min(100% - 2rem, var(--wrap)); }
+  .site-header { height: auto; }
+  .header-inner { flex-wrap: wrap; height: auto; padding-block: .6rem; }
+  .brand { margin-right: auto; }
+  .menu-toggle { display: inline-grid; }
+  .header-search { order: 3; flex: 1 1 100%; width: 100%; margin-bottom: .35rem; }
+  .site-nav { order: 4; }
+  .hero { padding-top: 2.2rem; }
+  .hero h1 { font-size: clamp(2.3rem, 11vw, 3.2rem); }
+  .hero-search { flex-wrap: wrap; border-radius: var(--radius); padding: .7rem; }
+  .hero-search input { flex: 1 1 100%; padding: .4rem .3rem; }
+  .hero-search button { width: 100%; }
+  .search-form { flex-wrap: wrap; border-radius: var(--radius); padding: .7rem; }
+  .search-form input { flex: 1 1 100%; padding: .4rem .3rem; }
+  .search-form button { width: 100%; }
+  .route-card { grid-template-columns: minmax(0, 1fr); }
+  .route-portrait { padding: .6rem; }
+  .route-portrait img { max-height: 150px; width: auto; }
+  .card-grid { grid-template-columns: minmax(0, 1fr); }
+  .lesson-row { grid-template-columns: 1fr; gap: .35rem; }
+  .lesson-num { font-size: .66rem; }
+  .lesson-arrow { display: none; }
+  .lesson-hero h1 { font-size: clamp(1.85rem, 8vw, 2.6rem); }
+  .lesson-pager { grid-template-columns: minmax(0, 1fr); }
+  .lesson-pager .is-empty { display: none; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 420px) {
+  body { font-size: 17px; }
+  .brand-name { font-size: .85rem; }
+  .brand-role { font-size: .58rem; }
+  .stat { padding: 0 .8rem; }
+  .lesson-body h2 { font-size: 1.35rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  :root {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --ink: #000;
+    --ink-soft: #222;
+    --muted: #555;
+    --line: #ccc;
+    --line-strong: #999;
+    --accent: #0a6b60;
+    --accent-soft: #fff;
+    --accent-ink: #0a6b60;
+  }
+  @page { size: A4; margin: 15mm 16mm; }
+
+  body { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.5; }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .toc,
+  .lesson-pager,
+  .breadcrumb,
+  .prompt-copy,
+  .header-search,
+  .menu-toggle,
+  .hero::before,
+  .hero::after { display: none !important; }
+
+  .wrap { width: 100%; max-width: none; }
+  .lesson-layout { display: block; padding: 0; }
+  .lesson-body { max-width: none; }
+  .lesson-hero { padding: 0 0 .8rem; border-bottom: 1px solid #999; }
+  .lesson-hero h1 { font-size: 21pt; }
+  .lesson-body h2 { font-size: 13.5pt; margin-top: 1.4rem; padding-top: .6rem; break-after: avoid; }
+  .lesson-body p,
+  .lesson-body li { orphans: 3; widows: 3; }
+  .prompt,
+  .lesson-body pre,
+  .lesson-body table,
+  .lesson-body figure,
+  .lesson-body li.task,
+  .lesson-body blockquote { break-inside: avoid; }
+  .prompt { border: 1px solid #999; background: #fff; }
+  .prompt-head { background: #fff; border-bottom: 1px solid #999; }
+  .prompt pre { font-size: 8.8pt; }
+  .lesson-body a { color: #000; text-decoration: none; }
+  .lesson-body code { border-color: #bbb; background: #f5f5f5; }
+  .table-wrap { overflow: visible; border-color: #999; }
+}
+</style>
+</head>
+<body class="page-annotate">
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">批注预览</span></span></a>
+<nav class="footer-nav" aria-label="批注预览导航"><a href="#home">首页</a><a href="#dad">爸爸的课程</a><a href="#mom">妈妈的课程</a><a href="#practice">共同练习</a></nav>
+</div></header>
+<main id="main"><div id="view-root"></div></main>
+<footer class="site-footer"><div class="wrap footer-inner"><p class="footer-copy">批注预览：所有页面在同一个 HTML 文件内切换，方便批注；公开课程仍是多页站点。刷新会尽量回到上次的页面。</p></div></footer>
+<script type="application/json" id="views-data">{"dad": {"title": "爸爸的课程", "html": "<section class=\"hero hero-route route-dad\"><div class=\"wrap\">\n<p class=\"eyebrow\">学习路线 · DeepSeek · Harness · Word → LaTeX<\/p>\n<h1>爸爸的课程<\/h1>\n<p class=\"lead\">从自己的 DeepSeek 账户开始，把一份真实的 Word 技术文档逐步变成可维护、可复用的中文 LaTeX 项目。<\/p>\n<p class=\"hero-meta\"><span class=\"chip\">9 节<\/span><\/p>\n<\/div><\/section>\n<section class=\"wrap lesson-section\">\n<div class=\"section-head\"><div class=\"section-title\"><p class=\"eyebrow\">正在进行<\/p><h2>课程进度<\/h2><\/div><span class=\"section-note\">9 节<\/span><\/div>\n<div class=\"lesson-list\"><a class=\"lesson-row\" href=\"#dad/lesson-01\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 01<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">认识模型和工具，用自己的 DeepSeek 账户跑通 Codex<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-02\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 02<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">初始化 DeepSeek Harness，安装微信输入法与六个指定插件<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-03\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 03<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">在 DeepSeek Harness 比较推理强度与用量，练习读网页和日程<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-04\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 04<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">说清 Word 转 LaTeX 的输入、产出和长期工作流目标<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-05\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 05<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">编译中文 LaTeX，练习 PDF 批注并认识 Overleaf 模板库<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-06\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 06<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">在 Overleaf 选模板，做可编译的完整中文技术书模板（附录/TikZ/横向页）<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-07\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 07<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">分开放 Overleaf 模板来源、通用模板和第一份 Word，建立项目目录<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-08\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 08<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">写项目指令、阶段路线与内容保持规则，并开新会话核对<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#dad/lesson-09\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 09<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">用已验证模板转换一小段 Word，编译、核对并沉淀流程<\/span><span class=\"lesson-tags\"><span class=\"chip\">后续课<\/span><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><\/div>\n<\/section>\n<section class=\"wrap lesson-section\">\n<a class=\"practice-card\" href=\"#practice\">\n<p class=\"eyebrow\">共同练习 · 2 项<\/p>\n<h2>GitHub 与 Seedream 生图<\/h2>\n<p>GitHub 先备用；Seedream 生图建议安排，用来跑通 Harness 生图、改图和软装对比。<\/p>\n<span class=\"route-enter\">打开共同练习 <span aria-hidden=\"true\">→<\/span><\/span>\n<\/a>\n<\/section>"}, "dad/lesson-01": {"title": "认识两层 AI，用自己的 DeepSeek 账户跑通 Codex", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 1 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 01<\/span> · 爸爸 <\/p>\n<h1>认识两层 AI，用自己的 DeepSeek 账户跑通 Codex<\/h1><p class=\"lesson-summary\">认识模型和工具，用自己的 DeepSeek 账户跑通 Codex<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>用两层来理解 AI<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>用自己的 DeepSeek 账户跑通 Codex<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>从手头的事挑入口<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>收尾<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><h2 id=\"step-1\">1. 用两层来理解 AI<\/h2>\n<ol>\n<li><strong>界面是操作入口。<\/strong> 你打开 Codex，在里面输入任务。<\/li>\n<li><strong>模型负责生成回答。<\/strong> 爸爸这台 Mac 的 Codex 接的是 DeepSeek。<\/li>\n<li><strong>界面把结果显示给你。<\/strong> 先试一句简单的问题，看看能否收到回复。<\/li>\n<li><strong>最后自己核对。<\/strong> 如果问的是事实，就对照原文。如果问的是操作，就亲手试一步。<\/li>\n<\/ol>\n<figure><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NDAgMzMwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUiPgo8dGl0bGUgaWQ9InRpdGxlIj7ku7vliqHpgJrov4cgQ29kZXgg55WM6Z2i5Y+R6YCB57uZIERlZXBTZWVrIOaooeWei++8jOWbnuetlOaYvuekuuWcqOeVjOmdouS4ijwvdGl0bGU+CjxyZWN0IHdpZHRoPSI4NDAiIGhlaWdodD0iMzMwIiBmaWxsPSIjZjdmNmYyIi8+CjxnIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksIFBpbmdGYW5nIFNDLCBzYW5zLXNlcmlmIiBmaWxsPSIjMTYyMDFlIj4KPHJlY3QgeD0iMTM1IiB5PSIzMiIgd2lkdGg9IjU3MCIgaGVpZ2h0PSIxMDMiIHJ4PSIxOCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iI2NmY2NjMSIvPgo8cmVjdCB4PSIxNTkiIHk9IjU0IiB3aWR0aD0iNjAiIGhlaWdodD0iNTQiIHJ4PSI5IiBmaWxsPSIjZTRmMWVlIi8+CjxwYXRoIGQ9Ik0xNzUgNzBoMjhtLTI4IDEwaDIwbS0yMCAxMGgyNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMGE2YjYwIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8dGV4dCB4PSIyNDMiIHk9Ijc3IiBmb250LXNpemU9IjI1IiBmb250LXdlaWdodD0iNzAwIj5Db2RleCDCtyDnlYzpnaI8L3RleHQ+Cjx0ZXh0IHg9IjI0MyIgeT0iMTA5IiBmb250LXNpemU9IjE5IiBmaWxsPSIjNDY1MTRlIj7kvaDovpPlhaXku7vliqHvvIzkuZ/lnKjov5nph4znnIvlm57nrZQ8L3RleHQ+CjxnIHN0cm9rZT0iIzBhNmI2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgo8cGF0aCBkPSJNMzcwIDE0NHY0M20tNy03IDcgNyA3LTdNNDcwIDE4N3YtNDNtLTcgNyA3LTcgNyA3Ii8+CjwvZz4KPHRleHQgeD0iMzQ0IiB5PSIxNzEiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM0NjUxNGUiPuS7u+WKoTwvdGV4dD4KPHRleHQgeD0iNDk0IiB5PSIxNzEiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM0NjUxNGUiPuWbnuetlDwvdGV4dD4KPHJlY3QgeD0iMTM1IiB5PSIxOTciIHdpZHRoPSI1NzAiIGhlaWdodD0iMTAzIiByeD0iMTgiIGZpbGw9IiNlNGYxZWUiIHN0cm9rZT0iI2NmY2NjMSIvPgo8cmVjdCB4PSIxNTkiIHk9IjIyMCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjU0IiByeD0iOSIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE3NSAyNDZsMTQtMTEgMTQgMTEtMTQgMTF6IiBmaWxsPSJub25lIiBzdHJva2U9IiMwYTZiNjAiIHN0cm9rZS13aWR0aD0iMyIvPgo8dGV4dCB4PSIyNDMiIHk9IjI0MiIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9IjcwMCI+RGVlcFNlZWsgwrcg5qih5Z6LPC90ZXh0Pgo8dGV4dCB4PSIyNDMiIHk9IjI3NCIgZm9udC1zaXplPSIxOSIgZmlsbD0iIzQ2NTE0ZSI+5aSE55CG5L2g5Lqk57uZ5a6D55qE5Lu75Yqh77yM55Sf5oiQ5Zue562UPC90ZXh0Pgo8L2c+Cjwvc3ZnPgo=\" alt=\"上层是用来交代任务的电脑界面，下层是处理输入并生成回答的模型。\" width=\"840\" height=\"330\"><figcaption>上层负责交互，下层生成回答。爸爸这台 Mac 的连接方式如下。<\/figcaption><div class=\"model-line\"><span>上层 · Codex 界面<\/span><b aria-hidden=\"true\">→<\/b><span>下层 · DeepSeek 模型<\/span><\/div><\/figure>\n\n<p>备查：在中国大陆，普通对话用当地可用的 DeepSeek 入口。本地 Codex 接入是否正常，用测试请求和 DeepSeek 账户用量核对。 <a href=\"https://help.openai.com/en/articles/7947663-chatgpt-supported-countries\" target=\"_blank\" rel=\"noopener\">OpenAI 服务支持地区<\/a><\/p>\n<h2 id=\"step-2\">2. 用自己的 DeepSeek 账户跑通 Codex<\/h2>\n<p>今天要做的是亲手从「有自己的账户」走到「在 Codex 收到一条回复，并能回开放平台找这次用量」。<\/p>\n<ol>\n<li><strong>登录开放平台。<\/strong> 在浏览器打开 <a href=\"https://platform.deepseek.com/\" target=\"_blank\" rel=\"noopener\">DeepSeek 开放平台<\/a>，注册或登录爸爸自己的账户，按页面完成验证。打开账户余额和用量页面，记下测试前的余额与时间。<\/li>\n<li><strong>小额充值。<\/strong> 进入充值页面，先核对金额和账户。若页面允许，充约 10 元作为练习预算，支付后回到账户页确认余额。以页面实际可选金额为准，金额不合适就把这一步留待确认。<\/li>\n<li><strong>创建 API Key。<\/strong> 在「API Keys」创建一把专用于爸爸这台 Mac 的密钥，可命名为 <code>dad-codex<\/code>。它像给这个工具使用账户的一把钥匙。创建时在本机妥善保存。暂停屏幕共享，密钥只填入本机接入配置，避开聊天输入框、截图和课程仓库。<\/li>\n<li><strong>把新密钥接到已跑通的 Codex。<\/strong> 和家人一起确认这台 Mac 现有 DeepSeek 接入方式及密钥存放位置，保留可恢复的原设置，再把接入所用的密钥换成爸爸新建的那把。模型和接入地址先沿用已验证的配置。DeepSeek 官方方案使用 Responses API，配置示例将密钥存于本机配置文件。实际换密钥前先核对本机接入方式，勿共享配置文件或把备份存进课程目录。改好后完全退出桌面应用、重新打开 Codex，确认当前使用 DeepSeek 配置。若发现本机配置与预期不同，先按 <a href=\"https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/codex/\" target=\"_blank\" rel=\"noopener\">DeepSeek 官方 Codex 接入说明<\/a>核对，再决定是否调整现有配置。<\/li>\n<li><strong>发一条短测试。<\/strong> 在 Codex 新对话输入「请只回复：连接成功。」看到回复后记下发送时间。若提示认证失败，先核对密钥和当前配置。若提示余额不足，回开放平台检查余额。先修正原因，再发下一次测试。<\/li>\n<li><strong>回开放平台核对。<\/strong> 打开用量明细，选测试当天，若页面提供按 API Key 筛选，就选新建密钥和测试日期。用当时可见的时间、模型和用量粒度核对，页面只有汇总时就比较测试前后。读一读页面实际提供的输入、输出 token 和费用。Token 是模型处理文字时用的小单位，和屏幕上看到的字数可以不同。余额只显示到有限位数时，优先看用量明细。若暂时没看到记录，记下测试时间和密钥名称，下次刷新再查。<\/li>\n<\/ol>\n<p>首课优先走到收到测试回复。用量还没核对到，或注册、支付、接入中途停住，就在第 2 节配置 Harness 前补齐。<\/p>\n<h2 id=\"step-3\">3. 从手头的事挑入口<\/h2>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>想做什么<\/th>\n<th>先试哪个入口<\/th>\n<th>一个生活例子<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>边看着 Mac 边问怎么操作<\/td>\n<td>豆包 Mac 客户端的语音通话与屏幕共享<\/td>\n<td>「怎么在 Finder 里快速看一眼照片？」<\/td>\n<\/tr>\n<tr>\n<td>问问题、想办法、先看一段文字<\/td>\n<td>在大陆优先用可用的 DeepSeek 或 Kimi 对话入口<\/td>\n<td>「把这三件事写成一条发给家人的周末提醒。」<\/td>\n<\/tr>\n<tr>\n<td>给一个练习项目做出或修改具体文件<\/td>\n<td>Codex<\/td>\n<td>「在练习目录新建一个能在浏览器打开的家庭菜单网页。」<\/td>\n<\/tr>\n<tr>\n<td>把几份材料交给工作助手整理成一个成果<\/td>\n<td>了解 ChatGPT Work 和 Kimi Work<\/td>\n<td>「把几份虚构菜谱整理成一张分类表。」首课认识用途即可。<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>这里按学习场景选入口。有的工具能做相似的事，课堂上先用最容易开始的那个。Codex 云端执行是运行位置的概念，和 ChatGPT Work 这样的工作入口分别理解即可。<\/p>\n<h2 id=\"step-4\">收尾<\/h2>\n<p>用一句话说出「我打开的是哪个工具，背后用的是哪个模型」。再从上表选一个自己平时会遇到的场景，说说为什么会先打开那个工具。第 2 节配置 DeepSeek Harness，第 3 节再做生活提示词实操。<\/p>\n<p>备查：<a href=\"https://learn.chatgpt.com/docs/prompting\" target=\"_blank\" rel=\"noopener\">OpenAI Docs 提示词指南<\/a> · <a href=\"https://www.kimi.com/en/help/kimi-work/overview\" target=\"_blank\" rel=\"noopener\">Kimi Work 官方介绍<\/a> · <a href=\"https://api-docs.deepseek.com/\" target=\"_blank\" rel=\"noopener\">DeepSeek 官方文档<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<span class=\"pager-link is-empty\" aria-hidden=\"true\"><\/span>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-02\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 2 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-02": {"title": "只完成初始化、输入法和插件安装", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 2 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 02<\/span> · 爸爸 <\/p>\n<h1>只完成初始化、输入法和插件安装<\/h1><p class=\"lesson-summary\">初始化 DeepSeek Harness，安装微信输入法与六个指定插件<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>安装并初始化 DeepSeek Harness<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>安装微信输入法<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>先装插件市场<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>安装另外五个指定插件<\/span><\/a><a href=\"#step-5\"><span class=\"toc-num\">05<\/span><span>用清单收尾<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>这一节不做网站、不编译 LaTeX，也不验证批注工作流。目标只有一个：把以后要用的 DeepSeek Harness 环境准备齐，并用安装清单逐项核对。<\/p>\n<h2 id=\"step-1\">1. 安装并初始化 DeepSeek Harness<\/h2>\n<ol>\n<li>打开 <a href=\"https://github.com/DeepSeek-ai/deepseek-harness/releases\" target=\"_blank\" rel=\"noopener\">DeepSeek Harness 官方发布页<\/a>，在所选版本的 Assets 中找适用于 macOS Apple Silicon 的桌面安装文件，安装到「应用程序」并打开。发布页若只显示源码或找不到对应安装文件，先核对家里已安装的桌面版及其更新入口，再继续本课。<\/li>\n<li>沿用<a href=\"#dad/lesson-01\">第 1 节<\/a>使用的 DeepSeek 开放平台账户。在 Harness 的模型设置中配置自己的 API Key。远程上课时先停止屏幕共享，再由爸爸本人粘贴密钥；密钥不放进聊天、截图或课程仓库。<\/li>\n<li>打开模型选择器，确认能看到 DeepSeek 提供方和可选模型。模型、推理强度和用量统一放到第 3 节练。<\/li>\n<\/ol>\n<p><a href=\"https://deepseek-harness.github.io/deepseek-harness/guide/providers.html\" target=\"_blank\" rel=\"noopener\">DeepSeek Harness 模型配置说明<\/a> · <a href=\"https://platform.deepseek.com/\" target=\"_blank\" rel=\"noopener\">DeepSeek 开放平台<\/a><\/p>\n<h2 id=\"step-2\">2. 安装微信输入法<\/h2>\n<ol>\n<li>打开<a href=\"https://wetype.weixin.qq.com/\" target=\"_blank\" rel=\"noopener\">微信输入法官网<\/a>，下载并安装 macOS 版。<\/li>\n<li>在「系统设置 → 键盘 → 文字输入」确认微信输入法已经加入输入法列表；按系统提示授予麦克风权限。<\/li>\n<li>找到微信输入法的语音输入快捷键并记下来。今天只确认安装和入口，不在 Harness 里口述任务，也不另外安装 Harness 的语音输入插件。<\/li>\n<\/ol>\n<h2 id=\"step-3\">3. 先装插件市场<\/h2>\n<p>在 Harness 的插件设置中安装并启用 <code>dshmarket<\/code>。重开 Harness 后，确认可以进入可视化插件市场。插件入口和按钮名称以爸爸电脑上的版本为准。<\/p>\n<h2 id=\"step-4\">4. 安装另外五个指定插件<\/h2>\n<p>在插件市场按下表的界面显示名称逐项搜索和安装。每装一个就回到 Installed plugins 清单核对名称，并确认右侧开关已开启。搜索不到时记录本机版本和搜索结果，课上一起核对安装入口。<\/p>\n<p>插件市场能打开后，可以在 Harness 会话中输入下面的任务。先看它实际能使用哪些插件管理工具，以及列出的已安装状态，再让它逐项继续。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请帮我准备这六个 DeepSeek Harness 插件：dshmarket、HTML Annotations、Config Sync、dsh-image-gen、dsh-quote-annotate-pro、dsh-workspace-folders。\n先检查 Installed plugins，按这六个显示名称列出「已安装并启用／已安装但未启用／未找到」，再告诉我当前会话能否调用安装或启用插件的工具。不要安装 dsh-ears。\n如果能操作插件，请逐项安装或启用缺少的插件。每完成一项就重新查看 Installed plugins，报告显示名称和开关状态；需要我在界面确认时停下来。\n如果当前会话没有安装能力，请只告诉我在插件页逐项搜索和核对的步骤，不要声称已经安装。\n<\/code><\/pre><\/div>\n<p>爸爸对照自己的 Installed plugins 清单核对六项。若 Harness 无法在会话中安装，就在插件页按清单逐项完成；界面显示的版本与来源以本机确认框为准。<a href=\"https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market\" target=\"_blank\" rel=\"noopener\">DeepSeek Harness 插件索引说明<\/a><\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>Installed plugins 中的显示名称<\/th>\n<th>以后负责什么<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>HTML Annotations<\/td>\n<td>在 Harness 预览的 HTML 页面上定位并提交批注<\/td>\n<\/tr>\n<tr>\n<td>Config Sync<\/td>\n<td>导出或迁移 Harness 配置与插件设置<\/td>\n<\/tr>\n<tr>\n<td>dsh-image-gen<\/td>\n<td>以后需要时接入图像生成服务<\/td>\n<\/tr>\n<tr>\n<td>dsh-quote-annotate-pro<\/td>\n<td>在 PDF、Markdown 和代码预览中做精确划词批注<\/td>\n<\/tr>\n<tr>\n<td>dsh-workspace-folders<\/td>\n<td>给工作区增加额外的工作目录<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>不安装 <code>dsh-ears<\/code>。语音输入统一使用微信输入法。<\/p>\n<h2 id=\"step-5\">5. 用清单收尾<\/h2>\n<ul>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">DeepSeek Harness 可以打开，模型设置里已保存自己的 DeepSeek 配置。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">微信输入法已安装，能在菜单栏切换，并已找到语音输入入口。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\"><code>dshmarket<\/code> 已安装并启用。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">HTML Annotations 已安装并启用。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">Config Sync 已安装并启用。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">dsh-image-gen 已安装并启用。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">dsh-quote-annotate-pro 已安装并启用。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">dsh-workspace-folders 已安装并启用。<\/span><\/li>\n<\/ul>\n<p>今天不要求这些插件真正完成任务。若某个插件因版本不相容而无法启用，记下显示名称、版本和报错，其他项目继续安装。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-01\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 1 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-03\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 3 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-03": {"title": "在 DeepSeek Harness 里比较推理强度与用量", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 3 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 03<\/span> · 爸爸 <\/p>\n<h1>在 DeepSeek Harness 里比较推理强度与用量<\/h1><p class=\"lesson-summary\">在 DeepSeek Harness 比较推理强度与用量，练习读网页和日程<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>先认清模型与推理强度<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>用同一道题比较两个档位<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>回开放平台找这两次用量<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>用微信输入法口述一条真实提示词<\/span><\/a><a href=\"#step-5\"><span class=\"toc-num\">05<\/span><span>收尾<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>第 2 节已经完成 Harness、微信输入法和插件安装。这节在 <strong>DeepSeek Harness<\/strong> 中练习模型、推理强度和开放平台用量，再用已验证的浏览器与日程工具完成一项真实查询。<\/p>\n<h2 id=\"step-1\">1. 先认清模型与推理强度<\/h2>\n<ol>\n<li>打开 DeepSeek Harness，新建一个空练习会话。<\/li>\n<li>打开模型选择器，确认提供方是 DeepSeek，并记下当前模型名。模型列表以本机实际显示为准；若能选择 <code>deepseek-flash<\/code> 和 <code>deepseek-v4-pro<\/code>，先用 Flash 做简单练习，需要更复杂推理时再比较 Pro。<\/li>\n<li>找到 Effort 或推理强度。Harness 的 DeepSeek 直连可能显示 <code>off<\/code>、<code>low<\/code>、<code>high<\/code>、<code>max<\/code>。先说出它控制的是「模型愿意投入多少推理」，不是文件权限，也不会自动开启联网搜索。<\/li>\n<li>复杂问题不一定总要最高档。简单整理先用低档；条件多、需要比较时再提高，并通过结果判断是否值得。<\/li>\n<\/ol>\n<p><a href=\"https://deepseek-harness.github.io/deepseek-harness/guide/providers.html\" target=\"_blank\" rel=\"noopener\">DeepSeek Harness 模型配置说明<\/a> · <a href=\"https://api-docs.deepseek.com/zh-cn/guides/thinking_mode/\" target=\"_blank\" rel=\"noopener\">DeepSeek 思考模式<\/a><\/p>\n<h2 id=\"step-2\">2. 用同一道题比较两个档位<\/h2>\n<p>在两个新会话里使用同一个模型和完全相同的问题，只改变推理强度。下面用虚构行程练习，比较时不要改动提示词中的条件。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">我要安排一次半天家庭出行。两位长辈不想走太多路，上午 9:30 从上海长宁区出发，12:30 前回家。\n请先列出你还缺少的三个关键信息，再给一份暂定安排。\n交通时间未经核实的地方请标「待核实」。最后列出我需要亲自核对的两件事。\n<\/code><\/pre><\/div>\n<ol>\n<li>第一次选择 <code>low<\/code>；记录发送时间、回复所用时间、追问是否有针对性，以及有没有忽略条件。<\/li>\n<li>第二次选择 <code>high<\/code> 或 <code>max<\/code>；其余内容不变，再记录同样四项。<\/li>\n<li>把两次结果并排看。重点不是哪一份更长，而是哪一份更准确地使用了条件、清楚区分了待核实信息。<\/li>\n<\/ol>\n<p>做自己的出行安排时，可以替换人数、出发地和时间。比较两个推理档位时，两次仍须使用完全相同的文字。<\/p>\n<h2 id=\"step-3\">3. 回开放平台找这两次用量<\/h2>\n<ol>\n<li>打开 <a href=\"https://platform.deepseek.com/\" target=\"_blank\" rel=\"noopener\">DeepSeek 开放平台<\/a>的用量或账单页面，选当天和爸爸用于 Harness 的 API Key。<\/li>\n<li>对照刚才记录的时间，观察平台能否区分两次请求。页面显示哪些字段就读哪些字段，例如输入 token、输出 token、思考 token、缓存或费用；不要用屏幕字数猜 token。<\/li>\n<li>记录两次请求能确认的模型、档位、耗时和用量。若明细延迟出现，先记下时间，稍后刷新，不重复发送许多测试。<\/li>\n<li>说出结论：「高档是否更慢？是否用了更多 token？这道题的答案是否真的更好？」一次练习只说明本次任务，不代表所有问题。<\/li>\n<\/ol>\n<p><a href=\"https://api-docs.deepseek.com/zh-cn/quick_start/token_usage/\" target=\"_blank\" rel=\"noopener\">DeepSeek Token 用量说明<\/a> · <a href=\"https://api-docs.deepseek.com/zh-cn/quick_start/pricing/\" target=\"_blank\" rel=\"noopener\">DeepSeek 定价页<\/a><\/p>\n<h2 id=\"step-4\">4. 用微信输入法口述一条真实提示词<\/h2>\n<p>从机票、商品比价或上海便民信息中挑一个需求，用微信输入法口述进 Harness。先用公开网页练浏览器读取。可以按自己的兴趣改成另一项公开政策，仍要求它给出原文链接和待核实之处。<a href=\"https://www.shanghai.gov.cn/\" target=\"_blank\" rel=\"noopener\">上海市人民政府<\/a><\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请用当前可用的浏览器工具，在上海市人民政府网站找一条与长者服务有关的公开办事指南。\n给出标题、发布单位、发布日期、正文链接和一条适用条件，并指出支持这条条件的正文位置。\n先报告你实际打开了哪些页面、读到了哪些正文。只看到搜索摘要或读不到正文时请说明，不要补猜。\n我会打开原链接，核对域名、日期和适用条件。\n<\/code><\/pre><\/div>\n<p>爸爸打开同一链接，核对域名、日期与适用条件，并查看 Harness 是否确实调用了浏览器。若工具打不开正文，就由爸爸打开官方页面，把可公开的段落复制进会话，让 Harness 只根据这段文字整理。<\/p>\n<p>再用一条测试日程练习只读本机日历。先由爸爸在已授权的日历中新建一条标题为「家庭出行测试」的练习日程，设置当天的开始、结束时间并记下来，再发送下面的提示词。若日历只有读取权限，就请有权限的家人创建这条测试日程。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请只读取我当前已授权日历里标题为「家庭出行测试」的那条测试日程，不要创建或修改日程。\n报告它的日期、开始和结束时间、时区，并按时间顺序整理成一行行程。\n如果找不到、遇到多条同名日程或看不到时区，请说明实际查到什么，再问我下一步。\n我会回到日历原记录，逐项核对。\n<\/code><\/pre><\/div>\n<p>爸爸对照日历原记录核对时间和时区。若读取失败，记录日历名称和权限提示，先完成网页练习。想换成机票或商品比价时，可以把目标、日期或型号、预算、希望读取的公开来源写进同样的提示词，要求列出实际打开的页面和无法确认的价格或规格。登录、提交资料、下单和付款由本人操作。<\/p>\n<h2 id=\"step-5\">收尾<\/h2>\n<p>完成时，爸爸应能在 Harness 里指出模型名和 Effort，从开放平台找到至少一条对应的用量记录，并对照实际调用与原页面或日历核对一项结果。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-02\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 2 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-04\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 4 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-04": {"title": "说清项目和这门课要学什么", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 4 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 04<\/span> · 爸爸 <\/p>\n<h1>说清项目和这门课要学什么<\/h1><p class=\"lesson-summary\">说清 Word 转 LaTeX 的输入、产出和长期工作流目标<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>指出项目的输入<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>写下产出和学习目标<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>我们已经选定第一份项目：把一份一百多页的中文 Word 技术文档忠实转换成 LaTeX。排版模板将在第 6 节由爸爸从 Overleaf 选定，再改造成可复用的中文多章节模板。今天先把已确定的输入、预期产出和学习目标写成一页项目说明；公开课稿只用占位名称。<\/p>\n<h2 id=\"step-1\">1. 指出项目的输入<\/h2>\n<ol>\n<li>在 Finder 找到 Word 原件并打开，确认这就是要转换的技术文档。公开课稿用 <code>source-document.docx<\/code> 作占位名称；实际文件名和位置只记在爸爸本机。<\/li>\n<li>说清 Word 提供需要忠实保留的技术内容。模板现在尚未选定，第 6 节再从 Overleaf 模板库比较、选择和改造；今天不把某一份模板写成已确定输入。<\/li>\n<\/ol>\n<h2 id=\"step-2\">2. 写下产出和学习目标<\/h2>\n<p>请爸爸用自己的话确认下表，再在本机写成一页项目说明。<\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>要确认的事<\/th>\n<th>本项目已经确定的方向<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>已确定的输入<\/td>\n<td>一百多页的中文 Word 原件<\/td>\n<\/tr>\n<tr>\n<td>待选的排版起点<\/td>\n<td>第 6 节和爸爸一起选定的 Overleaf 书籍模板<\/td>\n<\/tr>\n<tr>\n<td>产出<\/td>\n<td>可编译、便于以后修改的 LaTeX 源文件和排版更精美的中文 PDF<\/td>\n<\/tr>\n<tr>\n<td>内容要求<\/td>\n<td>保留原稿的正文、技术结论、参数、单位、公式和表格数据；改善模板与格式，文字修改另行确认<\/td>\n<\/tr>\n<tr>\n<td>学习目标<\/td>\n<td>借这份文档学习如何让 AI 按项目目标、文件规则和验证办法持续工作，并把有效做法留给下一份文档复用<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>前几节已经试过直接写提示词让 AI 完成一次任务。接下来会用同一个文档项目练习更有结构的做法：第 5 节练中文 LaTeX 编译与 PDF 批注，第 6 节选并制作中文多章节模板，第 7 节建立长期项目目录，第 8 节写项目入口、路线和规则，第 9 节转换 Word 的一小段并核对、记录可复用的方法。具体字体、图表样式和读者使用场景，以爸爸确认的版本记在项目说明里，尚未决定的标「待定」。<\/p>\n<p>完成时，爸爸能找回 Word 输入，在一页项目说明里写清预期的 LaTeX 源文件、中文 PDF 和工作流学习目标，并说明模板将在第 6 节一起选定。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-03\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 3 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-05\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 5 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-05": {"title": "编译中文 LaTeX，并在 PDF 预览中批注", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 5 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 05<\/span> · 爸爸 <\/p>\n<h1>编译中文 LaTeX，并在 PDF 预览中批注<\/h1><p class=\"lesson-summary\">编译中文 LaTeX，练习 PDF 批注并认识 Overleaf 模板库<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>打开练习副本<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>做一条带位置的批注<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>知道以后去哪里找模板<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>这节使用虚构的两章中文 LaTeX 手册。目标是走通「打开项目、编译、定位批注、修改源文件、重新编译、核对 PDF」，再把方法带到自己的技术文档项目。<\/p>\n<h2 id=\"step-1\">1. 打开练习副本<\/h2>\n<ol>\n<li>下载<a href=\"assets/lessons/04/examples/chinese-manual.zip\" download>中文手册练习项目（ZIP）<\/a>，在 Finder 解压到「文稿」。保留 ZIP 原件，只在解压后的 <code>chinese-manual<\/code> 副本里操作。<\/li>\n<li>在 DeepSeek Harness 打开整个练习文件夹，确认工作区指向解压后的副本。<\/li>\n<\/ol>\n<p>把下面的任务交给 Harness。它应实际执行编译，并报告这次生成文件的位置。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">当前工作区是我刚解压的中文 LaTeX 练习副本。请先查看 main.tex 和 chapters/，找出编译入口与两章的引用关系。\n使用本机已有的 MacTeX 和 XeLaTeX 编译主文件，并运行足够次数更新目录。请实际执行，报告本次生成的 PDF 路径和编译结果。\n如果失败，先指出日志里第一条关键错误和涉及的文件，只在这个练习副本中做必要修复，再重试。需要安装软件或修改系统设置时先告诉我。\n我会打开本次生成的 PDF，核对封面、目录和两个中文章节。\n<\/code><\/pre><\/div>\n<p>编译完成后，打开 Harness 报告的 PDF，核对封面、目录与两个中文章节。看本次编译结果和文件修改时间，避免误看旧 PDF。<\/p>\n<h2 id=\"step-2\">2. 做一条带位置的批注<\/h2>\n<ol>\n<li>在 Harness 预览里确认 <code>dsh-quote-annotate-pro<\/code> 已启用，选中封面标题，批注「改为『爸爸的技术手册练习』」。<\/li>\n<li>在批注清单确认所选原文正确，把批注发送到当前会话。<\/li>\n<\/ol>\n<p>发送已选中的批注后，可以在同一会话继续交代任务。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请读取我刚发送的 PDF 划词批注，先告诉我批注选中的原文、对应的 .tex 源文件和准备修改的文字。\n等我核对位置后，只改这一处并重新编译主文件。请报告这次生成的 PDF 路径。\n我会打开新版 PDF，检查标题已改变，目录和两个中文章节仍可读。\n<\/code><\/pre><\/div>\n<p>爸爸对照 <code>main.tex<\/code> 确认 Harness 找到的位置，再让它完成修改和重编。打开新版 PDF，核对新标题、目录和两个章节。若批注插件在本机无法定位，就直接给出 <code>main.tex<\/code> 与标题原句，按同样的定位和重编步骤完成练习。<\/p>\n<h2 id=\"step-3\">3. 知道以后去哪里找模板<\/h2>\n<p>今天使用的是随课提供的中文 LaTeX 练习文件。下节课会和爸爸一起在 <a href=\"https://www.overleaf.com/gallery\" target=\"_blank\" rel=\"noopener\">Overleaf 官方模板库<\/a>的 <a href=\"https://www.overleaf.com/gallery/tagged/book\" target=\"_blank\" rel=\"noopener\">Books 分类<\/a>选一份喜欢的模板，再用虚构内容把它改成可编译的中文多章节技术书。今天只浏览版式和入口，不必立刻决定选哪一份。<\/p>\n<p>本节以爸爸能在 Harness 预览中选中原文、提交批注，并在重新编译的 PDF 中看到新标题为完成。核对目录和两章仍可读。第 6 节再选 Overleaf 模板，制作后续课程要用的中文技术书模板。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-04\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 4 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-06\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 6 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-06": {"title": "把选中的模板做成一本完整的书", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 6 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 06<\/span> · 爸爸 <\/p>\n<h1>把选中的模板做成一本完整的书<\/h1><p class=\"lesson-summary\">在 Overleaf 选模板，做可编译的完整中文技术书模板（附录/TikZ/横向页）<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>先看一本书需要什么<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>选模板并保存来源<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>搭书骨架<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>补正文版式<\/span><\/a><a href=\"#step-5\"><span class=\"toc-num\">05<\/span><span>补图、表、公式和单位<\/span><\/a><a href=\"#step-6\"><span class=\"toc-num\">06<\/span><span>补 TikZ、代码和提示框<\/span><\/a><a href=\"#step-7\"><span class=\"toc-num\">07<\/span><span>补引用、附录和索引<\/span><\/a><a href=\"#step-8\"><span class=\"toc-num\">08<\/span><span>双处编译、验收和模板交接<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>第 5 节已经编译了两章中文练习，也认识了 Overleaf 模板库。今天不是只给两章加个封面，而是把选中的模板做成<strong>一套可以复制给下一份 Word 文档的中文技术书模板<\/strong>。<\/p>\n<p>先看两份参考材料：<\/p>\n<ul>\n<li><a href=\"assets/lessons/06/examples/chinese-book-template.zip\" download>中文技术书模板（ZIP 源码）<\/a><\/li>\n<li><a href=\"assets/lessons/06/examples/chinese-book-template-preview.pdf\" download>编译结果预览（PDF）<\/a><\/li>\n<\/ul>\n<p>参考模板只用虚构内容，作用是“对照一本书应该有什么”，<strong>不替代<\/strong>你在 Overleaf 选中的模板。你要做的是把自己的模板补齐；遇到文档类或宏包冲突时，保留功能、换实现方式，不要为了编译通过删章节。<\/p>\n<h2 id=\"step-1\">1. 先看一本书需要什么<\/h2>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>组<\/th>\n<th>一本书里通常要有什么<\/th>\n<th>这一节怎么处理<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>前置<\/td>\n<td>封面、版权/版本页、前言、目录、图目录、表目录、符号/术语表<\/td>\n<td>先搭骨架，全部放进前言部分<\/td>\n<\/tr>\n<tr>\n<td>正文<\/td>\n<td>部/章/节、章首页、页眉页脚、页码、脚注、列表、引用块<\/td>\n<td>用中文字体和统一标题层级<\/td>\n<\/tr>\n<tr>\n<td>图<\/td>\n<td>单图、子图、并排图、图注、正文引用<\/td>\n<td>图片、子图、图注和交叉引用各验一次<\/td>\n<\/tr>\n<tr>\n<td>表<\/td>\n<td>三线表、定宽表、数值表、横向宽表、跨页长表<\/td>\n<td>数值表用 <code>siunitx<\/code>，横向页用 <code>pdflscape<\/code><\/td>\n<\/tr>\n<tr>\n<td>公式/单位<\/td>\n<td>编号公式、多行对齐、SI 数值和单位<\/td>\n<td>公式编号、<code>\\qty<\/code> 和单位表各验一次<\/td>\n<\/tr>\n<tr>\n<td>TikZ<\/td>\n<td>流程图/框图、标注坐标图、时间线或简单 <code>pgfplots<\/code> 图<\/td>\n<td>图源单独文件，样式统一<\/td>\n<\/tr>\n<tr>\n<td>代码/提示<\/td>\n<td>代码清单、行号、换行、提示/警告框<\/td>\n<td><code>listings<\/code> + <code>tcolorbox<\/code><\/td>\n<\/tr>\n<tr>\n<td>引用/链接<\/td>\n<td>PDF 书签、元数据、图/表/式中文称呼<\/td>\n<td><code>hyperref<\/code> + <code>cleveref<\/code><\/td>\n<\/tr>\n<tr>\n<td>后置<\/td>\n<td>附录 A/B、参考文献、索引、术语表<\/td>\n<td>附录和索引都要进目录<\/td>\n<\/tr>\n<tr>\n<td>交付<\/td>\n<td>模板 README、<code>latexmkrc<\/code>、编译命令、版本/许可、已知问题<\/td>\n<td>写清楚，下一份文档能直接复用<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>先做骨架，再逐组补功能。每补一组就编译一次；不通过就停在这一组，不继续加下一组。检查表用真实 PDF 结果填，不凭 AI 的一句“已完成”打勾。<\/p>\n<h2 id=\"step-2\">2. 选模板并保存来源<\/h2>\n<p>打开 <a href=\"https://www.overleaf.com/gallery/tagged/book\" target=\"_blank\" rel=\"noopener\">Overleaf Books 模板库<\/a>，一起看两三份候选。爸爸先挑喜欢的封面、正文、章节标题和页眉，再核对：<\/p>\n<ul>\n<li>能在 Overleaf 正常编译；<\/li>\n<li>能下载完整源码 ZIP，不是只有 PDF；<\/li>\n<li>文件、宏包和依赖能看懂；<\/li>\n<li>页面说明许可，允许课堂改造；<\/li>\n<li>支持 XeLaTeX/<code>ctex<\/code> 或容易改成中文；<\/li>\n<li>结构不太复杂，适合逐步加附录、文献和 TikZ。<\/li>\n<\/ul>\n<p>在选中的项目里下载源码 ZIP。源码 ZIP 与 PDF 是两次下载，不能把 PDF 当成模板源码。在爸爸本机的私有位置建立 <code>Technical-Publishing/template/original-overleaf/<\/code> 和 <code>template/technical-book/<\/code>：前者保存原始 ZIP、来源链接和解压后的只读副本，后者从它复制一套供修改。实际许可和是否允许再发布要看选中模板的页面；本课程不公开选中的源码。<\/p>\n<h2 id=\"step-3\">3. 搭书骨架<\/h2>\n<p>先把“书的结构”搭出来，不急着补花样。一个可工作的骨架大致是：<\/p>\n<pre><code class=\"language-latex\">\\begin{document}\n\\frontmatter\n\\input{frontmatter/titlepage}\n\\input{frontmatter/copyright}\n\\input{frontmatter/preface}\n\\tableofcontents\n\\listoffigures\n\\listoftables\n\\input{frontmatter/notation}\n\n\\mainmatter\n\\input{chapters/chapter-01}\n\\input{chapters/chapter-02}\n\n\\appendix\n\\input{appendix/appendix-a}\n\\input{appendix/appendix-b}\n\n\\backmatter\n\\printbibliography[title=参考文献]\n\\printindex\n\\end{document}\n<\/code><\/pre>\n<p>同时补上：<\/p>\n<ul>\n<li>页面：A4、内外边距、装订偏移；<\/li>\n<li>中文字体：正文宋体、标题黑体或宋体、代码等宽；<\/li>\n<li>页码：前言罗马数字，正文阿拉伯数字，附录继续；<\/li>\n<li>章首页、页眉页脚、目录深度；<\/li>\n<li>一张占位封面、版权/版本页、前言、符号/术语表；<\/li>\n<li>两个正文占位章节和一个附录占位章节。<\/li>\n<\/ul>\n<p>先只让这份骨架编译通过，再补内容。参考模板里的 <code>main.tex<\/code> 和 <code>frontmatter/<\/code> 可以直接对照。<\/p>\n<h2 id=\"step-4\">4. 补正文版式<\/h2>\n<p>逐项确认：<\/p>\n<ol>\n<li>中文标点、中英文混排、段首缩进和行距；<\/li>\n<li>章/节/小节层级和间距；<\/li>\n<li>脚注、列表、引用块、定理/定义/例；<\/li>\n<li>图注在图下、表注在表上或统一；<\/li>\n<li>页眉显示章名或节名，页码不重复、不跳号。<\/li>\n<\/ol>\n<p>定理环境可以用 <code>amsthm<\/code>：<\/p>\n<pre><code class=\"language-latex\">\\newtheorem{definition}{定义}[chapter]\n\\newtheorem{example}{例}[chapter]\n<\/code><\/pre>\n<h2 id=\"step-5\">5. 补图、表、公式和单位<\/h2>\n<p>这一组最容易“看起来能用、实际不能用”。按下面逐项做：<\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>组别<\/th>\n<th>用什么虚构内容试<\/th>\n<th>打开 PDF 核对什么<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>单图与子图<\/td>\n<td>一张示意图、两张子图及各自图注<\/td>\n<td>清晰度、子图编号、主图标题、正文引用<\/td>\n<\/tr>\n<tr>\n<td>三线表<\/td>\n<td>一张带小数的示例表<\/td>\n<td>表头、每格数据、数值对齐<\/td>\n<\/tr>\n<tr>\n<td>横向宽表<\/td>\n<td>一张列数较多的表<\/td>\n<td>横向页旋转正确，表头可读<\/td>\n<\/tr>\n<tr>\n<td>跨页长表<\/td>\n<td>一张多页数据表<\/td>\n<td>续页重复表头，不断行失控<\/td>\n<\/tr>\n<tr>\n<td>公式<\/td>\n<td>一个编号公式、一个多行对齐<\/td>\n<td>编号、对齐、正文引用<\/td>\n<\/tr>\n<tr>\n<td>SI 单位<\/td>\n<td><code>12.5 mm<\/code>、<code>23 °C<\/code>、<code>4.2 kW/m²<\/code><\/td>\n<td>数字和单位不丢，表格用 S 列对齐<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p><code>siunitx<\/code> 示例：<\/p>\n<pre><code class=\"language-latex\">\\qty{12.5}{\\milli\\metre}\n\\qty{23}{\\celsius}\n\\begin{tabular}{S[table-format=2.1]S[table-format=1.1]}\n\\toprule\n{长度 / \\si{\\milli\\metre}} &amp; {温度 / \\si{\\celsius}} \\\\\n\\midrule\n12.5 &amp; 23.0 \\\\\n8.0  &amp; 22.4 \\\\\n\\bottomrule\n\\end{tabular}\n<\/code><\/pre>\n<p>横向页用 <code>pdflscape<\/code>，长表用 <code>longtable<\/code>；两者的页眉和页码方向要在 PDF 里实际翻看。<\/p>\n<h2 id=\"step-6\">6. 补 TikZ、代码和提示框<\/h2>\n<p>TikZ 先做一张流程图，再做一张带坐标的标注图。关键是<strong>图源单独文件、样式统一、正文引用一次<\/strong>：<\/p>\n<pre><code class=\"language-latex\">\\tikzset{\n  box/.style={draw=teal,fill=teal!8,rounded corners=2pt,\n    minimum width=2.7cm,minimum height=1.1cm,align=center},\n  arrow/.style={-{Latex[length=2.4mm]},thick,draw=teal}\n}\n\\begin{tikzpicture}[node distance=1.1cm and 1.2cm]\n  \\node[box] (a) {采集输入};\n  \\node[box,right=of a] (b) {检查条件};\n  \\node[box,right=of b] (c) {执行任务};\n  \\draw[arrow] (a) -- (b);\n  \\draw[arrow] (b) -- (c);\n\\end{tikzpicture}\n<\/code><\/pre>\n<p>再补：<\/p>\n<ul>\n<li>代码清单：<code>listings<\/code>，行号、换行、标题；中文说明放在正文，不塞进代码；<\/li>\n<li>提示/警告框：<code>tcolorbox<\/code>，标题写“提示/注意/核对”；<\/li>\n<li>一张 <code>pgfplots<\/code> 简图或时间线，证明模板能画数据图，不只是方框。<\/li>\n<\/ul>\n<p>不要在模板里放真实 Word 的代码或技术数据；示例只用虚构内容。<\/p>\n<h2 id=\"step-7\">7. 补引用、附录和索引<\/h2>\n<ul>\n<li><code>hyperref<\/code>：PDF 书签、标题、作者、链接颜色；<\/li>\n<li><code>cleveref<\/code>：中文“图/表/式/章/节”称呼；<\/li>\n<li>参考文献：只选一套方案；参考模板用 <code>biblatex<\/code> + <code>biber<\/code>；<\/li>\n<li>附录：<code>\\appendix<\/code> 后放附录 A（图示/公式速查）、附录 B（术语/检查表），并让附录进目录；<\/li>\n<li>索引：<code>imakeidx<\/code> + <code>\\index{}<\/code> + <code>\\printindex<\/code>；至少 10 个词条；<\/li>\n<li>术语表：先用附录表格；<code>glossaries<\/code> 自动术语表标为选做，避免一次引入太多工具链。<\/li>\n<\/ul>\n<p>附录骨架：<\/p>\n<pre><code class=\"language-latex\">\\appendix\n\\chapter{图示与公式速查}\n\\chapter{术语与检查表}\n<\/code><\/pre>\n<p>如果本机或 Overleaf 没有自动跑 <code>biber<\/code>/<code>makeindex<\/code>，先记录实际编译命令和报错，不要跳过参考文献或索引却写成“通过”。<\/p>\n<h2 id=\"step-8\">8. 双处编译、验收和模板交接<\/h2>\n<p>先在本机编译：<\/p>\n<pre><code class=\"language-sh\">latexmk -xelatex main.tex\n<\/code><\/pre>\n<p>再把<strong>只有虚构内容<\/strong>的工作副本上传到自己的 Overleaf 项目，用 XeLaTeX 编译一次。两边都通过后，逐项填检查表：<\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>检查项<\/th>\n<th>结果<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>封面、版权页、前言、目录、图目录、表目录<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>前言罗马页码、正文阿拉伯页码、附录继续<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>中文标点、字体嵌入、无缺字<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>单图、子图、图注、正文引用<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>三线表、数值表、横向表、长表<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>公式、SI 单位、交叉引用<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>TikZ 箭头、标签、打印尺寸<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>代码清单、提示框、定理<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>参考文献、索引、PDF 书签<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>本机与 Overleaf 都能编译<\/td>\n<td>待核对<\/td>\n<\/tr>\n<tr>\n<td>模板 README、版本、许可、已知问题<\/td>\n<td>待核对<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>最后给模板写一份 <code>README.md<\/code>：<\/p>\n<ul>\n<li>引擎和编译命令；<\/li>\n<li>目录说明；<\/li>\n<li>已包含的功能；<\/li>\n<li>已知限制；<\/li>\n<li>来源和许可；<\/li>\n<li>版本日期。<\/li>\n<\/ul>\n<p>完成时，爸爸能从 <code>template/technical-book/<\/code> 找到主文件、两章、附录、TikZ、表格、代码、README 和最新 PDF；检查表没有未解决的必做项。保留 <code>original-overleaf/<\/code> 只读，不把虚构样稿当成 Word 正文。第 7 节把这份已验证模板放进长期项目目录，并为第一份 Word 单独建立工作区。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-05\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 5 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-07\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 7 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-07": {"title": "把通用模板和每份文档分开放", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 7 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 07<\/span> · 爸爸 <\/p>\n<h1>把通用模板和每份文档分开放<\/h1><p class=\"lesson-summary\">分开放 Overleaf 模板来源、通用模板和第一份 Word，建立项目目录<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>先看完整目标，再建今天要用的部分<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>在 Finder 找回来源、模板和 Word<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>用只读提示词检查目录<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>第 6 节已在本机保存选中的 Overleaf 来源副本和通过检查的中文技术书模板。今天把它们放进长期项目结构，并为第一份 Word 建独立工作区。真实文件、路径和第 6 节的检查记录留在爸爸本机。<\/p>\n<h2 id=\"step-1\">1. 先看完整目标，再建今天要用的部分<\/h2>\n<p><code>template/technical-book/<\/code> 是以后还能复制给第二份文档的通用模板；<code>projects/book-001/latex/<\/code> 将是第一份文档自己的模板实例和章节。今天只增加下图标「第 7 节」的 Word 留存目录；其他文件在对应课次再建立。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">Technical-Publishing/\n  AGENTS.md                         第 8 节：项目入口\n  ROADMAP.md                        第 8 节：阶段路线\n  .agents/skills/\n    word-to-latex/SKILL.md          第 9 节验证后建立\n    latex-template-engineering/     以后维护模板时再建立\n    technical-writing-review/       以后独立审校时再建立\n  standards/\n    word-conversion.md              第 8 节：内容保持规则\n    latex-writing.md                模板版式规则稳定后再建立\n  template/\n    original-overleaf/              第 6 节：选中模板的来源和只读副本\n    technical-book/                 第 6 节：已通过检查的中文通用模板\n  projects/\n    book-001/\n      original/                     第 7 节：Word 留存副本\n      latex/                        第 9 节：模板实例与转换的章节\n      review/                       第 9 节：内容核对记录\n      output/                       第 9 节：编译出的 PDF\n    book-002/                       第二份文档出现时才创建\n  development/                      有重要技术决定时再创建\n  tests/                            第 9 节：可重复的转换检查\n<\/code><\/pre><\/div>\n<p><code>original-overleaf/<\/code> 保留下载的原始 ZIP、来源与许可记录，不因后续修改而覆盖。<code>technical-book/<\/code> 是中文模板的工作成果，不放第一份 Word 的私人内容。选中的模板虽在 Overleaf 上可以编辑，真实 Word 仍只在本机项目里处理。<\/p>\n<h2 id=\"step-2\">2. 在 Finder 找回来源、模板和 Word<\/h2>\n<ol>\n<li>关闭窗口后自己重新打开 <code>Technical-Publishing/<\/code>，在 <code>template/original-overleaf/<\/code> 找到选中模板的原始 ZIP 与来源记录，在 <code>template/technical-book/<\/code> 找到主 <code>.tex<\/code>、两章和第 6 节通过的测试样稿。若第 6 节的工作副本目前在别处，先把完整文件夹复制到这两个约定位置，保留能恢复的原文件。<\/li>\n<li>回到第 4 节确认的 Word 原件，试着打开。创建 <code>projects/book-001/original/<\/code>，把整份 Word 复制一份到这里供对照。示例名称是 <code>source-document.docx<\/code>；实际文件名保持爸爸自己的，不上传这个仓库，也不覆盖本机原位置。<\/li>\n<li>在本机写一张简短路径表，分别记下原始 Word、项目内 Word 留存副本、Overleaf 来源副本、中文模板主文件和第 6 节最新 PDF 的实际位置。关掉 Finder 再自己找回一次。<\/li>\n<\/ol>\n<h2 id=\"step-3\">3. 用只读提示词检查目录<\/h2>\n<p>在 Harness 打开 <code>Technical-Publishing/<\/code> 为工作区，发送下面的提示词。今天不开始转换，也不重写模板。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请只读清点当前项目中的 template/original-overleaf/、template/technical-book/ 和 projects/book-001/original/，不要修改、移动、上传或删除任何文件。\n报告 Overleaf 来源记录和原始 ZIP 是否在位、中文模板主文件与两个独立章节的相对路径、Word 留存副本的文件名；再指出以后复制模板到 projects/book-001/latex/ 时应保留哪些依赖文件。只报告项目内相对路径，不抄录 Word 正文或私人绝对路径。\n我会在 Finder 逐项找回并核对。若实际目录与课稿示例不同，请列为待确认，不要猜测。\n<\/code><\/pre><\/div>\n<p>爸爸在 Finder 对照 Harness 报告，打开中文模板主文件，确认它没有引用 <code>book-001<\/code>。完成时，能说清为什么通用模板、模板来源和第一份文档分别存放；留下一张实际路径表。第 8 节再写项目入口、阶段路线和内容保持规则。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-06\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 6 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-08\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 8 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-08": {"title": "让下一次 Harness 会话接着做", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 8 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 08<\/span> · 爸爸 <\/p>\n<h1>让下一次 Harness 会话接着做<\/h1><p class=\"lesson-summary\">写项目指令、阶段路线与内容保持规则，并开新会话核对<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>先分清六种记录<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>让 Harness 起草，爸爸确认后写入<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>开新会话验证它读到了什么<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>第 7 节已把选中的 Overleaf 中文模板与第一份 Word 分开放好。今天只写眼前会用到的三份 Markdown：项目入口 <code>AGENTS.md<\/code>、阶段路线 <code>ROADMAP.md<\/code>、内容保持规则 <code>standards/word-conversion.md<\/code>。Markdown 可以用普通文本编辑器打开，<code>#<\/code> 表示标题，<code>-<\/code> 表示一条清单。<\/p>\n<h2 id=\"step-1\">1. 先分清六种记录<\/h2>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>名称<\/th>\n<th>回答什么问题<\/th>\n<th>本节怎样处理<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td><code>AGENTS.md<\/code><\/td>\n<td>Harness 在这个项目先读什么、可改哪里、怎样汇报？<\/td>\n<td>放在 <code>Technical-Publishing/<\/code> 根目录，写长期边界和文件索引<\/td>\n<\/tr>\n<tr>\n<td><code>ROADMAP.md<\/code><\/td>\n<td>现在在哪一阶段，下一小步是什么？<\/td>\n<td>写已验证的模板、首段转换、后续批量转换的顺序<\/td>\n<\/tr>\n<tr>\n<td>Standard<\/td>\n<td>已确认的内容或排版要求是什么？<\/td>\n<td>先写 <code>standards/word-conversion.md<\/code> 中少量确定规则<\/td>\n<\/tr>\n<tr>\n<td>Development<\/td>\n<td>曾遇到什么重要问题，为什么采用某种解决办法？<\/td>\n<td>等第 9 节有真实决定再建，避免预填假经验<\/td>\n<\/tr>\n<tr>\n<td>Skill<\/td>\n<td>下次同类任务按什么步骤重复？<\/td>\n<td>第 9 节验证完一次转换后再写<\/td>\n<\/tr>\n<tr>\n<td>Tests<\/td>\n<td>怎样检查改动没有破坏已能工作的部分？<\/td>\n<td>第 9 节从实际编译和核对中写出<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>一句话记：入口管边界，路线管阶段，Standard 管要求，Skill 管步骤，Tests 管验证，Development 管决定的原因。<code>CLAUDE.md<\/code> 也是部分工具和 Harness 配置可读取的项目指令候选文件；本项目先用一份 <code>AGENTS.md<\/code>，不复制一套相同内容。以爸爸本机新会话读到的文件为准。<a href=\"https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/context/agent-instructions/README.md\" target=\"_blank\" rel=\"noopener\">Harness 项目指令说明<\/a><\/p>\n<h2 id=\"step-2\">2. 让 Harness 起草，爸爸确认后写入<\/h2>\n<p>先打开第 4 节保存在本机的一页项目说明。让 Harness 读取它和第 7 节的目录，<strong>只在会话里提出草稿<\/strong>，不要立即写入文件。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">当前工作区是 Technical-Publishing/。请先读取我本机第 4 节留下的项目说明，再只读查看 template/ 和 projects/book-001/ 的目录。找不到项目说明时先问我位置，不要猜测内容。\n请在会话中起草根目录 AGENTS.md、ROADMAP.md 和 standards/word-conversion.md，暂时不要创建或修改文件。\nAGENTS.md 写清先读哪些现有文件、只修改 template/technical-book/ 与 projects/book-001/latex/ 等工作副本、原件和留存副本不得覆盖，以及每轮先报告计划和结束时报告核对结果。\nROADMAP.md 区分当前已验证的 Overleaf 中文模板、下一步的 Word 小段转换、以后分批转换与复用。Standard 只写已经确定的内容保持规则；未确定的排版细节标待定。\n请逐份列出拟写内容和依据，等我对照项目说明与 Finder 确认。\n<\/code><\/pre><\/div>\n<p>爸爸逐条核对草稿：目录名是否真存在，Word 的技术内容是否被当作输入，已经验证的通用模板和项目实例的范围是否写对，是否把未决定的字体或图表样式误写成规则。确认后，在 Harness 中说「按刚确认的三份草稿写入对应路径，只创建需要的 <code>standards/<\/code> 目录，不动其他文件」；再从 Finder 打开三份文件核对。若 Harness 无法写入，爸爸也可以把确认后的文字粘贴到本机文本编辑器保存。<\/p>\n<p>三份文件可以从下面的<strong>公开示例<\/strong>起步，实际内容应按爸爸本机项目说明和目录修改。<\/p>\n<pre><code class=\"language-markdown\"># AGENTS.md｜项目入口\n先读 ROADMAP.md；转换前再读 standards/word-conversion.md。\n原件与 template/original-overleaf/、projects/book-001/original/ 只用于读取和核对，不覆盖。\n本轮可从 template/technical-book/ 复制模板实例到 projects/book-001/latex/；通用模板不放私人正文。\n动手前列出将读、将改的文件及检查办法；完成后报告结果和未解决问题。\n<\/code><\/pre>\n<pre><code class=\"language-markdown\"># ROADMAP.md｜阶段路线\n目标：忠实转换 Word，形成可长期复用的中文 LaTeX 模板和流程。\n当前：第 6 节选定的 Overleaf 模板已完成中文、多章节与功能检查。\n下一步：转换 book-001 的一小段，编译并逐项核对。\n以后：分批转换全篇，验证图表与引用，再复用到下一份文档。\n<\/code><\/pre>\n<pre><code class=\"language-markdown\"># standards/word-conversion.md｜已确认规则\n- 不覆盖 Word 与模板原件，也不改项目内的留存副本。\n- 转换时保留正文、数字、单位、公式、表格数据和技术结论。\n- 表格可以重新排版；图可在人工确认后重绘，但不能改变数据或技术连接关系。\n- 原稿编号与 LaTeX 引用建立可核对的对应关系；语言润色与格式转换分开，改字句先征求爸爸确认。\n<\/code><\/pre>\n<p>这三份文件各管一件事：<code>AGENTS.md<\/code> 只给工作边界和索引，不复制整份 Standard；<code>ROADMAP.md<\/code> 只记阶段；Standard 记可以重复使用的要求。第 9 节若发现规则需要调整，先核对真实结果，再改文件。<\/p>\n<h2 id=\"step-3\">3. 开新会话验证它读到了什么<\/h2>\n<p>关闭当前会话，从项目根目录打开 Harness 新会话，发送只读提示词：<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请先读当前项目根目录的 AGENTS.md、它指向的 ROADMAP.md，以及 standards/word-conversion.md。暂时不要修改文件或开始转换。\n请用自己的话列出当前阶段、下一小步、可以修改的工作副本、不能覆盖的原件，并给出你实际读取的相对路径。找不到文件就报告，不要按记忆补写。\n我会打开这三份 Markdown 和 Finder 目录逐项对照，再决定下一步。\n<\/code><\/pre><\/div>\n<p>爸爸逐项对照三个文件和 Finder。若它没有读到，先确认 Harness 工作区是不是 <code>Technical-Publishing/<\/code>，再明确提供文件路径重试，并记下本机的加载情况。完成时，新会话能说对项目阶段和原件边界，爸爸能指出以后该把步骤、检查和重要决定分别放在哪里。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-07\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 7 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#dad/lesson-09\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 9 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "dad/lesson-09": {"title": "让第一小段 Word 进入真实模板", "html": "<article class=\"lesson-page route-dad\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#dad\">爸爸的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 9 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 09<\/span> · 爸爸 <span class=\"chip chip-status\">后续课<\/span><\/p>\n<h1>让第一小段 Word 进入真实模板<\/h1><p class=\"lesson-summary\">用已验证模板转换一小段 Word，编译、核对并沉淀流程<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>定位输入，先只做计划<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>按确认的范围转换并编译<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>做有证据的人工核对<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>把验证过的做法留下来<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"dad\"><p>第 6 节已选好并验证 Overleaf 中文模板，第 7 节建了项目目录，第 8 节写了入口、路线和内容规则。今天从本机 Word 选一个小节，按「计划 → 执行 → 编译与核对 → 沉淀」走完第一轮。模板已能编译中文；这一节专注于忠实转换这段内容，后续再扩大范围。<\/p>\n<h2 id=\"step-1\">1. 定位输入，先只做计划<\/h2>\n<p>在 <code>projects/book-001/original/<\/code> 的 Word 留存副本里，选一个有标题、正文和数字或单位的小节。在本机记下标题与页码或段落位置，不把原文粘到公开课程仓库。建立 <code>projects/book-001/latex/<\/code>、<code>review/<\/code>、<code>output/<\/code>。若 Harness 无法读取 Word 正文，爸爸在私人会话里提供这一小节的文字或本机工作副本，要求它说明实际读到了什么。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">当前工作区是 Technical-Publishing/。请先读 AGENTS.md、ROADMAP.md、standards/word-conversion.md，再只读查看 projects/book-001/original/ 中我指定的 Word 小节，以及 template/technical-book/。若不能读取 Word，请停下并告诉我需要我提供哪一段。\n这一轮只处理我指定的一个小节。请先给计划，不创建或修改文件：列出原文标题和位置、怎样把第 6 节验证的通用模板复制成 projects/book-001/latex/ 中的项目实例、拟生成的章节文件、编译入口，以及 Word、LaTeX、PDF 三处要核对的项目。\n不要改原件或留存副本，不要润色技术文字；遇到表格、公式、图和原稿编号，说明会怎样保留与核对。等我确认计划后再执行。\n<\/code><\/pre><\/div>\n<p>爸爸对照 Word 原文和 Finder 核对计划中的小节边界、目标路径、原件保护和检查办法。计划扩大到整章、擅自改字句或凭猜测描述未读到的材料时，先让 Harness 改正计划。<\/p>\n<h2 id=\"step-2\">2. 按确认的范围转换并编译<\/h2>\n<p>计划确认后，才发送执行提示词。<code>template/original-overleaf/<\/code> 和 <code>projects/book-001/original/<\/code> 始终只读；<code>template/technical-book/<\/code> 保持第 6 节通过检查的通用版本。把完整模板复制到 <code>projects/book-001/latex/<\/code> 作为本书实例，只在实例中加入真实章节，避免通用模板引用 <code>book-001<\/code> 的私人内容。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">按我刚确认的计划，只转换指定的 Word 小节。先把 template/technical-book/ 中已验证的模板完整复制为 projects/book-001/latex/ 的项目实例，在实例中写入本段 .tex 章节并接入主文件。保持原文正文、数字、单位、公式、表格数据和技术结论，不自行润色、补写或重绘技术关系。\n只改 projects/book-001/latex/。不要改 template/original-overleaf/、template/technical-book/ 或 Word 留存副本。若实际材料出现第 6 节模板未测试过的结构，先报告缺口和建议，不要擅自扩张模板。\n请实际编译项目实例，报告改动文件、编译方式、最新 PDF 路径、第一条关键错误和未解决问题。编译成功后把本次 PDF 放入 projects/book-001/output/。我会打开 Word、.tex 和 PDF 核对，再决定是否沉淀流程。\n<\/code><\/pre><\/div>\n<p>爸爸打开新 PDF，核对文件时间和显示的内容，避免误看旧版本。若本段有新的模板需求，先记录并回到模板工作副本单独验证，再重新复制到项目实例；没有编译成功和内容核对结果时，本节仍在进行中。<\/p>\n<h2 id=\"step-3\">3. 做有证据的人工核对<\/h2>\n<p>在本机建立 <code>projects/book-001/review/segment-001.md<\/code>，逐项记 Word 的位置、对应 <code>.tex<\/code> 文件、PDF 页码、核对结果和待处理问题。由爸爸亲自对照三处，不让 AI 只凭自己的转换稿给自己打勾。<\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>核对什么<\/th>\n<th>怎样对照<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>标题、段落与顺序<\/td>\n<td>从 Word 原段逐段找到 <code>.tex<\/code> 和 PDF 中的对应内容<\/td>\n<\/tr>\n<tr>\n<td>数字、单位、公式、技术结论<\/td>\n<td>按原文逐项核对，不把格式改善当成内容改写<\/td>\n<\/tr>\n<tr>\n<td>表格<\/td>\n<td>核对每行每列的数据；允许版式变化，不漏项<\/td>\n<\/tr>\n<tr>\n<td>图与技术连接关系<\/td>\n<td>保留原图供核对；以后要重绘，先确认连接和参数没有变化<\/td>\n<\/tr>\n<tr>\n<td>编号与交叉引用<\/td>\n<td>记录 Word 编号到 LaTeX 标签、PDF 显示的对应关系<\/td>\n<\/tr>\n<tr>\n<td>项目编译<\/td>\n<td>打开本次 PDF，检查中文、目录或引用及未修改部分仍可读<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>小节没有的项目写「不适用」，没核对到的写「待核对」，不要填成通过。内容措辞若需要润色，另列建议请爸爸确认，不混入这次格式转换。<\/p>\n<h2 id=\"step-4\">4. 把验证过的做法留下来<\/h2>\n<p>先区分本轮产生的四种记录。<code>review/segment-001.md<\/code> 保存这份文档的核对证据；<code>tests/word-segment-check.md<\/code> 写能重复执行的转换与编译检查，包括入口、实际运行方式、预期现象与本轮结果；<code>development/decisions.md<\/code> 仅在确实解决了转换或引用问题时记录「问题、原因、采用的改法、验证结果」。经核对的通用内容要求继续放 <code>standards/word-conversion.md<\/code>。具体 <code>.tex<\/code> 的改动历史将来交给 Git，Development 负责解释重要决定的原因。<\/p>\n<p>两份检查记录可以先照下面的占位格式写，填写时只用爸爸本机的真实结果：<\/p>\n<pre><code class=\"language-markdown\"># projects/book-001/review/segment-001.md\nWord 位置：本机第［页／节］；LaTeX 文件：［相对路径］；PDF：［文件及页码］\n标题与段落：待核对；数字与单位：待核对\n表格／图／公式／引用：按本段实际内容填写通过、不适用或待核对\n未解决问题：［实际问题或“无”］\n<\/code><\/pre>\n<pre><code class=\"language-markdown\"># tests/word-segment-check.md\n编译入口：［本次使用的 book-001 项目实例主文件］\n重复办法：［Harness 实际执行的编译命令或操作］\n预期：生成新 PDF，本段标题与内容可读，目录或引用按本段实际情况显示\n本次结果：［运行时间、PDF 位置、通过或实际错误］\n<\/code><\/pre>\n<p>本轮通过后，再请 Harness 起草第一份可复用 Skill：<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请先读本轮的 Word 小节、转换后的 .tex、最新 PDF、projects/book-001/review/segment-001.md 和 tests/word-segment-check.md。只根据实际通过的检查，起草 .agents/skills/word-to-latex/SKILL.md；先在会话中展示草稿，等我确认后再写入。\nSkill 只记录下次转换另一小节时可重复的步骤：定位原文、规划对应文件、只改工作副本、编译、对照原文和记录待确认项。规则请引用 standards/word-conversion.md，不要复制一大段；未经验证的修复不要写成固定步骤。\n同时建议 ROADMAP.md 的下一小步。若产生了稳定新规则或实际技术决定，指出应更新哪份文件及依据；没有变化的文件保持不动。我会对照本轮核对记录确认。\n<\/code><\/pre><\/div>\n<p>下面只示范 Skill 的最小形状，爸爸应以本轮确实验证过的步骤写自己的版本。<a href=\"https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/subsystems/skills.md\" target=\"_blank\" rel=\"noopener\">Harness 项目 Skill 说明<\/a><\/p>\n<pre><code class=\"language-markdown\">---\nname: word-to-latex\ndescription: 把已定位的 Word 小节忠实转换到项目的 LaTeX 工作副本并核对\n---\n# 转换一小节\n1. 读项目入口、当前路线和内容规则，定位 Word 原文。\n2. 先列源段落与目标 .tex 的对应关系，等人确认。\n3. 只修改工作副本，编译当前模板并报告新 PDF。\n4. 对照 Word、.tex 和 PDF 记录通过项、待核对项与问题。\n<\/code><\/pre>\n<p>本节只建立经过验证的 <code>word-to-latex<\/code>。以后模板维护可发展 <code>latex-template-engineering<\/code>，语言审校可发展 <code>technical-writing-review<\/code>；审校建议与格式转换分开，原文字句要改时由爸爸确认。若本机 Harness 没有发现新 Skill，就明确指向文件让它读，并记下本机验证结果，不把识别能力当作已完成。<\/p>\n<p>完成时，爸爸能展示由已验证的 <code>technical-book/<\/code> 复制出的项目实例所编译的新 PDF、对应 <code>.tex<\/code>、逐项核对记录和可重复的编译检查；通过后才保存 Skill 并在 <code>ROADMAP.md<\/code> 记下下一段或下一项模板工作。<\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#dad/lesson-08\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 8 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回爸爸的课程<\/span><\/a>\n<span class=\"pager-link is-empty\" aria-hidden=\"true\"><\/span>\n<\/nav>\n<\/div><\/article>"}, "home": {"title": "爸妈的 Mac 与 AI 课", "html": "<section class=\"hero home-hero\"><div class=\"wrap\">\n<p class=\"eyebrow\">家庭课程 · 持续更新<\/p>\n<h1>爸妈的 <em>Mac 与 AI 课<\/em><\/h1>\n<p class=\"lead\">按学习路线浏览，或搜索课里的操作和概念。两条路线各自编号，不必同步。<\/p>\n\n<p class=\"hero-examples\">试一试：<a class=\"chip\" href=\"#home\">屏幕共享<\/a><a class=\"chip\" href=\"#home\">API Key<\/a><a class=\"chip\" href=\"#home\">LaTeX<\/a><a class=\"chip\" href=\"#home\">GitHub<\/a><\/p>\n<\/div><\/section>\n<section class=\"wrap stats\" aria-label=\"课程概况\">\n<div class=\"stat\"><span class=\"stat-value\">9<\/span><span class=\"stat-label\">爸爸的课<\/span><\/div>\n<div class=\"stat\"><span class=\"stat-value\">7<\/span><span class=\"stat-label\">妈妈的课<\/span><\/div>\n<div class=\"stat\"><span class=\"stat-value\">2<\/span><span class=\"stat-label\">共同练习<\/span><\/div>\n<div class=\"stat\"><span class=\"stat-value\">2<\/span><span class=\"stat-label\">学习路线<\/span><\/div>\n<\/section>\n<section class=\"wrap route-grid\" aria-label=\"选择学习路线\"><a class=\"route-card route-dad\" href=\"#dad\">\n<figure class=\"route-portrait\"><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjIwIj4KPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2ZjY2MxIiBzdHJva2Utd2lkdGg9IjEuMiIgb3BhY2l0eT0iLjY1Ij48Y2lyY2xlIGN4PSIxNDkiIGN5PSIxMDgiIHI9Ijg4Ii8+PHBhdGggZD0iTTI5IDE3MXEzMi0xOSA1Ny05bTExMS0xMTlxMjMtOSA1MC0ybS0xOSAxMGgzNCIvPjwvZz4KPGcgc3Ryb2tlPSIjMTYyMDFlIiBzdHJva2Utd2lkdGg9IjIuMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KPHBhdGggZD0iTTY2IDE5NHExNS00MyA2Ni01Nmw0NyAycTQ0IDEyIDU3IDU0IiBmaWxsPSIjZTRmMWVlIi8+CjxwYXRoIGQ9Im0xMzcgMTIxLTQgMjUgMjUgMjQgMjMtMjMtNy0yNCIgZmlsbD0iI2YyZTJkNSIvPgo8cGF0aCBkPSJNMTA5IDgycS00LTM5IDM4LTQ5IDQ3LTEwIDU4IDM3bC0yIDE2IDEzIDE3LTEzIDUtMSAxNHEtMSAxNC0xOCAxNWwtMjUtM3EtMzAtNC0zNy0zMCIgZmlsbD0iI2Y2ZTdkYiIvPgo8cGF0aCBkPSJNMTA5IDg4cS0xNC0xMS02LTMzIDE0LTM0IDU0LTM1IDM2LTEgNTEgMzUtMjAgMi0zNi0xMS0yMCAxNi01MSAxOWwtMSAyOCIgZmlsbD0iIzE2MjAxZSIvPgo8cGF0aCBkPSJNMTEzIDUxcTIwLTIzIDQ5LTIxbS00MyAyNXEyNC02IDQzLTE5IiBzdHJva2U9IiM2Yjc2NzMiIHN0cm9rZS13aWR0aD0iMS4xIi8+CjxwYXRoIGQ9Ik0xMjggODZxLTE2LTExLTE0IDcgMSAxMiAxMyAxMm01NC0yM3ExMC01IDIwIDBtLTE3IDlxNy00IDEzIDBtLTE0IDI5cTggMyAxNy0xbS02NCAyMSAyMiAzMCAyNC0yOW0tMjMgMjggMTkgMjRtLTY2LTM3cS05IDEzLTEyIDI5IiBmaWxsPSJub25lIi8+CjxwYXRoIGQ9Ik0xNzMgOTVxOCA1IDE3IDIiIHN0cm9rZT0iI2IwODQ3MSIgc3Ryb2tlLXdpZHRoPSIxLjEiLz4KPC9nPjwvc3ZnPgo=\" alt=\"爸爸路线的抽象侧脸线描，用作课程入口\" width=\"300\" height=\"220\"><\/figure>\n<div class=\"route-copy\"><p class=\"eyebrow\">学习路线<\/p><h2>爸爸的课程<\/h2><p>从自己的 DeepSeek 账户开始，把一份真实的 Word 技术文档逐步变成可维护、可复用的中文 LaTeX 项目。<\/p>\n<p class=\"route-meta\"><span class=\"chip\">9 节<\/span><span class=\"chip\">DeepSeek · Harness · Word → LaTeX<\/span><\/p>\n<span class=\"route-enter\">打开课表 <span aria-hidden=\"true\">→<\/span><\/span><\/div><\/a><a class=\"route-card route-mom\" href=\"#mom\">\n<figure class=\"route-portrait\"><img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjIwIj4KPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2ZjY2MxIiBzdHJva2Utd2lkdGg9IjEuMiIgb3BhY2l0eT0iLjY1Ij48Y2lyY2xlIGN4PSIxNTEiIGN5PSIxMDgiIHI9Ijg4Ii8+PHBhdGggZD0iTTQ2IDUxcTI0LTcgNDgtMm0tNTMgMTFoMzJtMTQ1IDEwNXEyNS0xMSA1MS0xIi8+PC9nPgo8ZyBzdHJva2U9IiMxNjIwMWUiIHN0cm9rZS13aWR0aD0iMi4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgo8cGF0aCBkPSJNNjYgMTk0cTE0LTM5IDYwLTU1aDQzcTQ5IDExIDY2IDU1IiBmaWxsPSIjZjNlN2UwIi8+CjxwYXRoIGQ9Im0xMjYgMTIzLTYgMjcgMjkgMTkgMjAtMjQtNS0yNCIgZmlsbD0iI2YyZTJkNSIvPgo8cGF0aCBkPSJNMTc3IDYwcTEzLTE0IDI3LTUgMTMgOSA5IDI0LTQgMTMtMTkgMTYiIGZpbGw9IiMxNjIwMWUiLz4KPHBhdGggZD0iTTExMCA2NnExMC0zMyA0NS0zMiA0NyAxIDQzIDQ4LTEgMzItMjYgNDYtMTkgOS00MiA4LTE2IDAtMTctMTRsLTEtMTUtMTQtNSAxMi0xN3oiIGZpbGw9IiNmNmU3ZGIiLz4KPHBhdGggZD0iTTEwNyA3N3EtMTMtOS0xLTI4IDE0LTI1IDQ1LTI3IDM2LTEgNDcgMjUgMTMgMzAtMTUgNThsLTMtMTlxLTI5LTctNDQtMzMtMTIgMTgtMjkgMjR6IiBmaWxsPSIjMTYyMDFlIi8+CjxwYXRoIGQ9Ik0xNDIgMzNxMjItNiA0MSAxM20tMzgtMTBxMTUgMjIgMzcgMjkiIHN0cm9rZT0iIzZiNzY3MyIgc3Ryb2tlLXdpZHRoPSIxLjEiLz4KPHBhdGggZD0iTTExNyA4M3E4LTUgMTYtMm0tMTYgMTFxNy00IDE0IDBtLTE2IDI4cTggMyAxNi0xbTM5LTMycTE0LTEwIDE1IDUgMCAxMC0xMSAxNW0tNTQgMzggMjkgMjQgMjItMjVtLTIyIDI1LTE4IDI1bTQ0LTM5cTE0IDExIDIyIDI5IiBmaWxsPSJub25lIi8+CjxwYXRoIGQ9Ik0xMzAgOTdxNyA1IDE1IDIiIHN0cm9rZT0iI2IwODQ3MSIgc3Ryb2tlLXdpZHRoPSIxLjEiLz4KPGNpcmNsZSBjeD0iMTc0IiBjeT0iMTExIiByPSIzLjIiIGZpbGw9IiNmZmYiLz4KPC9nPjwvc3ZnPgo=\" alt=\"妈妈路线的抽象侧脸线描，用作课程入口\" width=\"300\" height=\"220\"><\/figure>\n<div class=\"route-copy\"><p class=\"eyebrow\">学习路线<\/p><h2>妈妈的课程<\/h2><p>先把新 Mac、会议、邮件和家庭共享用顺，再按爸爸第 1–3 节完成 DeepSeek 与 Harness 的 AI 入门。<\/p>\n<p class=\"route-meta\"><span class=\"chip\">7 节<\/span><span class=\"chip\">Mac 基础 · 豆包 · DeepSeek/Harness<\/span><\/p>\n<span class=\"route-enter\">打开课表 <span aria-hidden=\"true\">→<\/span><\/span><\/div><\/a><\/section>\n<section class=\"wrap home-section\"><div class=\"section-head\"><div class=\"section-title\"><p class=\"eyebrow\">共用练习<\/p><h2>共同练习<\/h2><\/div><\/div><div class=\"practice-grid\"><a class=\"practice-card\" href=\"#practice/github\">\n<p class=\"eyebrow\">共同练习 · 备用<\/p>\n<h2>爸妈第一次用 GitHub<\/h2>\n<p>备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。<\/p>\n<span class=\"route-enter\">打开练习 <span aria-hidden=\"true\">→<\/span><\/span>\n<\/a><a class=\"practice-card\" href=\"#practice/image-gen\">\n<p class=\"eyebrow\">共同练习 · 建议安排<\/p>\n<h2>用 Harness 生成房间软装图<\/h2>\n<p>建议安排：配置 Seedream / 火山方舟，跑通生图、改图和软装对比。<\/p>\n<span class=\"route-enter\">打开练习 <span aria-hidden=\"true\">→<\/span><\/span>\n<\/a><\/div><\/section>\n<section class=\"wrap home-section\"><div class=\"section-head\"><div class=\"section-title\"><p class=\"eyebrow\">怎么用<\/p><h2>三步开始<\/h2><\/div><\/div>\n<div class=\"card-grid\">\n<article class=\"card\"><span class=\"card-kicker\">01<\/span><h3>选自己的路线<\/h3><p>爸爸和妈妈各自从自己的课表开始，课次不要求同步。第一次来，先看一节里要做什么。<\/p><\/article>\n<article class=\"card\"><span class=\"card-kicker\">02<\/span><h3>按步骤动手<\/h3><p>每节先写清输入、步骤和预期结果。需要提示词时，照提示词块里的文字发给 AI，再自己操作。<\/p><\/article>\n<article class=\"card\"><span class=\"card-kicker\">03<\/span><h3>亲手核对<\/h3><p>AI 说得通顺不等于事情做对。打开原文件、原网页或 PDF，对照检查后再进入下一步。<\/p><\/article>\n<\/div><\/section>"}, "mom": {"title": "妈妈的课程", "html": "<section class=\"hero hero-route route-mom\"><div class=\"wrap\">\n<p class=\"eyebrow\">学习路线 · Mac 基础 · 豆包 · DeepSeek/Harness<\/p>\n<h1>妈妈的课程<\/h1>\n<p class=\"lead\">先把新 Mac、会议、邮件和家庭共享用顺，再按爸爸第 1–3 节完成 DeepSeek 与 Harness 的 AI 入门。<\/p>\n<p class=\"hero-meta\"><span class=\"chip\">7 节<\/span><\/p>\n<\/div><\/section>\n<section class=\"wrap lesson-section\">\n<div class=\"section-head\"><div class=\"section-title\"><p class=\"eyebrow\">正在进行<\/p><h2>课程进度<\/h2><\/div><span class=\"section-note\">7 节<\/span><\/div>\n<div class=\"lesson-list\"><a class=\"lesson-row\" href=\"#mom/lesson-01\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 01<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">新 Mac 联网后先装豆包桌面版，试语音通话和屏幕共享，再更新和验证入会<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#mom/lesson-02\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 02<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">安装应用、配邮箱并核对同步<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#mom/lesson-03\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 03<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">快捷键和触控板，验证共享日历、备忘录和相册<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#mom/lesson-04\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 04<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">会议预约与分享、语音输入、MacTeX 验证<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#mom/lesson-05\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 05<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">按爸爸第 1 节：认识 AI 与 DeepSeek/Codex<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#mom/lesson-06\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 06<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">按爸爸第 2 节：安装与初始化 Harness<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><a class=\"lesson-row\" href=\"#mom/lesson-07\"><span class=\"lesson-num\" lang=\"en-GB\">Lesson 07<\/span><span class=\"lesson-main\"><span class=\"lesson-title\">按爸爸第 3 节：推理强度、用量与查网页/日历<\/span><span class=\"lesson-tags\"><\/span><\/span><span class=\"lesson-arrow\" aria-hidden=\"true\">→<\/span><\/a><\/div>\n<\/section>\n<section class=\"wrap lesson-section\">\n<a class=\"practice-card\" href=\"#practice\">\n<p class=\"eyebrow\">共同练习 · 2 项<\/p>\n<h2>GitHub 与 Seedream 生图<\/h2>\n<p>GitHub 先备用；Seedream 生图建议安排，用来跑通 Harness 生图、改图和软装对比。<\/p>\n<span class=\"route-enter\">打开共同练习 <span aria-hidden=\"true\">→<\/span><\/span>\n<\/a>\n<\/section>"}, "mom/lesson-01": {"title": "把新 Mac 设置到能上远程课", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 1 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 01<\/span> · 妈妈 <\/p>\n<h1>把新 Mac 设置到能上远程课<\/h1><p class=\"lesson-summary\">新 Mac 联网后先装豆包桌面版，试语音通话和屏幕共享，再更新和验证入会<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>新 Mac 联网后先装豆包桌面版<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>检查更新，先把下载排起来<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>登录 Apple 账户，检查 App Store 更新<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>安装腾讯会议，并亲手进会<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"mom\"><p>本课按 macOS 27 编写。<\/p>\n<h2 id=\"step-1\">1. 新 Mac 联网后先装豆包桌面版<\/h2>\n<ol>\n<li>接电开机，按提示设置 Mac 登录密码并连网，打开 Safari。<\/li>\n<li>打开<a href=\"https://www.doubao.com/download/desktop?ug_utm_source=101\" target=\"_blank\" rel=\"noopener\">下载豆包桌面版（Mac）<\/a>，选 Mac 版。下载后在 Finder 的「下载」里打开安装文件，按提示安装。从「应用程序」打开豆包并登录。<\/li>\n<li>在豆包桌面客户端先拨通语音通话，再从通话界面开启屏幕共享。若 macOS 提示授权，按提示在「系统设置 → 隐私与安全性」为豆包开启麦克风和屏幕录制相关权限（名称随 macOS 版本变化，例如「录屏与系统录音」），必要时重新打开客户端。按钮名称以现场版本为准。<\/li>\n<li>打开「系统设置」，对着 Mac 说：「请看我现在共享的画面。我想检查系统更新，请只告诉我下一步。」妈妈自己照着点，再让豆包按新画面给下一步。按豆包的说明，它会在收到指令时截取当时的共享画面。<a href=\"https://www.doubao.com/legal/privacy\" target=\"_blank\" rel=\"noopener\">豆包隐私政策<\/a><\/li>\n<li>做完停止共享并结束通话。进入账号验证或私人页面前先停共享。若通话或共享入口暂时不可用，记下卡点，先继续设置，第 2 节再补验收。<\/li>\n<\/ol>\n<h2 id=\"step-2\">2. 检查更新，先把下载排起来<\/h2>\n<ol>\n<li>打开「系统设置 → 通用 → 软件更新」。若安装需要重启，先看看等待时间。今天优先保证腾讯会议能入会，可先启动下载，或等入会测试后再重启。更新结束后重新检查这一页。<\/li>\n<li>从 Safari 打开<a href=\"https://meeting.tencent.com/download/index.html\" target=\"_blank\" rel=\"noopener\">下载腾讯会议（Mac）<\/a>，选 macOS，先下载它。打开 Safari 的下载列表或 Finder 的「下载」目录，确认文件已下载完成。<\/li>\n<li>同时从 <a href=\"https://www.tug.org/mactex/mactex-download.html\" target=\"_blank\" rel=\"noopener\">MacTeX 下载页<\/a>找到 MacTeX 安装包。它是大文件，网络和磁盘空间允许时让它先下载，等候期间做下面的设置。如果网络慢，先保腾讯会议和系统更新，MacTeX 可留在课间继续。<\/li>\n<li>用同样方法找到 <a href=\"https://www.google.com/chrome/\" target=\"_blank\" rel=\"noopener\">Chrome<\/a>和<a href=\"https://mac.weixin.qq.com/\" target=\"_blank\" rel=\"noopener\">微信 Mac 版<\/a>。优先下载后面马上用到的微信和 Chrome。DeepSeek Harness 留到妈妈开始 AI 课程时再按当时的官方入口安装。官方下载或使用入口暂时不可用时，记下卡在哪一步，继续其他项目。<\/li>\n<\/ol>\n<h2 id=\"step-3\">3. 登录 Apple 账户，检查 App Store 更新<\/h2>\n<ol>\n<li>打开「系统设置」，点左上方 Apple 账户入口，用自己的账户登录并在自己的设备上完成验证。<\/li>\n<li>打开账户下的 iCloud 页面，核对日历、备忘录和照片等本次要使用的同步项目。家庭共享邀请与应用里的实际显示在第 3 节检查。邮箱账户在第 2 节另行添加。<\/li>\n<li>打开 App Store，点边栏的「更新」。如有待更新的应用，先更新马上要用的。其余在网络空闲时继续。回到更新页确认所选项目已完成。系统更新负责 Safari、备忘录等系统内建 App 的更新。App Store 的「更新」针对从商店获得的 App。<\/li>\n<\/ol>\n<h2 id=\"step-4\">4. 安装腾讯会议，并亲手进会<\/h2>\n<ol>\n<li>在 Finder 的「下载」打开官方安装文件。若是 <code>.dmg<\/code>，先打开，再看里面是可拖入「应用程序」的 App，还是要双击运行的安装器。若是 <code>.pkg<\/code>，双击后按安装器的提示继续。<\/li>\n<li>到 Finder 的「应用程序」打开腾讯会议。点家人发的测试邀请，开关麦克风，请对方确认声音。选择一个练习窗口共享，再停止。若被要求授予权限，按提示到「系统设置 → 隐私与安全性」检查麦克风或屏幕录制权限，按应用提示重新打开并试一次。<\/li>\n<li>退出会议，再用原邀请重新进会。Mac 还在更新时，先用手机验证能加入，再把 Mac 入会留作待办。<\/li>\n<li>打开「文本编辑」，写一行测试文字，试 <code>⌘C<\/code> 复制、<code>⌘V<\/code> 粘贴、<code>⌘S<\/code> 保存。把文件存到「文稿」，关闭后用 Finder 找回。<\/li>\n<\/ol>\n<p>本节以能入会为优先。豆包试一次即可，其余软件先排下载，来不及就到第 2 节再安装。给每项软件记一个状态：待下载、下载中、已安装、已打开验证。<\/p>\n<p>备查：<a href=\"https://support.apple.com/zh-cn/108382\" target=\"_blank\" rel=\"noopener\">Apple 软件更新<\/a> · <a href=\"https://support.apple.com/zh-cn/102629\" target=\"_blank\" rel=\"noopener\">App Store 手动更新<\/a> · <a href=\"https://support.apple.com/zh-cn/guide/mac-help/mchl211c911f/mac\" target=\"_blank\" rel=\"noopener\">Apple 隐私与安全设置<\/a> · <a href=\"https://meeting.tencent.com/support/topic/1758/\" target=\"_blank\" rel=\"noopener\">腾讯会议桌面端指南<\/a> · <a href=\"https://api-docs.deepseek.com/zh-cn/faq/\" target=\"_blank\" rel=\"noopener\">DeepSeek 平台常见问题<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<span class=\"pager-link is-empty\" aria-hidden=\"true\"><\/span>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#mom/lesson-02\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 2 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "mom/lesson-02": {"title": "先验收应用，再做邮件和基础操作", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 2 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 02<\/span> · 妈妈 <\/p>\n<h1>先验收应用，再做邮件和基础操作<\/h1><p class=\"lesson-summary\">安装应用、配邮箱并核对同步<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>检查应用和远程入会<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>添加邮箱并验证同步<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"mom\"><h2 id=\"step-1\">检查应用和远程入会<\/h2>\n<ol>\n<li>从上节链接进会。打开「下载」目录，逐项检查上节的状态。先完成系统重启和腾讯会议验证，再继续安装。<\/li>\n<li><strong>Chrome<\/strong>：打开官方安装文件，按窗口提示放入「应用程序」，再从那里打开，访问一个已知网页。<strong>微信<\/strong>：同样打开官方安装文件，安装后从「应用程序」打开，按提示用手机确认登录。先检查能看到聊天列表。<\/li>\n<li><strong>复用 Mac 版豆包<\/strong>：在 Mac 上发起豆包语音通话并共享练习画面，问「请看我现在的画面。我想找到邮件的获取设置，下一步点哪里？」照建议做一步，再停止共享。进入真实账户页面前先停共享。上节若没走通，先补麦克风和屏幕共享。<\/li>\n<li><strong>MacTeX<\/strong>：下载结束后，从「下载」双击官方 <code>.pkg<\/code>，按安装器提示继续。成功后打开「应用程序」里的 TeX 工具目录，尝试启动 TeXShop。若仍在下载，就先做邮件。<\/li>\n<\/ol>\n<h2 id=\"step-2\">添加邮箱并验证同步<\/h2>\n<ol>\n<li><strong>添加网易 126 邮箱。<\/strong> 打开苹果「邮件 → 添加账户」，输入妈妈完整的 <code>@126.com<\/code> 邮箱地址。已添加的账号可在「邮件 → 设置 → 账户」查看。<\/li>\n<li><strong>如果验证失败，检查客户端授权。<\/strong> 打开<a href=\"https://www.126.com/\" target=\"_blank\" rel=\"noopener\">网易 126 网页邮箱<\/a>并登录。在设置中找 POP3/SMTP/IMAP 或客户端授权相关选项，按网页提示检查 IMAP/SMTP 并生成授权码。先停止屏幕共享，再由妈妈将授权码填入苹果「邮件」的密码栏。菜单名称以实际账户界面为准。 <a href=\"https://help.mail.163.com/\" target=\"_blank\" rel=\"noopener\">网易邮箱帮助<\/a><\/li>\n<li><strong>验证双向同步。<\/strong> 从苹果「邮件」发一封测试邮件，在 126 网页邮箱的「已发送」里找同一主题。请家人回复，再回苹果「邮件」查看回信。需要调整检查频率时，打开「邮件 → 设置 → 通用 → 检查新邮件」。<\/li>\n<\/ol>\n<p>快捷键和触控板集中放到第 3 节。<\/p>\n<p>做不完时，先确保会议和邮件可用，记录还没验证的软件和动作。<\/p>\n<p>备查：<a href=\"https://support.apple.com/zh-cn/guide/mail/mail35803/mac\" target=\"_blank\" rel=\"noopener\">Apple 添加邮件账户<\/a> · <a href=\"https://support.apple.com/zh-cn/guide/mail/cpmlprefgen/mac\" target=\"_blank\" rel=\"noopener\">Apple 邮件通用设置<\/a> · <a href=\"https://www.tug.org/mactex/gui-link.html\" target=\"_blank\" rel=\"noopener\">MacTeX 的 TeXShop 位置<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#mom/lesson-01\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 1 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#mom/lesson-03\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 3 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "mom/lesson-03": {"title": "先练快捷操作，再打开家庭共享", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 3 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 03<\/span> · 妈妈 <\/p>\n<h1>先练快捷操作，再打开家庭共享<\/h1><p class=\"lesson-summary\">快捷键和触控板，验证共享日历、备忘录和相册<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>快捷键和触控板<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>验证日历、备忘录和相簿<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"mom\"><h2 id=\"step-1\">快捷键和触控板<\/h2>\n<p>打开测试文稿，逐项试 <code>⌘C<\/code> 复制、<code>⌘V<\/code> 粘贴、<code>⌘S<\/code> 保存、<code>⌘W<\/code> 关窗口、<code>⌘Q<\/code> 退出、<code>⇧⌘4<\/code> 区域截图。打开触控板设置，在「更多手势」看本机演示。练上滑打开「调度中心」、左右滑切换全屏 App 或桌面空间、拇指与三指张开显示桌面。若本机有「启动台」捏合手势再试它。没有这个选项就用聚焦查找并打开 App。<\/p>\n<h2 id=\"step-2\">验证日历、备忘录和相簿<\/h2>\n<p>快捷操作试过后，再检查家庭共享。当天来不及就从下一个项目接着做。<\/p>\n<ol>\n<li>打开苹果「日历」，找一条家人已经共享的日程。新建一个有开始和结束时间的测试日程，选家人共享且自己有编辑权限的 iCloud 日历，请家人在另一台设备确认能看到。<\/li>\n<li>用自己的 Apple 账户开启 iCloud 备忘录，接受共享邀请，再在「备忘录」的 iCloud 列表找之前共享的三条。看不到时，核对邀请所用的邮件地址或电话号码是否关联到自己的 Apple 账户。打开课程使用计划和另外两条家庭备忘录，确认正文能显示。真实名称由家人现场确认。<\/li>\n<li>家里用的是 Apple「共享相簿」。在 macOS 27 的「照片 → 设置 → iCloud」检查「iCloud 照片」和「共享相簿」已开启。接受家人的相簿邀请后，在「照片」边栏的「共享」部分找到相簿，打开一张家人分享的照片。 <a href=\"https://support.apple.com/zh-cn/124160\" target=\"_blank\" rel=\"noopener\">Apple 共享相簿指南<\/a>\n遇到陌生菜单，可以在 Mac 版豆包里发起语音通话并共享练习画面，再问一小步。共享日历是否同步，以家人在自己设备上看到的结果为准。<\/li>\n<\/ol>\n<p>备查：<a href=\"https://support.apple.com/zh-cn/102650\" target=\"_blank\" rel=\"noopener\">Apple 键盘快捷键<\/a> · <a href=\"https://support.apple.com/zh-cn/102482\" target=\"_blank\" rel=\"noopener\">触控板手势<\/a> · <a href=\"https://support.apple.com/zh-hans/guide/calendar/icl32362/mac\" target=\"_blank\" rel=\"noopener\">共享日历<\/a> · <a href=\"https://support.apple.com/zh-cn/guide/notes/apd4e6e2c9a6/mac\" target=\"_blank\" rel=\"noopener\">备忘录协作<\/a> · <a href=\"https://support.apple.com/zh-cn/124160\" target=\"_blank\" rel=\"noopener\">共享相簿<\/a> · <a href=\"https://support.apple.com/zh-cn/123926\" target=\"_blank\" rel=\"noopener\">共享照片图库<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#mom/lesson-02\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 2 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#mom/lesson-04\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 4 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "mom/lesson-04": {"title": "验证会议预约、语音输入和 MacTeX", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 4 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 04<\/span> · 妈妈 <\/p>\n<h1>验证会议预约、语音输入和 MacTeX<\/h1><p class=\"lesson-summary\">会议预约与分享、语音输入、MacTeX 验证<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>预定会议并同步日历<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>试微信语音转文字<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>验证 MacTeX<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"mom\"><p>先补前几节没完成、今天会用到的项目。腾讯会议、微信和 Apple 账户能打开后，再做下面的练习。<\/p>\n<h2 id=\"step-1\">预定会议并同步日历<\/h2>\n<ol>\n<li>在腾讯会议 Mac 客户端主页点「预定会议」，填主题和时间，再点「预定」。从会议详情或邀请菜单复制会议号和链接。把日期、时区与链接通过邮件发给约好的家人，请对方核对在哥本哈根看到的时间。<\/li>\n<li>在苹果「日历」建立测试日程，用日程右上角的彩色标记选一个自己可编辑的共享日历。双击日程，在「添加备注、URL 或附件」贴入会议链接。需要指定时区时，在「日历 → 设置 → 高级」打开时区支持，再点日程日期选择上海时区。请家人在哥本哈根用自己的设备核对当地开始时间，并打开链接确认是同一场会议。 <a href=\"https://support.apple.com/zh-hans/guide/calendar/icalwr13-events/mac\" target=\"_blank\" rel=\"noopener\">Apple 添加和修改日程<\/a><\/li>\n<\/ol>\n<h2 id=\"step-2\">试微信语音转文字<\/h2>\n<p>优先练微信 Mac 客户端自带的语音转文字。打开一个测试聊天，把光标放在输入框，找语音输入的小话筒或客户端显示的快捷键。试说「明天给薄荷浇水，check the leaves」。确认中英文出现在可编辑的输入框，核对后清空。入口以现场客户端版本为准。如果只有发送语音消息的按钮，先请家人一起检查版本和设置。macOS 听写作为备用，可在「系统设置 → 键盘 → 听写」查看启用方式和快捷键。<\/p>\n<h2 id=\"step-3\">验证 MacTeX<\/h2>\n<p>本节只用 Mac 上已经装好的 TeXShop，不需要 DeepSeek Harness。<\/p>\n<ol>\n<li>下载<a href=\"assets/lessons/04/examples/chinese-manual.zip\" download>中文手册练习项目（ZIP）<\/a>和<a href=\"assets/lessons/04/examples/mom-mactex-test.tex\" download>测试文件<\/a>。把 ZIP 解压到「文稿」，测试文件也放到同一个「文稿」位置。<\/li>\n<li>双击测试文件，TeXShop 会打开它。点工具栏的「排版」（Typeset），等预览窗口出现。若能看到「MacTeX 练习」和下面那行中文，说明中文编译环境可用。<\/li>\n<li>在 TeXShop 里打开解压后的 <code>chinese-manual/main.tex<\/code>。文件第一行指定 XeLaTeX，按「排版」编译；第一次目录可能为空，再按一次「排版」更新目录。<\/li>\n<li>在预览里核对封面、目录，以及「准备设备」「记录与复查」两个中文章节。看到本次生成的 PDF 就完成本节验证；妈妈本节不做 PDF 批注。<\/li>\n<li>若排版报错，先看 TeXShop 日志窗口的第一条错误，记下文件名和提示。确认 MacTeX 已安装、TeXShop 是从「应用程序」打开的；修不了就记下错误，下节课一起看。<\/li>\n<\/ol>\n<p>如仍有待完成的基础操作，记下从哪一步接着做。豆包桌面版继续按需使用。工具选择与提示词的系统练习留到第 5、6 节。<\/p>\n<p>备查：<a href=\"https://meeting.tencent.com/support/topic/392/index.html\" target=\"_blank\" rel=\"noopener\">腾讯会议预定常规会议<\/a> · <a href=\"https://support.apple.com/zh-cn/guide/mac-help/-kbdm162/mac\" target=\"_blank\" rel=\"noopener\">Apple 听写设置<\/a> · <a href=\"https://www.tug.org/mactex/gui-link.html\" target=\"_blank\" rel=\"noopener\">MacTeX 图形工具<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#mom/lesson-03\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 3 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#mom/lesson-05\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 5 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "mom/lesson-05": {"title": "认识 AI：按爸爸第 1 节做", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 5 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 05<\/span> · 妈妈 <\/p>\n<h1>认识 AI：按爸爸第 1 节做<\/h1><p class=\"lesson-summary\">按爸爸第 1 节：认识 AI 与 DeepSeek/Codex<\/p>\n<\/header>\n<div class=\"lesson-layout no-toc\">\n\n<div class=\"lesson-body\" id=\"mom\"><p>这一节和爸爸第 1 节是同一份内容。打开<a href=\"#dad/lesson-01\">爸爸第 1 节<\/a>，按那里的步骤做；账户、API Key 和登录都用自己的，不要用爸爸的密钥。<\/p>\n<ol>\n<li>先读爸爸第 1 节的「用两层来理解 AI」，用自己的话说出界面和模型的分工。<\/li>\n<li>按爸爸第 1 节创建或登录自己的 DeepSeek 开放平台账户，按页面提示小额充值。<\/li>\n<li>创建自己的 API Key，接到这台 Mac 的 Codex 上，发一条测试，再回开放平台核对用量。若这台 Mac 还没有 Codex，先和爸爸一起按第 1 节的入口装好。<\/li>\n<li>完成后记下卡住的一步；下一节用 Harness 继续。<\/li>\n<\/ol>\n<p>备查：<a href=\"https://platform.deepseek.com/\" target=\"_blank\" rel=\"noopener\">DeepSeek 开放平台<\/a> · <a href=\"https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/codex/\" target=\"_blank\" rel=\"noopener\">DeepSeek Codex 接入说明<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#mom/lesson-04\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 4 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#mom/lesson-06\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 6 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "mom/lesson-06": {"title": "安装与初始化 Harness：按爸爸第 2 节做", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 6 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 06<\/span> · 妈妈 <\/p>\n<h1>安装与初始化 Harness：按爸爸第 2 节做<\/h1><p class=\"lesson-summary\">按爸爸第 2 节：安装与初始化 Harness<\/p>\n<\/header>\n<div class=\"lesson-layout no-toc\">\n\n<div class=\"lesson-body\" id=\"mom\"><p>打开<a href=\"#dad/lesson-02\">爸爸第 2 节<\/a>，按那里的清单安装 DeepSeek Harness、微信输入法和插件；账户和密钥用自己的。<\/p>\n<ol>\n<li>先完成 Harness 安装、模型设置和一条「连接成功」测试。<\/li>\n<li>按爸爸第 2 节安装微信输入法，找到语音输入快捷键。<\/li>\n<li>安装插件市场 <code>dshmarket<\/code> 和另外五个指定插件，逐项核对 Installed plugins 的开关。<\/li>\n<li>不安装 <code>dsh-ears<\/code>；语音输入统一用微信输入法。卡住时记下显示名称、版本和报错，下一节继续。<\/li>\n<\/ol><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#mom/lesson-05\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 5 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<a class=\"pager-link\" href=\"#mom/lesson-07\"><span class=\"pager-label\">下一节<\/span><span class=\"pager-title\">第 7 节<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "mom/lesson-07": {"title": "推理强度、用量与查网页：按爸爸第 3 节做", "html": "<article class=\"lesson-page route-mom\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#mom\">妈妈的课程<\/a><span aria-hidden=\"true\">/<\/span><span>第 7 节<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\"><span lang=\"en-GB\">Lesson 07<\/span> · 妈妈 <\/p>\n<h1>推理强度、用量与查网页：按爸爸第 3 节做<\/h1><p class=\"lesson-summary\">按爸爸第 3 节：推理强度、用量与查网页/日历<\/p>\n<\/header>\n<div class=\"lesson-layout no-toc\">\n\n<div class=\"lesson-body\" id=\"mom\"><p>打开<a href=\"#dad/lesson-03\">爸爸第 3 节<\/a>，用同一道题比较推理强度，回开放平台看用量，再用 Harness 读公开网页和只读日历。<\/p>\n<ol>\n<li>在 Harness 里找到模型名和 Effort。<\/li>\n<li>用爸爸第 3 节的虚构行程题，分别用 low 和 high/max 各做一次。<\/li>\n<li>回 DeepSeek 开放平台核对两次请求的用量。<\/li>\n<li>用微信输入法口述一条提示词，按爸爸第 3 节读一条公开网页；日历只读，不创建或修改日程。<\/li>\n<\/ol><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link\" href=\"#mom/lesson-06\"><span class=\"pager-label\">上一节<\/span><span class=\"pager-title\">第 6 节<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">课表<\/span><span class=\"pager-title\">返回妈妈的课程<\/span><\/a>\n<span class=\"pager-link is-empty\" aria-hidden=\"true\"><\/span>\n<\/nav>\n<\/div><\/article>"}, "practice/github": {"title": "爸妈第一次用 GitHub", "html": "<article class=\"lesson-page page-practice\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#home\">首页<\/a><span aria-hidden=\"true\">/<\/span><a href=\"#practice\">共同练习<\/a><span aria-hidden=\"true\">/<\/span><span>爸妈第一次用 GitHub<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\">共同练习 · 备用<\/p>\n<h1>爸妈第一次用 GitHub<\/h1>\n<p class=\"lesson-summary\">备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>各自注册并登录<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>新建仓库时，先看可见性<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>认三个词，让 Harness 帮忙执行<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"practice\"><h2 id=\"step-1\">1. 各自注册并登录<\/h2>\n<p>两人在自己的 Mac 上打开 <a href=\"https://github.com/signup\" target=\"_blank\" rel=\"noopener\">GitHub 注册页<\/a>，各自注册个人账号，按网页提示完成邮箱验证。登录后点右上角头像，确认用户名是自己的。登录、验证码和授权由本人完成，遇到卡点先停下来一起看。 <a href=\"https://docs.github.com/en/account-and-profile/how-tos/account-management/creating-an-account-on-github\" target=\"_blank\" rel=\"noopener\">GitHub 账号注册说明<\/a><\/p>\n<h2 id=\"step-2\">2. 新建仓库时，先看可见性<\/h2>\n<p>各自打开 <a href=\"https://github.com/new\" target=\"_blank\" rel=\"noopener\">新建 GitHub 仓库<\/a>，确认 Owner 是自己的账号。爸爸可取名 <code>technical-manual<\/code>，妈妈可取名 <code>my-first-repo<\/code>。课堂先选 <strong>Private<\/strong>，创建后检查仓库名称旁是否显示 Private。<\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>选项<\/th>\n<th>谁能看到<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>Private（私有）<\/td>\n<td>自己和获授权的人。爸爸的手册和妈妈的小项目先用这个选项。<\/td>\n<\/tr>\n<tr>\n<td>Public（公开）<\/td>\n<td>任何人都可以查看仓库里的文件和公开提交历史。以后要公开自己的小项目时，再一起核对素材和发布范围。<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p>私有仓库里也只放有权上传的文件。手册先选已确认可上传的 <code>.tex<\/code>、Markdown 规则和示例图表。账号信息、密钥、无权上传的内部资料留在本机。妈妈先用自己的一组虚构练习文件。 <a href=\"https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories\" target=\"_blank\" rel=\"noopener\">GitHub 仓库可见性说明<\/a><\/p>\n<h2 id=\"step-3\">3. 认三个词，让 Harness 帮忙执行<\/h2>\n<p>本节默认已经装好 DeepSeek Harness（爸爸第 2 节、妈妈第 6 节）。<\/p>\n<ul>\n<li><strong>clone（克隆）<\/strong>：把 GitHub 仓库复制到电脑，得到可以编辑的本地项目。<\/li>\n<li><strong>commit（提交）<\/strong>：在本地保存一份带说明的版本记录。<\/li>\n<li><strong>push（推送）<\/strong>：把已提交的版本送到指定的 GitHub 仓库。<\/li>\n<\/ul>\n<ol>\n<li>在新仓库复制地址。各自在 Mac 选一个空练习位置，让 Harness 把仓库克隆到那里。若 GitHub 要求本机登录或授权，按提示由本人完成，再让 Harness 继续。<\/li>\n<li>打开克隆得到的文件夹。爸爸复制选好的手册文件，妈妈复制自己的 <code>index.html<\/code> 或那节课用到的练习文件。原来的本地项目仍可直接打开。复制前先看仓库里有没有 <code>.gitignore<\/code>；没有就建一个，至少排除 <code>.DS_Store<\/code>、密钥文件和私人草稿。<\/li>\n<li>用自然语言交代任务。先让 Harness 列出要上传的内容，自己检查后再同意推送。若 Harness 不能直接执行 git，就让它给出命令，由本人打开「终端」逐条执行并核对输出。<\/li>\n<\/ol>\n<blockquote>\n<p>这个本地文件夹来自我刚建立的私有 GitHub 仓库。请核对远端地址和仓库所有者，列出准备提交的文件、分支和提交说明。只提交我刚复制进去、确认可上传的项目文件。不要提交密钥、账号资料或私人原件。等我确认后再提交和推送。需要登录或权限时先停下来告诉我。<\/p>\n<\/blockquote>\n<ol start=\"4\">\n<li>回到浏览器刷新各自的仓库，检查仍显示 Private，文件和提交说明都出现了。爸爸打开一份手册源文件，妈妈打开 <code>index.html<\/code>。看得见文件，就完成了第一次推送。<\/li>\n<\/ol>\n<p><a href=\"https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository\" target=\"_blank\" rel=\"noopener\">克隆仓库<\/a> · <a href=\"https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories\" target=\"_blank\" rel=\"noopener\">提交和推送入门<\/a><\/p>\n<p>本节只练文件推送。以后要让家人从网址打开自己的页面时，再单独配置 GitHub Pages 和确认发布范围。 <a href=\"https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages\" target=\"_blank\" rel=\"noopener\">GitHub Pages 说明<\/a><\/p><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link pager-home\" href=\"#practice\"><span class=\"pager-label\">共同练习<\/span><span class=\"pager-title\">返回共同练习<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">爸爸<\/span><span class=\"pager-title\">返回爸爸的课表<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">妈妈<\/span><span class=\"pager-title\">返回妈妈的课表<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "practice/image-gen": {"title": "用 DeepSeek Harness 生成房间软装图", "html": "<article class=\"lesson-page page-practice\"><div class=\"wrap\">\n<nav class=\"breadcrumb\" aria-label=\"面包屑\"><a href=\"#home\">首页<\/a><span aria-hidden=\"true\">/<\/span><a href=\"#practice\">共同练习<\/a><span aria-hidden=\"true\">/<\/span><span>用 Harness 生成房间软装图<\/span><\/nav>\n<header class=\"lesson-hero\">\n<p class=\"eyebrow\">共同练习 · 建议安排<\/p>\n<h1>用 DeepSeek Harness 生成房间软装图<\/h1>\n<p class=\"lesson-summary\">建议安排：配置 Seedream / 火山方舟，跑通生图、改图和软装对比。<\/p>\n<\/header>\n<div class=\"lesson-layout\">\n<aside class=\"toc\" aria-label=\"本节步骤\"><p class=\"toc-title\">本节步骤<\/p><nav class=\"toc-nav\"><a href=\"#step-1\"><span class=\"toc-num\">01<\/span><span>先分清四个名字<\/span><\/a><a href=\"#step-2\"><span class=\"toc-num\">02<\/span><span>开通火山方舟和 Seedream<\/span><\/a><a href=\"#step-3\"><span class=\"toc-num\">03<\/span><span>安装并启用 dsh-image-gen<\/span><\/a><a href=\"#step-4\"><span class=\"toc-num\">04<\/span><span>配置 Seedream Provider<\/span><\/a><a href=\"#step-5\"><span class=\"toc-num\">05<\/span><span>第一张图：虚构客厅<\/span><\/a><a href=\"#step-6\"><span class=\"toc-num\">06<\/span><span>在原图上改：只换一处<\/span><\/a><a href=\"#step-7\"><span class=\"toc-num\">07<\/span><span>软装选品：三套方案与核对<\/span><\/a><a href=\"#step-8\"><span class=\"toc-num\">08<\/span><span>费用、隐私和故障排查<\/span><\/a><a href=\"#step-9\"><span class=\"toc-num\">09<\/span><span>验收清单<\/span><\/a><\/nav><\/aside>\n<div class=\"lesson-body\" id=\"practice\"><p>这一课只做一件事：把「用 DeepSeek Harness 生成图片」这条路跑通。先用虚构的客厅练手，再把自己的房间照片放在本机做软装方向的对比；生成图只当方向板，不当施工图，也不替代商品尺寸和材质核对。<\/p>\n<p>公开课稿只用虚构房间和示例文字；真实家庭照片、门牌、快递单和家人物品只在本机使用，上传前先裁掉隐私信息。<\/p>\n<h2 id=\"step-1\">1. 先分清四个名字<\/h2>\n<p>你之前提到的「C Dream」，官方资料写作 <strong>Seedream<\/strong>（也见 SeeDream），是字节跳动的图像生成模型。和它相关的几个入口不是一回事：<\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>名称<\/th>\n<th>是什么<\/th>\n<th>这一课怎么用<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td><strong>Seedream / SeeDream<\/strong><\/td>\n<td>字节跳动 Seed 团队的图像生成模型，支持文生图、参考图生图、局部编辑、组图<\/td>\n<td>本课要调用的模型<\/td>\n<\/tr>\n<tr>\n<td><strong>即梦 AI<\/strong><\/td>\n<td>消费端网页/App，使用 Seedream；会员/订阅是消费级入口<\/td>\n<td>可以自己玩，但<strong>不能<\/strong>直接给 DSH 插件当 API<\/td>\n<\/tr>\n<tr>\n<td><strong>火山方舟 Ark<\/strong><\/td>\n<td>火山引擎的模型 API 平台：开通模型、创建 API Key、按量计费<\/td>\n<td>本课必须走这条<\/td>\n<\/tr>\n<tr>\n<td><strong>dsh-image-gen<\/strong><\/td>\n<td>DeepSeek Harness 的生图插件，支持 Seedream / 火山方舟 Provider<\/td>\n<td>本课安装和配置的插件<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<p><strong>关于“订阅”<\/strong>：即梦会员和火山方舟 API 是两条账本。DSH 插件要的是 Ark API Key，按生成张数计费；不需要先买即梦会员。火山引擎的 Agent Plan 是另一种订阅套餐，可能含部分 Seedream Lite 额度，但先确认它是否提供可用于 <code>/api/v3<\/code> 的 API Key，不要把它当成图片余额。若只想在网页里随手生成，才考虑即梦会员。<\/p>\n<h2 id=\"step-2\">2. 开通火山方舟和 Seedream<\/h2>\n<ol>\n<li>打开<a href=\"https://console.volcengine.com/ark/region:cn-beijing\" target=\"_blank\" rel=\"noopener\">火山方舟控制台<\/a>，用爸爸妈妈自己的火山引擎账号登录，按页面要求完成实名认证和开通。<\/li>\n<li>在模型广场或「开通管理」里找到 <strong>Seedream<\/strong>，开通要用的版本。课堂先用 <strong>Seedream 5.0 Lite<\/strong> 或 <strong>5.0 Pro<\/strong> 试，确认流程后再用 5.5 或更高分辨率。<\/li>\n<li>打开 <a href=\"https://console.volcengine.com/ark/region:cn-beijing/apiKey\" target=\"_blank\" rel=\"noopener\">API Key 管理<\/a>，创建一把只给这台 Mac 用的 Key，命名例如 <code>dsh-image-gen-dad<\/code> 或 <code>dsh-image-gen-mom<\/code>。先停止屏幕共享，由本人复制；Key 不写进聊天、截图或课程仓库。<\/li>\n<li>回到控制台确认计费方式和余额。API 是按量后付费；先在预算里留一小笔练习额度，开启用量/余额提醒。<\/li>\n<li>记下区域和端点。图片生成默认端点是 <code>https://ark.cn-beijing.volces.com/api/v3<\/code>；实际以控制台和插件“拉取模型”结果为准。<\/li>\n<\/ol>\n<p>当前常见模型 ID（以控制台/插件拉取结果为准）：<\/p>\n<ul>\n<li><code>doubao-seedream-5-5-261028<\/code>：Seedream 5.5，2026-11-09 发布，API 陆续开放；<\/li>\n<li><code>doubao-seedream-5-0-pro-260628<\/code>：Seedream 5.0 Pro，插件当前默认之一；<\/li>\n<li><code>doubao-seedream-5-0-260128<\/code> / <code>doubao-seedream-5-0-lite-260128<\/code>：Seedream 5.0 Lite。<\/li>\n<\/ul>\n<p>价格示例（2026-11-15 查到的官方口径，实际以下单页面为准）：Seedream 5.0 Pro 输出图不超过 236 万像素约 0.3 元/张，更大尺寸约 0.6 元/张；5.5 约 0.28 元/2K 方图编辑；Lite 更便宜。先用 Lite/1K 试构图，满意后用 Pro/5.5/2K。<\/p>\n<h2 id=\"step-3\">3. 安装并启用 dsh-image-gen<\/h2>\n<ol>\n<li>打开 DeepSeek Harness 左侧的「插件」面板，进入「已安装」或插件市场，搜索 <code>dsh-image-gen<\/code>。<\/li>\n<li>安装或启用后重启 Harness。插件详情页应出现「图像生成」配置表单；输入框旁也会出现生图按钮。<\/li>\n<li>不要照搬插件 README 里的 <code>--profile web<\/code> 命令到 Desktop；父母用界面安装即可。若界面找不到，先确认 Harness 版本，再让家人协助用插件管理。<\/li>\n<li>安装只需一次；以后升级插件后重新打开详情页检查 Provider 和模型是否还在。<\/li>\n<\/ol>\n<h2 id=\"step-4\">4. 配置 Seedream Provider<\/h2>\n<p>在插件详情页：<\/p>\n<ol>\n<li>默认 Provider 选 <strong>ByteDance Seedream / 火山方舟<\/strong>（界面可能显示「字节 Seedream」）。<\/li>\n<li>填入第 2 步创建的 API Key。<\/li>\n<li>Endpoint / Base URL 保持默认；若为空，填 <code>https://ark.cn-beijing.volces.com/api/v3<\/code>。<\/li>\n<li>模型先填 <code>doubao-seedream-5-0-pro-260628<\/code>，或点「拉取模型」后选可用的 5.5 / 5.0 Lite。<\/li>\n<li>点「测试连接」。通过后再点「拉取模型」核对模型列表；失败先看第 8 步的排错。<\/li>\n<li>设置输出格式（PNG/JPEG）、水印开关和保存工作区。水印是否可关以模型和条款为准；课堂先用默认。<\/li>\n<li>保存后，回到会话输入框旁确认 Provider 是 Seedream，不要误用 ChatGPT 订阅通道。<\/li>\n<\/ol>\n<p>密钥只保存在本机 DSH 凭据里；不要为了“方便”把 Key 写进课稿、仓库、聊天或截图。<\/p>\n<h2 id=\"step-5\">5. 第一张图：虚构客厅<\/h2>\n<p>先用一张虚构房间练提示词，不要上传真实家庭照片。要求写明：房间、固定不动的元素、要换的软装、光线、镜头和比例。<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">请生成一张约 20 平方米客厅的软装示意：浅橡木地板，米白色墙，左侧落地窗，午后自然光；现有灰色布艺三人沙发、白色圆形茶几。请只把沙发换成浅米色亚麻三人沙发，增加胡桃木边柜和橄榄绿地毯；保留窗、墙、地板、光线和拍摄角度不变，其他家具不要移动。真实照片感，24mm 广角，1:1，不要添加文字。\n<\/code><\/pre><\/div>\n<p>生成后先看四件事：<\/p>\n<ul>\n<li>房间结构和窗/墙/地板有没有被改掉；<\/li>\n<li>沙发、边柜、地毯是不是你要的方向；<\/li>\n<li>光线、镜头角度是否还能和原房间对上；<\/li>\n<li>画面里有没有乱码文字或多余物件。<\/li>\n<\/ul>\n<p>不要一次要求“全部重新设计”。软装对比要控制变量，否则看不出是哪一件东西变了。<\/p>\n<h2 id=\"step-6\">6. 在原图上改：只换一处<\/h2>\n<p>打开 <code>画廊 → 工作台<\/code>，或在画布/图库里选中刚生成的图：<\/p>\n<ol>\n<li>点「继续编辑（垫图）」或把图拖进画布，作为参考图。<\/li>\n<li>用画笔圈出要改的区域（例如沙发），或在提示词里明确位置。<\/li>\n<li>发一条只改一处的修改意见：<\/li>\n<\/ol>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">只改左侧沙发：换成浅米色亚麻三人沙发；保留窗帘、地板、光线、镜头角度、其他家具和房间结构不变。不要把整张图重新设计，不要添加文字。\n<\/code><\/pre><\/div>\n<ol start=\"4\">\n<li>生成后对比新旧两版，满意就保存为新版本；不满意就退回上一版再改，不要覆盖原图。<\/li>\n<li>再试一次“只换地毯”或“只换落地灯”，每次都只改一个变量。<\/li>\n<\/ol>\n<p>如果插件支持画布选区，优先圈出要改的地方再发指令；选区能让模型更清楚“只改这里”。如果当前通道的图生图不稳定，就先退回“文字重生成”，但把固定条件写得更具体。<\/p>\n<h2 id=\"step-7\">7. 软装选品：三套方案与核对<\/h2>\n<p>同一房间一次生成三套方向，每套只改变软装组合：<\/p>\n<div class=\"prompt\"><div class=\"prompt-head\"><span class=\"prompt-label\">提示词<\/span><button class=\"prompt-copy\" type=\"button\" aria-label=\"复制提示词\">复制<\/button><\/div><pre><code class=\"language-text\">同一间客厅，保留墙、窗、地板、主沙发、光线和镜头角度不变，分别生成三套软装方向：\nA：橄榄绿地毯 + 藤编落地灯 + 胡桃木边几；\nB：米色羊毛地毯 + 黑色细杆落地灯 + 浅木边柜；\nC：蓝灰地毯 + 黄铜落地灯 + 深色边几。\n每套单独一张图，真实照片感，1:1，不要添加文字。\n<\/code><\/pre><\/div>\n<p>拿去淘宝/店里选品时：<\/p>\n<ul>\n<li>先量墙面、沙发、柜子和通道尺寸，再看商品尺寸；生成图不保证比例。<\/li>\n<li>用生成图比较颜色、材质和风格，商品页的尺寸、材质、色差、安装方式和退货政策以商家为准。<\/li>\n<li>不要根据生成图判断“放得下”；放不下是尺寸问题，不是画面问题。<\/li>\n<li>真实房间照片只在本机使用；上传前裁掉门牌、家人照片、快递单等隐私信息；公开课稿只放虚构房间。<\/li>\n<li>生成图只作方向板，最终以实物、样板和小样为准。<\/li>\n<\/ul>\n<h2 id=\"step-8\">8. 费用、隐私和故障排查<\/h2>\n<p><strong>费用<\/strong><\/p>\n<ul>\n<li>按生成张数计费；先 Lite/1K 试构图，再用 Pro/5.5/2K 做最终图。<\/li>\n<li>在火山方舟控制台看用量、余额和账单；设预算提醒，避免一次批量生成过多。<\/li>\n<li>5.0 Pro 输出图 ≤236 万像素约 0.3 元/张，更大尺寸约 0.6 元/张；5.5 约 0.28 元/2K 编辑；以控制台为准。<\/li>\n<\/ul>\n<p><strong>隐私<\/strong><\/p>\n<ul>\n<li>API Key 不截图、不进聊天、不进仓库；只放本机 DSH 凭据。<\/li>\n<li>真实家庭照片不上传公开仓库；按火山方舟条款处理图片。<\/li>\n<li>课堂投屏时先停共享再粘贴 Key。<\/li>\n<\/ul>\n<p><strong>排错<\/strong><\/p>\n<div class=\"table-wrap\"><table>\n<thead>\n<tr>\n<th>现象<\/th>\n<th>先检查<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>401/403<\/td>\n<td>Key 是否复制完整；模型是否开通；账号是否欠费；实名/区域是否符合<\/td>\n<\/tr>\n<tr>\n<td>404 模型不存在<\/td>\n<td>模型 ID 是否过期；点「拉取模型」选当前 ID；5.5 是否已对该账号开放<\/td>\n<\/tr>\n<tr>\n<td>429<\/td>\n<td>触发限流；等一会儿，减少并发/批量<\/td>\n<\/tr>\n<tr>\n<td>测试连接失败<\/td>\n<td>Endpoint 是否 <code>/api/v3<\/code>；Key 是否属于当前区域；网络是否可访问火山方舟<\/td>\n<\/tr>\n<tr>\n<td>生成成功但看不到图<\/td>\n<td>图库/工作区保存位置；Provider 是否选对；刷新或重开插件<\/td>\n<\/tr>\n<tr>\n<td>中文小字乱码<\/td>\n<td>减少画面文字；重要文字后期另加，不依赖模型写小字<\/td>\n<\/tr>\n<tr>\n<td>改图改得太多<\/td>\n<td>提示词写“只改…、保留…”，用选区圈定；降低一次修改数量<\/td>\n<\/tr>\n<\/tbody>\n<\/table><\/div>\n<h2 id=\"step-9\">9. 验收清单<\/h2>\n<ul>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">能说清 Seedream、即梦、火山方舟和 dsh-image-gen 的区别。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">火山方舟账号已开通 Seedream，API Key 只保存在本机。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">dsh-image-gen 已安装并启用，Provider 选 ByteDance Seedream / 火山方舟。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">「测试连接」通过，「拉取模型」能看到可用模型。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">用虚构客厅生成至少一张图，能说出模型、尺寸和大约费用。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">在原图上只改一处（沙发/地毯/灯），保存新版本，原图还在。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">生成三套软装方向，能说清哪些是画面方向、哪些必须去商品页核对尺寸和材质。<\/span><\/li>\n<li class=\"task\"><span class=\"task-box\" aria-hidden=\"true\"><\/span><span class=\"task-text\">真实照片没有上传公开仓库；API Key 没有进截图、聊天或课稿。<\/span><\/li>\n<\/ul>\n<h3>备查<\/h3>\n<ul>\n<li><a href=\"https://docs.volcengine.com/docs/ark/seedream-5-5?lang=zh\" target=\"_blank\" rel=\"noopener\">Seedream 5.5 教程<\/a><\/li>\n<li><a href=\"https://docs.volcengine.com/docs/ark/seedream-5-0-pro?lang=zh\" target=\"_blank\" rel=\"noopener\">Seedream 5.0 Pro 教程<\/a><\/li>\n<li><a href=\"https://docs.volcengine.com/docs/ark/image-generation-tutorial?lang=zh\" target=\"_blank\" rel=\"noopener\">图片生成教程<\/a><\/li>\n<li><a href=\"https://docs.volcengine.com/docs/ark/model-pricing?lang=zh\" target=\"_blank\" rel=\"noopener\">模型价格<\/a><\/li>\n<li><a href=\"https://console.volcengine.com/ark/region:cn-beijing/apiKey\" target=\"_blank\" rel=\"noopener\">API Key 管理<\/a><\/li>\n<li><a href=\"https://github.com/shanliuling/dsh-image-gen\" target=\"_blank\" rel=\"noopener\">dsh-image-gen 插件<\/a><\/li>\n<\/ul><\/div>\n<\/div>\n<nav class=\"lesson-pager\" aria-label=\"课次导航\">\n<a class=\"pager-link pager-home\" href=\"#practice\"><span class=\"pager-label\">共同练习<\/span><span class=\"pager-title\">返回共同练习<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#dad\"><span class=\"pager-label\">爸爸<\/span><span class=\"pager-title\">返回爸爸的课表<\/span><\/a>\n<a class=\"pager-link pager-home\" href=\"#mom\"><span class=\"pager-label\">妈妈<\/span><span class=\"pager-title\">返回妈妈的课表<\/span><\/a>\n<\/nav>\n<\/div><\/article>"}, "practice": {"title": "共同练习", "html": "<section class=\"hero hero-route\"><div class=\"wrap\">\n<p class=\"eyebrow\">共同练习<\/p>\n<h1>共同练习<\/h1>\n<p class=\"lead\">两项共用练习，不占爸爸妈妈的课号。GitHub 先备用；Seedream 生图建议安排，用来跑通 Harness 生图、改图和软装对比。<\/p>\n<\/div><\/section>\n<section class=\"wrap lesson-section\">\n<div class=\"practice-grid\"><a class=\"practice-card\" href=\"#practice/github\">\n<p class=\"eyebrow\">共同练习 · 备用<\/p>\n<h2>爸妈第一次用 GitHub<\/h2>\n<p>备用：注册账号、建立私有仓库，用 Harness 完成第一次提交和推送。<\/p>\n<span class=\"route-enter\">打开练习 <span aria-hidden=\"true\">→<\/span><\/span>\n<\/a><a class=\"practice-card\" href=\"#practice/image-gen\">\n<p class=\"eyebrow\">共同练习 · 建议安排<\/p>\n<h2>用 Harness 生成房间软装图<\/h2>\n<p>建议安排：配置 Seedream / 火山方舟，跑通生图、改图和软装对比。<\/p>\n<span class=\"route-enter\">打开练习 <span aria-hidden=\"true\">→<\/span><\/span>\n<\/a><\/div>\n<\/section>"}}</script>
+<script>
+(function () {
+  var views = JSON.parse(document.getElementById("views-data").textContent);
+  var root = document.getElementById("view-root");
+  var current = "";
+  function keyFromHash() { return decodeURIComponent(location.hash.slice(1)); }
+  function render(key, anchor) {
+    if (!views[key]) key = "home";
+    root.innerHTML = views[key].html;
+    document.title = views[key].title + " · 爸妈的 Mac 与 AI 课";
+    document.body.className = "page-annotate" + (key.indexOf("mom") === 0 ? " route-mom" : "");
+    current = key;
+    try { sessionStorage.setItem("annotate-view", key); } catch (error) {}
+    if (anchor) {
+      var node = document.getElementById(anchor);
+      if (node) { node.scrollIntoView(); return; }
+    }
+    window.scrollTo(0, 0);
+  }
+  function route() {
+    var raw = keyFromHash();
+    if (views[raw]) { render(raw); return; }
+    if (raw && current && document.getElementById(raw)) {
+      document.getElementById(raw).scrollIntoView();
+      return;
+    }
+    var last = "";
+    try { last = sessionStorage.getItem("annotate-view") || ""; } catch (error) {}
+    render(views[last] ? last : "home", raw);
+  }
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body>
+</html>

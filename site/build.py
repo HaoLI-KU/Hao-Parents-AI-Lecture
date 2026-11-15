@@ -1,6 +1,8 @@
 """Build the family course site from the course Markdown."""
 from html import escape, unescape
+import base64
 import json
+import posixpath
 from pathlib import Path
 from shutil import copyfile, rmtree
 import re
@@ -700,6 +702,126 @@ def copy_static():
             copyfile(font, destination / font.name)
 
 
+def page_view_key(relative):
+    if relative == "index.html":
+        return "home"
+    if relative.endswith("/index.html"):
+        return relative[:-len("/index.html")]
+    if relative.endswith(".html"):
+        return relative[:-len(".html")]
+    return None
+
+
+def build_annotate():
+    # The public site stays multi-page. This file exists because the annotation
+    # overlay only survives when the preview document does not navigate.
+    page_paths = []
+    for path in sorted(DOCS.rglob("*.html")):
+        relative = path.relative_to(DOCS).as_posix()
+        if relative in ("search.html", "annotate.html"):
+            continue
+        key = page_view_key(relative)
+        if key:
+            page_paths.append((relative, key, path))
+    view_keys = {relative: key for relative, key, _ in page_paths}
+    views = {}
+    for relative, key, path in page_paths:
+        html = path.read_text(encoding="utf-8")
+        main = re.search(r'<main id="main">(.*?)</main>', html, re.S)
+        if not main:
+            continue
+        title_match = re.search(r"<title>(.*?)</title>", html, re.S)
+        title = unescape(title_match.group(1)) if title_match else key
+        title = re.sub(r"\s*·\s*爸妈的 Mac 与 AI 课\s*$", "", title)
+
+        def repl(match):
+            attribute, raw = match.group(1), unescape(match.group(2))
+            if raw.startswith(("http://", "https://", "mailto:", "tel:", "#", "data:")):
+                return match.group(0)
+            href, _, fragment = raw.partition("#")
+            path_only = href.split("?", 1)[0]
+            target = posixpath.normpath(posixpath.join(posixpath.dirname(relative), path_only))
+            if target in view_keys:
+                return f'{attribute}="#{view_keys[target]}"'
+            if target.startswith("assets/"):
+                if attribute == "src":
+                    asset = DOCS / target
+                    if asset.is_file():
+                        mime = "image/svg+xml" if asset.suffix == ".svg" else "image/png"
+                        encoded = base64.b64encode(asset.read_bytes()).decode("ascii")
+                        return f'{attribute}="data:{mime};base64,{encoded}"'
+                suffix = (f"#{fragment}" if fragment else "")
+                return f'{attribute}="{target}{suffix}"'
+            if target == "search.html":
+                return f'{attribute}="#home"'
+            return match.group(0)
+
+        content = re.sub(r'(href|src)="([^"]+)"', repl, main.group(1))
+        content = re.sub(r'<form\b.*?</form>', '', content, flags=re.S)
+        views[key] = {"title": title, "html": content}
+
+    css = (ROOT / "site/style.css").read_text(encoding="utf-8")
+    css = css.replace('url("fonts/', 'url("assets/fonts/')
+    views_json = json.dumps(views, ensure_ascii=False).replace("</", "<\\/")
+    body = f'''<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">{SITE_NAME}</span><span class="brand-role">批注预览</span></span></a>
+<nav class="footer-nav" aria-label="批注预览导航"><a href="#home">首页</a><a href="#dad">爸爸的课程</a><a href="#mom">妈妈的课程</a><a href="#practice">共同练习</a></nav>
+</div></header>
+<main id="main"><div id="view-root"></div></main>
+<footer class="site-footer"><div class="wrap footer-inner"><p class="footer-copy">批注预览：所有页面在同一个 HTML 文件内切换，方便批注；公开课程仍是多页站点。刷新会尽量回到上次的页面。</p></div></footer>
+<script type="application/json" id="views-data">{views_json}</script>
+<script>
+(function () {{
+  var views = JSON.parse(document.getElementById("views-data").textContent);
+  var root = document.getElementById("view-root");
+  var current = "";
+  function keyFromHash() {{ return decodeURIComponent(location.hash.slice(1)); }}
+  function render(key, anchor) {{
+    if (!views[key]) key = "home";
+    root.innerHTML = views[key].html;
+    document.title = views[key].title + " · 爸妈的 Mac 与 AI 课";
+    document.body.className = "page-annotate" + (key.indexOf("mom") === 0 ? " route-mom" : "");
+    current = key;
+    try {{ sessionStorage.setItem("annotate-view", key); }} catch (error) {{}}
+    if (anchor) {{
+      var node = document.getElementById(anchor);
+      if (node) {{ node.scrollIntoView(); return; }}
+    }}
+    window.scrollTo(0, 0);
+  }}
+  function route() {{
+    var raw = keyFromHash();
+    if (views[raw]) {{ render(raw); return; }}
+    if (raw && current && document.getElementById(raw)) {{
+      document.getElementById(raw).scrollIntoView();
+      return;
+    }}
+    var last = "";
+    try {{ last = sessionStorage.getItem("annotate-view") || ""; }} catch (error) {{}}
+    render(views[last] ? last : "home", raw);
+  }}
+  window.addEventListener("hashchange", route);
+  route();
+}})();
+</script>'''
+    page = f'''<!doctype html>
+<html lang="zh-CN" data-page-dir="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>批注预览 · {SITE_FULL}</title>
+<meta name="theme-color" content="#f7f6f2">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>{css}</style>
+</head>
+<body class="page-annotate">
+{body}
+</body>
+</html>
+'''
+    (DOCS / "annotate.html").write_text(page, encoding="utf-8")
+
+
 def main():
     if not (ROOT / "README.md").is_file():
         raise SystemExit("找不到 README.md")
@@ -716,6 +838,7 @@ def main():
     for item in PRACTICES:
         entries.extend(practice_page(item))
     search_page(rows)
+    build_annotate()
     (DOCS / "assets/search-index.js").write_text(
         "window.courseSearchIndex = " + json.dumps(entries, ensure_ascii=False) + ";\n",
         encoding="utf-8",
