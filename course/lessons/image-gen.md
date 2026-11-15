@@ -147,7 +147,7 @@ C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
 - [ ] 生成三套软装方向，能说清哪些是画面方向、哪些必须去商品页核对尺寸和材质。
 - [ ] 真实照片没有上传公开仓库；API Key 没有进截图、聊天或课稿。
 
-## 备查
+### 备查
 
 - [Seedream 5.5 教程](https://docs.volcengine.com/docs/ark/seedream-5-5?lang=zh)
 - [Seedream 5.0 Pro 教程](https://docs.volcengine.com/docs/ark/seedream-5-0-pro?lang=zh)

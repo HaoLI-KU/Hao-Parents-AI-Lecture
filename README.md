@@ -15,7 +15,7 @@
 | [第 3 节](course/lessons/03.md) | 在 DeepSeek Harness 比较推理强度与用量，练习读网页和日程 | 快捷键和触控板，验证共享日历、备忘录和相册 |  |  |
 | [第 4 节](course/lessons/04.md) | 说清 Word 转 LaTeX 的输入、产出和长期工作流目标 | 会议预约与分享、语音输入、MacTeX 验证 |  | 妈妈用 TeXShop 验证，不需要 Harness |
 | [第 5 节](course/lessons/05.md) | 编译中文 LaTeX，练习 PDF 批注并认识 Overleaf 模板库 | 按爸爸第 1 节：认识 AI 与 DeepSeek/Codex |  | 妈妈用自己的账户和密钥；Codex 安装可由家人协助 |
-| [第 6 节](course/lessons/06.md) | 在 Overleaf 选模板，做可编译的完整中文技术书模板 | 按爸爸第 2 节：安装与初始化 Harness |  | 妈妈用自己的账户和密钥 |
+| [第 6 节](course/lessons/06.md) | 在 Overleaf 选模板，做可编译的完整中文技术书模板（附录/TikZ/横向页） | 按爸爸第 2 节：安装与初始化 Harness |  | 妈妈用自己的账户和密钥 |
 | [第 7 节](course/lessons/07.md) | 分开放 Overleaf 模板来源、通用模板和第一份 Word，建立项目目录 | 按爸爸第 3 节：推理强度、用量与查网页/日历 |  |  |
 | [第 8 节](course/lessons/08.md) | 写项目指令、阶段路线与内容保持规则，并开新会话核对 | — |  | 妈妈路线到第 7 节 |
 | [第 9 节](course/lessons/09.md) | 用已验证模板转换一小段 Word，编译、核对并沉淀流程 | — | 后续课 |  |
