@@ -35,8 +35,8 @@ ROUTE_META = {
     "dad": {
         "name": "爸爸",
         "title": "爸爸的课程",
-        "blurb": "从自己的 DeepSeek 账户开始，把一份真实的 Word 技术文档逐步变成可维护、可复用的中文 LaTeX 项目。",
-        "focus": "DeepSeek · Harness · Word → LaTeX",
+        "blurb": "从自己的 DeepSeek 账户开始，把真实的 Word 技术文档变成可维护的中文 LaTeX 项目，再把多年积累的 AutoCAD 工艺流程图整理成可核对、可批注的材料。",
+        "focus": "DeepSeek · Harness · Word → LaTeX · CAD 图纸",
     },
     "mom": {
         "name": "妈妈",
@@ -301,7 +301,8 @@ def resolve_links(html, route, prefix, source_path):
             relative = copy_asset(url, source_path)
             if attribute == "src":
                 return f'src="{prefix}assets/{relative}"'
-            return f'href="{prefix}assets/{relative}" download'
+            suffix = "" if relative.lower().endswith((".html", ".htm")) else " download"
+            return f'href="{prefix}assets/{relative}"{suffix}'
         return match.group(0)
 
     return re.sub(r'(href|src)="([^"]+)"', repl, html)

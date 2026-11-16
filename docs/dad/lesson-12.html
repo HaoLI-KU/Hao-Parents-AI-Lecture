@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="dad/" data-page-path="dad/lesson-12.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>把图纸打开，点一个热点，写一条批注 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="第 10、11 节处理的是文字清单。真正推敲图纸时，你还是想看着图说话：这里少一个阀、那条线为什么绕、这个位号和上一张图对不上。这一节把 DXF 变成一页可以缩放、按图层显示、点选和批注的审图页，再把它接回 Harness 的会话。 这一节先标「后续课」：脚本本身已经在虚构示例上…">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "dad/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css?v=7e47f5caba">
+</head>
+<body class="page-lesson route-dad">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../dad/index.html" class="is-active" aria-current="true">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-dad"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="index.html">爸爸的课程</a><span aria-hidden="true">/</span><span>第 12 节</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow"><span lang="en-GB">Lesson 12</span> · 爸爸 <span class="chip chip-status">后续课</span></p>
+<h1>把图纸打开，点一个热点，写一条批注</h1><p class="lesson-summary">生成审图页，在 Harness 里点选批注，按 handle 讨论</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>生成审图页</span></a><a href="#step-2"><span class="toc-num">02</span><span>打开它的两种方式</span></a><a href="#step-3"><span class="toc-num">03</span><span>页面上能做什么</span></a><a href="#step-4"><span class="toc-num">04</span><span>在 Harness 里直接用批注浮层</span></a><a href="#step-5"><span class="toc-num">05</span><span>让 Harness 按 handle 回应批注</span></a><a href="#step-6"><span class="toc-num">06</span><span>把讨论结果留下来</span></a><a href="#step-7"><span class="toc-num">07</span><span>关于「原生图纸面板」</span></a><a href="#step-8"><span class="toc-num">08</span><span>检查清单</span></a></nav></aside>
+<div class="lesson-body" id="dad"><p>第 10、11 节处理的是文字清单。真正推敲图纸时，你还是想看着图说话：这里少一个阀、那条线为什么绕、这个位号和上一张图对不上。这一节把 DXF 变成一页可以缩放、按图层显示、点选和批注的审图页，再把它接回 Harness 的会话。</p>
+<p>这一节先标「后续课」：脚本本身已经在虚构示例上跑通，但 Harness 预览里的批注浮层需要在你本机确认一次；确认前不要把它当成已经稳定的流程。</p>
+<h2 id="step-1">1. 生成审图页</h2>
+<p>用同一个工具把一张 DXF 生成 HTML：</p>
+<pre><code class="language-sh">.venv-cad/bin/python tools/make_review_sheet.py dxf/DEMO-PFD-001.dxf \
+  -o review/DEMO-PFD-001.html --title &quot;糖浆配制工艺流程图&quot;
+</code></pre>
+<ul>
+<li>几何用矢量 SVG 逐图层渲染，放大不糊；中文文字单独叠加，所以不依赖 AutoCAD 的 SHX 字体。</li>
+<li>每个设备、仪表和标题栏文字都有一个稳定的热点编号，热点带 <code>handle</code>，能对回 DXF 实体。</li>
+<li>默认黑线白底、按图层分开；想保留图层颜色时加 <code>--colors</code>。</li>
+<li>单文件、无外部依赖，可以离线打开。</li>
+</ul>
+<p>想先看看成品，可以打开虚构示例的<a href="../assets/lessons/10/examples/cad/sample-review.html">审图页</a>。</p>
+<h2 id="step-2">2. 打开它的两种方式</h2>
+<ol>
+<li><strong>在 Harness 里看。</strong> 从右侧 Files 面板找到 <code>review/&lt;图号&gt;.html</code> 打开预览。预览宽度有限时用页面自带的缩放和拖动；需要更大画面就在浏览器里打开同一文件。</li>
+<li><strong>在浏览器里看。</strong> 双击 HTML 文件，或在 Finder 里右键「打开方式 → Safari」。这一页不联网也能用。</li>
+</ol>
+<p>两种方式看到的是同一个文件，批注也存在同一个地方。</p>
+<h2 id="step-3">3. 页面上能做什么</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>怎么做</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>放大 / 缩小 / 适应窗口</td>
+<td>左侧按钮；按住 <code>⌘</code> 滚动也可以</td>
+<td>看局部细节</td>
+</tr>
+<tr>
+<td>平移</td>
+<td>在空白处按住拖动</td>
+<td>看图纸另一端</td>
+</tr>
+<tr>
+<td>按图层显示</td>
+<td>左侧图层勾选框</td>
+<td>只看设备、只看仪表、只看管线</td>
+</tr>
+<tr>
+<td>看实体信息</td>
+<td>点图纸上的编号热点</td>
+<td>位号、名称、图层、块名、handle</td>
+</tr>
+<tr>
+<td>写批注</td>
+<td>点热点 → 在文本框写 → 保存批注</td>
+<td>把你的疑问挂在具体实体上</td>
+</tr>
+<tr>
+<td>导出批注</td>
+<td>导出批注 JSON</td>
+<td>交给 Harness 读取</td>
+</tr>
+<tr>
+<td>复制批注</td>
+<td>复制成 Markdown 列表</td>
+<td>贴进会话</td>
+</tr>
+</tbody>
+</table></div>
+<p>批注存在本机浏览器里，导出文件默认叫 <code>&lt;图号&gt;-notes.json</code>。把它放进 <code>review/</code>。</p>
+<p>注意：Harness 的 HTML 预览是一个受限的沙箱页面，页面自带的批注可能存不住，下载也可能被拦。在预览里优先用「点选批注」浮层；要长期保存页面自带的批注，就在浏览器里打开同一份 HTML，或在导出后把文件放进 <code>review/</code>。</p>
+<h2 id="step-4">4. 在 Harness 里直接用批注浮层</h2>
+<p>第 2 节装过 HTML 批注插件（Installed plugins 里显示为 <strong>HTML Annotations</strong> 或 <code>dsh-annotate-sync</code>）。它会在 HTML 预览上自动出现「点选批注」浮层。</p>
+<ol>
+<li>在 Files 面板打开 <code>review/&lt;图号&gt;.html</code>，确认预览区出现批注入口。<strong>这一步以你本机的实际显示为准</strong>：有的版本自动出现，有的需要点一下「点选批注」。</li>
+<li>点图纸上的编号热点，写一条批注，例如「这台泵出口没有止回阀？和上一版图纸不一致」。</li>
+<li>退出点选，点「发送给 Agent」，整批批注进入当前会话。</li>
+<li>如果浮层不出现，不要卡在这一步：在浏览器里打开同一份 HTML，用页面自己的「导出批注 JSON」，把文件放进 <code>review/</code>，第 5 步同样可以继续。</li>
+</ol>
+<p>批注记录里有页面选择器和 <code>hs-&lt;handle&gt;</code>，所以 Agent 能直接对回实体，而不是只看到一句脱离图纸的评论。</p>
+<h2 id="step-5">5. 让 Harness 按 handle 回应批注</h2>
+<p>把清单和批注放在一起交给它，并要求只提讨论点。</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">当前工作区是 CAD-Review/。请只读 inventory/&lt;图号&gt;.json、review/&lt;图号&gt;-notes.json 和 review/&lt;图号&gt;.html，不要修改 original/ 和 dxf/ 里的任何图纸。
+请按 handle 把每条批注对回实体，逐条回答：
+1. 这条批注涉及哪个位号、哪条原文、在图纸的哪个位置；
+2. 从清单能确认什么；
+3. 从清单不能确认什么（需要看原图或做工艺判断的部分）；
+4. 值得进一步讨论的两三个问题，按重要性排序。
+只提讨论点，不要给工艺结论，不要改图，也不要替我决定哪一版是对的。
+</code></pre></div>
+<p>如果批注是浮层直接发过来的，它可能带着 <code>selector</code> 或「第 N 号热点」这样的信息。让 Agent 说明它把哪条批注对到了哪个 handle；对不上的，贴回本文档再问一次。</p>
+<h2 id="step-6">6. 把讨论结果留下来</h2>
+<p>讨论结束后，在 <code>review/&lt;图号&gt;-讨论.md</code> 里记录：批注原文、对应 handle 或位号、从清单能确认的事实、仍需原图判断的问题、你的结论或「待定」。</p>
+<p>这份记录和 <code>notes/</code> 里的阅读记录是两件事：<code>notes/</code> 记这张图读得对不对，<code>review/</code> 记这张图讨论出了什么。不要混写。</p>
+<h2 id="step-7">7. 关于「原生图纸面板」</h2>
+<p>现在这条路是：脚本生成审图页 → Harness 预览或浏览器打开 → 批注回到会话。好处是零安装、可离线、换电脑也能用。</p>
+<p>如果以后你希望 Harness 里有一个固定的「图纸」面板——左边列图纸、右边看图、不经过 Files 面板——那是一个单独的插件项目，需要另外设计和验证，不在这一节承诺。</p>
+<h2 id="step-8">检查清单</h2>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">至少一张图生成了审图页 HTML，能在浏览器打开。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">缩放、平移、图层勾选都试过，图纸细节看得清。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">点热点能看到位号、图层和 handle。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">至少写了并保存一条批注，导出的 JSON 放进了 <code>review/</code>。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">在 Harness 预览里确认过批注浮层是否出现（记录本机结果）。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">Agent 能把每条批注对回具体 handle，且没有编造工艺结论。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>review/&lt;图号&gt;-讨论.md</code> 记下了事实、待确认项和你的判断。</span></li>
+</ul>
+<p>完成这一节后，这套流程就可以按「归档 → 清单 → 核对 → 审图批注」重复使用了。</p>
+<p>备查：<a href="lesson-10.html#dad">第 10 节</a> · <a href="lesson-11.html#dad">第 11 节</a> · <a href="https://github.com/chopperH0824/dsh-annotate-sync" target="_blank" rel="noopener">dsh-annotate-sync 说明</a> · <a href="https://ezdxf.mozman.at/docs/addons/drawing.html" target="_blank" rel="noopener">ezdxf 矢量渲染</a></p></div>
+</div>
+<nav class="lesson-pager" aria-label="课次导航">
+<a class="pager-link" href="lesson-11.html"><span class="pager-label">上一节</span><span class="pager-title">第 11 节</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">课表</span><span class="pager-title">返回爸爸的课程</span></a>
+<span class="pager-link is-empty" aria-hidden="true"></span>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../gallery/index.html">拾趣</a><a href="../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/dad/lesson-12.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../assets/ui.js?v=7e47f5caba"></script>
+</body>
+</html>

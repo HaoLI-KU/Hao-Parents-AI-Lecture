@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>糖浆配制工艺流程图（虚构示例）｜审图页</title>
+<style>
+:root {
+  --paper: #f7f6f2; --card: #ffffff; --ink: #16201e; --muted: #626d6a;
+  --line: #e2e0d8; --accent: #0a6b60; --accent-soft: #e4f1ee;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font-family: Inter, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--paper); color: var(--ink); font-size: 14px; }
+.app { display: flex; height: 100vh; overflow: hidden; }
+.side { width: 300px; flex: 0 0 300px; background: var(--card); border-right: 1px solid var(--line);
+  padding: 16px; overflow-y: auto; }
+.view { position: relative; flex: 1; overflow: hidden; background: #fff; }
+h1 { font-size: 18px; margin: 0 0 4px; font-family: "Source Serif 4", "Songti SC", serif; }
+.meta { color: var(--muted); font-size: 12px; margin: 0 0 12px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+button { font: inherit; border: 1px solid var(--line); background: #fff; color: var(--ink);
+  border-radius: 8px; padding: 5px 10px; cursor: pointer; min-height: 30px; }
+button:hover { border-color: var(--accent); color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted);
+  margin: 18px 0 8px; font-weight: 600; }
+.layers { display: grid; gap: 2px; }
+.layer { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
+.layer input { accent-color: var(--accent); }
+.swatch { width: 10px; height: 10px; border-radius: 2px; border: 1px solid var(--line); }
+.layer-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.layer-count { color: var(--muted); font-variant-numeric: tabular-nums; }
+.info { border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin-top: 10px;
+  background: #fbfaf7; min-height: 64px; }
+.info.empty { color: var(--muted); }
+.info dl { display: grid; grid-template-columns: 60px 1fr; gap: 2px 8px; margin: 0; }
+.info dt { color: var(--muted); }
+.info dd { margin: 0; word-break: break-all; }
+.note-box { margin-top: 10px; display: grid; gap: 6px; }
+textarea { font: inherit; width: 100%; min-height: 64px; resize: vertical; padding: 6px 8px;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+.notes { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 6px; }
+.notes li { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 6px 8px;
+  border-radius: 0 6px 6px 0; font-size: 13px; }
+.notes .note-head { display: flex; justify-content: space-between; gap: 8px; color: var(--muted);
+  font-size: 11px; margin-bottom: 2px; }
+.notes button { padding: 0 4px; min-height: 18px; border: 0; background: transparent; color: var(--muted); }
+.hint { color: var(--muted); font-size: 12px; line-height: 1.5; margin-top: 10px; }
+.stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  cursor: grab; touch-action: none; }
+.stage.dragging { cursor: grabbing; }
+.paper { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.paper > svg { width: 100%; height: 100%; max-width: 100%; max-height: 100%;
+  box-shadow: 0 12px 34px -16px rgba(0,0,0,.35); }
+#sheet text.lab { fill: #16201e; font-family: "PingFang SC", "Songti SC", "Noto Sans CJK SC", sans-serif; }
+#sheet .hs circle { fill: #ffffff; stroke: #0a6b60; stroke-width: .6; }
+#sheet .hs text { fill: #0a6b60; font-family: Inter, sans-serif; font-weight: 600; pointer-events: none; }
+#sheet .hs { cursor: pointer; }
+#sheet .hs:hover circle, #sheet .hs:focus circle { fill: #e4f1ee; stroke-width: 1; }
+#sheet .hs.active circle { fill: #0a6b60; }
+#sheet .hs.active text { fill: #fff; }
+#sheet .hs.hidden, #sheet text.lab.hidden, .layer-svg.hidden { display: none; }
+.foot { position: absolute; left: 12px; bottom: 8px; color: var(--muted); font-size: 11px;
+  background: rgba(255,255,255,.85); padding: 2px 6px; border-radius: 4px; }
+@media (max-width: 900px) {
+  .app { flex-direction: column; }
+  .side { width: auto; flex: 0 0 auto; max-height: 44vh; border-right: 0; border-bottom: 1px solid var(--line); }
+  .view { min-height: 56vh; }
+}
+@media print {
+  .side, .foot { display: none; }
+  .app, .view { height: auto; overflow: visible; }
+  .stage { position: static; }
+  .paper > svg { box-shadow: none; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <h1>糖浆配制工艺流程图（虚构示例）</h1>
+    <p class="meta">DXF AC1032 · 实体 62 个 · 热点 28 个</p>
+
+    <div class="toolbar">
+      <button type="button" data-zoom="in" aria-label="放大">放大</button>
+      <button type="button" data-zoom="out" aria-label="缩小">缩小</button>
+      <button type="button" data-zoom="reset" aria-label="适应窗口">适应窗口</button>
+      <button type="button" data-toggle="labels">隐藏文字</button>
+      <button type="button" data-toggle="hotspots">隐藏热点</button>
+    </div>
+
+    <h2>图层</h2>
+    <div class="layers"><label class="layer"><input type="checkbox" checked data-layer-toggle="TITLE"><span class="swatch" style="background:#16201e"></span><span class="layer-name">TITLE</span><span class="layer-count">21</span></label><label class="layer"><input type="checkbox" checked data-layer-toggle="INSTRUMENT"><span class="swatch" style="background:#7b1fa2"></span><span class="layer-name">INSTRUMENT</span><span class="layer-count">12</span></label><label class="layer"><input type="checkbox" checked data-layer-toggle="TEXT"><span class="swatch" style="background:#16201e"></span><span class="layer-name">TEXT</span><span class="layer-count">9</span></label><label class="layer"><input type="checkbox" checked data-layer-toggle="EQUIPMENT"><span class="swatch" style="background:#00838f"></span><span class="layer-name">EQUIPMENT</span><span class="layer-count">8</span></label><label class="layer"><input type="checkbox" checked data-layer-toggle="PIPE"><span class="swatch" style="background:#2e7d32"></span><span class="layer-name">PIPE</span><span class="layer-count">8</span></label><label class="layer"><input type="checkbox" checked data-layer-toggle="FRAME"><span class="swatch" style="background:#16201e"></span><span class="layer-name">FRAME</span><span class="layer-count">2</span></label><label class="layer"><input type="checkbox" checked data-layer-toggle="NOTE"><span class="swatch" style="background:#b8860b"></span><span class="layer-name">NOTE</span><span class="layer-count">2</span></label></div>
+
+    <h2>选中的实体</h2>
+    <div class="info empty" id="info">点图纸上的编号热点，查看对应的设备、仪表或标题栏文字。</div>
+
+    <div class="note-box">
+      <textarea id="note" placeholder="给这个热点写一条批注，例如：这里缺少蒸汽伴热？"></textarea>
+      <button type="button" class="primary" id="save-note">保存批注</button>
+    </div>
+
+    <h2>批注清单</h2>
+    <ul class="notes" id="notes"></ul>
+    <div class="toolbar">
+      <button type="button" id="export-notes">导出批注 JSON</button>
+      <button type="button" id="copy-notes">复制批注</button>
+    </div>
+
+    <p class="hint">批注存在本机浏览器里，导出 JSON 后可以交给 DeepSeek Harness 读取。
+    在 Harness 的 Files 面板预览这一页时，也可以直接用「点选批注」浮层。</p>
+    <p class="hint" id="status" role="status" aria-live="polite"></p>
+  </aside>
+
+  <main class="view">
+    <div class="stage" id="stage">
+      <div class="paper">
+        <svg id="sheet" viewBox="0 0 853.84 596.96" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="853.84" height="596.96" fill="#ffffff"></rect>
+          <g id="layers-group"><svg class="layer-svg" data-layer="TITLE" x="0" y="0" width="853.84" height="596.96" viewBox="0 0 1000000 699227" aria-hidden="true"><defs><style>.L0-C1 {stroke: #000000; stroke-width: 293; stroke-opacity: 1.000; fill: none; fill-opacity: 1.000;}</style></defs><rect fill="#ffffff" x="0" y="0" width="1000000" height="699227" fill-opacity="0.0" /><g stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd"><path d="M 710227 674030 l 258831 0 l 0 -105406 l -258831 0 l 0 105406" class="L0-C1" /><path d="M 710227 603759 l 258831 0" class="L0-C1" /><path d="M 710227 633039 l 258831 0" class="L0-C1" /><path d="M 710227 659976 l 258831 0" class="L0-C1" /><path d="M 780498 674030 l 0 -70271" class="L0-C1" /><path d="M 850768 674030 l 0 -70271" class="L0-C1" /><path d="M 921039 674030 l 0 -70271" class="L0-C1" /></g></svg><svg class="layer-svg" data-layer="INSTRUMENT" x="0" y="0" width="853.84" height="596.96" viewBox="0 0 1000000 699227" aria-hidden="true"><defs><style>.L1-C1 {stroke: #000000; stroke-width: 293; stroke-opacity: 1.000; fill: none; fill-opacity: 1.000;}</style></defs><rect fill="#ffffff" x="0" y="0" width="1000000" height="699227" fill-opacity="0.0" /><g stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd"><path d="M 394008 182135 l 0 40991" class="L1-C1" /><path d="M 406891 182135 c 0 7115 -5768 12883 -12883 12883 c -7115 0 -12883 -5768 -12883 -12883 c 0 -7115 5768 -12883 12883 -12883 c 7115 0 12883 5768 12883 12883" class="L1-C1" /><path d="M 381125 182135 l 25766 0" class="L1-C1" /><path d="M 329593 383578 l -19910 -49190" class="L1-C1" /><path d="M 342476 383578 c 0 7115 -5768 12883 -12883 12883 c -7115 0 -12883 -5768 -12883 -12883 c 0 -7115 5768 -12883 12883 -12883 c 7115 0 12883 5768 12883 12883" class="L1-C1" /><path d="M 316710 383578 l 25766 0" class="L1-C1" /><path d="M 557973 158711 l 0 58559" class="L1-C1" /><path d="M 570856 158711 c 0 7115 -5768 12883 -12883 12883 c -7115 0 -12883 -5768 -12883 -12883 c 0 -7115 5768 -12883 12883 -12883 c 7115 0 12883 5768 12883 12883" class="L1-C1" /><path d="M 545090 158711 l 25766 0" class="L1-C1" /><path d="M 768786 111864 l 0 35135" class="L1-C1" /><path d="M 781669 111864 c 0 7115 -5768 12883 -12883 12883 c -7115 0 -12883 -5768 -12883 -12883 c 0 -7115 5768 -12883 12883 -12883 c 7115 0 12883 5768 12883 12883" class="L1-C1" /><path d="M 755903 111864 l 25766 0" class="L1-C1" /><path d="M 136349 381235 l 0 -81983" class="L1-C1" /><path d="M 149232 381235 c 0 7115 -5768 12883 -12883 12883 c -7115 0 -12883 -5768 -12883 -12883 c 0 -7115 5768 -12883 12883 -12883 c 7115 0 12883 5768 12883 12883" class="L1-C1" /><path d="M 123466 381235 l 25766 0" class="L1-C1" /><path d="M 862480 146999 l 0 23424" class="L1-C1" /><path d="M 875363 146999 c 0 7115 -5768 12883 -12883 12883 c -7115 0 -12883 -5768 -12883 -12883 c 0 -7115 5768 -12883 12883 -12883 c 7115 0 12883 5768 12883 12883" class="L1-C1" /><path d="M 849597 146999 l 25766 0" class="L1-C1" /></g></svg><svg class="layer-svg" data-layer="EQUIPMENT" x="0" y="0" width="853.84" height="596.96" viewBox="0 0 1000000 699227" aria-hidden="true"><defs><style>.L2-C1 {stroke: #000000; stroke-width: 293; stroke-opacity: 1.000; fill: none; fill-opacity: 1.000;}</style></defs><rect fill="#ffffff" x="0" y="0" width="1000000" height="699227" fill-opacity="0.0" /><g stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd"><path d="M 107069 287541 l 58559 0 l 0 -70271 l -58559 0 l 0 70271" class="L2-C1" /><path d="M 165628 217270 c 0 4851 -13109 8784 -29279 8784 c -16171 0 -29279 -3933 -29279 -8784 c 0 -4851 13109 -8784 29279 -8784 c 16171 0 29279 3933 29279 8784" class="L2-C1" /><path d="M 107069 266460 l 58559 0" class="L2-C1" /><path d="M 279233 299253 c 0 7762 -6292 14054 -14054 14054 c -7762 0 -14054 -6292 -14054 -14054 c 0 -7762 6292 -14054 14054 -14054 c 7762 0 14054 6292 14054 14054" class="L2-C1" /><path d="M 246440 320334 l 37478 0 l -4685 9369 l -28108 0 l -4685 -9369" class="L2-C1" /><path d="M 279233 299253 l 11712 0" class="L2-C1" /><path d="M 364729 269973 l 58559 0 l 0 -35135 l -58559 0 l 0 35135" class="L2-C1" /><path d="M 364729 234838 l 58559 35135" class="L2-C1" /><path d="M 364729 269973 l 58559 -35135" class="L2-C1" /><path d="M 522838 281685 l 70271 0 l 0 -52703 l -70271 52703" class="L2-C1" /><path d="M 593109 228982 c 0 5433 -15731 9838 -35135 9838 c -19405 0 -35135 -4405 -35135 -9838 c 0 -5433 15731 -9838 35135 -9838 c 19405 0 35135 4405 35135 9838" class="L2-C1" /><path d="M 557973 219613 l 0 42162" class="L2-C1" /><path d="M 541577 261775 l 32793 0" class="L2-C1" /><path d="M 557973 219613 l 23424 -9369" class="L2-C1" /><path d="M 747704 346100 l 42162 0 l 0 -187389 l -42162 0 l 0 187389" class="L2-C1" /><path d="M 789867 158711 c 0 3493 -9438 6324 -21081 6324 c -11643 0 -21081 -2832 -21081 -6324 c 0 -3493 9438 -6324 21081 -6324 c 11643 0 21081 2832 21081 6324" class="L2-C1" /><path d="M 789867 346100 c 0 3493 -9438 6324 -21081 6324 c -11643 0 -21081 -2832 -21081 -6324 c 0 -3493 9438 -6324 21081 -6324 c 11643 0 21081 2832 21081 6324" class="L2-C1" /><path d="M 748876 317992 l 39820 0" class="L2-C1" /><path d="M 748876 299253 l 39820 0" class="L2-C1" /><path d="M 748876 280514 l 39820 0" class="L2-C1" /><path d="M 748876 261775 l 39820 0" class="L2-C1" /><path d="M 748876 243036 l 39820 0" class="L2-C1" /><path d="M 748876 224297 l 39820 0" class="L2-C1" /><path d="M 748876 205558 l 39820 0" class="L2-C1" /><path d="M 748876 186820 l 39820 0" class="L2-C1" /><path d="M 833201 129432 l 58559 0 l 0 -35135 l -58559 0 l 0 35135" class="L2-C1" /><path d="M 833201 94296 l 58559 35135" class="L2-C1" /><path d="M 833201 129432 l 58559 -35135" class="L2-C1" /><path d="M 833201 240694 l 58559 0 l 0 -70271 l -58559 0 l 0 70271" class="L2-C1" /><path d="M 891760 170423 c 0 4851 -13109 8784 -29279 8784 c -16171 0 -29279 -3933 -29279 -8784 c 0 -4851 13109 -8784 29279 -8784 c 16171 0 29279 3933 29279 8784" class="L2-C1" /><path d="M 833201 219613 l 58559 0" class="L2-C1" /><path d="M 876534 287541 c 0 7762 -6292 14054 -14054 14054 c -7762 0 -14054 -6292 -14054 -14054 c 0 -7762 6292 -14054 14054 -14054 c 7762 0 14054 6292 14054 14054" class="L2-C1" /><path d="M 843741 308622 l 37478 0 l -4685 9369 l -28108 0 l -4685 -9369" class="L2-C1" /><path d="M 876534 287541 l 11712 0" class="L2-C1" /></g></svg><svg class="layer-svg" data-layer="PIPE" x="0" y="0" width="853.84" height="596.96" viewBox="0 0 1000000 699227" aria-hidden="true"><defs><style>.L3-C1 {stroke: #000000; stroke-width: 293; stroke-opacity: 1.000; fill: none; fill-opacity: 1.000;}</style></defs><rect fill="#ffffff" x="0" y="0" width="1000000" height="699227" fill-opacity="0.0" /><g stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd"><path d="M 136349 287541 l 0 46847 l 128830 0 l 0 -16397" class="L3-C1" /><path d="M 290944 299253 l 67928 0 l 0 -46847 l 5856 0" class="L3-C1" /><path d="M 423288 252406 l 99550 0" class="L3-C1" /><path d="M 593109 252406 l 154596 0" class="L3-C1" /><path d="M 768786 158711 l 0 -46847 l 64415 0" class="L3-C1" /><path d="M 862480 129432 l 0 40991" class="L3-C1" /><path d="M 862480 240694 l 0 32793" class="L3-C1" /><path d="M 848426 287541 l -79640 0 l 0 58559" class="L3-C1" /></g></svg><svg class="layer-svg" data-layer="FRAME" x="0" y="0" width="853.84" height="596.96" viewBox="0 0 1000000 699227" aria-hidden="true"><defs><style>.L4-C1 {stroke: #000000; stroke-width: 293; stroke-opacity: 1.000; fill: none; fill-opacity: 1.000;}</style></defs><rect fill="#ffffff" x="0" y="0" width="1000000" height="699227" fill-opacity="0.0" /><g stroke-linecap="round" stroke-linejoin="round" fill-rule="evenodd"><path d="M 19231 685742 l 961538 0 l 0 -672257 l -961538 0 l 0 672257" class="L4-C1" /><path d="M 30943 674030 l 938115 0 l 0 -648834 l -938115 0 l 0 648834" class="L4-C1" /></g></svg></g>
+          <g id="labels-group"><text class="lab" data-layer="TITLE" data-handle="D4" x="611.420" y="504.480" font-size="4.320"><tspan x="611.420" dy="0.000">图名</tspan></text><text class="lab" data-layer="TITLE" data-handle="D5" x="674.420" y="505.480" font-size="6.750"><tspan x="674.420" dy="0.000">糖浆配制工艺流程图</tspan></text><text class="lab" data-layer="TITLE" data-handle="D6" x="611.420" y="529.480" font-size="4.320"><tspan x="611.420" dy="0.000">图号</tspan></text><text class="lab" data-layer="TITLE" data-handle="D7" x="672.420" y="531.480" font-size="5.400"><tspan x="672.420" dy="0.000">DEMO-PFD-001</tspan></text><text class="lab" data-layer="TITLE" data-handle="D8" x="731.420" y="529.480" font-size="4.320"><tspan x="731.420" dy="0.000">版本</tspan></text><text class="lab" data-layer="TITLE" data-handle="D9" x="791.420" y="531.480" font-size="5.400"><tspan x="791.420" dy="0.000">A</tspan></text><text class="lab" data-layer="TITLE" data-handle="DA" x="611.420" y="552.480" font-size="4.320"><tspan x="611.420" dy="0.000">日期</tspan></text><text class="lab" data-layer="TITLE" data-handle="DB" x="672.420" y="554.480" font-size="4.860"><tspan x="672.420" dy="0.000">2026-11</tspan></text><text class="lab" data-layer="TITLE" data-handle="DC" x="731.420" y="552.480" font-size="4.320"><tspan x="731.420" dy="0.000">比例</tspan></text><text class="lab" data-layer="TITLE" data-handle="DD" x="791.420" y="554.480" font-size="4.860"><tspan x="791.420" dy="0.000">1:1</tspan></text><text class="lab" data-layer="TITLE" data-handle="DE" x="611.420" y="571.480" font-size="4.320"><tspan x="611.420" dy="0.000">专业</tspan></text><text class="lab" data-layer="TITLE" data-handle="DF" x="672.420" y="572.480" font-size="4.860"><tspan x="672.420" dy="0.000">工艺</tspan></text><text class="lab" data-layer="TITLE" data-handle="E0" x="731.420" y="571.480" font-size="4.320"><tspan x="731.420" dy="0.000">设计</tspan></text><text class="lab" data-layer="TITLE" data-handle="E1" x="784.420" y="572.480" font-size="4.320"><tspan x="784.420" dy="0.000">教学示例</tspan></text><text class="lab" data-layer="NOTE" data-handle="E2" x="36.420" y="506.200" font-size="4.590"><tspan x="36.420" dy="0.000">注：</tspan><tspan x="36.420" dy="6.655">本图为虚构教学示例，设备位号、仪表位号与流程均不对应任何真实装置或项目。</tspan><tspan x="36.420" dy="6.655">用途：练习 DWG/DXF → 结构化清单 → 审图页的完整流程。</tspan></text><text class="lab" data-layer="NOTE" data-handle="E3" x="36.420" y="536.200" font-size="4.590"><tspan x="36.420" dy="0.000">管线说明：PL-101 原料进料；PL-102 预热后进料；PL-103 反应出料；PL-104 塔顶气相；PL-105 回流液。</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="E6" x="96.420" y="215.480" font-size="4.725"><tspan x="96.420" dy="0.000">V-101</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="E7" x="96.420" y="223.480" font-size="4.050"><tspan x="96.420" dy="0.000">原料储罐</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="EA" x="206.420" y="255.480" font-size="4.725"><tspan x="206.420" dy="0.000">P-101</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="EB" x="206.420" y="263.480" font-size="4.050"><tspan x="206.420" dy="0.000">进料泵</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="EE" x="316.420" y="215.480" font-size="4.725"><tspan x="316.420" dy="0.000">E-101</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="EF" x="316.420" y="223.480" font-size="4.050"><tspan x="316.420" dy="0.000">预热器</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="F2" x="456.420" y="215.480" font-size="4.725"><tspan x="456.420" dy="0.000">R-101</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="F3" x="456.420" y="223.480" font-size="4.050"><tspan x="456.420" dy="0.000">反应釜</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="F6" x="636.420" y="215.480" font-size="4.725"><tspan x="636.420" dy="0.000">T-101</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="F7" x="636.420" y="223.480" font-size="4.050"><tspan x="636.420" dy="0.000">精馏塔</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="FA" x="716.420" y="95.480" font-size="4.725"><tspan x="716.420" dy="0.000">E-102</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="FB" x="716.420" y="103.480" font-size="4.050"><tspan x="716.420" dy="0.000">塔顶冷凝器</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="FE" x="716.420" y="175.480" font-size="4.725"><tspan x="716.420" dy="0.000">V-102</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="FF" x="716.420" y="183.480" font-size="4.050"><tspan x="716.420" dy="0.000">回流罐</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="102" x="716.420" y="245.480" font-size="4.725"><tspan x="716.420" dy="0.000">P-102</tspan></text><text class="lab" data-layer="EQUIPMENT" data-handle="103" x="716.420" y="253.480" font-size="4.050"><tspan x="716.420" dy="0.000">回流泵</tspan></text><text class="lab" data-layer="TEXT" data-handle="105" x="136.420" y="282.480" font-size="3.780"><tspan x="136.420" dy="0.000">PL-101-25-A1A</tspan></text><text class="lab" data-layer="TEXT" data-handle="107" x="256.420" y="251.480" font-size="3.780"><tspan x="256.420" dy="0.000">PL-102-25-A1A</tspan></text><text class="lab" data-layer="TEXT" data-handle="109" x="384.420" y="211.480" font-size="3.780"><tspan x="384.420" dy="0.000">PL-103-40-A1A</tspan></text><text class="lab" data-layer="TEXT" data-handle="10B" x="546.420" y="211.480" font-size="3.780"><tspan x="546.420" dy="0.000">PL-103-40-A1A</tspan></text><text class="lab" data-layer="TEXT" data-handle="10D" x="661.420" y="125.480" font-size="3.780"><tspan x="661.420" dy="0.000">PL-104-100-A1A</tspan></text><text class="lab" data-layer="TEXT" data-handle="10F" x="741.420" y="133.480" font-size="3.780"><tspan x="741.420" dy="0.000">PL-104-100-A1A</tspan></text><text class="lab" data-layer="TEXT" data-handle="111" x="741.420" y="223.480" font-size="3.780"><tspan x="741.420" dy="0.000">PL-105-50-A1A</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="116" x="328.420" y="156.680" font-size="3.510"><tspan x="328.420" dy="0.000">TI-101</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="117" x="328.420" y="162.980" font-size="3.240"><tspan x="328.420" dy="0.000">预热出口温度</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="11B" x="273.420" y="328.680" font-size="3.510"><tspan x="273.420" dy="0.000">FIC-101</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="11C" x="273.420" y="334.980" font-size="3.240"><tspan x="273.420" dy="0.000">进料流量</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="120" x="468.420" y="136.680" font-size="3.510"><tspan x="468.420" dy="0.000">PIC-101</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="121" x="468.420" y="142.980" font-size="3.240"><tspan x="468.420" dy="0.000">反应压力</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="125" x="648.420" y="96.680" font-size="3.510"><tspan x="648.420" dy="0.000">TI-102</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="126" x="648.420" y="102.980" font-size="3.240"><tspan x="648.420" dy="0.000">塔顶温度</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="12A" x="108.420" y="326.680" font-size="3.510"><tspan x="108.420" dy="0.000">LI-101</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="12B" x="108.420" y="332.980" font-size="3.240"><tspan x="108.420" dy="0.000">储罐液位</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="12F" x="728.420" y="126.680" font-size="3.510"><tspan x="728.420" dy="0.000">LI-102</tspan></text><text class="lab" data-layer="INSTRUMENT" data-handle="130" x="728.420" y="132.980" font-size="3.240"><tspan x="728.420" dy="0.000">回流罐液位</tspan></text><text class="lab" data-layer="TEXT" data-handle="131" x="46.420" y="55.480" font-size="10.800"><tspan x="46.420" dy="0.000">工艺流程图</tspan></text><text class="lab" data-layer="TEXT" data-handle="132" x="46.420" y="70.480" font-size="5.400"><tspan x="46.420" dy="0.000">（虚构教学示例）</tspan></text></g>
+          <g id="hotspots-group"><g class="hs" id="hs-119" data-handle="119" data-tag="FIC-101" data-name="进料流量" data-kind="仪表" data-layer="INSTRUMENT" tabindex="0" role="button" aria-label="仪表 FIC-101｜进料流量"><title>仪表 FIC-101｜进料流量（handle 119）</title><circle cx="281.420" cy="327.480" r="5.123"></circle><text x="281.420" y="330.298" font-size="10.758" text-anchor="middle">1</text></g><g class="hs" id="hs-128" data-handle="128" data-tag="LI-101" data-name="储罐液位" data-kind="仪表" data-layer="INSTRUMENT" tabindex="0" role="button" aria-label="仪表 LI-101｜储罐液位"><title>仪表 LI-101｜储罐液位（handle 128）</title><circle cx="116.420" cy="325.480" r="5.123"></circle><text x="116.420" y="328.298" font-size="10.758" text-anchor="middle">2</text></g><g class="hs" id="hs-12D" data-handle="12D" data-tag="LI-102" data-name="回流罐液位" data-kind="仪表" data-layer="INSTRUMENT" tabindex="0" role="button" aria-label="仪表 LI-102｜回流罐液位"><title>仪表 LI-102｜回流罐液位（handle 12D）</title><circle cx="736.420" cy="125.480" r="5.123"></circle><text x="736.420" y="128.298" font-size="10.758" text-anchor="middle">3</text></g><g class="hs" id="hs-11E" data-handle="11E" data-tag="PIC-101" data-name="反应压力" data-kind="仪表" data-layer="INSTRUMENT" tabindex="0" role="button" aria-label="仪表 PIC-101｜反应压力"><title>仪表 PIC-101｜反应压力（handle 11E）</title><circle cx="476.420" cy="135.480" r="5.123"></circle><text x="476.420" y="138.298" font-size="10.758" text-anchor="middle">4</text></g><g class="hs" id="hs-114" data-handle="114" data-tag="TI-101" data-name="预热出口温度" data-kind="仪表" data-layer="INSTRUMENT" tabindex="0" role="button" aria-label="仪表 TI-101｜预热出口温度"><title>仪表 TI-101｜预热出口温度（handle 114）</title><circle cx="336.420" cy="155.480" r="5.123"></circle><text x="336.420" y="158.298" font-size="10.758" text-anchor="middle">5</text></g><g class="hs" id="hs-123" data-handle="123" data-tag="TI-102" data-name="塔顶温度" data-kind="仪表" data-layer="INSTRUMENT" tabindex="0" role="button" aria-label="仪表 TI-102｜塔顶温度"><title>仪表 TI-102｜塔顶温度（handle 123）</title><circle cx="656.420" cy="95.480" r="5.123"></circle><text x="656.420" y="98.298" font-size="10.758" text-anchor="middle">6</text></g><g class="hs" id="hs-DD" data-handle="DD" data-tag="1:1" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 1:1｜标题栏文字"><title>标题栏 1:1｜标题栏文字（handle DD）</title><circle cx="791.420" cy="554.480" r="5.123"></circle><text x="791.420" y="557.298" font-size="10.758" text-anchor="middle">7</text></g><g class="hs" id="hs-DB" data-handle="DB" data-tag="2026-11" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 2026-11｜标题栏文字"><title>标题栏 2026-11｜标题栏文字（handle DB）</title><circle cx="672.420" cy="554.480" r="5.123"></circle><text x="672.420" y="557.298" font-size="10.758" text-anchor="middle">8</text></g><g class="hs" id="hs-D9" data-handle="D9" data-tag="A" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 A｜标题栏文字"><title>标题栏 A｜标题栏文字（handle D9）</title><circle cx="791.420" cy="531.480" r="5.123"></circle><text x="791.420" y="534.298" font-size="10.758" text-anchor="middle">9</text></g><g class="hs" id="hs-D7" data-handle="D7" data-tag="DEMO-PFD-001" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 DEMO-PFD-001｜标题栏文字"><title>标题栏 DEMO-PFD-001｜标题栏文字（handle D7）</title><circle cx="672.420" cy="531.480" r="5.123"></circle><text x="672.420" y="534.298" font-size="10.758" text-anchor="middle">10</text></g><g class="hs" id="hs-DE" data-handle="DE" data-tag="专业" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 专业｜标题栏文字"><title>标题栏 专业｜标题栏文字（handle DE）</title><circle cx="611.420" cy="571.480" r="5.123"></circle><text x="611.420" y="574.298" font-size="10.758" text-anchor="middle">11</text></g><g class="hs" id="hs-D6" data-handle="D6" data-tag="图号" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 图号｜标题栏文字"><title>标题栏 图号｜标题栏文字（handle D6）</title><circle cx="611.420" cy="529.480" r="5.123"></circle><text x="611.420" y="532.298" font-size="10.758" text-anchor="middle">12</text></g><g class="hs" id="hs-D4" data-handle="D4" data-tag="图名" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 图名｜标题栏文字"><title>标题栏 图名｜标题栏文字（handle D4）</title><circle cx="611.420" cy="504.480" r="5.123"></circle><text x="611.420" y="507.298" font-size="10.758" text-anchor="middle">13</text></g><g class="hs" id="hs-DF" data-handle="DF" data-tag="工艺" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 工艺｜标题栏文字"><title>标题栏 工艺｜标题栏文字（handle DF）</title><circle cx="672.420" cy="572.480" r="5.123"></circle><text x="672.420" y="575.298" font-size="10.758" text-anchor="middle">14</text></g><g class="hs" id="hs-E1" data-handle="E1" data-tag="教学示例" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 教学示例｜标题栏文字"><title>标题栏 教学示例｜标题栏文字（handle E1）</title><circle cx="784.420" cy="572.480" r="5.123"></circle><text x="784.420" y="575.298" font-size="10.758" text-anchor="middle">15</text></g><g class="hs" id="hs-DA" data-handle="DA" data-tag="日期" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 日期｜标题栏文字"><title>标题栏 日期｜标题栏文字（handle DA）</title><circle cx="611.420" cy="552.480" r="5.123"></circle><text x="611.420" y="555.298" font-size="10.758" text-anchor="middle">16</text></g><g class="hs" id="hs-DC" data-handle="DC" data-tag="比例" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 比例｜标题栏文字"><title>标题栏 比例｜标题栏文字（handle DC）</title><circle cx="731.420" cy="552.480" r="5.123"></circle><text x="731.420" y="555.298" font-size="10.758" text-anchor="middle">17</text></g><g class="hs" id="hs-D8" data-handle="D8" data-tag="版本" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 版本｜标题栏文字"><title>标题栏 版本｜标题栏文字（handle D8）</title><circle cx="731.420" cy="529.480" r="5.123"></circle><text x="731.420" y="532.298" font-size="10.758" text-anchor="middle">18</text></g><g class="hs" id="hs-D5" data-handle="D5" data-tag="糖浆配制工艺流程图" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 糖浆配制工艺流程图｜标题栏文字"><title>标题栏 糖浆配制工艺流程图｜标题栏文字（handle D5）</title><circle cx="674.420" cy="505.480" r="5.123"></circle><text x="674.420" y="508.298" font-size="10.758" text-anchor="middle">19</text></g><g class="hs" id="hs-E0" data-handle="E0" data-tag="设计" data-name="标题栏文字" data-kind="标题栏" data-layer="TITLE" tabindex="0" role="button" aria-label="标题栏 设计｜标题栏文字"><title>标题栏 设计｜标题栏文字（handle E0）</title><circle cx="731.420" cy="571.480" r="5.123"></circle><text x="731.420" y="574.298" font-size="10.758" text-anchor="middle">20</text></g><g class="hs" id="hs-EC" data-handle="EC" data-tag="E-101" data-name="预热器" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 E-101｜预热器"><title>设备 E-101｜预热器（handle EC）</title><circle cx="336.420" cy="215.480" r="5.123"></circle><text x="336.420" y="218.298" font-size="10.758" text-anchor="middle">21</text></g><g class="hs" id="hs-F8" data-handle="F8" data-tag="E-102" data-name="塔顶冷凝器" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 E-102｜塔顶冷凝器"><title>设备 E-102｜塔顶冷凝器（handle F8）</title><circle cx="736.420" cy="95.480" r="5.123"></circle><text x="736.420" y="98.298" font-size="10.758" text-anchor="middle">22</text></g><g class="hs" id="hs-E8" data-handle="E8" data-tag="P-101" data-name="进料泵" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 P-101｜进料泵"><title>设备 P-101｜进料泵（handle E8）</title><circle cx="226.420" cy="255.480" r="5.123"></circle><text x="226.420" y="258.298" font-size="10.758" text-anchor="middle">23</text></g><g class="hs" id="hs-100" data-handle="100" data-tag="P-102" data-name="回流泵" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 P-102｜回流泵"><title>设备 P-102｜回流泵（handle 100）</title><circle cx="736.420" cy="245.480" r="5.123"></circle><text x="736.420" y="248.298" font-size="10.758" text-anchor="middle">24</text></g><g class="hs" id="hs-F0" data-handle="F0" data-tag="R-101" data-name="反应釜" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 R-101｜反应釜"><title>设备 R-101｜反应釜（handle F0）</title><circle cx="476.420" cy="215.480" r="5.123"></circle><text x="476.420" y="218.298" font-size="10.758" text-anchor="middle">25</text></g><g class="hs" id="hs-F4" data-handle="F4" data-tag="T-101" data-name="精馏塔" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 T-101｜精馏塔"><title>设备 T-101｜精馏塔（handle F4）</title><circle cx="656.420" cy="215.480" r="5.123"></circle><text x="656.420" y="218.298" font-size="10.758" text-anchor="middle">26</text></g><g class="hs" id="hs-E4" data-handle="E4" data-tag="V-101" data-name="原料储罐" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 V-101｜原料储罐"><title>设备 V-101｜原料储罐（handle E4）</title><circle cx="116.420" cy="215.480" r="5.123"></circle><text x="116.420" y="218.298" font-size="10.758" text-anchor="middle">27</text></g><g class="hs" id="hs-FC" data-handle="FC" data-tag="V-102" data-name="回流罐" data-kind="设备" data-layer="EQUIPMENT" tabindex="0" role="button" aria-label="设备 V-102｜回流罐"><title>设备 V-102｜回流罐（handle FC）</title><circle cx="736.420" cy="175.480" r="5.123"></circle><text x="736.420" y="178.298" font-size="10.758" text-anchor="middle">28</text></g></g>
+        </svg>
+      </div>
+    </div>
+    <div class="foot">只读 DXF 生成 · sample-pfd.dxf · 2026-11-17 00:35</div>
+  </main>
+</div>
+
+<script>
+const DRAWING = "糖浆配制工艺流程图（虚构示例）";
+const SPOTS = [{"handle": "119", "tag": "FIC-101", "name": "进料流量", "kind": "仪表", "block": "INS-BUBBLE", "x": 275.0, "y": 268.0, "layer": "INSTRUMENT", "attributes": {"TAG": "FIC-101", "NAME": "进料流量"}}, {"handle": "128", "tag": "LI-101", "name": "储罐液位", "kind": "仪表", "block": "INS-BUBBLE", "x": 110.0, "y": 270.0, "layer": "INSTRUMENT", "attributes": {"TAG": "LI-101", "NAME": "储罐液位"}}, {"handle": "12D", "tag": "LI-102", "name": "回流罐液位", "kind": "仪表", "block": "INS-BUBBLE", "x": 730.0, "y": 470.0, "layer": "INSTRUMENT", "attributes": {"TAG": "LI-102", "NAME": "回流罐液位"}}, {"handle": "11E", "tag": "PIC-101", "name": "反应压力", "kind": "仪表", "block": "INS-BUBBLE", "x": 470.0, "y": 460.0, "layer": "INSTRUMENT", "attributes": {"TAG": "PIC-101", "NAME": "反应压力"}}, {"handle": "114", "tag": "TI-101", "name": "预热出口温度", "kind": "仪表", "block": "INS-BUBBLE", "x": 330.0, "y": 440.0, "layer": "INSTRUMENT", "attributes": {"TAG": "TI-101", "NAME": "预热出口温度"}}, {"handle": "123", "tag": "TI-102", "name": "塔顶温度", "kind": "仪表", "block": "INS-BUBBLE", "x": 650.0, "y": 500.0, "layer": "INSTRUMENT", "attributes": {"TAG": "TI-102", "NAME": "塔顶温度"}}, {"handle": "DD", "tag": "1:1", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 785.0, "y": 41.0, "layer": "TITLE", "attributes": {}}, {"handle": "DB", "tag": "2026-11", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 666.0, "y": 41.0, "layer": "TITLE", "attributes": {}}, {"handle": "D9", "tag": "A", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 785.0, "y": 64.0, "layer": "TITLE", "attributes": {}}, {"handle": "D7", "tag": "DEMO-PFD-001", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 666.0, "y": 64.0, "layer": "TITLE", "attributes": {}}, {"handle": "DE", "tag": "专业", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 605.0, "y": 24.0, "layer": "TITLE", "attributes": {}}, {"handle": "D6", "tag": "图号", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 605.0, "y": 66.0, "layer": "TITLE", "attributes": {}}, {"handle": "D4", "tag": "图名", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 605.0, "y": 91.0, "layer": "TITLE", "attributes": {}}, {"handle": "DF", "tag": "工艺", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 666.0, "y": 23.0, "layer": "TITLE", "attributes": {}}, {"handle": "E1", "tag": "教学示例", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 778.0, "y": 23.0, "layer": "TITLE", "attributes": {}}, {"handle": "DA", "tag": "日期", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 605.0, "y": 43.0, "layer": "TITLE", "attributes": {}}, {"handle": "DC", "tag": "比例", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 725.0, "y": 43.0, "layer": "TITLE", "attributes": {}}, {"handle": "D8", "tag": "版本", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 725.0, "y": 66.0, "layer": "TITLE", "attributes": {}}, {"handle": "D5", "tag": "糖浆配制工艺流程图", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 668.0, "y": 90.0, "layer": "TITLE", "attributes": {}}, {"handle": "E0", "tag": "设计", "name": "标题栏文字", "kind": "标题栏", "block": "", "x": 725.0, "y": 24.0, "layer": "TITLE", "attributes": {}}, {"handle": "EC", "tag": "E-101", "name": "预热器", "kind": "设备", "block": "EQ-HX", "x": 330.0, "y": 380.0, "layer": "EQUIPMENT", "attributes": {"TAG": "E-101", "NAME": "预热器"}}, {"handle": "F8", "tag": "E-102", "name": "塔顶冷凝器", "kind": "设备", "block": "EQ-HX", "x": 730.0, "y": 500.0, "layer": "EQUIPMENT", "attributes": {"TAG": "E-102", "NAME": "塔顶冷凝器"}}, {"handle": "E8", "tag": "P-101", "name": "进料泵", "kind": "设备", "block": "EQ-PUMP", "x": 220.0, "y": 340.0, "layer": "EQUIPMENT", "attributes": {"TAG": "P-101", "NAME": "进料泵"}}, {"handle": "100", "tag": "P-102", "name": "回流泵", "kind": "设备", "block": "EQ-PUMP", "x": 730.0, "y": 350.0, "layer": "EQUIPMENT", "attributes": {"TAG": "P-102", "NAME": "回流泵"}}, {"handle": "F0", "tag": "R-101", "name": "反应釜", "kind": "设备", "block": "EQ-REACTOR", "x": 470.0, "y": 380.0, "layer": "EQUIPMENT", "attributes": {"TAG": "R-101", "NAME": "反应釜"}}, {"handle": "F4", "tag": "T-101", "name": "精馏塔", "kind": "设备", "block": "EQ-COLUMN", "x": 650.0, "y": 380.0, "layer": "EQUIPMENT", "attributes": {"TAG": "T-101", "NAME": "精馏塔"}}, {"handle": "E4", "tag": "V-101", "name": "原料储罐", "kind": "设备", "block": "EQ-TANK", "x": 110.0, "y": 380.0, "layer": "EQUIPMENT", "attributes": {"TAG": "V-101", "NAME": "原料储罐"}}, {"handle": "FC", "tag": "V-102", "name": "回流罐", "kind": "设备", "block": "EQ-TANK", "x": 730.0, "y": 420.0, "layer": "EQUIPMENT", "attributes": {"TAG": "V-102", "NAME": "回流罐"}}];
+const META = {"drawing": "糖浆配制工艺流程图（虚构示例）", "source": "sample-pfd.dxf", "generated": "2026-11-17 00:35", "counts": {"entities": 62, "texts": 53, "hotspots": 28}};
+const STORAGE_KEY = "cad-review:" + (META.source || DRAWING);
+const stage = document.getElementById("stage");
+const sheet = document.getElementById("sheet");
+const info = document.getElementById("info");
+const noteInput = document.getElementById("note");
+const notesList = document.getElementById("notes");
+const status = document.getElementById("status");
+
+let view = { scale: 1, x: 0, y: 0 };
+let selected = null;
+let notes = [];
+
+function applyView() {
+  sheet.style.transform = `translate(${view.x}px, ${view.y}px) scale(${view.scale})`;
+  sheet.style.transformOrigin = "center center";
+  sheet.style.transition = "transform .08s ease-out";
+}
+function zoom(factor) {
+  view.scale = Math.min(12, Math.max(0.4, view.scale * factor));
+  applyView();
+}
+function resetView() {
+  view = { scale: 1, x: 0, y: 0 };
+  sheet.style.transform = "none";
+}
+document.querySelector('[data-zoom="in"]').onclick = () => zoom(1.25);
+document.querySelector('[data-zoom="out"]').onclick = () => zoom(0.8);
+document.querySelector('[data-zoom="reset"]').onclick = resetView;
+
+stage.addEventListener("wheel", (event) => {
+  if (!event.ctrlKey && !event.metaKey) return;
+  event.preventDefault();
+  zoom(event.deltaY < 0 ? 1.12 : 0.9);
+}, { passive: false });
+
+let drag = null;
+stage.addEventListener("pointerdown", (event) => {
+  if (event.target.closest(".hs")) return;
+  drag = { x: event.clientX - view.x, y: event.clientY - view.y };
+  stage.classList.add("dragging");
+  stage.setPointerCapture(event.pointerId);
+});
+stage.addEventListener("pointermove", (event) => {
+  if (!drag) return;
+  view.x = event.clientX - drag.x;
+  view.y = event.clientY - drag.y;
+  applyView();
+});
+stage.addEventListener("pointerup", () => { drag = null; stage.classList.remove("dragging"); });
+stage.addEventListener("pointercancel", () => { drag = null; stage.classList.remove("dragging"); });
+
+document.querySelectorAll("[data-toggle]").forEach((button) => {
+  const key = button.dataset.toggle;
+  button.addEventListener("click", () => {
+    const hidden = button.classList.toggle("off");
+    const selector = key === "labels" ? "#labels-group" : "#hotspots-group";
+    document.querySelector(selector).style.display = hidden ? "none" : "";
+    button.textContent = hidden ? (key === "labels" ? "显示文字" : "显示热点") : (key === "labels" ? "隐藏文字" : "隐藏热点");
+  });
+});
+
+document.querySelectorAll("[data-layer-toggle]").forEach((input) => {
+  input.addEventListener("change", () => {
+    const name = input.dataset.layerToggle;
+    document.querySelectorAll(`.layer-svg[data-layer="${CSS.escape(name)}"]`).forEach((node) => {
+      node.classList.toggle("hidden", !input.checked);
+    });
+    document.querySelectorAll(`.lab[data-layer="${CSS.escape(name)}"]`).forEach((node) => {
+      node.classList.toggle("hidden", !input.checked);
+    });
+    document.querySelectorAll(`.hs[data-layer="${CSS.escape(name)}"]`).forEach((node) => {
+      node.classList.toggle("hidden", !input.checked);
+    });
+  });
+});
+
+function selectSpot(node) {
+  document.querySelectorAll(".hs.active").forEach((item) => item.classList.remove("active"));
+  const handle = node.dataset.handle;
+  const index = SPOTS.findIndex((item) => item.handle === handle);
+  const spot = index >= 0 ? SPOTS[index] : {
+    handle, tag: node.dataset.tag, name: node.dataset.name, kind: node.dataset.kind,
+  };
+  selected = spot;
+  node.classList.add("active");
+  info.classList.remove("empty");
+  const rows = [
+    ["编号", String(index + 1)],
+    ["类型", spot.kind || ""],
+    ["位号", spot.tag || ""],
+    ["名称", spot.name || ""],
+    ["图层", spot.layer || node.dataset.layer || ""],
+    ["handle", handle],
+  ];
+  if (spot.block) rows.push(["块名", spot.block]);
+  Object.entries(spot.attributes || {}).forEach(([key, value]) => {
+    if (key !== "TAG" && key !== "NAME") rows.push([key, value]);
+  });
+  info.innerHTML = "<dl>" + rows.map(([key, value]) =>
+    `<dt>${key}</dt><dd>${String(value).replace(/</g, "&lt;")}</dd>`).join("") + "</dl>";
+  const existing = notes.find((item) => item.handle === handle);
+  noteInput.value = existing ? existing.text : "";
+  noteInput.focus();
+}
+
+document.querySelectorAll(".hs").forEach((node) => {
+  node.addEventListener("click", (event) => {
+    event.stopPropagation();
+    selectSpot(node);
+  });
+  node.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      selectSpot(node);
+    }
+  });
+});
+
+function loadNotes() {
+  try {
+    notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  } catch (error) {
+    notes = [];
+  }
+  renderNotes();
+}
+function saveNotes() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  } catch (error) {
+    status.textContent = "当前预览环境不允许本地保存：请用「复制批注」或在浏览器里打开本页。";
+  }
+  renderNotes();
+}
+function renderNotes() {
+  notesList.innerHTML = notes.map((note) => `<li data-handle="${note.handle}">
+      <div class="note-head"><span>${note.kind || ""} ${note.tag || note.handle}</span>
+      <button type="button" data-remove="${note.handle}" aria-label="删除这条批注">删除</button></div>
+      <div>${String(note.text).replace(/</g, "&lt;")}</div>
+    </li>`).join("");
+  notesList.querySelectorAll("[data-remove]").forEach((button) => {
+    button.addEventListener("click", () => {
+      notes = notes.filter((note) => note.handle !== button.dataset.remove);
+      saveNotes();
+    });
+  });
+  status.textContent = notes.length ? `已保存 ${notes.length} 条批注` : "";
+}
+document.getElementById("save-note").addEventListener("click", () => {
+  if (!selected) {
+    status.textContent = "先点一个图纸热点，再写批注。";
+    return;
+  }
+  const text = noteInput.value.trim();
+  if (!text) {
+    status.textContent = "批注内容为空，没有保存。";
+    return;
+  }
+  notes = notes.filter((note) => note.handle !== selected.handle);
+  notes.push({
+    handle: selected.handle,
+    tag: selected.tag || "",
+    name: selected.name || "",
+    kind: selected.kind || "",
+    text,
+    createdAt: new Date().toISOString(),
+  });
+  saveNotes();
+  status.textContent = `已保存「${selected.tag || selected.handle}」的批注`;
+});
+document.getElementById("export-notes").addEventListener("click", () => {
+  const payload = {
+    drawing: DRAWING,
+    source: META.source,
+    exportedAt: new Date().toISOString(),
+    notes,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = (META.source || DRAWING).replace(/\.dxf$/i, "") + "-notes.json";
+  try {
+    link.click();
+    status.textContent = "已导出批注 JSON";
+  } catch (error) {
+    status.textContent = "预览环境拦截了下载：请在浏览器里打开本页再导出。";
+  }
+  URL.revokeObjectURL(link.href);
+});
+document.getElementById("copy-notes").addEventListener("click", async () => {
+  const text = notes.map((note) => `- [${note.handle}] ${note.kind || ""} ${note.tag || ""}：${note.text}`).join("\n");
+  try {
+    await navigator.clipboard.writeText(text || "（还没有批注）");
+    status.textContent = "批注已复制到剪贴板";
+  } catch (error) {
+    status.textContent = "浏览器不允许自动复制，请用「导出批注 JSON」。";
+  }
+});
+
+loadNotes();
+applyView();
+</script>
+</body>
+</html>

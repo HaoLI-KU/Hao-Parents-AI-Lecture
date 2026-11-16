@@ -13,7 +13,10 @@ import build  # noqa: E402
 
 errors = []
 warnings = []
-pages = sorted(DOCS.rglob("*.html"))
+pages = sorted(
+    path for path in DOCS.rglob("*.html")
+    if "assets" not in path.relative_to(DOCS).parts
+)
 links_checked = 0
 
 

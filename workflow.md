@@ -9,6 +9,7 @@ course/lessons/image-gen.md        共同练习：Seedream 生图
 course/gallery/whiteboard.md       拾趣：办公室白板上的画
 course/audit-01-07.md              首版核查记录（历史，课号沿用首版）
 assets/lessons/06/examples/        第 6 节参考模板、ZIP 和预览 PDF
+assets/lessons/10/examples/cad/    第 10–12 节 CAD 脚本、虚构示例 DXF 与审图页
 assets/lessons/01/screenshots/     第 1 节可公开的截图
 assets/lessons/01/examples/        第 1 节可公开的案例、模板及练习文件
 assets/site/                       全站侧脸插画、图标、线稿
@@ -56,6 +57,14 @@ docs/                              生成物，GitHub Pages 从这里发布
 - 源文件在 `assets/lessons/06/examples/chinese-book-template/`，ZIP 和预览 PDF 在同一层。
 - 改模板后在本机运行 `latexmk -xelatex main.tex`，检查 PDF 后再重新生成 ZIP；不要提交 `.aux/.log/.toc/.out/.bcf/.run.xml/.idx/.ind/.ilg/.fls/.fdb_latexmk` 和 `main.pdf`（预览 PDF 单独放）。
 - 参考模板是课程样例，不替代爸爸选中的 Overleaf 模板；正式项目仍按 `template/technical-book/` 的工作副本维护。
+
+## 爸爸的 CAD 图纸材料
+
+- 真实 AutoCAD 图纸、图号、位号、厂名和审图批注只留在本机 `CAD-Review/`；仓库和公开网页只用 `assets/lessons/10/examples/cad/` 里的虚构「糖浆配制」示例。
+- 脚本固定在 `assets/lessons/10/examples/cad/`：`make_sample_pfd.py`、`cad_inventory.py`、`make_review_sheet.py`，依赖写在同目录 `requirements.txt`；不把 `ezdxf` 加进站点 `.venv`，学员在自己的私有目录建 `.venv-cad`。
+- 改脚本后重生成示例，并重新核对热点对位：`python3 make_sample_pfd.py -o sample-pfd.dxf`、`python3 make_review_sheet.py sample-pfd.dxf -o sample-review.html`。审图页是生成物，可以提交，但不要手改。
+- 第 12 节标「后续课」，等爸爸本机确认 Harness 预览里的批注浮层之后，再把 README 状态改回正常，并在课稿里补一句本机实际显示。
+- 批注只以「文件路径 + selector/handle」引用；课稿里不贴真实图纸截图。
 
 ## 链接、搜索和素材
 

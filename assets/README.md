@@ -4,6 +4,8 @@
 
 第 6 节的中文技术书参考模板在 `lessons/06/examples/chinese-book-template/`，ZIP 和预览 PDF 也放在同一层。真实家庭和工作资料留在仓库外；发布目录只复制页面实际引用的素材。
 
+第 10–12 节的 CAD 材料在 `lessons/10/examples/cad/`：三个脚本、依赖、一张**虚构**的「糖浆配制」示例 DXF，以及由它生成的审图页 HTML。真实 AutoCAD 图纸、图号、位号和审图批注一律留在本机私有目录，不进入这个仓库。
+
 首页 Hero 的线稿水印来自本人提供的白板画，整理版是 `assets/site/whiteboard-lineart.svg`，只保留人物线稿和阴阳符号；透明度、尺寸和响应式用法见 `website-style.md`。
 
 拾趣的公开图片放在 `gallery/`：

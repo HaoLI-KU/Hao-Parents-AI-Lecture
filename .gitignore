@@ -3,6 +3,7 @@
 ._*
 
 .venv/
+.venv-cad/
 __pycache__/
 *.py[cod]
 

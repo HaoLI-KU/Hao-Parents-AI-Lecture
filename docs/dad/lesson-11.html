@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="dad/" data-page-path="dad/lesson-11.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>先建台账，再让 AI 只列疑点 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="第 10 节读懂了一张图。真正要整理的是很多年、很多套装置的一批图。这一节把「一张一张看」变成「先有一份台账，再有跨图核对」，并且把 AI 的角色压在 只列疑点、不下结论 这一侧。 工艺判断仍然由你做。AI 能做的是把散在各张图里的位号、图层和图框文字并排放在一起，指出哪里不一致…">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "dad/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css?v=7e47f5caba">
+</head>
+<body class="page-lesson route-dad">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../dad/index.html" class="is-active" aria-current="true">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-dad"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="index.html">爸爸的课程</a><span aria-hidden="true">/</span><span>第 11 节</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow"><span lang="en-GB">Lesson 11</span> · 爸爸 </p>
+<h1>先建台账，再让 AI 只列疑点</h1><p class="lesson-summary">批量生成台账，让 AI 只列跨图疑点，逐条判定并沉淀核对规则</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>一次只放 3–5 张图</span></a><a href="#step-2"><span class="toc-num">02</span><span>批量生成清单和台账</span></a><a href="#step-3"><span class="toc-num">03</span><span>让 Harness 做跨图核对，但只列疑点</span></a><a href="#step-4"><span class="toc-num">04</span><span>逐条判定，写证据</span></a><a href="#step-5"><span class="toc-num">05</span><span>把能重复的规则留下来</span></a><a href="#step-6"><span class="toc-num">06</span><span>这一节做到哪里算完成</span></a><a href="#step-7"><span class="toc-num">07</span><span>检查清单</span></a></nav></aside>
+<div class="lesson-body" id="dad"><p>第 10 节读懂了一张图。真正要整理的是很多年、很多套装置的一批图。这一节把「一张一张看」变成「先有一份台账，再有跨图核对」，并且把 AI 的角色压在<strong>只列疑点、不下结论</strong>这一侧。</p>
+<p>工艺判断仍然由你做。AI 能做的是把散在各张图里的位号、图层和图框文字并排放在一起，指出哪里不一致，再去原图核对。</p>
+<h2 id="step-1">1. 一次只放 3–5 张图</h2>
+<ol>
+<li>从同一套装置或同一阶段里挑 3–5 张有关联的图，例如总流程、反应、分离各一张。先不要一次放几十张。</li>
+<li>每张图按第 10 节的方法另存 DXF，文件名统一用图号；图号里不要有空格和斜杠。</li>
+<li>在 <code>notes/&lt;图号&gt;-阅读.md</code> 里各写一行：这张图是什么、和图里哪几张相关、有没有未绑定的参照。</li>
+</ol>
+<h2 id="step-2">2. 批量生成清单和台账</h2>
+<p>把这一批 DXF 一起放进 <code>dxf/</code>，对目录运行清单脚本：</p>
+<pre><code class="language-sh">.venv-cad/bin/python tools/cad_inventory.py dxf/ -o inventory
+</code></pre>
+<p>脚本会为每张图生成一份 <code>.md</code> 和 <code>.json</code>，并在 <code>inventory/ledger.csv</code> 里汇总一张表：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>列</th>
+<th>含义</th>
+<th>先看什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file</code></td>
+<td>文件名</td>
+<td>是否都用图号</td>
+</tr>
+<tr>
+<td><code>dxf_version</code></td>
+<td>DXF 版本</td>
+<td>是否统一到 AC1032（R2018）</td>
+</tr>
+<tr>
+<td><code>entities</code></td>
+<td>实体总数</td>
+<td>数量明显偏少的图要单独看</td>
+</tr>
+<tr>
+<td><code>texts</code></td>
+<td>文字条数</td>
+<td>太少可能是参照没绑定</td>
+</tr>
+<tr>
+<td><code>equipment</code> / <code>instruments</code></td>
+<td>设备、仪表数</td>
+<td>与印象差太多时先核对</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>位号候选数</td>
+<td>用于发现漏提取</td>
+</tr>
+<tr>
+<td><code>warnings</code></td>
+<td>提醒条数</td>
+<td>不为 0 的图先处理</td>
+</tr>
+</tbody>
+</table></div>
+<p>台账不是结论，只是「这批图能不能读、读到了多少」的体检表。<code>warnings</code> 不为 0 的图，先在原图里处理外部参照或重新另存，再进入下一步。</p>
+<h2 id="step-3">3. 让 Harness 做跨图核对，但只列疑点</h2>
+<p>先把要求说死：只列需要你确认的项目，每条给证据，不判断对错、不评价工艺。这样它不会用「看起来合理」的猜测混进台账。</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">当前工作区是 CAD-Review/。请只读 inventory/ledger.csv 和 inventory/ 里这一批图的清单（.md 与 .json），不要打开也不修改 original/ 和 dxf/ 里的图纸。
+请做一次跨图核对，但不要下结论。只列需要我人工确认的项目，分四类：
+1. 同一位号在不同图纸里名称、参数或位置不一致；
+2. 设备或仪表位号重复、跳号、或只出现在一张图里；
+3. 图层命名、图框版本、图号格式不一致；
+4. 清单里读不到或可能缺内容的地方（外部参照、代理对象、编码问题）。
+每条写清：疑点是什么、证据（文件 + handle + 原文）、为什么值得核对、建议我在原图里看哪里。
+没有把握的写「待确认」，不要编造位号，也不要替我判断工艺是否合理。
+最后列出你认为我应该先核对的三条，并说明理由。
+</code></pre></div>
+<h2 id="step-4">4. 逐条判定，写证据</h2>
+<p>在 <code>notes/</code> 新建 <code>cross-check-&lt;日期&gt;.md</code>，把 AI 列的每一条抄进去，逐条判定：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>判定</th>
+<th>什么情况用</th>
+<th>记录要写什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成立</td>
+<td>原图确实是那样</td>
+<td>图号、handle、原图位置、你的判断</td>
+</tr>
+<tr>
+<td>不成立</td>
+<td>清单提取或 AI 理解有误</td>
+<td>错在哪：文字、块、图层还是推断</td>
+</tr>
+<tr>
+<td>需原件确认</td>
+<td>本机副本看不清或版本不对</td>
+<td>缺什么、去找哪份原件</td>
+</tr>
+</tbody>
+</table></div>
+<p>判定原则和第 9 节一样：没核对到的写「待核对」，不填「通过」。AI 说「疑似缺一个回流泵」，你要回到 PFD 上确认管线走向和泵位号，不能因为它说得顺就采纳。</p>
+<h2 id="step-5">5. 把能重复的规则留下来</h2>
+<p>跑完两三批图，你会发现自己反复在核对同样的东西。这时再写 <code>standards/cad-review.md</code>，只写已经确认的规则；不确定的标「待定」。</p>
+<pre><code class="language-markdown"># standards/cad-review.md｜图纸核对规则
+- 位号格式：设备用「字母-三位数字」，仪表用「两位功能字母 + 编号」；以本装置现有图纸为准。
+- 图号与文件名一致；另存 DXF 统一用 AutoCAD 2018 DXF。
+- 先绑定外部参照再另存；有未绑定参照的图不进入跨图核对。
+- 文字编码：R2004 及以前用 $DWGCODEPAGE，出现乱码先用 ODA 重出 ACAD2018。
+- 清单 warnings 不为 0 的图先处理，不进入下一步。
+- AI 只能提出疑点；每条结论必须能指回「文件 + handle + 原文」。
+</code></pre>
+<p>规则写短。它是给下一次会话和你自己看的，不是给外人看的制度文件。</p>
+<h2 id="step-6">6. 这一节做到哪里算完成</h2>
+<p>完成时，你应该能展示：一批 3–5 张图的台账、一份逐条判定过的跨图核对记录、一份只写确定规则的 <code>standards/cad-review.md</code>，并能说清哪几条是 AI 找出来的、哪几条是你自己核出来的。</p>
+<h2 id="step-7">检查清单</h2>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">这一批 3–5 张图都按图号命名并另存为 DXF。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>ledger.csv</code> 已生成，每张图一行。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>warnings</code> 不为 0 的图已处理或已记录原因。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">跨图核对结果只包含「疑点 + 证据 + 建议核对位置」。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">每条疑点都有「成立 / 不成立 / 需原件确认」的判定。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>standards/cad-review.md</code> 只写已确认规则，未确定的标「待定」。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">没有把 AI 的推测当成工艺结论。</span></li>
+</ul>
+<p>第 12 节把审图页打开，在 Harness 里直接点选和批注。</p>
+<p>备查：<a href="lesson-10.html#dad">第 10 节</a> · <a href="https://ezdxf.mozman.at/" target="_blank" rel="noopener">ezdxf 文档</a> · <a href="https://www.opendesign.com/guestfiles/oda_file_converter" target="_blank" rel="noopener">ODA File Converter</a></p></div>
+</div>
+<nav class="lesson-pager" aria-label="课次导航">
+<a class="pager-link" href="lesson-10.html"><span class="pager-label">上一节</span><span class="pager-title">第 10 节</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">课表</span><span class="pager-title">返回爸爸的课程</span></a>
+<a class="pager-link" href="lesson-12.html"><span class="pager-label">下一节</span><span class="pager-title">第 12 节</span></a>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../dad/index.html">爸爸的课程</a><a href="../mom/index.html">妈妈的课程</a><a href="../practice/index.html">共同练习</a><a href="../gallery/index.html">拾趣</a><a href="../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/dad/lesson-11.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../assets/ui.js?v=7e47f5caba"></script>
+</body>
+</html>
