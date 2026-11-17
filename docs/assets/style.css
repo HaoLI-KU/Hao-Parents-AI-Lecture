@@ -543,13 +543,6 @@ button { cursor: pointer; background: none; border: 0; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
-.practice-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-@media (max-width: 720px) {
-}
 .card {
   padding: 1.3rem;
   border: 1px solid var(--line);
