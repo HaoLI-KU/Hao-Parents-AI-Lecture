@@ -767,7 +767,7 @@ def path_page(route, topics):
 </div></section>
 {''.join(sections)}
 <section class="wrap lesson-section"><div class="section-head"><div class="section-title"><p class="eyebrow">全部</p><h2>按专题浏览</h2></div></div>
-<a class="practice-card" href="../topics/index.html"><p class="eyebrow">专题</p><h2>{len(topics)} 个专题</h2><p>不按人的路径，直接看所有专题和讲次。</p><span class="route-enter">打开专题总览 →</span></a>
+<a class="overview-card" href="../topics/index.html"><p class="eyebrow">专题</p><h2>{len(topics)} 个专题</h2><p>不按人的路径，直接看所有专题和讲次。</p><span class="route-enter">打开专题总览 →</span></a>
 </section>'''
     write_page(f"{route}/index.html", meta["title"], meta["blurb"], body, route, page_type="path")
 

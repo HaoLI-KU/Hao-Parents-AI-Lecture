@@ -655,7 +655,7 @@ a.chip:hover { border-color: var(--accent); color: var(--accent); }
 .lesson-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
 .lesson-arrow { justify-self: end; color: var(--muted); font-size: 1.1rem; }
 
-.practice-card {
+.overview-card {
   display: block;
   padding: 1.4rem 1.5rem;
   border: 1px dashed var(--line-strong);
@@ -665,19 +665,19 @@ a.chip:hover { border-color: var(--accent); color: var(--accent); }
   text-decoration: none;
   transition: border-color .2s var(--ease), background-color .2s var(--ease);
 }
-.practice-card:hover {
+.overview-card:hover {
   border-color: var(--accent);
   background: var(--surface);
   color: var(--ink);
 }
-.practice-card h2 {
+.overview-card h2 {
   margin: .1rem 0 .4rem;
   font-family: var(--font-serif);
   font-size: clamp(1.35rem, 2.4vw, 1.7rem);
   font-weight: 600;
 }
-.practice-card p { color: var(--ink-soft); font-size: .92rem; }
-.practice-card .route-enter { margin-top: .7rem; }
+.overview-card p { color: var(--ink-soft); font-size: .92rem; }
+.overview-card .route-enter { margin-top: .7rem; }
 
 /* ---------- Lesson pages ---------- */
 .breadcrumb {
