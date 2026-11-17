@@ -1,4 +1,4 @@
-"""Check generated topic pages, links, anchors, redirects and search coverage."""
+"""Check generated topic pages, links, anchors and search coverage."""
 from html import unescape
 import json
 import re
@@ -59,8 +59,6 @@ def check_link(page, raw_href):
 def check_page(page):
     html = page.read_text(encoding="utf-8")
     relative = page.relative_to(DOCS).as_posix()
-    if 'data-redirect="1"' in html:
-        return
     if 'lang="zh-CN"' not in html:
         fail(f"{relative}: 缺少 lang=\"zh-CN\"")
     if len(re.findall(r"<h1[ >]", html)) != 1:
@@ -164,15 +162,6 @@ def main():
         if not (DOCS / page).is_file():
             fail(f"缺少页面：{page}")
 
-    for old, new in build.LEGACY_REDIRECTS.items():
-        old_page = DOCS / old
-        if not old_page.is_file():
-            fail(f"缺少重定向页：{old}")
-            continue
-        if 'data-redirect="1"' not in old_page.read_text(encoding="utf-8"):
-            fail(f"重定向页标记缺失：{old}")
-        if not (DOCS / new).is_file():
-            fail(f"重定向目标不存在：{old} → {new}")
 
     for folder in (ROOT / "course", DOCS):
         for path in folder.rglob("*"):

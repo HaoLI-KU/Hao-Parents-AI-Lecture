@@ -43,7 +43,7 @@ python3 -m venv .venv
 日常改完课稿或样式后，在仓库根目录运行：
 
 ```sh
-make all                        # 重建并检查链接、锚点、搜索覆盖和重定向
+make all                        # 重建并检查链接、锚点、搜索覆盖
 make serve                      # 打开 http://localhost:8000 预览
 make PYTHON=.venv/bin/python all  # 使用虚拟环境
 ```

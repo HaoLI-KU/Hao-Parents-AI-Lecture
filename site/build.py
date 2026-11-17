@@ -45,31 +45,6 @@ NAV_ITEMS = (
     ("mom", "妈妈", "mom/index.html"),
     ("gallery", "拾趣", "gallery/index.html"),
 )
-LEGACY_REDIRECTS = {
-    "dad/lesson-01.html": "topics/ai/01-models-and-tools.html",
-    "dad/lesson-02.html": "topics/ai/02-harness-setup.html",
-    "dad/lesson-03.html": "topics/ai/03-effort-and-usage.html",
-    "dad/lesson-04.html": "topics/word-to-latex/01-project-goal.html",
-    "dad/lesson-05.html": "topics/word-to-latex/02-compile-and-annotate.html",
-    "dad/lesson-06.html": "topics/word-to-latex/03-template.html",
-    "dad/lesson-07.html": "topics/word-to-latex/04-project-layout.html",
-    "dad/lesson-08.html": "topics/word-to-latex/05-project-rules.html",
-    "dad/lesson-09.html": "topics/word-to-latex/06-convert-segment.html",
-    "dad/lesson-10.html": "topics/cad/01-convert-to-dxf.html",
-    "dad/lesson-11.html": "topics/cad/03-batch-and-cross-check.html",
-    "dad/lesson-12.html": "topics/cad/04-review-and-annotate.html",
-    "mom/lesson-01.html": "topics/mac/01-new-mac.html",
-    "mom/lesson-02.html": "topics/mac/02-apps-and-email.html",
-    "mom/lesson-03.html": "topics/mac/03-shortcuts-and-sharing.html",
-    "mom/lesson-04.html": "topics/mac/04-meetings-and-mactex.html",
-    "mom/lesson-05.html": "topics/ai/01-models-and-tools.html",
-    "mom/lesson-06.html": "topics/ai/02-harness-setup.html",
-    "mom/lesson-07.html": "topics/ai/03-effort-and-usage.html",
-    "practice/index.html": "topics/index.html",
-    "practice/github.html": "topics/version-control/01-first-repository.html",
-    "practice/image-gen.html": "topics/image-generation/01-generate-and-edit.html",
-}
-
 
 def compute_asset_version():
     digest = hashlib.sha1()
@@ -605,7 +580,6 @@ def gallery_page(item, items):
         "url": f"gallery/{item['slug']}.html#gallery",
         "route": "gallery",
         "routeName": "拾趣",
-        "lesson": None,
         "status": "active",
     }
 
@@ -638,7 +612,7 @@ def copy_asset(url, source_path):
 def resolve_links(html, route, prefix, source_path):
     def repl(match):
         attribute, url = match.group(1), unescape(match.group(2))
-        if "/assets/topics/" in url or "/assets/lessons/" in url:
+        if "/assets/topics/" in url:
             relative = copy_asset(url, source_path)
             if attribute == "src":
                 return f'src="{prefix}assets/{relative}"'
@@ -929,23 +903,6 @@ def search_page(topics, gallery):
                body, "search", page_type="search", scripts=("search-index.js", "search.js"))
 
 
-def write_redirect(old_path, new_path):
-    import os
-    target = DOCS / new_path
-    if not target.is_file():
-        raise SystemExit(f"重定向目标不存在：{new_path}")
-    page = DOCS / old_path
-    page.parent.mkdir(parents=True, exist_ok=True)
-    relative = os.path.relpath(target, page.parent)
-    html = f'''<!doctype html>
-<html lang="zh-CN" data-redirect="1">
-<head><meta charset="utf-8"><title>页面已迁移</title>
-<meta http-equiv="refresh" content="0; url={relative}">
-<link rel="canonical" href="{SITE_URL}{new_path}"></head>
-<body><p>这个地址已迁移到 <a href="{relative}">新位置</a>。</p></body></html>'''
-    page.write_text(html, encoding="utf-8")
-
-
 def clean_docs():
     for route in ROUTES:
         directory = DOCS / route
@@ -1025,15 +982,13 @@ def main():
     for item in gallery:
         entries.append(gallery_page(item, gallery))
     search_page(topics, gallery)
-    for old, new in LEGACY_REDIRECTS.items():
-        write_redirect(old, new)
     (DOCS / "assets/search-index.js").write_text(
         "window.courseSearchIndex = " + json.dumps(entries, ensure_ascii=False) + ";\n",
         encoding="utf-8",
     )
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
     print(f"Built {len(entries)} search entries, {sum(len(t['sessions']) for t in topics)} sessions, "
-          f"{len(topics)} topics, {len(gallery)} gallery pages, {len(LEGACY_REDIRECTS)} redirects.")
+          f"{len(topics)} topics, {len(gallery)} gallery pages.")
 
 
 if __name__ == "__main__":

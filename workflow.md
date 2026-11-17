@@ -18,7 +18,7 @@ site/build.py                    从 topics 和 gallery 生成网页
 site/style.css                   全站样式和设计变量
 site/ui.js                       菜单、目录高亮、提示词复制
 site/search.js                   搜索页交互
-site/check_site.py               链接、锚点、搜索、重定向、残留检查
+site/check_site.py               链接、锚点、搜索、残留检查
 site/fonts/                      自托管的拉丁字体
 docs/                            生成物，GitHub Pages 从这里发布
 ```
@@ -38,16 +38,15 @@ docs/                            生成物，GitHub Pages 从这里发布
 2. **补素材并确认**：只发布实际制作并核对过的图；截图裁掉账号和个人信息；真实图纸和家庭资料留在本机。
 3. **改 frontmatter 和 README**：新增讲更新 README 的专题总览和 `skills.md`；新增专题更新总览表。
 4. **重建**：`make build`。
-5. **检查**：`make check`。链接、锚点、搜索覆盖、重定向、快捷键和残留有一项不过就不发布。
-6. **预览**：`make serve`，看首页、专题总览、每个专题、两条路径、课页、搜索和重定向；按 1280/1024/500px 和 200% 放大检查，打印一节长课。
+5. **检查**：`make check`。链接、锚点、搜索覆盖、快捷键和残留有一项不过就不发布。
+6. **预览**：`make serve`，看首页、专题总览、每个专题、两条路径、课页和搜索；按 1280/1024/500px 和 200% 放大检查，打印一节长课。
 7. **提交**：课稿、专题文件、素材、样式和重建后的 `docs/` 一起提交；推送 `main` 后等 1–2 分钟刷新线上地址。
 
-## URL 和重定向
+## URL
 
 - 页面：`/`、`/topics/`、`/topics/<slug>/`、`/topics/<slug>/<stem>.html`、`/dad/`、`/mom/`、`/gallery/`。
-- 旧课页 URL 不保留源码文件，只在 `site/build.py` 的 `LEGACY_REDIRECTS` 里映射；每次构建生成 22 个重定向页。
-- 新增或调整讲次时，如果 URL 会变，把旧路径加进 `LEGACY_REDIRECTS`，并让 `make check` 验证目标存在。
-- 不要手写 `docs/` 里的重定向。
+- URL 由专题 slug 和讲次文件名决定；调整后直接生效，不保留旧路径兼容页或重定向映射。
+- 调整讲次文件名或专题 slug 时，同步改所有站内引用，再跑 `make check`。
 
 ## 搜索和素材
 
@@ -78,7 +77,6 @@ docs/                            生成物，GitHub Pages 从这里发布
 - 课稿里的相对链接和 `assets/topics/` 引用都存在；
 - `skills.md` 的妈妈长期技能完整保留；
 - 没有 `course/lessons/`、`course/practices/` 或旧课稿残留；
-- `LEGACY_REDIRECTS` 覆盖所有已迁移的旧 URL；
 - 真实图纸、位数和审图批注没有进入仓库。
 
 做网页批注时，从右侧 Files 面板直接打开对应的 `.html` 课页（例如 `docs/topics/mac/01-new-mac.html`）；批注按文件保存，改完发送给 Agent。
