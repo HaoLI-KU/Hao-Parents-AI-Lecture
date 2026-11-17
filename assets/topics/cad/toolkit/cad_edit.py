@@ -66,6 +66,10 @@ def load_plan(path: Path) -> dict:
             if not op.get("layer"):
                 raise PlanError(f"第 {index} 条新增操作缺少 layer。")
             continue
+        if op["op"] == "rename_layer":
+            if not op.get("from") or not op.get("to"):
+                raise PlanError(f"第 {index} 条图层改名缺少 from/to。")
+            continue
         handle = str(op.get("handle", ""))
         if not HANDLE_RE.match(handle):
             raise PlanError(f"第 {index} 条操作缺少合法 handle。")
@@ -188,7 +192,7 @@ def plan_check(doc, plan: dict) -> list[dict]:
     resolved = []
     for index, op in enumerate(plan["operations"], start=1):
         item = {"id": op.get("id") or f"op{index}", **op}
-        if op["op"].startswith("add_"):
+        if op["op"].startswith("add_") or op["op"] == "rename_layer":
             resolved.append(item)
             continue
         entity = resolve(doc, op["handle"])
@@ -324,6 +328,11 @@ def run(drawing: Path, plan_path: Path, output: Path | None, dry_run: bool) -> d
     before_entities = graphical_entities(doc)
     before_sigs = {handle: entity_signature(entity) for handle, entity in before_entities.items()}
     before_count = layout_entity_count(doc)
+    rename_targets = set()
+    for item in resolved:
+        if item["op"] == "rename_layer":
+            rename_targets |= {handle for handle, entity in before_entities.items()
+                               if entity.dxf.get("layer") == item["from"]}
 
     # 记录移动前的插入点，便于写盘后核对
     for item in resolved:
@@ -370,10 +379,7 @@ def run(drawing: Path, plan_path: Path, output: Path | None, dry_run: bool) -> d
     targets = {item["handle"] for item in resolved if item.get("handle")}
     for handle in list(targets):
         targets |= dependent_handles(doc, handle)
-    for item in resolved:
-        if item["op"] == "rename_layer":
-            targets |= {handle for handle, entity in before_entities.items()
-                        if entity.dxf.get("layer") == item["from"]}
+    targets |= rename_targets
     added = sum(1 for item in resolved if item["op"].startswith("add_"))
     deleted = sum(1 for item in resolved if item["op"] == "delete")
     expected_after = before_count + added - deleted

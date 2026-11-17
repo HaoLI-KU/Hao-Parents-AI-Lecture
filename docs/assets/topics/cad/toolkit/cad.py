@@ -187,6 +187,7 @@ def cmd_selftest(args) -> int:
                  "expect": {"layer": "INSTRUMENT", "insert": [330.0, 440.0]}, "delta": [0, -10]},
                 {"id": "add", "op": "add_polyline", "layer": "REVIEW",
                  "points": [[520, 300], [560, 300]]},
+                {"id": "rename", "op": "rename_layer", "from": "PIPE", "to": "PIPE-REVIEW"},
             ],
         }, ensure_ascii=False, indent=2), encoding="utf-8")
 
