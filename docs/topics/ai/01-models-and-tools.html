@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+<link rel="stylesheet" href="../../assets/style.css?v=9aaa5f6946">
 </head>
 <body class="page-session route-both">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -57,7 +57,7 @@
 <div class="lesson-body" id="session"><h2 id="step-1">1. 用两层来理解 AI</h2>
 <ol>
 <li><strong>界面是操作入口。</strong> 你打开 Codex，在里面输入任务。</li>
-<li><strong>模型负责生成回答。</strong> 爸爸这台 Mac 的 Codex 接的是 DeepSeek。</li>
+<li><strong>模型负责生成回答。</strong> 这台 Mac 的 Codex 接的是 DeepSeek。</li>
 <li><strong>界面把结果显示给你。</strong> 先试一句简单的问题，看看能否收到回复。</li>
 <li><strong>最后自己核对。</strong> 如果问的是事实，就对照原文。如果问的是操作，就亲手试一步。</li>
 </ol>
@@ -67,10 +67,10 @@
 <h2 id="step-2">2. 用自己的 DeepSeek 账户跑通 Codex</h2>
 <p>今天要做的是亲手从「有自己的账户」走到「在 Codex 收到一条回复，并能回开放平台找这次用量」。</p>
 <ol>
-<li><strong>登录开放平台。</strong> 在浏览器打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">DeepSeek 开放平台</a>，注册或登录爸爸自己的账户，按页面完成验证。打开账户余额和用量页面，记下测试前的余额与时间。</li>
+<li><strong>登录开放平台。</strong> 在浏览器打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">DeepSeek 开放平台</a>，注册或登录自己的账户，按页面完成验证。打开账户余额和用量页面，记下测试前的余额与时间。</li>
 <li><strong>小额充值。</strong> 进入充值页面，先核对金额和账户。若页面允许，充约 10 元作为练习预算，支付后回到账户页确认余额。以页面实际可选金额为准，金额不合适就把这一步留待确认。</li>
-<li><strong>创建 API Key。</strong> 在「API Keys」创建一把专用于爸爸这台 Mac 的密钥，可命名为 <code>dad-codex</code>。它像给这个工具使用账户的一把钥匙。创建时在本机妥善保存。暂停屏幕共享，密钥只填入本机接入配置，避开聊天输入框、截图和课程仓库。</li>
-<li><strong>把新密钥接到已跑通的 Codex。</strong> 和家人一起确认这台 Mac 现有 DeepSeek 接入方式及密钥存放位置，保留可恢复的原设置，再把接入所用的密钥换成爸爸新建的那把。模型和接入地址先沿用已验证的配置。DeepSeek 官方方案使用 Responses API，配置示例将密钥存于本机配置文件。实际换密钥前先核对本机接入方式，勿共享配置文件或把备份存进课程目录。改好后完全退出桌面应用、重新打开 Codex，确认当前使用 DeepSeek 配置。若发现本机配置与预期不同，先按 <a href="https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/codex/" target="_blank" rel="noopener">DeepSeek 官方 Codex 接入说明</a>核对，再决定是否调整现有配置。</li>
+<li><strong>创建 API Key。</strong> 在「API Keys」创建一把专用于这台 Mac 的密钥，可命名为 <code>my-codex</code>。它像给这个工具使用账户的一把钥匙。创建时在本机妥善保存。暂停屏幕共享，密钥只填入本机接入配置，避开聊天输入框、截图和课程仓库。</li>
+<li><strong>把新密钥接到已跑通的 Codex。</strong> 和家人一起确认这台 Mac 现有 DeepSeek 接入方式及密钥存放位置，保留可恢复的原设置，再把接入所用的密钥换成自己新建的那把。模型和接入地址先沿用已验证的配置。DeepSeek 官方方案使用 Responses API，配置示例将密钥存于本机配置文件。实际换密钥前先核对本机接入方式，勿共享配置文件或把备份存进课程目录。改好后完全退出桌面应用、重新打开 Codex，确认当前使用 DeepSeek 配置。若发现本机配置与预期不同，先按 <a href="https://api-docs.deepseek.com/zh-cn/quick_start/agent_integrations/codex/" target="_blank" rel="noopener">DeepSeek 官方 Codex 接入说明</a>核对，再决定是否调整现有配置。</li>
 <li><strong>发一条短测试。</strong> 在 Codex 新对话输入「请只回复：连接成功。」看到回复后记下发送时间。若提示认证失败，先核对密钥和当前配置。若提示余额不足，回开放平台检查余额。先修正原因，再发下一次测试。</li>
 <li><strong>回开放平台核对。</strong> 打开用量明细，选测试当天，若页面提供按 API Key 筛选，就选新建密钥和测试日期。用当时可见的时间、模型和用量粒度核对，页面只有汇总时就比较测试前后。读一读页面实际提供的输入、输出 token 和费用。Token 是模型处理文字时用的小单位，和屏幕上看到的字数可以不同。余额只显示到有限位数时，优先看用量明细。若暂时没看到记录，记下测试时间和密钥名称，下次刷新再查。</li>
 </ol>
@@ -112,11 +112,11 @@
 <p>用一句话说出「我打开的是哪个工具，背后用的是哪个模型」。再从上表选一个自己平时会遇到的场景，说说为什么会先打开那个工具。第 2 讲配置 DeepSeek Harness，第 3 讲再做生活提示词实操。</p>
 <p>备查：<a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener">OpenAI Docs 提示词指南</a> · <a href="https://www.kimi.com/en/help/kimi-work/overview" target="_blank" rel="noopener">Kimi Work 官方介绍</a> · <a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">DeepSeek 官方文档</a></p>
 <h2 id="step-5">妈妈清单</h2>
-<p>这一讲妈妈和爸爸用同一份内容，账户、密钥和登录都用自己的。</p>
+<p>这一讲两人用同一份内容，账户、密钥和登录都用自己的。</p>
 <ol>
 <li>用自己的话说出「界面」和「模型」的分工。</li>
 <li>注册或登录自己的 DeepSeek 开放平台账户，按页面提示小额充值。</li>
-<li>创建自己的 API Key，接到这台 Mac 的 Codex 上，发一条测试，再回开放平台核对用量。这台 Mac 还没有 Codex 时，和爸爸一起按这一讲的入口装好。</li>
+<li>创建自己的 API Key，接到这台 Mac 的 Codex 上，发一条测试，再回开放平台核对用量。这台 Mac 还没有 Codex 时，和家人一起按这一讲的入口装好。</li>
 <li>记下卡住的一步，下一讲用 Harness 继续。</li>
 </ol></div>
 </div>
@@ -131,6 +131,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/ai/01-models-and-tools.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+<script defer src="../../assets/ui.js?v=9aaa5f6946"></script>
 </body>
 </html>

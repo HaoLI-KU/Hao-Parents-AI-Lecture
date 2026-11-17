@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+<link rel="stylesheet" href="../../assets/style.css?v=9aaa5f6946">
 </head>
 <body class="page-session route-both">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -77,7 +77,7 @@
 <p>做自己的出行安排时，可以替换人数、出发地和时间。比较两个推理档位时，两次仍须使用完全相同的文字。</p>
 <h2 id="step-3">3. 回开放平台找这两次用量</h2>
 <ol>
-<li>打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">DeepSeek 开放平台</a>的用量或账单页面，选当天和爸爸用于 Harness 的 API Key。</li>
+<li>打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">DeepSeek 开放平台</a>的用量或账单页面，选当天和自己用于 Harness 的 API Key。</li>
 <li>对照刚才记录的时间，观察平台能否区分两次请求。页面显示哪些字段就读哪些字段，例如输入 token、输出 token、思考 token、缓存或费用；不要用屏幕字数猜 token。</li>
 <li>记录两次请求能确认的模型、档位、耗时和用量。若明细延迟出现，先记下时间，稍后刷新，不重复发送许多测试。</li>
 <li>说出结论：「高档是否更慢？是否用了更多 token？这道题的答案是否真的更好？」一次练习只说明本次任务，不代表所有问题。</li>
@@ -90,18 +90,18 @@
 先报告你实际打开了哪些页面、读到了哪些正文。只看到搜索摘要或读不到正文时请说明，不要补猜。
 我会打开原链接，核对域名、日期和适用条件。
 </code></pre></div>
-<p>爸爸打开同一链接，核对域名、日期与适用条件，并查看 Harness 是否确实调用了浏览器。若工具打不开正文，就由爸爸打开官方页面，把可公开的段落复制进会话，让 Harness 只根据这段文字整理。</p>
-<p>再用一条测试日程练习只读本机日历。先由爸爸在已授权的日历中新建一条标题为「家庭出行测试」的练习日程，设置当天的开始、结束时间并记下来，再发送下面的提示词。若日历只有读取权限，就请有权限的家人创建这条测试日程。</p>
+<p>打开同一链接，核对域名、日期与适用条件，并查看 Harness 是否确实调用了浏览器。若工具打不开正文，就自己打开官方页面，把可公开的段落复制进会话，让 Harness 只根据这段文字整理。</p>
+<p>再用一条测试日程练习只读本机日历。先在已授权的日历中新建一条标题为「家庭出行测试」的练习日程，设置当天的开始、结束时间并记下来，再发送下面的提示词。若日历只有读取权限，就请有权限的家人创建这条测试日程。</p>
 <div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请只读取我当前已授权日历里标题为「家庭出行测试」的那条测试日程，不要创建或修改日程。
 报告它的日期、开始和结束时间、时区，并按时间顺序整理成一行行程。
 如果找不到、遇到多条同名日程或看不到时区，请说明实际查到什么，再问我下一步。
 我会回到日历原记录，逐项核对。
 </code></pre></div>
-<p>爸爸对照日历原记录核对时间和时区。若读取失败，记录日历名称和权限提示，先完成网页练习。想换成机票或商品比价时，可以把目标、日期或型号、预算、希望读取的公开来源写进同样的提示词，要求列出实际打开的页面和无法确认的价格或规格。登录、提交资料、下单和付款由本人操作。</p>
+<p>对照日历原记录核对时间和时区。若读取失败，记录日历名称和权限提示，先完成网页练习。想换成机票或商品比价时，可以把目标、日期或型号、预算、希望读取的公开来源写进同样的提示词，要求列出实际打开的页面和无法确认的价格或规格。登录、提交资料、下单和付款由本人操作。</p>
 <h2 id="step-5">收尾</h2>
-<p>完成时，爸爸应能在 Harness 里指出模型名和 Effort，从开放平台找到至少一条对应的用量记录，并对照实际调用与原页面或日历核对一项结果。</p>
+<p>完成时，你应能在 Harness 里指出模型名和 Effort，从开放平台找到至少一条对应的用量记录，并对照实际调用与原页面或日历核对一项结果。</p>
 <h2 id="step-6">妈妈清单</h2>
-<p>这一讲和爸爸同一份内容，用同一道虚构题比较推理强度。</p>
+<p>这一讲两人同一份内容，用同一道虚构题比较推理强度。</p>
 <ol>
 <li>在 Harness 里找到模型名和 Effort。</li>
 <li>用这一讲的虚构行程题，分别用 low 和 high/max 各做一次。</li>
@@ -120,6 +120,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/ai/03-effort-and-usage.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+<script defer src="../../assets/ui.js?v=9aaa5f6946"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@ summary: 安装 DeepSeek Harness、配置模型、安装微信输入法，并逐
 ### 1. 安装并初始化 DeepSeek Harness
 
 1. 打开 [DeepSeek Harness 官方发布页](https://github.com/DeepSeek-ai/deepseek-harness/releases)，在所选版本的 Assets 中找适用于 macOS Apple Silicon 的桌面安装文件，安装到「应用程序」并打开。发布页若只显示源码或找不到对应安装文件，先核对家里已安装的桌面版及其更新入口，再继续本课。
-2. 沿用[第 1 讲](../ai/01-models-and-tools.md)使用的 DeepSeek 开放平台账户。在 Harness 的模型设置中配置自己的 API Key。远程上课时先停止屏幕共享，再由爸爸本人粘贴密钥；密钥不放进聊天、截图或课程仓库。
+2. 沿用[第 1 讲](../ai/01-models-and-tools.md)使用的 DeepSeek 开放平台账户。在 Harness 的模型设置中配置自己的 API Key。远程上课时先停止屏幕共享，再由本人粘贴密钥；密钥不放进聊天、截图或课程仓库。
 3. 打开模型选择器，确认能看到 DeepSeek 提供方和可选模型。模型、推理强度和用量统一放到第 3 讲练。
 
 [DeepSeek Harness 模型配置说明](https://deepseek-harness.github.io/deepseek-harness/guide/providers.html) · [DeepSeek 开放平台](https://platform.deepseek.com/)
@@ -22,7 +22,7 @@ summary: 安装 DeepSeek Harness、配置模型、安装微信输入法，并逐
 
 ### 3. 先装插件市场
 
-在 Harness 的插件设置中安装并启用 `dshmarket`。重开 Harness 后，确认可以进入可视化插件市场。插件入口和按钮名称以爸爸电脑上的版本为准。
+在 Harness 的插件设置中安装并启用 `dshmarket`。重开 Harness 后，确认可以进入可视化插件市场。插件入口和按钮名称以你这台电脑上的版本为准。
 
 ### 4. 安装另外五个指定插件
 
@@ -37,7 +37,7 @@ summary: 安装 DeepSeek Harness、配置模型、安装微信输入法，并逐
 如果当前会话没有安装能力，请只告诉我在插件页逐项搜索和核对的步骤，不要声称已经安装。
 ```
 
-爸爸对照自己的 Installed plugins 清单核对六项。若 Harness 无法在会话中安装，就在插件页按清单逐项完成；界面显示的版本与来源以本机确认框为准。[DeepSeek Harness 插件索引说明](https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market)
+对照自己的 Installed plugins 清单核对六项。若 Harness 无法在会话中安装，就在插件页按清单逐项完成；界面显示的版本与来源以本机确认框为准。[DeepSeek Harness 插件索引说明](https://deepseek-harness.github.io/deepseek-harness/guide/plugin-market)
 
 | Installed plugins 中的显示名称 | 以后负责什么 |
 |---|---|
@@ -64,7 +64,7 @@ summary: 安装 DeepSeek Harness、配置模型、安装微信输入法，并逐
 
 ### 妈妈清单
 
-这一讲和爸爸同一份清单，账户和密钥用自己的。
+这一讲两人同一份清单，账户和密钥用自己的。
 
 1. 完成 Harness 安装、模型设置和一条「连接成功」测试。
 2. 安装微信输入法，找到语音输入快捷键。
