@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/version-control/" data-page-path="topics/version-control/index.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>版本管理与协作 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="注册 GitHub，建立私有仓库，把练习文件提交、推送并在本机找回。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/version-control/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-topics">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="page">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><section class="hero hero-route route-both"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><span>版本管理与协作</span></nav>
+<p class="eyebrow">专题 · 1 讲 · 共同</p>
+<h1>版本管理与协作</h1>
+<p class="lead">用 GitHub 管好文件和改动</p>
+<p>注册 GitHub，建立私有仓库，把练习文件提交、推送并在本机找回。</p>
+<p class="hero-meta"><span class="chip">1 讲</span><span class="chip chip-optional">按需专题</span></p>
+</div></section>
+<section class="wrap lesson-section"><div class="section-head"><div class="section-title"><p class="eyebrow">讲次</p><h2>按顺序</h2></div><span class="section-note">1 讲</span></div>
+<div class="lesson-list"><a class="lesson-row" href="01-first-repository.html"><span class="lesson-num">第 1 讲</span><span class="lesson-main"><span class="lesson-title">第一次把文件放进 GitHub 仓库</span><span class="lesson-tags"><span class="chip audience-chip audience-both">共同</span></span></span><span class="lesson-arrow" aria-hidden="true">→</span></a></div>
+</section></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/version-control/index.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

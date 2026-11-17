@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/mac/" data-page-path="topics/mac/04-meetings-and-mactex.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会议预约、语音输入与 MacTeX · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="预定会议并同步日历、试微信语音转文字，用 TeXShop 验证中文排版环境。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/mac/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-session route-mom">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-mom"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把 Mac 用顺</a><span aria-hidden="true">/</span><span>第 4 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 把 Mac 用顺 · 第 4 讲 · 妈妈</p>
+<h1>会议预约、语音输入与 MacTeX</h1>
+<p class="lesson-summary">预定会议并同步日历、试微信语音转文字，用 TeXShop 验证中文排版环境。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>预定会议并同步日历</span></a><a href="#step-2"><span class="toc-num">02</span><span>试微信语音转文字</span></a><a href="#step-3"><span class="toc-num">03</span><span>验证 MacTeX</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>先补前几节没完成、今天会用到的项目。腾讯会议、微信和 Apple 账户能打开后，再做下面的练习。</p>
+<h2 id="step-1">预定会议并同步日历</h2>
+<ol>
+<li>在腾讯会议 Mac 客户端主页点「预定会议」，填主题和时间，再点「预定」。从会议详情或邀请菜单复制会议号和链接。把日期、时区与链接通过邮件发给约好的家人，请对方核对在哥本哈根看到的时间。</li>
+<li>在苹果「日历」建立测试日程，用日程右上角的彩色标记选一个自己可编辑的共享日历。双击日程，在「添加备注、URL 或附件」贴入会议链接。需要指定时区时，在「日历 → 设置 → 高级」打开时区支持，再点日程日期选择上海时区。请家人在哥本哈根用自己的设备核对当地开始时间，并打开链接确认是同一场会议。 <a href="https://support.apple.com/zh-hans/guide/calendar/icalwr13-events/mac" target="_blank" rel="noopener">Apple 添加和修改日程</a></li>
+</ol>
+<h2 id="step-2">试微信语音转文字</h2>
+<p>优先练微信 Mac 客户端自带的语音转文字。打开一个测试聊天，把光标放在输入框，找语音输入的小话筒或客户端显示的快捷键。试说「明天给薄荷浇水，check the leaves」。确认中英文出现在可编辑的输入框，核对后清空。入口以现场客户端版本为准。如果只有发送语音消息的按钮，先请家人一起检查版本和设置。macOS 听写作为备用，可在「系统设置 → 键盘 → 听写」查看启用方式和快捷键。</p>
+<h2 id="step-3">验证 MacTeX</h2>
+<p>本节只用 Mac 上已经装好的 TeXShop，不需要 DeepSeek Harness。</p>
+<ol>
+<li>下载<a href="../../assets/topics/word-to-latex/examples/chinese-manual.zip" download>中文手册练习项目（ZIP）</a>和<a href="../../assets/topics/word-to-latex/examples/mom-mactex-test.tex" download>测试文件</a>。把 ZIP 解压到「文稿」，测试文件也放到同一个「文稿」位置。</li>
+<li>双击测试文件，TeXShop 会打开它。点工具栏的「排版」（Typeset），等预览窗口出现。若能看到「MacTeX 练习」和下面那行中文，说明中文编译环境可用。</li>
+<li>在 TeXShop 里打开解压后的 <code>chinese-manual/main.tex</code>。文件第一行指定 XeLaTeX，按「排版」编译；第一次目录可能为空，再按一次「排版」更新目录。</li>
+<li>在预览里核对封面、目录，以及「准备设备」「记录与复查」两个中文章节。看到本次生成的 PDF 就完成本节验证；妈妈本节不做 PDF 批注。</li>
+<li>若排版报错，先看 TeXShop 日志窗口的第一条错误，记下文件名和提示。确认 MacTeX 已安装、TeXShop 是从「应用程序」打开的；修不了就记下错误，下节课一起看。</li>
+</ol>
+<p>如仍有待完成的基础操作，记下从哪一步接着做。豆包桌面版继续按需使用。工具选择与提示词的系统练习留到第 5、6 节。</p>
+<p>备查：<a href="https://meeting.tencent.com/support/topic/392/index.html" target="_blank" rel="noopener">腾讯会议预定常规会议</a> · <a href="https://support.apple.com/zh-cn/guide/mac-help/-kbdm162/mac" target="_blank" rel="noopener">Apple 听写设置</a> · <a href="https://www.tug.org/mactex/gui-link.html" target="_blank" rel="noopener">MacTeX 图形工具</a></p></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<a class="pager-link" href="03-shortcuts-and-sharing.html"><span class="pager-label">上一讲</span><span class="pager-title">第 3 讲 · 练快捷键、触控板与家庭共享</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把 Mac 用顺</span></a>
+<span class="pager-link is-empty" aria-hidden="true"></span>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/mac/04-meetings-and-mactex.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

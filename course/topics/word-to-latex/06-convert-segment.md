@@ -1,0 +1,94 @@
+---
+title: 转换一小段 Word 并沉淀流程
+audience: dad
+status: followup
+summary: 把一小段 Word 忠实转成 LaTeX，编译、逐项核对，并把验证过的步骤写成 Skill。
+---
+第 3 讲已选好并验证 Overleaf 中文模板，第 4 讲建了项目目录，第 5 讲写了入口、路线和内容规则。今天从本机 Word 选一个小节，按「计划 → 执行 → 编译与核对 → 沉淀」走完第一轮。模板已能编译中文；这一节专注于忠实转换这段内容，后续再扩大范围。
+
+### 1. 定位输入，先只做计划
+
+在 `projects/book-001/original/` 的 Word 留存副本里，选一个有标题、正文和数字或单位的小节。在本机记下标题与页码或段落位置，不把原文粘到公开课程仓库。建立 `projects/book-001/latex/`、`review/`、`output/`。若 Harness 无法读取 Word 正文，爸爸在私人会话里提供这一小节的文字或本机工作副本，要求它说明实际读到了什么。
+
+```text
+当前工作区是 Technical-Publishing/。请先读 AGENTS.md、ROADMAP.md、standards/word-conversion.md，再只读查看 projects/book-001/original/ 中我指定的 Word 小节，以及 template/technical-book/。若不能读取 Word，请停下并告诉我需要我提供哪一段。
+这一轮只处理我指定的一个小节。请先给计划，不创建或修改文件：列出原文标题和位置、怎样把第 3 讲验证的通用模板复制成 projects/book-001/latex/ 中的项目实例、拟生成的章节文件、编译入口，以及 Word、LaTeX、PDF 三处要核对的项目。
+不要改原件或留存副本，不要润色技术文字；遇到表格、公式、图和原稿编号，说明会怎样保留与核对。等我确认计划后再执行。
+```
+
+爸爸对照 Word 原文和 Finder 核对计划中的小节边界、目标路径、原件保护和检查办法。计划扩大到整章、擅自改字句或凭猜测描述未读到的材料时，先让 Harness 改正计划。
+
+### 2. 按确认的范围转换并编译
+
+计划确认后，才发送执行提示词。`template/original-overleaf/` 和 `projects/book-001/original/` 始终只读；`template/technical-book/` 保持第 3 讲通过检查的通用版本。把完整模板复制到 `projects/book-001/latex/` 作为本书实例，只在实例中加入真实章节，避免通用模板引用 `book-001` 的私人内容。
+
+```text
+按我刚确认的计划，只转换指定的 Word 小节。先把 template/technical-book/ 中已验证的模板完整复制为 projects/book-001/latex/ 的项目实例，在实例中写入本段 .tex 章节并接入主文件。保持原文正文、数字、单位、公式、表格数据和技术结论，不自行润色、补写或重绘技术关系。
+只改 projects/book-001/latex/。不要改 template/original-overleaf/、template/technical-book/ 或 Word 留存副本。若实际材料出现第 3 讲模板未测试过的结构，先报告缺口和建议，不要擅自扩张模板。
+请实际编译项目实例，报告改动文件、编译方式、最新 PDF 路径、第一条关键错误和未解决问题。编译成功后把本次 PDF 放入 projects/book-001/output/。我会打开 Word、.tex 和 PDF 核对，再决定是否沉淀流程。
+```
+
+爸爸打开新 PDF，核对文件时间和显示的内容，避免误看旧版本。若本段有新的模板需求，先记录并回到模板工作副本单独验证，再重新复制到项目实例；没有编译成功和内容核对结果时，本节仍在进行中。
+
+### 3. 做有证据的人工核对
+
+在本机建立 `projects/book-001/review/segment-001.md`，逐项记 Word 的位置、对应 `.tex` 文件、PDF 页码、核对结果和待处理问题。由爸爸亲自对照三处，不让 AI 只凭自己的转换稿给自己打勾。
+
+| 核对什么 | 怎样对照 |
+|---|---|
+| 标题、段落与顺序 | 从 Word 原段逐段找到 `.tex` 和 PDF 中的对应内容 |
+| 数字、单位、公式、技术结论 | 按原文逐项核对，不把格式改善当成内容改写 |
+| 表格 | 核对每行每列的数据；允许版式变化，不漏项 |
+| 图与技术连接关系 | 保留原图供核对；以后要重绘，先确认连接和参数没有变化 |
+| 编号与交叉引用 | 记录 Word 编号到 LaTeX 标签、PDF 显示的对应关系 |
+| 项目编译 | 打开本次 PDF，检查中文、目录或引用及未修改部分仍可读 |
+
+小节没有的项目写「不适用」，没核对到的写「待核对」，不要填成通过。内容措辞若需要润色，另列建议请爸爸确认，不混入这次格式转换。
+
+### 4. 把验证过的做法留下来
+
+先区分本轮产生的四种记录。`review/segment-001.md` 保存这份文档的核对证据；`tests/word-segment-check.md` 写能重复执行的转换与编译检查，包括入口、实际运行方式、预期现象与本轮结果；`development/decisions.md` 仅在确实解决了转换或引用问题时记录「问题、原因、采用的改法、验证结果」。经核对的通用内容要求继续放 `standards/word-conversion.md`。具体 `.tex` 的改动历史将来交给 Git，Development 负责解释重要决定的原因。
+
+两份检查记录可以先照下面的占位格式写，填写时只用爸爸本机的真实结果：
+
+```markdown
+# projects/book-001/review/segment-001.md
+Word 位置：本机第［页／节］；LaTeX 文件：［相对路径］；PDF：［文件及页码］
+标题与段落：待核对；数字与单位：待核对
+表格／图／公式／引用：按本段实际内容填写通过、不适用或待核对
+未解决问题：［实际问题或“无”］
+```
+
+```markdown
+# tests/word-segment-check.md
+编译入口：［本次使用的 book-001 项目实例主文件］
+重复办法：［Harness 实际执行的编译命令或操作］
+预期：生成新 PDF，本段标题与内容可读，目录或引用按本段实际情况显示
+本次结果：［运行时间、PDF 位置、通过或实际错误］
+```
+
+本轮通过后，再请 Harness 起草第一份可复用 Skill：
+
+```text
+请先读本轮的 Word 小节、转换后的 .tex、最新 PDF、projects/book-001/review/segment-001.md 和 tests/word-segment-check.md。只根据实际通过的检查，起草 .agents/skills/word-to-latex/SKILL.md；先在会话中展示草稿，等我确认后再写入。
+Skill 只记录下次转换另一小节时可重复的步骤：定位原文、规划对应文件、只改工作副本、编译、对照原文和记录待确认项。规则请引用 standards/word-conversion.md，不要复制一大段；未经验证的修复不要写成固定步骤。
+同时建议 ROADMAP.md 的下一小步。若产生了稳定新规则或实际技术决定，指出应更新哪份文件及依据；没有变化的文件保持不动。我会对照本轮核对记录确认。
+```
+
+下面只示范 Skill 的最小形状，爸爸应以本轮确实验证过的步骤写自己的版本。[Harness 项目 Skill 说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/subsystems/skills.md)
+
+```markdown
+---
+name: word-to-latex
+description: 把已定位的 Word 小节忠实转换到项目的 LaTeX 工作副本并核对
+---
+# 转换一小节
+1. 读项目入口、当前路线和内容规则，定位 Word 原文。
+2. 先列源段落与目标 .tex 的对应关系，等人确认。
+3. 只修改工作副本，编译当前模板并报告新 PDF。
+4. 对照 Word、.tex 和 PDF 记录通过项、待核对项与问题。
+```
+
+本节只建立经过验证的 `word-to-latex`。以后模板维护可发展 `latex-template-engineering`，语言审校可发展 `technical-writing-review`；审校建议与格式转换分开，原文字句要改时由爸爸确认。若本机 Harness 没有发现新 Skill，就明确指向文件让它读，并记下本机验证结果，不把识别能力当作已完成。
+
+完成时，爸爸能展示由已验证的 `technical-book/` 复制出的项目实例所编译的新 PDF、对应 `.tex`、逐项核对记录和可重复的编译检查；通过后才保存 Skill 并在 `ROADMAP.md` 记下下一段或下一项模板工作。

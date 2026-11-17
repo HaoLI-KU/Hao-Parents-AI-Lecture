@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/image-generation/" data-page-path="topics/image-generation/01-generate-and-edit.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用 Harness 生成和修改图片 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="配置 Seedream / 火山方舟，跑通生图、只改一处的改图和软装方向对比。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/image-generation/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-session route-both">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-both"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把想法画出来</a><span aria-hidden="true">/</span><span>第 1 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 把想法画出来 · 第 1 讲 · 共同</p>
+<h1>用 Harness 生成和修改图片</h1>
+<p class="lesson-summary">配置 Seedream / 火山方舟，跑通生图、只改一处的改图和软装方向对比。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先分清四个名字</span></a><a href="#step-2"><span class="toc-num">02</span><span>开通火山方舟和 Seedream</span></a><a href="#step-3"><span class="toc-num">03</span><span>安装并启用 dsh-image-gen</span></a><a href="#step-4"><span class="toc-num">04</span><span>配置 Seedream Provider</span></a><a href="#step-5"><span class="toc-num">05</span><span>第一张图：虚构客厅</span></a><a href="#step-6"><span class="toc-num">06</span><span>在原图上改：只换一处</span></a><a href="#step-7"><span class="toc-num">07</span><span>软装选品：三套方案与核对</span></a><a href="#step-8"><span class="toc-num">08</span><span>费用、隐私和故障排查</span></a><a href="#step-9"><span class="toc-num">09</span><span>验收清单</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>这一课只做一件事：把「用 DeepSeek Harness 生成图片」这条路跑通。先用虚构的客厅练手，再把自己的房间照片放在本机做软装方向的对比；生成图只当方向板，不当施工图，也不替代商品尺寸和材质核对。</p>
+<p>公开课稿只用虚构房间和示例文字；真实家庭照片、门牌、快递单和家人物品只在本机使用，上传前先裁掉隐私信息。</p>
+<h2 id="step-1">1. 先分清四个名字</h2>
+<p>你之前提到的「C Dream」，官方资料写作 <strong>Seedream</strong>（也见 SeeDream），是字节跳动的图像生成模型。和它相关的几个入口不是一回事：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>是什么</th>
+<th>这一课怎么用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Seedream / SeeDream</strong></td>
+<td>字节跳动 Seed 团队的图像生成模型，支持文生图、参考图生图、局部编辑、组图</td>
+<td>本课要调用的模型</td>
+</tr>
+<tr>
+<td><strong>即梦 AI</strong></td>
+<td>消费端网页/App，使用 Seedream；会员/订阅是消费级入口</td>
+<td>可以自己玩，但<strong>不能</strong>直接给 DSH 插件当 API</td>
+</tr>
+<tr>
+<td><strong>火山方舟 Ark</strong></td>
+<td>火山引擎的模型 API 平台：开通模型、创建 API Key、按量计费</td>
+<td>本课必须走这条</td>
+</tr>
+<tr>
+<td><strong>dsh-image-gen</strong></td>
+<td>DeepSeek Harness 的生图插件，支持 Seedream / 火山方舟 Provider</td>
+<td>本课安装和配置的插件</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>关于“订阅”</strong>：即梦会员和火山方舟 API 是两条账本。DSH 插件要的是 Ark API Key，按生成张数计费；不需要先买即梦会员。火山引擎的 Agent Plan 是另一种订阅套餐，可能含部分 Seedream Lite 额度，但先确认它是否提供可用于 <code>/api/v3</code> 的 API Key，不要把它当成图片余额。若只想在网页里随手生成，才考虑即梦会员。</p>
+<h2 id="step-2">2. 开通火山方舟和 Seedream</h2>
+<ol>
+<li>打开<a href="https://console.volcengine.com/ark/region:cn-beijing" target="_blank" rel="noopener">火山方舟控制台</a>，用爸爸妈妈自己的火山引擎账号登录，按页面要求完成实名认证和开通。</li>
+<li>在模型广场或「开通管理」里找到 <strong>Seedream</strong>，开通要用的版本。课堂先用 <strong>Seedream 5.0 Lite</strong> 或 <strong>5.0 Pro</strong> 试，确认流程后再用 5.5 或更高分辨率。</li>
+<li>打开 <a href="https://console.volcengine.com/ark/region:cn-beijing/apiKey" target="_blank" rel="noopener">API Key 管理</a>，创建一把只给这台 Mac 用的 Key，命名例如 <code>dsh-image-gen-dad</code> 或 <code>dsh-image-gen-mom</code>。先停止屏幕共享，由本人复制；Key 不写进聊天、截图或课程仓库。</li>
+<li>回到控制台确认计费方式和余额。API 是按量后付费；先在预算里留一小笔练习额度，开启用量/余额提醒。</li>
+<li>记下区域和端点。图片生成默认端点是 <code>https://ark.cn-beijing.volces.com/api/v3</code>；实际以控制台和插件“拉取模型”结果为准。</li>
+</ol>
+<p>当前常见模型 ID（以控制台/插件拉取结果为准）：</p>
+<ul>
+<li><code>doubao-seedream-5-5-261028</code>：Seedream 5.5，2026-11-09 发布，API 陆续开放；</li>
+<li><code>doubao-seedream-5-0-pro-260628</code>：Seedream 5.0 Pro，插件当前默认之一；</li>
+<li><code>doubao-seedream-5-0-260128</code> / <code>doubao-seedream-5-0-lite-260128</code>：Seedream 5.0 Lite。</li>
+</ul>
+<p>价格示例（2026-11-15 查到的官方口径，实际以下单页面为准）：Seedream 5.0 Pro 输出图不超过 236 万像素约 0.3 元/张，更大尺寸约 0.6 元/张；5.5 约 0.28 元/2K 方图编辑；Lite 更便宜。先用 Lite/1K 试构图，满意后用 Pro/5.5/2K。</p>
+<h2 id="step-3">3. 安装并启用 dsh-image-gen</h2>
+<ol>
+<li>打开 DeepSeek Harness 左侧的「插件」面板，进入「已安装」或插件市场，搜索 <code>dsh-image-gen</code>。</li>
+<li>安装或启用后重启 Harness。插件详情页应出现「图像生成」配置表单；输入框旁也会出现生图按钮。</li>
+<li>不要照搬插件 README 里的 <code>--profile web</code> 命令到 Desktop；父母用界面安装即可。若界面找不到，先确认 Harness 版本，再让家人协助用插件管理。</li>
+<li>安装只需一次；以后升级插件后重新打开详情页检查 Provider 和模型是否还在。</li>
+</ol>
+<h2 id="step-4">4. 配置 Seedream Provider</h2>
+<p>在插件详情页：</p>
+<ol>
+<li>默认 Provider 选 <strong>ByteDance Seedream / 火山方舟</strong>（界面可能显示「字节 Seedream」）。</li>
+<li>填入第 2 步创建的 API Key。</li>
+<li>Endpoint / Base URL 保持默认；若为空，填 <code>https://ark.cn-beijing.volces.com/api/v3</code>。</li>
+<li>模型先填 <code>doubao-seedream-5-0-pro-260628</code>，或点「拉取模型」后选可用的 5.5 / 5.0 Lite。</li>
+<li>点「测试连接」。通过后再点「拉取模型」核对模型列表；失败先看第 8 步的排错。</li>
+<li>设置输出格式（PNG/JPEG）、水印开关和保存工作区。水印是否可关以模型和条款为准；课堂先用默认。</li>
+<li>保存后，回到会话输入框旁确认 Provider 是 Seedream，不要误用 ChatGPT 订阅通道。</li>
+</ol>
+<p>密钥只保存在本机 DSH 凭据里；不要为了“方便”把 Key 写进课稿、仓库、聊天或截图。</p>
+<h2 id="step-5">5. 第一张图：虚构客厅</h2>
+<p>先用一张虚构房间练提示词，不要上传真实家庭照片。要求写明：房间、固定不动的元素、要换的软装、光线、镜头和比例。</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请生成一张约 20 平方米客厅的软装示意：浅橡木地板，米白色墙，左侧落地窗，午后自然光；现有灰色布艺三人沙发、白色圆形茶几。请只把沙发换成浅米色亚麻三人沙发，增加胡桃木边柜和橄榄绿地毯；保留窗、墙、地板、光线和拍摄角度不变，其他家具不要移动。真实照片感，24mm 广角，1:1，不要添加文字。
+</code></pre></div>
+<p>生成后先看四件事：</p>
+<ul>
+<li>房间结构和窗/墙/地板有没有被改掉；</li>
+<li>沙发、边柜、地毯是不是你要的方向；</li>
+<li>光线、镜头角度是否还能和原房间对上；</li>
+<li>画面里有没有乱码文字或多余物件。</li>
+</ul>
+<p>不要一次要求“全部重新设计”。软装对比要控制变量，否则看不出是哪一件东西变了。</p>
+<h2 id="step-6">6. 在原图上改：只换一处</h2>
+<p>打开 <code>画廊 → 工作台</code>，或在画布/图库里选中刚生成的图：</p>
+<ol>
+<li>点「继续编辑（垫图）」或把图拖进画布，作为参考图。</li>
+<li>用画笔圈出要改的区域（例如沙发），或在提示词里明确位置。</li>
+<li>发一条只改一处的修改意见：</li>
+</ol>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">只改左侧沙发：换成浅米色亚麻三人沙发；保留窗帘、地板、光线、镜头角度、其他家具和房间结构不变。不要把整张图重新设计，不要添加文字。
+</code></pre></div>
+<ol start="4">
+<li>生成后对比新旧两版，满意就保存为新版本；不满意就退回上一版再改，不要覆盖原图。</li>
+<li>再试一次“只换地毯”或“只换落地灯”，每次都只改一个变量。</li>
+</ol>
+<p>如果插件支持画布选区，优先圈出要改的地方再发指令；选区能让模型更清楚“只改这里”。如果当前通道的图生图不稳定，就先退回“文字重生成”，但把固定条件写得更具体。</p>
+<h2 id="step-7">7. 软装选品：三套方案与核对</h2>
+<p>同一房间一次生成三套方向，每套只改变软装组合：</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">同一间客厅，保留墙、窗、地板、主沙发、光线和镜头角度不变，分别生成三套软装方向：
+A：橄榄绿地毯 + 藤编落地灯 + 胡桃木边几；
+B：米色羊毛地毯 + 黑色细杆落地灯 + 浅木边柜；
+C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
+每套单独一张图，真实照片感，1:1，不要添加文字。
+</code></pre></div>
+<p>拿去淘宝/店里选品时：</p>
+<ul>
+<li>先量墙面、沙发、柜子和通道尺寸，再看商品尺寸；生成图不保证比例。</li>
+<li>用生成图比较颜色、材质和风格，商品页的尺寸、材质、色差、安装方式和退货政策以商家为准。</li>
+<li>不要根据生成图判断“放得下”；放不下是尺寸问题，不是画面问题。</li>
+<li>真实房间照片只在本机使用；上传前裁掉门牌、家人照片、快递单等隐私信息；公开课稿只放虚构房间。</li>
+<li>生成图只作方向板，最终以实物、样板和小样为准。</li>
+</ul>
+<h2 id="step-8">8. 费用、隐私和故障排查</h2>
+<p><strong>费用</strong></p>
+<ul>
+<li>按生成张数计费；先 Lite/1K 试构图，再用 Pro/5.5/2K 做最终图。</li>
+<li>在火山方舟控制台看用量、余额和账单；设预算提醒，避免一次批量生成过多。</li>
+<li>5.0 Pro 输出图 ≤236 万像素约 0.3 元/张，更大尺寸约 0.6 元/张；5.5 约 0.28 元/2K 编辑；以控制台为准。</li>
+</ul>
+<p><strong>隐私</strong></p>
+<ul>
+<li>API Key 不截图、不进聊天、不进仓库；只放本机 DSH 凭据。</li>
+<li>真实家庭照片不上传公开仓库；按火山方舟条款处理图片。</li>
+<li>课堂投屏时先停共享再粘贴 Key。</li>
+</ul>
+<p><strong>排错</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>先检查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>401/403</td>
+<td>Key 是否复制完整；模型是否开通；账号是否欠费；实名/区域是否符合</td>
+</tr>
+<tr>
+<td>404 模型不存在</td>
+<td>模型 ID 是否过期；点「拉取模型」选当前 ID；5.5 是否已对该账号开放</td>
+</tr>
+<tr>
+<td>429</td>
+<td>触发限流；等一会儿，减少并发/批量</td>
+</tr>
+<tr>
+<td>测试连接失败</td>
+<td>Endpoint 是否 <code>/api/v3</code>；Key 是否属于当前区域；网络是否可访问火山方舟</td>
+</tr>
+<tr>
+<td>生成成功但看不到图</td>
+<td>图库/工作区保存位置；Provider 是否选对；刷新或重开插件</td>
+</tr>
+<tr>
+<td>中文小字乱码</td>
+<td>减少画面文字；重要文字后期另加，不依赖模型写小字</td>
+</tr>
+<tr>
+<td>改图改得太多</td>
+<td>提示词写“只改…、保留…”，用选区圈定；降低一次修改数量</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="step-9">9. 验收清单</h2>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">能说清 Seedream、即梦、火山方舟和 dsh-image-gen 的区别。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">火山方舟账号已开通 Seedream，API Key 只保存在本机。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">dsh-image-gen 已安装并启用，Provider 选 ByteDance Seedream / 火山方舟。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">「测试连接」通过，「拉取模型」能看到可用模型。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">用虚构客厅生成至少一张图，能说出模型、尺寸和大约费用。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">在原图上只改一处（沙发/地毯/灯），保存新版本，原图还在。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">生成三套软装方向，能说清哪些是画面方向、哪些必须去商品页核对尺寸和材质。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">真实照片没有上传公开仓库；API Key 没有进截图、聊天或课稿。</span></li>
+</ul>
+<h4>备查</h4>
+<ul>
+<li><a href="https://docs.volcengine.com/docs/ark/seedream-5-5?lang=zh" target="_blank" rel="noopener">Seedream 5.5 教程</a></li>
+<li><a href="https://docs.volcengine.com/docs/ark/seedream-5-0-pro?lang=zh" target="_blank" rel="noopener">Seedream 5.0 Pro 教程</a></li>
+<li><a href="https://docs.volcengine.com/docs/ark/image-generation-tutorial?lang=zh" target="_blank" rel="noopener">图片生成教程</a></li>
+<li><a href="https://docs.volcengine.com/docs/ark/model-pricing?lang=zh" target="_blank" rel="noopener">模型价格</a></li>
+<li><a href="https://console.volcengine.com/ark/region:cn-beijing/apiKey" target="_blank" rel="noopener">API Key 管理</a></li>
+<li><a href="https://github.com/shanliuling/dsh-image-gen" target="_blank" rel="noopener">dsh-image-gen 插件</a></li>
+</ul></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<span class="pager-link is-empty" aria-hidden="true"></span>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把想法画出来</span></a>
+<span class="pager-link is-empty" aria-hidden="true"></span>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/image-generation/01-generate-and-edit.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

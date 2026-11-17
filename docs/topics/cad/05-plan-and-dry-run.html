@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/cad/" data-page-path="topics/cad/05-plan-and-dry-run.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>修改计划与 dry-run · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="把「想改什么」写成带 handle 和修改前状态的 JSON 计划，先检查、再 dry-run 看差异，确认后才允许执行。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/cad/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-session route-dad">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-dad"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">和图纸对话</a><span aria-hidden="true">/</span><span>第 5 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 和图纸对话 · 第 5 讲 · 爸爸</p>
+<h1>修改计划与 dry-run</h1>
+<p class="lesson-summary">把「想改什么」写成带 handle 和修改前状态的 JSON 计划，先检查、再 dry-run 看差异，确认后才允许执行。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>修改计划长什么样</span></a><a href="#step-2"><span class="toc-num">02</span><span>先检查计划</span></a><a href="#step-3"><span class="toc-num">03</span><span>dry-run：只看差异</span></a><a href="#step-4"><span class="toc-num">04</span><span>让 Harness 起草计划，但不要执行</span></a><a href="#step-5"><span class="toc-num">05</span><span>什么情况下不允许执行</span></a><a href="#step-6"><span class="toc-num">06</span><span>检查清单</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>从这一讲开始动图。原则是：<strong>先把改动写成计划，看清差异，再执行</strong>；执行只写新文件，原图和 DXF 工作副本都不覆盖。</p>
+<h2 id="step-1">1. 修改计划长什么样</h2>
+<p>计划是一个 JSON 文件，<code>operations</code> 里每条写清操作、目标 handle、修改前状态（<code>expect</code>）和修改后的值。示例见 <a href="../../assets/topics/cad/examples/sample-plan.json" download>sample-plan.json</a>：</p>
+<pre><code class="language-json">{
+  &quot;drawing&quot;: &quot;sample-pfd.dxf&quot;,
+  &quot;operations&quot;: [
+    {&quot;id&quot;: &quot;layer-v101&quot;, &quot;op&quot;: &quot;set_layer&quot;, &quot;handle&quot;: &quot;E4&quot;,
+     &quot;expect&quot;: {&quot;type&quot;: &quot;INSERT&quot;, &quot;layer&quot;: &quot;EQUIPMENT&quot;, &quot;tag&quot;: &quot;V-101&quot;},
+     &quot;to&quot;: &quot;EQ-REVIEW&quot;},
+    {&quot;id&quot;: &quot;name-v101&quot;, &quot;op&quot;: &quot;set_attribute&quot;, &quot;handle&quot;: &quot;E4&quot;,
+     &quot;expect&quot;: {&quot;tag&quot;: &quot;V-101&quot;, &quot;name&quot;: &quot;原料储罐&quot;},
+     &quot;tag&quot;: &quot;NAME&quot;, &quot;to&quot;: &quot;原料罐&quot;},
+    {&quot;id&quot;: &quot;new-line&quot;, &quot;op&quot;: &quot;add_polyline&quot;, &quot;layer&quot;: &quot;REVIEW&quot;,
+     &quot;points&quot;: [[520, 300], [560, 300]]}
+  ]
+}
+</code></pre>
+<p>支持的操作：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>op</th>
+<th>作用</th>
+<th>必填</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>set_layer</code></td>
+<td>改实体图层</td>
+<td><code>handle</code>、<code>expect</code>、<code>to</code></td>
+</tr>
+<tr>
+<td><code>move</code></td>
+<td>平移</td>
+<td><code>handle</code>、<code>expect</code>、<code>delta: [dx, dy]</code></td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td>删除</td>
+<td><code>handle</code>、<code>expect</code></td>
+</tr>
+<tr>
+<td><code>set_attribute</code></td>
+<td>改块属性</td>
+<td><code>handle</code>、<code>expect</code>、<code>tag</code>、<code>to</code></td>
+</tr>
+<tr>
+<td><code>replace_text</code></td>
+<td>改 TEXT/MTEXT 文字</td>
+<td><code>handle</code>、<code>expect</code>、<code>to</code></td>
+</tr>
+<tr>
+<td><code>set_color</code></td>
+<td>改 ACI 颜色</td>
+<td><code>handle</code>、<code>expect</code>、<code>to</code></td>
+</tr>
+<tr>
+<td><code>rename_layer</code></td>
+<td>图层改名</td>
+<td><code>expect</code>、<code>from</code>、<code>to</code></td>
+</tr>
+<tr>
+<td><code>add_line</code> / <code>add_polyline</code> / <code>add_circle</code> / <code>add_text</code></td>
+<td>新增图元</td>
+<td><code>layer</code> 与几何参数</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>expect</code> 是守卫：执行前逐条核对当前值；只要有一条与图纸不符，整套计划中止，不写任何文件。</p>
+<h2 id="step-2">2. 先检查计划</h2>
+<pre><code class="language-sh">.venv-cad/bin/python toolkit/cad.py check-plan plan.json --drawing dxf/&lt;图号&gt;.dxf
+</code></pre>
+<p>输出应列出每条操作的 id 和 handle。任何一条报「找不到 handle」或「守卫不符」，说明清单或图纸已经变了，回到第一讲重新生成清单，不要绕过守卫。</p>
+<h2 id="step-3">3. dry-run：只看差异</h2>
+<pre><code class="language-sh">.venv-cad/bin/python toolkit/cad.py apply plan.json --drawing dxf/&lt;图号&gt;.dxf --dry-run
+</code></pre>
+<p>dry-run 不写文件，只确认计划能通过守卫。把操作逐条对照成自然语言，例如：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>id</th>
+<th>操作</th>
+<th>现在的样子</th>
+<th>修改后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>layer-v101</td>
+<td>set_layer</td>
+<td>E4 / EQUIPMENT / V-101</td>
+<td>图层改为 EQ-REVIEW</td>
+</tr>
+<tr>
+<td>name-v101</td>
+<td>set_attribute</td>
+<td>NAME = 原料储罐</td>
+<td>NAME = 原料罐</td>
+</tr>
+<tr>
+<td>new-line</td>
+<td>add_polyline</td>
+<td>无</td>
+<td>REVIEW 图层新增一段折线</td>
+</tr>
+</tbody>
+</table></div>
+<p>确认三件事：改的对象对不对、改的值对不对、有没有漏掉要改的东西。</p>
+<h2 id="step-4">4. 让 Harness 起草计划，但不要执行</h2>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">当前工作区是 CAD-Review/。请只读 inventory/&lt;图号&gt;.json 和 dxf/&lt;图号&gt;.dxf 的清单，不要修改任何文件。
+我要做的修改是：&lt;用一句话说清，例如「把 V-101 的 NAME 改成原料罐，并把这台设备移到 EQ-REVIEW 图层」&gt;。
+请先列出你准备改的实体的 handle、当前值、修改后的值，以及你依据的清单字段。
+然后按工具箱 README 的 schema 起草 plan.json，只在会话里展示，不要写入文件，也不要执行 apply。
+如果你无法从清单确认某个 handle，写「待确认」，不要猜。
+</code></pre></div>
+<p>你逐条核对 handle 和当前值，确认后让 Harness 写入 <code>plan.json</code>；也可以自己改示例文件。</p>
+<h2 id="step-5">5. 什么情况下不允许执行</h2>
+<ul>
+<li>计划里有你没确认过的 handle；</li>
+<li>某条操作会删除实体，但你还没在 AutoCAD 里确认它能删；</li>
+<li>计划扩大了范围（比如本来只改一个位号，却顺带改了文字或图层）；</li>
+<li>图纸在 AutoCAD 里被另存或改过，清单已经过期。</li>
+</ul>
+<p>遇到这些情况，先改计划，不要先执行再回滚。</p>
+<h2 id="step-6">检查清单</h2>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">每条操作都有 <code>handle</code> 和 <code>expect</code>，没有空守卫。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>check-plan</code> 全部通过。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">dry-run 的对照表逐条看过。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">删除类操作已在 AutoCAD 里确认。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">计划范围与口头需求一致，没有顺带改动。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">还没有写任何文件。</span></li>
+</ul>
+<p>上一讲：<a href="../../topics/cad/04-review-and-annotate.html">审图页与批注</a> · 下一讲：<a href="../../topics/cad/06-apply-and-verify.html">应用、验证与交付</a>。</p>
+<p>备查：<a href="../../assets/topics/cad/examples/sample-plan.json" download>sample-plan.json</a> · <a href="../../assets/topics/cad/examples/sample-edit-report.md" download>sample-edit-report.md</a> · <a href="../../assets/topics/cad/toolkit/README.md" download>工具箱说明</a></p></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<a class="pager-link" href="04-review-and-annotate.html"><span class="pager-label">上一讲</span><span class="pager-title">第 4 讲 · 审图页与批注讨论</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回和图纸对话</span></a>
+<a class="pager-link" href="06-apply-and-verify.html"><span class="pager-label">下一讲</span><span class="pager-title">第 6 讲 · 应用、验证与交付</span></a>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/cad/05-plan-and-dry-run.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/word-to-latex/" data-page-path="topics/word-to-latex/06-convert-segment.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>转换一小段 Word 并沉淀流程 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="把一小段 Word 忠实转成 LaTeX，编译、逐项核对，并把验证过的步骤写成 Skill。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/word-to-latex/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-session route-dad">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-dad"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把技术文档做成书</a><span aria-hidden="true">/</span><span>第 6 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 把技术文档做成书 · 第 6 讲 · 爸爸<span class="chip chip-status">后续课</span></p>
+<h1>转换一小段 Word 并沉淀流程</h1>
+<p class="lesson-summary">把一小段 Word 忠实转成 LaTeX，编译、逐项核对，并把验证过的步骤写成 Skill。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>定位输入，先只做计划</span></a><a href="#step-2"><span class="toc-num">02</span><span>按确认的范围转换并编译</span></a><a href="#step-3"><span class="toc-num">03</span><span>做有证据的人工核对</span></a><a href="#step-4"><span class="toc-num">04</span><span>把验证过的做法留下来</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>第 3 讲已选好并验证 Overleaf 中文模板，第 4 讲建了项目目录，第 5 讲写了入口、路线和内容规则。今天从本机 Word 选一个小节，按「计划 → 执行 → 编译与核对 → 沉淀」走完第一轮。模板已能编译中文；这一节专注于忠实转换这段内容，后续再扩大范围。</p>
+<h2 id="step-1">1. 定位输入，先只做计划</h2>
+<p>在 <code>projects/book-001/original/</code> 的 Word 留存副本里，选一个有标题、正文和数字或单位的小节。在本机记下标题与页码或段落位置，不把原文粘到公开课程仓库。建立 <code>projects/book-001/latex/</code>、<code>review/</code>、<code>output/</code>。若 Harness 无法读取 Word 正文，爸爸在私人会话里提供这一小节的文字或本机工作副本，要求它说明实际读到了什么。</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">当前工作区是 Technical-Publishing/。请先读 AGENTS.md、ROADMAP.md、standards/word-conversion.md，再只读查看 projects/book-001/original/ 中我指定的 Word 小节，以及 template/technical-book/。若不能读取 Word，请停下并告诉我需要我提供哪一段。
+这一轮只处理我指定的一个小节。请先给计划，不创建或修改文件：列出原文标题和位置、怎样把第 3 讲验证的通用模板复制成 projects/book-001/latex/ 中的项目实例、拟生成的章节文件、编译入口，以及 Word、LaTeX、PDF 三处要核对的项目。
+不要改原件或留存副本，不要润色技术文字；遇到表格、公式、图和原稿编号，说明会怎样保留与核对。等我确认计划后再执行。
+</code></pre></div>
+<p>爸爸对照 Word 原文和 Finder 核对计划中的小节边界、目标路径、原件保护和检查办法。计划扩大到整章、擅自改字句或凭猜测描述未读到的材料时，先让 Harness 改正计划。</p>
+<h2 id="step-2">2. 按确认的范围转换并编译</h2>
+<p>计划确认后，才发送执行提示词。<code>template/original-overleaf/</code> 和 <code>projects/book-001/original/</code> 始终只读；<code>template/technical-book/</code> 保持第 3 讲通过检查的通用版本。把完整模板复制到 <code>projects/book-001/latex/</code> 作为本书实例，只在实例中加入真实章节，避免通用模板引用 <code>book-001</code> 的私人内容。</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">按我刚确认的计划，只转换指定的 Word 小节。先把 template/technical-book/ 中已验证的模板完整复制为 projects/book-001/latex/ 的项目实例，在实例中写入本段 .tex 章节并接入主文件。保持原文正文、数字、单位、公式、表格数据和技术结论，不自行润色、补写或重绘技术关系。
+只改 projects/book-001/latex/。不要改 template/original-overleaf/、template/technical-book/ 或 Word 留存副本。若实际材料出现第 3 讲模板未测试过的结构，先报告缺口和建议，不要擅自扩张模板。
+请实际编译项目实例，报告改动文件、编译方式、最新 PDF 路径、第一条关键错误和未解决问题。编译成功后把本次 PDF 放入 projects/book-001/output/。我会打开 Word、.tex 和 PDF 核对，再决定是否沉淀流程。
+</code></pre></div>
+<p>爸爸打开新 PDF，核对文件时间和显示的内容，避免误看旧版本。若本段有新的模板需求，先记录并回到模板工作副本单独验证，再重新复制到项目实例；没有编译成功和内容核对结果时，本节仍在进行中。</p>
+<h2 id="step-3">3. 做有证据的人工核对</h2>
+<p>在本机建立 <code>projects/book-001/review/segment-001.md</code>，逐项记 Word 的位置、对应 <code>.tex</code> 文件、PDF 页码、核对结果和待处理问题。由爸爸亲自对照三处，不让 AI 只凭自己的转换稿给自己打勾。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>核对什么</th>
+<th>怎样对照</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标题、段落与顺序</td>
+<td>从 Word 原段逐段找到 <code>.tex</code> 和 PDF 中的对应内容</td>
+</tr>
+<tr>
+<td>数字、单位、公式、技术结论</td>
+<td>按原文逐项核对，不把格式改善当成内容改写</td>
+</tr>
+<tr>
+<td>表格</td>
+<td>核对每行每列的数据；允许版式变化，不漏项</td>
+</tr>
+<tr>
+<td>图与技术连接关系</td>
+<td>保留原图供核对；以后要重绘，先确认连接和参数没有变化</td>
+</tr>
+<tr>
+<td>编号与交叉引用</td>
+<td>记录 Word 编号到 LaTeX 标签、PDF 显示的对应关系</td>
+</tr>
+<tr>
+<td>项目编译</td>
+<td>打开本次 PDF，检查中文、目录或引用及未修改部分仍可读</td>
+</tr>
+</tbody>
+</table></div>
+<p>小节没有的项目写「不适用」，没核对到的写「待核对」，不要填成通过。内容措辞若需要润色，另列建议请爸爸确认，不混入这次格式转换。</p>
+<h2 id="step-4">4. 把验证过的做法留下来</h2>
+<p>先区分本轮产生的四种记录。<code>review/segment-001.md</code> 保存这份文档的核对证据；<code>tests/word-segment-check.md</code> 写能重复执行的转换与编译检查，包括入口、实际运行方式、预期现象与本轮结果；<code>development/decisions.md</code> 仅在确实解决了转换或引用问题时记录「问题、原因、采用的改法、验证结果」。经核对的通用内容要求继续放 <code>standards/word-conversion.md</code>。具体 <code>.tex</code> 的改动历史将来交给 Git，Development 负责解释重要决定的原因。</p>
+<p>两份检查记录可以先照下面的占位格式写，填写时只用爸爸本机的真实结果：</p>
+<pre><code class="language-markdown"># projects/book-001/review/segment-001.md
+Word 位置：本机第［页／节］；LaTeX 文件：［相对路径］；PDF：［文件及页码］
+标题与段落：待核对；数字与单位：待核对
+表格／图／公式／引用：按本段实际内容填写通过、不适用或待核对
+未解决问题：［实际问题或“无”］
+</code></pre>
+<pre><code class="language-markdown"># tests/word-segment-check.md
+编译入口：［本次使用的 book-001 项目实例主文件］
+重复办法：［Harness 实际执行的编译命令或操作］
+预期：生成新 PDF，本段标题与内容可读，目录或引用按本段实际情况显示
+本次结果：［运行时间、PDF 位置、通过或实际错误］
+</code></pre>
+<p>本轮通过后，再请 Harness 起草第一份可复用 Skill：</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请先读本轮的 Word 小节、转换后的 .tex、最新 PDF、projects/book-001/review/segment-001.md 和 tests/word-segment-check.md。只根据实际通过的检查，起草 .agents/skills/word-to-latex/SKILL.md；先在会话中展示草稿，等我确认后再写入。
+Skill 只记录下次转换另一小节时可重复的步骤：定位原文、规划对应文件、只改工作副本、编译、对照原文和记录待确认项。规则请引用 standards/word-conversion.md，不要复制一大段；未经验证的修复不要写成固定步骤。
+同时建议 ROADMAP.md 的下一小步。若产生了稳定新规则或实际技术决定，指出应更新哪份文件及依据；没有变化的文件保持不动。我会对照本轮核对记录确认。
+</code></pre></div>
+<p>下面只示范 Skill 的最小形状，爸爸应以本轮确实验证过的步骤写自己的版本。<a href="https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/subsystems/skills.md" target="_blank" rel="noopener">Harness 项目 Skill 说明</a></p>
+<pre><code class="language-markdown">---
+name: word-to-latex
+description: 把已定位的 Word 小节忠实转换到项目的 LaTeX 工作副本并核对
+---
+# 转换一小节
+1. 读项目入口、当前路线和内容规则，定位 Word 原文。
+2. 先列源段落与目标 .tex 的对应关系，等人确认。
+3. 只修改工作副本，编译当前模板并报告新 PDF。
+4. 对照 Word、.tex 和 PDF 记录通过项、待核对项与问题。
+</code></pre>
+<p>本节只建立经过验证的 <code>word-to-latex</code>。以后模板维护可发展 <code>latex-template-engineering</code>，语言审校可发展 <code>technical-writing-review</code>；审校建议与格式转换分开，原文字句要改时由爸爸确认。若本机 Harness 没有发现新 Skill，就明确指向文件让它读，并记下本机验证结果，不把识别能力当作已完成。</p>
+<p>完成时，爸爸能展示由已验证的 <code>technical-book/</code> 复制出的项目实例所编译的新 PDF、对应 <code>.tex</code>、逐项核对记录和可重复的编译检查；通过后才保存 Skill 并在 <code>ROADMAP.md</code> 记下下一段或下一项模板工作。</p></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<a class="pager-link" href="05-project-rules.html"><span class="pager-label">上一讲</span><span class="pager-title">第 5 讲 · 写项目入口、路线和内容规则</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把技术文档做成书</span></a>
+<span class="pager-link is-empty" aria-hidden="true"></span>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/word-to-latex/06-convert-segment.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

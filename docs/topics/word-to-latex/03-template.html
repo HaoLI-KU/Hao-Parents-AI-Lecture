@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/word-to-latex/" data-page-path="topics/word-to-latex/03-template.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>做可编译的中文技术书模板 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="从 Overleaf 选模板，改造成覆盖章节、图表、公式、TikZ、代码和索引的中文模板。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/word-to-latex/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-session route-dad">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-dad"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把技术文档做成书</a><span aria-hidden="true">/</span><span>第 3 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 把技术文档做成书 · 第 3 讲 · 爸爸</p>
+<h1>做可编译的中文技术书模板</h1>
+<p class="lesson-summary">从 Overleaf 选模板，改造成覆盖章节、图表、公式、TikZ、代码和索引的中文模板。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先看一本书需要什么</span></a><a href="#step-2"><span class="toc-num">02</span><span>选模板并保存来源</span></a><a href="#step-3"><span class="toc-num">03</span><span>搭书骨架</span></a><a href="#step-4"><span class="toc-num">04</span><span>补正文版式</span></a><a href="#step-5"><span class="toc-num">05</span><span>补图、表、公式和单位</span></a><a href="#step-6"><span class="toc-num">06</span><span>补 TikZ、代码和提示框</span></a><a href="#step-7"><span class="toc-num">07</span><span>补引用、附录和索引</span></a><a href="#step-8"><span class="toc-num">08</span><span>双处编译、验收和模板交接</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>第 2 讲已经编译了两章中文练习，也认识了 Overleaf 模板库。今天不是只给两章加个封面，而是把选中的模板做成<strong>一套可以复制给下一份 Word 文档的中文技术书模板</strong>。</p>
+<p>先看两份参考材料：</p>
+<ul>
+<li><a href="../../assets/topics/word-to-latex/examples/chinese-book-template.zip" download>中文技术书模板（ZIP 源码）</a></li>
+<li><a href="../../assets/topics/word-to-latex/examples/chinese-book-template-preview.pdf" download>编译结果预览（PDF）</a></li>
+</ul>
+<p>参考模板只用虚构内容，作用是“对照一本书应该有什么”，<strong>不替代</strong>你在 Overleaf 选中的模板。你要做的是把自己的模板补齐；遇到文档类或宏包冲突时，保留功能、换实现方式，不要为了编译通过删章节。</p>
+<h2 id="step-1">1. 先看一本书需要什么</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>组</th>
+<th>一本书里通常要有什么</th>
+<th>这一节怎么处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前置</td>
+<td>封面、版权/版本页、前言、目录、图目录、表目录、符号/术语表</td>
+<td>先搭骨架，全部放进前言部分</td>
+</tr>
+<tr>
+<td>正文</td>
+<td>部/章/节、章首页、页眉页脚、页码、脚注、列表、引用块</td>
+<td>用中文字体和统一标题层级</td>
+</tr>
+<tr>
+<td>图</td>
+<td>单图、子图、并排图、图注、正文引用</td>
+<td>图片、子图、图注和交叉引用各验一次</td>
+</tr>
+<tr>
+<td>表</td>
+<td>三线表、定宽表、数值表、横向宽表、跨页长表</td>
+<td>数值表用 <code>siunitx</code>，横向页用 <code>pdflscape</code></td>
+</tr>
+<tr>
+<td>公式/单位</td>
+<td>编号公式、多行对齐、SI 数值和单位</td>
+<td>公式编号、<code>\qty</code> 和单位表各验一次</td>
+</tr>
+<tr>
+<td>TikZ</td>
+<td>流程图/框图、标注坐标图、时间线或简单 <code>pgfplots</code> 图</td>
+<td>图源单独文件，样式统一</td>
+</tr>
+<tr>
+<td>代码/提示</td>
+<td>代码清单、行号、换行、提示/警告框</td>
+<td><code>listings</code> + <code>tcolorbox</code></td>
+</tr>
+<tr>
+<td>引用/链接</td>
+<td>PDF 书签、元数据、图/表/式中文称呼</td>
+<td><code>hyperref</code> + <code>cleveref</code></td>
+</tr>
+<tr>
+<td>后置</td>
+<td>附录 A/B、参考文献、索引、术语表</td>
+<td>附录和索引都要进目录</td>
+</tr>
+<tr>
+<td>交付</td>
+<td>模板 README、<code>latexmkrc</code>、编译命令、版本/许可、已知问题</td>
+<td>写清楚，下一份文档能直接复用</td>
+</tr>
+</tbody>
+</table></div>
+<p>先做骨架，再逐组补功能。每补一组就编译一次；不通过就停在这一组，不继续加下一组。检查表用真实 PDF 结果填，不凭 AI 的一句“已完成”打勾。</p>
+<h2 id="step-2">2. 选模板并保存来源</h2>
+<p>打开 <a href="https://www.overleaf.com/gallery/tagged/book" target="_blank" rel="noopener">Overleaf Books 模板库</a>，一起看两三份候选。爸爸先挑喜欢的封面、正文、章节标题和页眉，再核对：</p>
+<ul>
+<li>能在 Overleaf 正常编译；</li>
+<li>能下载完整源码 ZIP，不是只有 PDF；</li>
+<li>文件、宏包和依赖能看懂；</li>
+<li>页面说明许可，允许课堂改造；</li>
+<li>支持 XeLaTeX/<code>ctex</code> 或容易改成中文；</li>
+<li>结构不太复杂，适合逐步加附录、文献和 TikZ。</li>
+</ul>
+<p>在选中的项目里下载源码 ZIP。源码 ZIP 与 PDF 是两次下载，不能把 PDF 当成模板源码。在爸爸本机的私有位置建立 <code>Technical-Publishing/template/original-overleaf/</code> 和 <code>template/technical-book/</code>：前者保存原始 ZIP、来源链接和解压后的只读副本，后者从它复制一套供修改。实际许可和是否允许再发布要看选中模板的页面；本课程不公开选中的源码。</p>
+<h2 id="step-3">3. 搭书骨架</h2>
+<p>先把“书的结构”搭出来，不急着补花样。一个可工作的骨架大致是：</p>
+<pre><code class="language-latex">\begin{document}
+\frontmatter
+\input{frontmatter/titlepage}
+\input{frontmatter/copyright}
+\input{frontmatter/preface}
+\tableofcontents
+\listoffigures
+\listoftables
+\input{frontmatter/notation}
+
+\mainmatter
+\input{chapters/chapter-01}
+\input{chapters/chapter-02}
+
+\appendix
+\input{appendix/appendix-a}
+\input{appendix/appendix-b}
+
+\backmatter
+\printbibliography[title=参考文献]
+\printindex
+\end{document}
+</code></pre>
+<p>同时补上：</p>
+<ul>
+<li>页面：A4、内外边距、装订偏移；</li>
+<li>中文字体：正文宋体、标题黑体或宋体、代码等宽；</li>
+<li>页码：前言罗马数字，正文阿拉伯数字，附录继续；</li>
+<li>章首页、页眉页脚、目录深度；</li>
+<li>一张占位封面、版权/版本页、前言、符号/术语表；</li>
+<li>两个正文占位章节和一个附录占位章节。</li>
+</ul>
+<p>先只让这份骨架编译通过，再补内容。参考模板里的 <code>main.tex</code> 和 <code>frontmatter/</code> 可以直接对照。</p>
+<h2 id="step-4">4. 补正文版式</h2>
+<p>逐项确认：</p>
+<ol>
+<li>中文标点、中英文混排、段首缩进和行距；</li>
+<li>章/节/小节层级和间距；</li>
+<li>脚注、列表、引用块、定理/定义/例；</li>
+<li>图注在图下、表注在表上或统一；</li>
+<li>页眉显示章名或节名，页码不重复、不跳号。</li>
+</ol>
+<p>定理环境可以用 <code>amsthm</code>：</p>
+<pre><code class="language-latex">\newtheorem{definition}{定义}[chapter]
+\newtheorem{example}{例}[chapter]
+</code></pre>
+<h2 id="step-5">5. 补图、表、公式和单位</h2>
+<p>这一组最容易“看起来能用、实际不能用”。按下面逐项做：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>组别</th>
+<th>用什么虚构内容试</th>
+<th>打开 PDF 核对什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单图与子图</td>
+<td>一张示意图、两张子图及各自图注</td>
+<td>清晰度、子图编号、主图标题、正文引用</td>
+</tr>
+<tr>
+<td>三线表</td>
+<td>一张带小数的示例表</td>
+<td>表头、每格数据、数值对齐</td>
+</tr>
+<tr>
+<td>横向宽表</td>
+<td>一张列数较多的表</td>
+<td>横向页旋转正确，表头可读</td>
+</tr>
+<tr>
+<td>跨页长表</td>
+<td>一张多页数据表</td>
+<td>续页重复表头，不断行失控</td>
+</tr>
+<tr>
+<td>公式</td>
+<td>一个编号公式、一个多行对齐</td>
+<td>编号、对齐、正文引用</td>
+</tr>
+<tr>
+<td>SI 单位</td>
+<td><code>12.5 mm</code>、<code>23 °C</code>、<code>4.2 kW/m²</code></td>
+<td>数字和单位不丢，表格用 S 列对齐</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>siunitx</code> 示例：</p>
+<pre><code class="language-latex">\qty{12.5}{\milli\metre}
+\qty{23}{\celsius}
+\begin{tabular}{S[table-format=2.1]S[table-format=1.1]}
+\toprule
+{长度 / \si{\milli\metre}} &amp; {温度 / \si{\celsius}} \\
+\midrule
+12.5 &amp; 23.0 \\
+8.0  &amp; 22.4 \\
+\bottomrule
+\end{tabular}
+</code></pre>
+<p>横向页用 <code>pdflscape</code>，长表用 <code>longtable</code>；两者的页眉和页码方向要在 PDF 里实际翻看。</p>
+<h2 id="step-6">6. 补 TikZ、代码和提示框</h2>
+<p>TikZ 先做一张流程图，再做一张带坐标的标注图。关键是<strong>图源单独文件、样式统一、正文引用一次</strong>：</p>
+<pre><code class="language-latex">\tikzset{
+  box/.style={draw=teal,fill=teal!8,rounded corners=2pt,
+    minimum width=2.7cm,minimum height=1.1cm,align=center},
+  arrow/.style={-{Latex[length=2.4mm]},thick,draw=teal}
+}
+\begin{tikzpicture}[node distance=1.1cm and 1.2cm]
+  \node[box] (a) {采集输入};
+  \node[box,right=of a] (b) {检查条件};
+  \node[box,right=of b] (c) {执行任务};
+  \draw[arrow] (a) -- (b);
+  \draw[arrow] (b) -- (c);
+\end{tikzpicture}
+</code></pre>
+<p>再补：</p>
+<ul>
+<li>代码清单：<code>listings</code>，行号、换行、标题；中文说明放在正文，不塞进代码；</li>
+<li>提示/警告框：<code>tcolorbox</code>，标题写“提示/注意/核对”；</li>
+<li>一张 <code>pgfplots</code> 简图或时间线，证明模板能画数据图，不只是方框。</li>
+</ul>
+<p>不要在模板里放真实 Word 的代码或技术数据；示例只用虚构内容。</p>
+<h2 id="step-7">7. 补引用、附录和索引</h2>
+<ul>
+<li><code>hyperref</code>：PDF 书签、标题、作者、链接颜色；</li>
+<li><code>cleveref</code>：中文“图/表/式/章/节”称呼；</li>
+<li>参考文献：只选一套方案；参考模板用 <code>biblatex</code> + <code>biber</code>；</li>
+<li>附录：<code>\appendix</code> 后放附录 A（图示/公式速查）、附录 B（术语/检查表），并让附录进目录；</li>
+<li>索引：<code>imakeidx</code> + <code>\index{}</code> + <code>\printindex</code>；至少 10 个词条；</li>
+<li>术语表：先用附录表格；<code>glossaries</code> 自动术语表标为选做，避免一次引入太多工具链。</li>
+</ul>
+<p>附录骨架：</p>
+<pre><code class="language-latex">\appendix
+\chapter{图示与公式速查}
+\chapter{术语与检查表}
+</code></pre>
+<p>如果本机或 Overleaf 没有自动跑 <code>biber</code>/<code>makeindex</code>，先记录实际编译命令和报错，不要跳过参考文献或索引却写成“通过”。</p>
+<h2 id="step-8">8. 双处编译、验收和模板交接</h2>
+<p>先在本机编译：</p>
+<pre><code class="language-sh">latexmk -xelatex main.tex
+</code></pre>
+<p>再把<strong>只有虚构内容</strong>的工作副本上传到自己的 Overleaf 项目，用 XeLaTeX 编译一次。两边都通过后，逐项填检查表：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>封面、版权页、前言、目录、图目录、表目录</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>前言罗马页码、正文阿拉伯页码、附录继续</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>中文标点、字体嵌入、无缺字</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>单图、子图、图注、正文引用</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>三线表、数值表、横向表、长表</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>公式、SI 单位、交叉引用</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>TikZ 箭头、标签、打印尺寸</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>代码清单、提示框、定理</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>参考文献、索引、PDF 书签</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>本机与 Overleaf 都能编译</td>
+<td>待核对</td>
+</tr>
+<tr>
+<td>模板 README、版本、许可、已知问题</td>
+<td>待核对</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后给模板写一份 <code>README.md</code>：</p>
+<ul>
+<li>引擎和编译命令；</li>
+<li>目录说明；</li>
+<li>已包含的功能；</li>
+<li>已知限制；</li>
+<li>来源和许可；</li>
+<li>版本日期。</li>
+</ul>
+<p>完成时，爸爸能从 <code>template/technical-book/</code> 找到主文件、两章、附录、TikZ、表格、代码、README 和最新 PDF；检查表没有未解决的必做项。保留 <code>original-overleaf/</code> 只读，不把虚构样稿当成 Word 正文。第 4 讲把这份已验证模板放进长期项目目录，并为第一份 Word 单独建立工作区。</p></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<a class="pager-link" href="02-compile-and-annotate.html"><span class="pager-label">上一讲</span><span class="pager-title">第 2 讲 · 编译中文 LaTeX，练习 PDF 批注</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把技术文档做成书</span></a>
+<a class="pager-link" href="04-project-layout.html"><span class="pager-label">下一讲</span><span class="pager-title">第 4 讲 · 分开模板来源、通用模板和项目</span></a>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/word-to-latex/03-template.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

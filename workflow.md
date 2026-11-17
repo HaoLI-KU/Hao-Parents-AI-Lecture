@@ -1,100 +1,86 @@
 # 课程和网站怎么维护
 
-这是你和协作工具共用的维护说明。审课时可直接打开对应课稿，新增课、补素材或调整网页时再查这里。
+这是你和协作工具共用的维护说明。审课时可直接打开对应课稿，新增专题、加讲或补素材时再查这里。
 
 ```text
-course/lessons/01.md               一课一份，内分爸爸和妈妈
-course/lessons/github.md           共同练习：GitHub（备用）
-course/lessons/image-gen.md        共同练习：Seedream 生图
-course/gallery/whiteboard.md       拾趣：办公室白板上的画
-course/audit-01-07.md              首版核查记录（历史，课号沿用首版）
-assets/lessons/06/examples/        第 6 节参考模板、ZIP 和预览 PDF
-assets/lessons/10/examples/cad/    第 10–12 节 CAD 脚本、虚构示例 DXF 与审图页
-assets/lessons/01/screenshots/     第 1 节可公开的截图
-assets/lessons/01/examples/        第 1 节可公开的案例、模板及练习文件
-assets/site/                       全站侧脸插画、图标、线稿
-assets/gallery/                    拾趣图片和已确认公开的白板原图
-site/build.py                      从 Markdown 和 README 课表生成网页
-site/style.css                     全站样式和设计变量
-site/ui.js                         菜单、目录高亮、提示词复制
-site/search.js                     搜索页交互
-site/check_site.py                 链接、锚点、搜索、共同练习、方式残留检查
-site/fonts/                        自托管的拉丁字体
-docs/                              生成物，GitHub Pages 从这里发布
+course/topics/mac/               专题：topic.md + 01-….md
+course/topics/ai/
+course/topics/word-to-latex/
+course/topics/cad/
+course/topics/image-generation/
+course/topics/version-control/
+course/gallery/whiteboard.md     拾趣（不占专题）
+course/archive/audit-01-07.md    历史核查记录
+assets/topics/<slug>/            该专题的图片、示例和工具箱
+assets/gallery/                  拾趣图片
+assets/site/                     全站侧脸插画、图标、线稿
+site/build.py                    从 topics、gallery 和 README 生成网页
+site/style.css                   全站样式和设计变量
+site/ui.js                       菜单、目录高亮、提示词复制
+site/search.js                   搜索页交互
+site/check_site.py               链接、锚点、搜索、重定向、残留检查
+site/fonts/                      自托管的拉丁字体
+docs/                            生成物，GitHub Pages 从这里发布
 ```
 
-## 一节课或一个共同练习怎样变成网页
+## 专题和讲次
 
-1. **先定小任务。** 每条路线写清输入、要动手的步骤、最后产出和如何确认成功。需要 AI 完成具体任务时，在课稿提供可直接使用的提示词，交代材料或工具、允许操作范围、预期结果和学员怎样亲手核对；简单手动操作保持短步骤。
-2. **补素材并确认。** 可公开的截图放 `assets/lessons/NN/screenshots/`，示例放 `examples/`，已核对的示意图放 `illustrations/`。课稿用相对链接引用，图片补说明和替代文字。未制作的配图想法留在备课记录中，真实家庭媒体和私人资料不进仓库。
-3. **更新课表、共同练习或拾趣。** 路线课在 `README.md` 的表格中加行/改行，列名保持 `课稿`、`爸爸`、`妈妈`、`状态`、`说明`；某一侧没有这一节时写 `—`，`状态` 只写“后续课/草稿”，不写地点或平台。共同练习写进 `README.md` 的“共同练习”小节，并在 `site/build.py` 的 `PRACTICES` 中登记。拾趣只加 `course/gallery/*.md`，不占课号，也不进课表。
-4. **重建。** 在仓库根目录运行 `make build`。构建器读取 README 课表和 `course/gallery/*.md`，从 `course/lessons/NN.md` 提取 `## 爸爸｜…` / `## 妈妈｜…` 正文，生成 `docs/` 下的课表、课页、共同练习首页、练习页、拾趣首页与作品页、搜索页和搜索索引，并复制被引用的素材和字体。
-5. **检查。** 运行 `make check`：检查内部链接、锚点、重复 `id`、`.md` 残留链接、课稿是否都进了课表、共同练习和拾趣覆盖、搜索索引、快捷键、方式标签和养花草稿残留。任何错误先修，不带错误发布。
-6. **预览。** 运行 `make serve`，打开 `http://localhost:8000`。对照 1280px、1024px、500px 和 200% 放大看首页、两条课表、共同练习首页、拾趣首页/作品页和课页；用一份长课检查提示词、表格、清单和打印。
-7. **提交。** 课稿、README 课表、样式、脚本和重建后的 `docs/` 一起提交。推送 `main` 后 GitHub Pages 自动发布，等 1–2 分钟刷新线上地址。
+- 一个专题一个文件夹，英文 slug；`topic.md` 写 `title`、`subtitle`、`summary`、`order`，需要时加 `optional: true`（页面显示「按需」）。
+- 讲次写在同一文件夹，文件名 `NN-slug.md`；frontmatter 必填 `title`、`audience`（`dad|mom|both`）、`status`（`active|followup|draft`）、`summary`。
+- 编号只决定顺序，不写进 URL 之外的展示；页面显示「第 N 讲」，不再出现 Lesson。
+- 正文从介绍段开始，`### 1. …` 是步骤；步骤会生成本节目录和搜索条目。
+- 跨讲引用写相对 Markdown 链接，例如 `[下一讲](02-read-a-drawing.md)`、`[上一专题](../ai/01-models-and-tools.md)`；构建器会改成网页链接。
+- 素材放 `assets/topics/<slug>/`，课稿用 `../../../assets/topics/...` 引用；构建器复制被引用的文件，并给非 HTML 素材加 `download`。
 
-## 共同练习
+## 一讲怎样变成网页
 
-- `/practice/index.html` 是共同练习首页；`/practice/github.html` 和 `/practice/image-gen.html` 是两个练习页。
-- 共同练习不占爸爸妈妈的课号，不写进路线课表；只在 README 的“共同练习”小节和站点栏目出现。
-- GitHub 练习是备用：需要时再排，内容保持通用，不依赖养花项目。
-- Seedream 生图练习是按需安排：先核对火山方舟/模型价格和账号状态，再让父母用自己的 API Key 跑通。课程里的模型 ID、价格和限制可能变化，发布前以火山方舟控制台和官方文档为准。
-- 真实家庭照片、门牌、API Key 不进公开仓库；公开课稿只用虚构房间。
+1. **先定小任务**：输入、动手步骤、产出、怎样确认成功。需要 AI 做具体任务时给可直接使用的提示词，写清材料、允许范围、预期结果和亲手核对办法。
+2. **补素材并确认**：只发布实际制作并核对过的图；截图裁掉账号和个人信息；真实图纸和家庭资料留在本机。
+3. **改 frontmatter 和 README**：新增讲更新 README 的专题总览和 `skills.md`；新增专题更新总览表。
+4. **重建**：`make build`。
+5. **检查**：`make check`。链接、锚点、搜索覆盖、重定向、快捷键和残留有一项不过就不发布。
+6. **预览**：`make serve`，看首页、专题总览、每个专题、两条路径、课页、搜索和重定向；按 1280/1024/500px 和 200% 放大检查，打印一节长课。
+7. **提交**：课稿、专题文件、素材、样式和重建后的 `docs/` 一起提交；推送 `main` 后等 1–2 分钟刷新线上地址。
 
-## 拾趣
+## URL 和重定向
 
-- `/gallery/index.html` 是拾趣首页；`/gallery/<slug>.html` 是作品页。拾趣不占课号，不进路线课表。
-- 每件作品一份 `course/gallery/<slug>.md`，frontmatter 至少写 `title`、`date`、`summary`、`image`、`alt`、`credit`；可选 `original_image`、`peek_image`、`image_credit`、`relation`、`credit_en`、`affiliation`、`email`、`location`、`medium`。
-- 图片放 `assets/gallery/`，构建时复制到 `docs/assets/gallery/`；`image` 和 `original_image` 写 `docs` 相对路径，例如 `assets/gallery/example.jpg`。
-- `credit` 写原画作者；`image_credit` 写整理版/生成者。两件事不能混写。
-- 有 `original_image` 时，页面自动生成双图切换：默认显示 `original_image`（原画），点击显示 `image`（整理版）；caption 和 `aria-pressed` 同步更新，按钮支持点击、触屏、Enter 和 Space。`peek_image` 可选，用来给后卡露出的缩略角提供一张脸部/主体裁切；不填则退回 `original_image`。
-- 双图错落卡片和布局由构建器统一生成，不写进每件作品的 Markdown；后卡和 peek 只是视觉提示，不参与 Tab。
-- 第一件作品的原图 `assets/gallery/whiteboard-original.jpeg` 已经本人确认公开，是本仓库私人素材规则的明确例外；新增作品涉及真人、姓名或邮箱时，先确认再发布。
-- 新增作品后运行 `make build && make check`；搜索筛选和首页 teaser 会自动更新，不需要手改 `docs/`。
+- 页面：`/`、`/topics/`、`/topics/<slug>/`、`/topics/<slug>/<stem>.html`、`/dad/`、`/mom/`、`/gallery/`。
+- 旧课页 URL 不保留源码文件，只在 `site/build.py` 的 `LEGACY_REDIRECTS` 里映射；每次构建生成 22 个重定向页。
+- 新增或调整讲次时，如果 URL 会变，把旧路径加进 `LEGACY_REDIRECTS`，并让 `make check` 验证目标存在。
+- 不要手写 `docs/` 里的重定向。
 
-## 爸爸第 6 节的参考模板
+## 搜索和素材
 
-- 源文件在 `assets/lessons/06/examples/chinese-book-template/`，ZIP 和预览 PDF 在同一层。
-- 改模板后在本机运行 `latexmk -xelatex main.tex`，检查 PDF 后再重新生成 ZIP；不要提交 `.aux/.log/.toc/.out/.bcf/.run.xml/.idx/.ind/.ilg/.fls/.fdb_latexmk` 和 `main.pdf`（预览 PDF 单独放）。
-- 参考模板是课程样例，不替代爸爸选中的 Overleaf 模板；正式项目仍按 `template/technical-book/` 的工作副本维护。
+- 搜索索引按每个 `###` 段落生成，另加每个专题一条介绍；字段含专题、讲次、受众、标题、步骤、正文和 URL。
+- 搜索页用 `?q=` 和 `?topic=`；筛选项由专题自动生成，另加「拾趣」。
+- CSS/JS 引用带内容版本号 `?v=`；改样式、脚本或课稿后重新构建。
+- 外部链接自动加 `target="_blank" rel="noopener"`；发布前抽查官方域名和页面用途。
 
-## 爸爸的 CAD 图纸材料
+## CAD 工具箱
 
-- 真实 AutoCAD 图纸、图号、位号、厂名和审图批注只留在本机 `CAD-Review/`；仓库和公开网页只用 `assets/lessons/10/examples/cad/` 里的虚构「糖浆配制」示例。
-- 脚本固定在 `assets/lessons/10/examples/cad/`：`make_sample_pfd.py`、`cad_inventory.py`、`make_review_sheet.py`，依赖写在同目录 `requirements.txt`；不把 `ezdxf` 加进站点 `.venv`，学员在自己的私有目录建 `.venv-cad`。
-- 改脚本后重生成示例，并重新核对热点对位：`python3 make_sample_pfd.py -o sample-pfd.dxf`、`python3 make_review_sheet.py sample-pfd.dxf -o sample-review.html`。审图页是生成物，可以提交，但不要手改。
-- 第 12 节标「后续课」，等爸爸本机确认 Harness 预览里的批注浮层之后，再把 README 状态改回正常，并在课稿里补一句本机实际显示。
-- 批注只以「文件路径 + selector/handle」引用；课稿里不贴真实图纸截图。
-
-## 链接、搜索和素材
-
-- 课稿里跨课引用写 `01.md#dad`、`03.md#dad`、`github.md`、`image-gen.md`；构建器会改成对应 HTML 课页和锚点。
-- 课页内容容器保留 `id="dad"` / `id="mom"`，共同练习页保留 `id="practice"`，拾趣作品页保留 `id="gallery"`。
-- 不要手写 `docs/` 里的路径，也不要手改 `docs/` 页面。
-- 搜索索引由构建器按每个 `###` 段落生成；共同练习按 `##` 段落生成；新增或改写步骤后重新 `make build`。
-- 搜索页的查询用 `?q=`，路线筛选用 `?route=dad|mom|practice|gallery`；不要手工维护结果列表。
-- CSS/JS 引用带内容版本号 `?v=`；修改样式、脚本或课稿后重新构建，避免浏览器或 GitHub Pages 缓存旧布局。
-- 课稿里引用 `../../assets/...` 的练习文件会在构建时复制到 `docs/assets/`；没有引用的素材不会进入发布目录。
-- 外部链接在页面上自动加 `target="_blank" rel="noopener"`；发布前人工抽查官方域名、页面用途和下载平台。
+- 位置：`assets/topics/cad/toolkit/`；示例在 `assets/topics/cad/examples/`。
+- 改工具后运行 `python3 cad.py selftest`，再跑 `make build`，让课稿里的下载文件和示例同步。
+- 工作流只做 DXF 文件层：`inventory`、`check-plan`、`apply`（dry-run/写副本/重读校验）、`review`、`convert`；不要写 GUI 自动化。
+- 真实图纸、清单、计划、报告只在本机 `~/CAD-Review/`；公开示例必须是虚构的。
 
 ## 嵌入式浏览器
 
-- 站点的每个页面由构建器写入 `data-page-dir` 和一段内联导航脚本；在 iframe 中用真实页面目录设置 `<base>`，并把内部链接改成绝对地址。
+- 每个页面由构建器写入 `data-page-dir` 和一段内联导航脚本；在 iframe 中用真实页面目录设置 `<base>`，并把内部链接改成绝对地址。
 - 普通 Chrome 和 `make serve` 是顶层页面，不加 base；如果预览时链接被带到线上，先确认是不是在 iframe 里打开的。
-- 页脚“在浏览器打开”是兜底；DeepSeek 侧栏仍空白时，记录具体页面和地址，再判断是侧栏 iframe 状态还是站点链接问题。
+- 页脚「在浏览器打开」是兜底。
 
 ## 全部 Markdown 复查
 
-改完课稿、README、website、workflow、teaching、skills 后，人工读一遍：
+改完课稿、专题、README、website、workflow、teaching、skills 后，人工读一遍：
 
-- 标题、状态、爸爸/妈妈小节与 README 课表一致；
-- `NN.md`、`NN.md#dad`、共同练习链接都指向存在的文件；
-- 妈妈 1–4 未改；5–7 指向爸爸 1–3；没有妈妈 8–10 和养花草稿；
-- `skills.md` 妈妈长期技能完整保留，不被清理误删；
-- README/website/workflow/teaching 没有排课方式标签；课表和课页 eyebrow 也没有；
-- 爸爸第 6 节的模板、ZIP、PDF、检查表和参考模板文件树一致；
-- 共同练习首页、GitHub、Seedream 生图三页互链正确；生图事实和链接可核对。
+- 每个专题有 `topic.md`，每讲 frontmatter 齐全，编号唯一；
+- `README.md` 的专题总览与 `course/topics/` 一致；
+- 课稿里的相对链接和 `assets/topics/` 引用都存在；
+- `skills.md` 的妈妈长期技能完整保留；
+- 没有 `course/lessons/`、`course/practices/` 或旧课稿残留；
+- `LEGACY_REDIRECTS` 覆盖所有已迁移的旧 URL；
+- 真实图纸、位数和审图批注没有进入仓库。
 
-做网页批注时，从右侧 Files 面板直接打开对应的 `.html` 课页文件（例如 `docs/dad/lesson-02.html`）；批注按文件保存，改完发送给 Agent。跨页批注浮层不在多页站点的设计范围内。
+做网页批注时，从右侧 Files 面板直接打开对应的 `.html` 课页（例如 `docs/topics/mac/01-new-mac.html`）；批注按文件保存，改完发送给 Agent。
 
-从[第 1 节课稿](course/lessons/01.md)开始。语言、颜色、字体和打印规则见[网站语言与视觉规范](website-style.md)。
+从[第一个专题](course/topics/mac/topic.md)开始。语言、颜色、字体和打印规则见[网站语言与视觉规范](website-style.md)。

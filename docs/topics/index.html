@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/" data-page-path="topics/index.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>专题 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="按专题浏览课程：Mac、AI、LaTeX、AutoCAD、生图与版本管理。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css?v=9fc155c2ee">
+</head>
+<body class="page-topics">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../index.html">首页</a><a href="../topics/index.html" class="is-active" aria-current="page">专题</a><a href="../dad/index.html">爸爸</a><a href="../mom/index.html">妈妈</a><a href="../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><section class="hero hero-route"><div class="wrap">
+<p class="eyebrow">全部内容 · 按专题浏览</p>
+<h1>专题</h1>
+<p class="lead">每个专题是一组按顺序排好的讲次。可以按自己的路径学，也可以从任意一个专题开始；标「按需」的专题不必按顺序。</p>
+<p class="hero-meta"><span class="chip">6 个专题</span><span class="chip">21 讲</span></p>
+</div></section>
+<section class="wrap lesson-section"><div class="topic-grid"><a class="topic-card" href="mac/index.html">
+<span class="topic-index" aria-hidden="true">01</span>
+<p class="eyebrow">专题 · 4 讲 · 妈妈</p>
+<h2>把 Mac 用顺</h2>
+<p class="topic-subtitle">Mac 基础与家庭协作</p>
+<p class="topic-summary">从开箱、装软件到邮件、会议和家庭共享，先把这台 Mac 用顺。</p>
+<p class="topic-tags"></p>
+<span class="route-enter">打开专题 <span aria-hidden="true">→</span></span>
+</a><a class="topic-card" href="ai/index.html">
+<span class="topic-index" aria-hidden="true">02</span>
+<p class="eyebrow">专题 · 3 讲 · 共同</p>
+<h2>和 AI 一起做事</h2>
+<p class="topic-subtitle">从提问到 DeepSeek Harness</p>
+<p class="topic-summary">先分清界面和模型，再用自己的账户跑通 Codex、Harness 和用量核对。</p>
+<p class="topic-tags"></p>
+<span class="route-enter">打开专题 <span aria-hidden="true">→</span></span>
+</a><a class="topic-card" href="word-to-latex/index.html">
+<span class="topic-index" aria-hidden="true">03</span>
+<p class="eyebrow">专题 · 6 讲 · 爸爸</p>
+<h2>把技术文档做成书</h2>
+<p class="topic-subtitle">从 Word 到可维护的中文 LaTeX</p>
+<p class="topic-summary">把一份真实的 Word 技术文档逐步变成可编译、可修改、可复用的中文 LaTeX 项目。</p>
+<p class="topic-tags"></p>
+<span class="route-enter">打开专题 <span aria-hidden="true">→</span></span>
+</a><a class="topic-card" href="cad/index.html">
+<span class="topic-index" aria-hidden="true">04</span>
+<p class="eyebrow">专题 · 6 讲 · 爸爸</p>
+<h2>和图纸对话</h2>
+<p class="topic-subtitle">AutoCAD 工艺流程图：精确读取与修改</p>
+<p class="topic-summary">把 DWG 变成可读的 DXF，建立覆盖报告，用计划式修改精确改图并自动校验。</p>
+<p class="topic-tags"></p>
+<span class="route-enter">打开专题 <span aria-hidden="true">→</span></span>
+</a><a class="topic-card" href="image-generation/index.html">
+<span class="topic-index" aria-hidden="true">05</span>
+<p class="eyebrow">专题 · 1 讲 · 共同</p>
+<h2>把想法画出来</h2>
+<p class="topic-subtitle">图片生成与改图</p>
+<p class="topic-summary">用 Harness 接通图片生成服务，跑通生图、改图和软装方向对比。</p>
+<p class="topic-tags"><span class="chip chip-optional">按需</span></p>
+<span class="route-enter">打开专题 <span aria-hidden="true">→</span></span>
+</a><a class="topic-card" href="version-control/index.html">
+<span class="topic-index" aria-hidden="true">06</span>
+<p class="eyebrow">专题 · 1 讲 · 共同</p>
+<h2>版本管理与协作</h2>
+<p class="topic-subtitle">用 GitHub 管好文件和改动</p>
+<p class="topic-summary">注册 GitHub，建立私有仓库，把练习文件提交、推送并在本机找回。</p>
+<p class="topic-tags"><span class="chip chip-optional">按需</span></p>
+<span class="route-enter">打开专题 <span aria-hidden="true">→</span></span>
+</a></div></section>
+<section class="wrap lesson-section"><div class="section-head"><div class="section-title"><p class="eyebrow">学习路径</p><h2>按人看</h2></div></div>
+<div class="path-grid">
+<a class="path-card route-dad" href="../dad/index.html"><p class="eyebrow">爸爸</p><h2>爸爸的学习路径</h2><p>AI 入门 → 中文 LaTeX 文档 → AutoCAD 图纸代码流。</p><span class="route-enter">打开路径 →</span></a>
+<a class="path-card route-mom" href="../mom/index.html"><p class="eyebrow">妈妈</p><h2>妈妈的学习路径</h2><p>Mac 基础与家庭协作 → 和爸爸一起完成 AI 入门。</p><span class="route-enter">打开路径 →</span></a>
+</div></section></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../index.html">首页</a><a href="../topics/index.html">专题</a><a href="../dad/index.html">爸爸</a><a href="../mom/index.html">妈妈</a><a href="../gallery/index.html">拾趣</a><a href="../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/index.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../assets/ui.js?v=9fc155c2ee"></script>
+</body>
+</html>

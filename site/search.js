@@ -6,14 +6,14 @@
   const status = document.querySelector('#search-status');
   const results = document.querySelector('#search-results');
   const empty = document.querySelector('#search-empty');
-  const filters = [...document.querySelectorAll('.search-filters [data-route]')];
+  const filters = [...document.querySelectorAll('.search-filters [data-topic]')];
   const hints = [...document.querySelectorAll('[data-query]')];
   const index = Array.isArray(window.courseSearchIndex) ? window.courseSearchIndex : [];
   const SITE_URL = 'https://haoli-ku.github.io/Hao-Parents-AI-Lecture/';
   const production = (() => {
     try { return location.origin === new URL(SITE_URL).origin; } catch (error) { return false; }
   })();
-  let route = 'all';
+  let topic = 'all';
 
   const normalise = (text) => String(text || '')
     .normalize('NFKC')
@@ -70,14 +70,20 @@
 
       const meta = document.createElement('p');
       meta.className = 'search-result-meta';
-      const routeChip = document.createElement('span');
-      routeChip.className = 'chip';
-      routeChip.textContent = entry.routeName;
-      meta.append(routeChip);
-      if (entry.lesson) {
+      const topicChip = document.createElement('span');
+      topicChip.className = 'chip';
+      topicChip.textContent = entry.topicName || '专题';
+      meta.append(topicChip);
+      if (entry.number) {
         const detail = document.createElement('span');
-        detail.textContent = `Lesson ${String(entry.lesson).padStart(2, '0')}`;
+        detail.textContent = `第 ${entry.number} 讲`;
         meta.append(detail);
+      }
+      if (entry.audienceName) {
+        const audience = document.createElement('span');
+        audience.className = 'chip audience-chip audience-' + (entry.audience || 'both');
+        audience.textContent = entry.audienceName;
+        meta.append(audience);
       }
       const state = statusLabel(entry);
       if (state) {
@@ -93,7 +99,7 @@
       link.href = production ? new URL(entry.url, SITE_URL).href : entry.url;
       appendHighlighted(
         link,
-        entry.heading ? `${entry.title} · ${entry.heading}` : entry.title,
+        entry.step ? `${entry.title} · ${entry.step}` : entry.title,
         terms,
       );
       heading.append(link);
@@ -111,7 +117,7 @@
     const query = input.value.trim();
     const params = new URLSearchParams();
     if (query) params.set('q', query);
-    if (route !== 'all') params.set('route', route);
+    if (topic !== 'all') params.set('topic', topic);
     const url = location.pathname + (params.toString() ? '?' + params.toString() : '') + location.hash;
     try {
       history.replaceState(null, '', url);
@@ -122,7 +128,7 @@
 
   function search() {
     const terms = normalise(input.value).split(' ').filter(Boolean);
-    const scoped = index.filter((entry) => route === 'all' || entry.route === route);
+    const scoped = index.filter((entry) => topic === 'all' || entry.topic === topic);
     results.replaceChildren();
     empty.hidden = true;
 
@@ -136,7 +142,7 @@
     }
 
     const matches = scoped.map((entry) => {
-      const title = normalise(entry.title + ' ' + (entry.heading || ''));
+      const title = normalise(entry.title + ' ' + (entry.step || ''));
       const full = title + ' ' + normalise(entry.text);
       if (!terms.every((term) => full.includes(term))) return null;
       const rank = terms.reduce((score, term) => {
@@ -156,10 +162,10 @@
     updateUrl();
   }
 
-  function setRoute(nextRoute) {
-    route = nextRoute;
+  function setTopic(nextTopic) {
+    topic = nextTopic;
     filters.forEach((button) => {
-      const active = button.dataset.route === route;
+      const active = button.dataset.topic === topic;
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', String(active));
     });
@@ -167,13 +173,13 @@
 
   const params = new URLSearchParams(location.search);
   input.value = params.get('q') || '';
-  const knownRoute = new Set(filters.map((button) => button.dataset.route));
-  const initialRoute = params.get('route') || 'all';
-  setRoute(knownRoute.has(initialRoute) ? initialRoute : 'all');
+  const knownTopic = new Set(filters.map((button) => button.dataset.topic));
+  const initialTopic = params.get('topic') || 'all';
+  setTopic(knownTopic.has(initialTopic) ? initialTopic : 'all');
 
   filters.forEach((button) => {
     button.addEventListener('click', () => {
-      setRoute(button.dataset.route);
+      setTopic(button.dataset.topic);
       search();
     });
   });

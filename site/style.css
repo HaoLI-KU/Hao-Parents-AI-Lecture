@@ -1547,3 +1547,50 @@ mark {
   .gallery-art { padding: 22px 30px 10px 0; }
   .gallery-peek { width: 46px; height: 62px; }
 }
+
+/* ---------- 专题与学习路径 ---------- */
+body.route-both,
+.hero-route.route-both {
+  --route-accent: var(--gold);
+  --route-soft: #f3efe3;
+  --route-ink: #6b5224;
+}
+
+.topic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.topic-card {
+  position: relative; display: block; padding: 26px 26px 22px;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: var(--surface); color: inherit; text-decoration: none;
+  transition: border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.topic-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.topic-index {
+  position: absolute; top: 20px; right: 24px; font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: .14em; color: var(--muted);
+}
+.topic-card h2 { font-family: var(--font-serif); font-size: clamp(1.3rem, 2.2vw, 1.7rem); margin: 6px 0 4px; }
+.topic-subtitle { color: var(--ink-soft); margin: 0 0 8px; }
+.topic-summary { color: var(--muted); margin: 0 0 14px; }
+.topic-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.chip-optional { color: var(--gold); border-color: var(--line-strong); background: #fbf7ec; }
+
+.path-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.path-card {
+  display: block; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: inherit; text-decoration: none;
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
+}
+.path-card:hover { border-color: var(--route-accent); transform: translateY(-2px); }
+.path-card h2 { margin: 4px 0 8px; }
+.path-section h2 a { color: inherit; text-decoration: none; }
+.path-section h2 a:hover { color: var(--accent); }
+.section-intro { color: var(--muted); margin: 4px 0 0; max-width: 60ch; }
+
+.audience-chip { border-style: solid; }
+.audience-dad { color: var(--accent-ink); border-color: var(--accent); background: var(--accent-soft); }
+.audience-mom { color: var(--route-mom-ink); border-color: var(--route-mom); background: var(--route-mom-soft); }
+.audience-both { color: var(--gold); border-color: var(--line-strong); background: #fbf7ec; }
+
+@media (max-width: 900px) {
+  .topic-grid, .path-grid { grid-template-columns: 1fr; }
+}
