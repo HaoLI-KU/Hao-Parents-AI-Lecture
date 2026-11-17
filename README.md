@@ -33,7 +33,7 @@
 
 ## 本地预览与发布
 
-页面由 `site/build.py` 从 `course/topics/`、`course/gallery/` 和 README 的专题总览生成；`docs/` 是生成物，不要手改。首次使用时安装依赖：
+页面由 `site/build.py` 从 `course/topics/` 和 `course/gallery/` 生成；README 只维护专题总览，`docs/` 是生成物，不要手改。首次使用时安装依赖：
 
 ```sh
 python3 -m venv .venv
@@ -48,7 +48,7 @@ make serve                      # 打开 http://localhost:8000 预览
 make PYTHON=.venv/bin/python all  # 使用虚拟环境
 ```
 
-`make build` 只重建，`make check` 只检查。生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿、专题文件、课表和重建后的网页，再推送到 `main`。
+`make build` 只重建，`make check` 只检查。生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿、专题文件和重建后的网页，再推送到 `main`。
 
 CAD 工具箱自带自检，改工具后运行：
 

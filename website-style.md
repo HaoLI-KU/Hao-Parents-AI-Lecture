@@ -6,7 +6,7 @@
 
 - 中文一律用简体中文，页面语言设为 `zh-CN`。保留 macOS、Finder、iCloud、Codex、DeepSeek、Harness 和 LaTeX 等正式名称。
 - 英文文案用 British English，例如 *colour*、*organise*、*favourite*。应用名、菜单标签、文件名和命令照实际界面或原样保留。英文段落可标记 `en-GB`。
-- 用「爸爸」「妈妈」做路线入口。按钮写动作，例如「开始第 1 节」「打开课表」「复制提示词」。中文操作句尽量短，用「打开」「点按」「选择」。
+- 用「爸爸」「妈妈」做路线入口。按钮写动作，例如「打开专题」「回到路径」「复制提示词」。中文操作句尽量短，用「打开」「点按」「选择」。
 - 快捷键同时给符号和文字，例如 `⌘S（Command + S）`。快捷键在页面里用等宽按键样式显示，不要改写成英文或大小写变形。
 - 提示词单独成块，保留原有换行；提示词块顶部标「提示词」，附「复制」按钮。
 
@@ -47,7 +47,7 @@
 
 - 衬线标题：`"Source Serif 4", "Iowan Old Style", "Songti SC", "STSong", "Noto Serif CJK SC", Georgia, serif`。
 - 正文无衬线：`Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif`。
-- 等宽：`ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace`，用于 Eyebrow、Lesson 编号、TOC 编号和快捷键。
+- 等宽：`ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace`，用于 Eyebrow、讲次编号、TOC 编号和快捷键。
 - 拉丁字体自托管在 `site/fonts/`，构建时复制到 `docs/assets/fonts/`。不在运行时请求 Google Fonts，避免课堂网络不稳定。
 - 中文不回落到拉丁字体：标题用 Songti SC，正文用 PingFang SC；先在两台 Mac 上核对实际字重和行高。
 - 正文 18px / 1.7，课页正文最大 68ch；首页 H1 `clamp(2.7rem, 6.4vw, 4.9rem)`，课页 H1 `clamp(2rem, 4.6vw, 3.4rem)`；H2 `clamp(1.45rem, 2.8vw, 2rem)`，H3 1.15rem。
@@ -56,21 +56,21 @@
 
 ## 布局
 
-- 页面最大宽度 1180px；两侧留白随屏幕缩小。首页、课表、课页共用同一个 `.wrap`。
+- 页面最大宽度 1180px；两侧留白随屏幕缩小。首页、专题页、路径页和课页共用同一个 `.wrap`。
 - 页头吸顶，桌面高度 68px；窄屏折成「品牌 + 菜单」一行，搜索框单独一行，导航收进菜单。
 - 首页 Hero 左文右留白，不放大照片；两条路线卡片并排，窄屏上下排列。
 - 课页用「220px 步骤目录 + 正文」双栏；小于 1060px 时目录变成正文上方卡片。
-- 课表用整行可点的列表，不做密集表格。左侧 `Lesson 01` 等宽编号，中间任务名，右侧只放状态或共同练习标签。
+- 讲次用整行可点的列表，不做密集表格。左侧「第 N 讲」等宽编号，中间标题，右侧只放状态或受众标签。
 
 ## 组件
 
-- **Chip**：节数、后续课、共同练习、路线标签。共同练习用浅青绿底，其他用白底细线。
+- **Chip**：讲数、后续课、受众、按需专题。共同/爸爸/妈妈用对应浅色底，按需用浅金底，其他用白底细线。
 - **Callout / blockquote**：偏青绿浅底、左侧 3px 主色线，用于准备、提醒和核对。
 - **Prompt**：顶部「提示词」+「复制」，正文等宽、`pre-wrap`、保留换行；窄屏不横向滚动。
 - **Checklist**：`- [ ]` / `- [x]` 显示为方框，不做本地存储，不伪造进度。
 - **Table**：外层可横向滚动，表头浅底，单元格允许换行。
-- **Lesson pager**：上一节 / 返回课表 / 下一节三张卡片；后续课在标题旁标「后续课」。
-- **Search result**：路线 chip、Lesson 编号、共同练习标签、步骤标题、匹配摘录和高亮。
+- **讲次 pager**：上一讲 / 返回专题 / 下一讲三张卡片；后续课在标题旁标「后续课」。
+- **Search result**：专题 chip、讲次编号、受众标签、步骤标题、匹配摘录和高亮。
 - **图**：只在有教学价值且已制作时发布；图注和替代文字必填，关键信息在正文再写一次。
 
 ## 首页个人线稿水印
@@ -84,7 +84,7 @@
 
 ## 拾趣
 
-- 拾趣是独立栏目，页面标题和导航用「拾趣」，技术路径是 `/gallery/`；不占课号，不进课表。
+- 拾趣是独立栏目，页面标题和导航用「拾趣」，技术路径是 `/gallery/`；不占专题，不进讲次列表。
 - 首页只放一张横向 teaser；拾趣首页一件作品时也是横向大卡片，多件时两列网格，窄屏单列。
 - 作品页：左侧纸面卡片放双图切换，右侧致谢和作品信息；不再把原图单独放在下方。
 - 双图切换：默认显示 `original_image`（原始白板照片/原画），点击后在原位淡入 `image`（整理版线稿）；再次点击切回。按钮是原生 `<button>`，支持鼠标、触屏、Enter/Space，`aria-pressed` 与 caption 同步；`prefers-reduced-motion` 下关闭过渡。
@@ -108,7 +108,7 @@
 
 ## 两条路线的区分
 
-- 爸爸：青绿主色、`Lesson` 编号、DeepSeek/Harness/LaTeX 关键词。
+- 爸爸：青绿主色、「第 N 讲」编号、DeepSeek/Harness/LaTeX/AutoCAD 关键词。
 - 妈妈：陶土色辅助、Mac/豆包/DeepSeek/Harness 关键词。
 - 颜色只用于 Eyebrow、标签、悬停线和路线卡片浅底；正文链接统一用青绿，避免同页出现两套链接色。
 - 路线首屏用抽象侧脸线描，不换真人照片；插画只做入口识别，不承担教学信息。

@@ -14,7 +14,7 @@ course/archive/audit-01-07.md    历史核查记录
 assets/topics/<slug>/            该专题的图片、示例和工具箱
 assets/gallery/                  拾趣图片
 assets/site/                     全站侧脸插画、图标、线稿
-site/build.py                    从 topics、gallery 和 README 生成网页
+site/build.py                    从 topics 和 gallery 生成网页
 site/style.css                   全站样式和设计变量
 site/ui.js                       菜单、目录高亮、提示词复制
 site/search.js                   搜索页交互

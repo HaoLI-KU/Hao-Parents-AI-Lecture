@@ -1,6 +1,6 @@
 # 爸爸妈妈的课程网站
 
-网站是公开的静态站点，发布在 GitHub Pages 的 `/docs` 目录。页面由 `site/build.py` 从 `course/topics/` 的 Markdown、`course/gallery/` 和 `README.md` 的专题总览生成；不要手改 `docs/`。
+网站是公开的静态站点，发布在 GitHub Pages 的 `/docs` 目录。页面由 `site/build.py` 从 `course/topics/` 的 Markdown 和 `course/gallery/` 生成；README 只维护专题总览，不要手改 `docs/`。
 
 ## 站点结构
 

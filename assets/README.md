@@ -1,6 +1,6 @@
 # 可公开的课程素材
 
-按专题放在 `topics/<slug>/` 下，图片和示例分别按 `screenshots/`、`examples/`、`illustrations/` 分类。按「路线-任务-结果」给截图命名，例如 `mom-join-test-meeting.png`。截图说明放在引用它的课稿里。第 1 节先提供虚构案例，实际界面核对后再补截图。
+按专题放在 `topics/<slug>/` 下，图片和示例分别按 `screenshots/`、`examples/`、`illustrations/` 分类。按「受众-任务-结果」给截图命名，例如 `mom-join-test-meeting.png`。截图说明放在引用它的课稿里。「和 AI 一起做事」第 1 讲先提供虚构案例，实际界面核对后再补截图。
 
 中文技术书参考模板在 `topics/word-to-latex/examples/chinese-book-template/`，ZIP 和预览 PDF 也放在同一层。真实家庭和工作资料留在仓库外；发布目录只复制页面实际引用的素材。
 

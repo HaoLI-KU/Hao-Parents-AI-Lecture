@@ -549,7 +549,6 @@ button { cursor: pointer; background: none; border: 0; }
   gap: 1rem;
 }
 @media (max-width: 720px) {
-  .practice-grid { grid-template-columns: minmax(0, 1fr); }
 }
 .card {
   padding: 1.3rem;

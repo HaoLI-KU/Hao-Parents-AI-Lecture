@@ -347,7 +347,7 @@ def render_body(source, level, route, prefix, source_path):
     diagram = (
         f'\n\n<figure>'
         f'<img src="{prefix}assets/ai-two-layers.svg" alt="上层是用来交代任务的电脑界面，下层是处理输入并生成回答的模型。" width="840" height="330">'
-        '<figcaption>上层负责交互，下层生成回答。爸爸这台 Mac 的连接方式如下。</figcaption>'
+        '<figcaption>上层负责交互，下层生成回答。这台 Mac 的连接方式如下。</figcaption>'
         '<div class="model-line"><span>上层 · Codex 界面</span><b aria-hidden="true">→</b><span>下层 · DeepSeek 模型</span></div>'
         '</figure>\n\n'
     )
@@ -980,9 +980,10 @@ def copy_static():
             destination = DOCS / "assets/gallery" / asset.relative_to(gallery_assets)
             destination.parent.mkdir(parents=True, exist_ok=True)
             copyfile(asset, destination)
-    diagram = ROOT / "assets/site/ai-two-layers.svg"
-    if diagram.is_file():
-        copyfile(diagram, DOCS / "assets/ai-two-layers.svg")
+    diagram = ROOT / "assets/topics/ai/illustrations/ai-two-layers.svg"
+    if not diagram.is_file():
+        raise SystemExit(f"缺少 AI 两层示意图：{diagram}")
+    copyfile(diagram, DOCS / "assets/ai-two-layers.svg")
     fonts = ROOT / "site/fonts"
     if fonts.is_dir():
         destination = DOCS / "assets/fonts"
