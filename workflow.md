@@ -53,6 +53,24 @@ docs/                            生成物，GitHub Pages 从这里发布
 6. **预览**：`make serve`，看首页、专题总览、每个专题、两条路径、课页和搜索；按 1280/1024/500px 和 200% 放大检查，打印一节长课。
 7. **提交**：课稿、专题文件、素材、样式和重建后的 `docs/` 一起提交；推送 `main` 后等 1–2 分钟刷新线上地址。
 
+## 配图流程
+
+- 先在 `course/curriculum.md` 的 `视觉` 列写类型和数量，例如 `结果图 ×3`、`概念图 ×2`。
+- 真实截图放 `assets/topics/<slug>/screenshots/`；概念图、SVG 和 ChatGPT 生成示意图放 `assets/topics/<slug>/illustrations/`；DXF、ZIP、PDF 等练习文件继续放 `examples/`。不新增 `images/` 目录。
+- 文件名 `NN-短描述.扩展名`；一讲多图用 `NN-短描述-2`。
+- 课稿用 HTML `figure` 引用，图片必须有非空 `alt` 和一句 `figcaption`：
+  ```html
+  <figure>
+    <img src="../../../assets/topics/mac/screenshots/01-remote-meeting.png"
+         alt="腾讯会议窗口，底部工具栏有共享屏幕按钮"
+         width="1600" height="1000" loading="lazy">
+    <figcaption>图注：点底部工具栏的共享屏幕。</figcaption>
+  </figure>
+  ```
+- 真实截图裁掉账号、通知、姓名和私人文件；AI 生成图在图注写「ChatGPT 生成」，不冒充真实界面或结果。
+- 每讲最多 3 张图，每个 `###` 步骤最多 1 张；没有必要时不配图。
+- 运行 `make all`；检查 1280px、500px 和打印。图片确认后再更新 `视觉` 状态。
+
 ## URL
 
 - 页面：`/`、`/topics/`、`/topics/<slug>/`、`/topics/<slug>/<stem>.html`、`/dad/`、`/mom/`、`/gallery/`。

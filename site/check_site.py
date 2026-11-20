@@ -154,6 +154,39 @@ def text_similarity(left, right):
     return len(a & b) / len(a | b)
 
 
+
+def check_source_images(topics):
+    for topic in topics:
+        for session in topic["sessions"]:
+            source = session["file"]
+            body = session["body"]
+            images = re.findall(r"<img\b[^>]*>", body, re.I)
+            figures = re.findall(r"<figure\b.*?</figure>", body, re.I | re.S)
+            if len(images) > 3:
+                fail(f"{source.relative_to(ROOT)} 图片超过 3 张")
+            for image in images:
+                if not re.search(r'\balt="([^"]*)"', image) or not re.search(r'\balt="([^"]*)"', image).group(1).strip():
+                    fail(f"{source.relative_to(ROOT)} 图片缺少非空 alt")
+                src_match = re.search(r'\bsrc="([^"]+)"', image)
+                if not src_match:
+                    fail(f"{source.relative_to(ROOT)} 图片缺少 src")
+                    continue
+                src = src_match.group(1)
+                target = (source.parent / src).resolve()
+                try:
+                    target.relative_to((ROOT / "assets" / "topics").resolve())
+                except ValueError:
+                    fail(f"{source.relative_to(ROOT)} 图片不在 assets/topics/ 下：{src}")
+                    continue
+                if not target.is_file():
+                    fail(f"{source.relative_to(ROOT)} 图片不存在：{src}")
+            for figure in figures:
+                if not re.search(r"<figcaption\b[^>]*>\s*\S", figure, re.I | re.S):
+                    fail(f"{source.relative_to(ROOT)} figure 缺少非空 figcaption")
+            if len(images) != len(figures):
+                fail(f"{source.relative_to(ROOT)} 存在未包在 figure 中的图片")
+
+
 def check_curriculum(topics):
     if not CURRICULUM.is_file():
         fail("缺少课程地图：course/curriculum.md")
@@ -205,7 +238,7 @@ def check_curriculum(topics):
                 fail(f"课程地图受众不一致：{file_value}「{row['受众']}」≠「{session['audience']}」")
             if row["状态"] != session["status"]:
                 fail(f"课程地图状态不一致：{file_value}「{row['状态']}」≠「{session['status']}」")
-            if row["视觉"] not in {"—", "概念图", "截图", "结果图", "对照"}:
+            if not re.fullmatch(r"(—|概念图|截图|结果图|对照)( ×[1-3])?", row["视觉"]):
                 warn(f"课程地图视觉类型未知：{file_value}「{row['视觉']}」")
 
     actual_slugs = [topic["slug"] for topic in topics]
@@ -264,6 +297,7 @@ def main():
     for page in pages:
         check_page(page)
     check_curriculum(topics)
+    check_source_images(topics)
 
     if not (DOCS / ".nojekyll").is_file():
         fail("缺少 docs/.nojekyll")

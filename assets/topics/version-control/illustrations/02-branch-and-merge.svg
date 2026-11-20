@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 380" role="img" aria-labelledby="title desc">
+<title id="title">main 分支和 feature 分支的提交与合并关系</title>
+<desc id="desc">从 main 拉出 feature 分支，在 feature 上提交，确认后再合并回 main。</desc>
+<rect width="840" height="380" fill="#f7f6f2"/>
+<g font-family="system-ui, 'PingFang SC', 'Hiragino Sans GB', sans-serif" fill="#16201e">
+  <text x="40" y="40" font-size="22" font-weight="700">branch 是一条独立的修改线</text>
+  <text x="40" y="66" font-size="16" fill="#46514e">在 feature 上提交，不会立刻改变 main；确认后再合并回去。</text>
+
+  <text x="48" y="145" font-size="15" font-weight="700" fill="#0a6b60">feature</text>
+  <text x="48" y="245" font-size="15" font-weight="700" fill="#8a4f3b">main</text>
+
+  <path d="M100 230h640" stroke="#8a4f3b" stroke-width="4" stroke-linecap="round"/>
+  <path d="M250 230c35 0 35-85 75-85h300" stroke="#0a6b60" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M625 145c35 0 35 85 75 85" stroke="#0a6b60" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <g fill="#ffffff" stroke="#8a4f3b" stroke-width="3">
+    <circle cx="140" cy="230" r="9"/>
+    <circle cx="240" cy="230" r="9"/>
+    <circle cx="350" cy="230" r="9"/>
+    <circle cx="460" cy="230" r="9"/>
+    <circle cx="570" cy="230" r="9"/>
+    <circle cx="700" cy="230" r="9"/>
+  </g>
+  <g fill="#ffffff" stroke="#0a6b60" stroke-width="3">
+    <circle cx="390" cy="145" r="9"/>
+    <circle cx="500" cy="145" r="9"/>
+    <circle cx="610" cy="145" r="9"/>
+  </g>
+
+  <text x="320" y="120" font-size="14" fill="#46514e">提交 1</text>
+  <text x="430" y="120" font-size="14" fill="#46514e">提交 2</text>
+  <text x="540" y="120" font-size="14" fill="#46514e">提交 3</text>
+  <text x="680" y="258" font-size="14" fill="#46514e">合并点</text>
+  <text x="126" y="258" font-size="14" fill="#46514e">起点</text>
+  <text x="238" y="214" font-size="13" fill="#0a6b60">拉出分支</text>
+  <text x="618" y="212" font-size="13" fill="#0a6b60">merge 回 main</text>
+
+  <rect x="90" y="302" width="660" height="48" rx="10" fill="#ffffff" stroke="#cfccc1"/>
+  <text x="108" y="332" font-size="15" fill="#46514e">先在自己的分支提交，确认没有冲突或遗漏，再合并；多人同时改同一文件时要特别小心。</text>
+</g>
+</svg>

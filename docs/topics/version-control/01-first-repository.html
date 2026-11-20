@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=4e45145d35">
+<link rel="stylesheet" href="../../assets/style.css?v=0e27b2396b">
 </head>
 <body class="page-session route-both">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -77,13 +77,24 @@
 </tbody>
 </table></div>
 <p>私有仓库里也只放有权上传的文件。手册先选已确认可上传的 <code>.tex</code>、Markdown 规则和示例图表。账号信息、密钥、无权上传的内部资料留在本机。妈妈先用自己的一组虚构练习文件。 <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories" target="_blank" rel="noopener">GitHub 仓库可见性说明</a></p>
+<figure>
+<img src="../../assets/topics/version-control/illustrations/01-local-and-remote.svg" alt="Mac 文件夹、本地 .git 提交历史和 GitHub 远端仓库之间的关系，标出 clone、commit 和 push" width="840" height="380">
+<figcaption>clone 把 GitHub 仓库复制到本机；commit 在本机记录版本；push 把提交送回 GitHub。</figcaption>
+</figure>
+
 <h2 id="step-3">3. 认三个词，让 Harness 帮忙执行</h2>
 <p>本节默认已经装好 DeepSeek Harness（先完成「和 AI 一起做事」第 2 讲）。</p>
 <ul>
 <li><strong>clone（克隆）</strong>：把 GitHub 仓库复制到电脑，得到可以编辑的本地项目。</li>
 <li><strong>commit（提交）</strong>：在本地保存一份带说明的版本记录。</li>
 <li><strong>push（推送）</strong>：把已提交的版本送到指定的 GitHub 仓库。</li>
+<li><strong>branch（分支）</strong>：一条独立的修改线。可以先在自己的分支提交，确认后再合并回 <code>main</code>。</li>
 </ul>
+<figure>
+<img src="../../assets/topics/version-control/illustrations/02-branch-and-merge.svg" alt="main 和 feature 两条分支线，feature 上有三个提交，最后合并回 main" width="840" height="380">
+<figcaption>在 feature 分支提交，确认没有冲突或遗漏后，再合并回 main。</figcaption>
+</figure>
+
 <ol>
 <li>在新仓库复制地址。各自在 Mac 选一个空练习位置，让 Harness 把仓库克隆到那里。若 GitHub 要求本机登录或授权，按提示由本人完成，再让 Harness 继续。</li>
 <li>打开克隆得到的文件夹。爸爸复制选好的手册文件，妈妈复制自己的 <code>index.html</code> 或那节课用到的练习文件。原来的本地项目仍可直接打开。复制前先看仓库里有没有 <code>.gitignore</code>；没有就建一个，至少排除 <code>.DS_Store</code>、密钥文件和私人草稿。</li>
@@ -109,6 +120,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/version-control/01-first-repository.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=4e45145d35"></script>
+<script defer src="../../assets/ui.js?v=0e27b2396b"></script>
 </body>
 </html>

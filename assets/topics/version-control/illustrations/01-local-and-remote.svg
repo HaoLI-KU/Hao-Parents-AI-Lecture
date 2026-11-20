@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 380" role="img" aria-labelledby="title desc">
+<title id="title">本地文件夹、本地 Git 仓库和 GitHub 远端仓库的关系</title>
+<desc id="desc">clone 把 GitHub 仓库复制到本机，commit 在本机记录版本，push 把本机提交送回 GitHub。</desc>
+<rect width="840" height="380" fill="#f7f6f2"/>
+<g font-family="system-ui, 'PingFang SC', 'Hiragino Sans GB', sans-serif" fill="#16201e">
+  <text x="40" y="40" font-size="22" font-weight="700">本地和远端不是同一份文件</text>
+  <text x="40" y="66" font-size="16" fill="#46514e">clone 先把远端复制到本机；之后的 commit 和 push 都在本机完成。</text>
+
+  <g>
+    <rect x="40" y="100" width="220" height="160" rx="16" fill="#ffffff" stroke="#cfccc1"/>
+    <text x="64" y="138" font-size="20" font-weight="700">Mac 文件夹</text>
+    <text x="64" y="168" font-size="16" fill="#46514e">你每天打开、编辑的文件</text>
+    <path d="M64 190h52l14 14h92v34H64z" fill="#e4f1ee" stroke="#0a6b60" stroke-width="2"/>
+    <text x="76" y="226" font-size="15" fill="#06443e">项目文件</text>
+  </g>
+
+  <g>
+    <rect x="310" y="100" width="220" height="160" rx="16" fill="#e4f1ee" stroke="#cfccc1"/>
+    <text x="334" y="138" font-size="20" font-weight="700">本地 .git</text>
+    <text x="334" y="168" font-size="16" fill="#46514e">带说明的版本记录</text>
+    <circle cx="356" cy="204" r="7" fill="#0a6b60"/>
+    <circle cx="390" cy="204" r="7" fill="#0a6b60"/>
+    <circle cx="424" cy="204" r="7" fill="#0a6b60"/>
+    <path d="M356 204h68" stroke="#0a6b60" stroke-width="3"/>
+    <text x="334" y="238" font-size="15" fill="#06443e">commit 存在这里</text>
+  </g>
+
+  <g>
+    <rect x="580" y="100" width="220" height="160" rx="16" fill="#ffffff" stroke="#cfccc1"/>
+    <text x="604" y="138" font-size="20" font-weight="700">GitHub 仓库</text>
+    <text x="604" y="168" font-size="16" fill="#46514e">远端的一份副本</text>
+    <circle cx="620" cy="204" r="12" fill="#16201e"/>
+    <path d="M620 208v30m0 0-10-10m10 10 10-10" fill="none" stroke="#f7f6f2" stroke-width="3" stroke-linecap="round"/>
+    <text x="604" y="238" font-size="15" fill="#06443e">push 的目标</text>
+  </g>
+
+  <g stroke="#0a6b60" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M580 128H470m10-8-10 8 10 8"/>
+    <path d="M260 128h50m-10-8 10 8-10 8"/>
+    <path d="M470 252H580m-10-8 10 8-10 8"/>
+  </g>
+  <text x="500" y="116" font-size="15" fill="#0a6b60">clone</text>
+  <text x="270" y="116" font-size="15" fill="#0a6b60">commit</text>
+  <text x="490" y="278" font-size="15" fill="#0a6b60">push</text>
+
+  <text x="40" y="326" font-size="16" fill="#46514e">记住顺序：clone 一次 → 改文件 → commit 记录 → push 送回 GitHub。</text>
+</g>
+</svg>

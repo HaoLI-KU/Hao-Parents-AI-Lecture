@@ -28,7 +28,7 @@
 - **学完能做到**：一句话，不复制正文。
 - **产出 / 验收**：可检查的结果。
 - **覆盖点**：短标签，逗号分隔；重复标签会触发提醒。标签要具体，不要用「AI」「GitHub」这类泛词。
-- **视觉**：`—`、`概念图`、`截图`、`结果图`、`对照`；这是下一阶段配图的计划，本次不要求全部完成。
+- **视觉**：`—`、`概念图`、`截图`、`结果图`、`对照`，可带数量，例如 `结果图 ×3`、`概念图 ×2`。这是配图计划；`截图`/`结果图` 放 `assets/topics/<slug>/screenshots/`，`概念图`/`对照` 放 `assets/topics/<slug>/illustrations/`。
 
 ## 专题：mac｜把 Mac 用顺
 
@@ -73,15 +73,15 @@
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/image-generation/01-generate-and-edit.md | 用 Harness 生成和修改图片 | 共同 | active | AI 02 | 能配置图像服务，生成、局部改图并做软装方向对比 | 原图；改图；三套方向 | image-provider, text-to-image, image-edit, soft-furnishing | 结果图 |
+| 01 | topics/image-generation/01-generate-and-edit.md | 用 Harness 生成和修改图片 | 共同 | active | AI 02 | 能配置图像服务，生成、局部改图并做软装方向对比 | 原图；改图；三套方向 | image-provider, text-to-image, image-edit, soft-furnishing | 结果图 ×3 |
 
 ## 专题：version-control｜版本管理与协作
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/version-control/01-first-repository.md | 第一次把文件放进 GitHub 仓库 | 共同 | active | AI 02 | 能注册账号、建私有仓库，并完成 clone、commit、push | 私有仓库；提交记录；本机文件 | github-account, private-repo, clone-commit-push | 截图 |
+| 01 | topics/version-control/01-first-repository.md | 第一次把文件放进 GitHub 仓库 | 共同 | active | AI 02 | 能注册账号、建私有仓库，并完成 clone、commit、push | 私有仓库；提交记录；本机文件 | github-account, private-repo, clone-commit-push | 概念图 ×2 |
 
 ## 待安排
 
-- 配图阶段：按每行 `视觉` 列逐讲补图，先做 Mac 01 和 CAD 05 两讲试点。
+- 配图阶段：按每行 `视觉` 列逐讲补图；第一轮试点是图片生成第 1 讲（3 张效果图）和版本管理第 1 讲（2 张 Git 示意图）。
 - 不把未制作的图写进学员课稿；图片构想先留在这里。

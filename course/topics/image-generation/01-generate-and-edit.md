@@ -8,6 +8,8 @@ summary: 配置 Seedream / 火山方舟，跑通生图、只改一处的改图�
 
 公开课稿只用虚构房间和示例文字；真实家庭照片、门牌、快递单和家人物品只在本机使用，上传前先裁掉隐私信息。
 
+本页的软装效果图由 **ChatGPT 生成**，只用于说明画面方向；课堂仍按下面的 Seedream 步骤生成自己的版本。
+
 ### 1. 先分清四个名字
 
 你之前提到的「C Dream」，官方资料写作 **Seedream**（也见 SeeDream），是字节跳动的图像生成模型。和它相关的几个入口不是一回事：
@@ -66,6 +68,12 @@ summary: 配置 Seedream / 火山方舟，跑通生图、只改一处的改图�
 请生成一张约 20 平方米客厅的软装示意：浅橡木地板，米白色墙，左侧落地窗，午后自然光；现有灰色布艺三人沙发、白色圆形茶几。请只把沙发换成浅米色亚麻三人沙发，增加胡桃木边柜和橄榄绿地毯；保留窗、墙、地板、光线和拍摄角度不变，其他家具不要移动。真实照片感，24mm 广角，1:1，不要添加文字。
 ```
 
+
+<figure>
+<img src="../../../assets/topics/image-generation/screenshots/01-fictional-living-room.jpg" alt="虚构客厅：浅橡木地板、米白墙、左侧落地窗、灰色沙发、白色圆茶几和浅色地毯" width="1200" height="1200" loading="lazy">
+<figcaption>示例：虚构客厅的初始软装方向，先固定房间结构再换软装（ChatGPT 生成）。</figcaption>
+</figure>
+
 生成后先看四件事：
 
 - 房间结构和窗/墙/地板有没有被改掉；
@@ -87,6 +95,12 @@ summary: 配置 Seedream / 火山方舟，跑通生图、只改一处的改图�
 只改左侧沙发：换成浅米色亚麻三人沙发；保留窗帘、地板、光线、镜头角度、其他家具和房间结构不变。不要把整张图重新设计，不要添加文字。
 ```
 
+
+<figure>
+<img src="../../../assets/topics/image-generation/screenshots/02-sofa-only-edit.jpg" alt="同一间虚构客厅，只把灰色沙发换成浅米色亚麻三人沙发，其他陈设保持不变" width="1200" height="1200" loading="lazy">
+<figcaption>示例：只把沙发换成浅米色亚麻三人沙发，窗、墙、地板、茶几和光线保持不变（ChatGPT 生成）。</figcaption>
+</figure>
+
 4. 生成后对比新旧两版，满意就保存为新版本；不满意就退回上一版再改，不要覆盖原图。
 5. 再试一次“只换地毯”或“只换落地灯”，每次都只改一个变量。
 
@@ -103,6 +117,12 @@ B：米色羊毛地毯 + 黑色细杆落地灯 + 浅木边柜；
 C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
 每套单独一张图，真实照片感，1:1，不要添加文字。
 ```
+
+
+<figure>
+<img src="../../../assets/topics/image-generation/screenshots/03-soft-furnishing-directions.jpg" alt="同一间客厅的三套软装方向并排：橄榄绿地毯与藤编灯、米色地毯与黑色灯、蓝灰地毯与黄铜灯" width="2100" height="700" loading="lazy">
+<figcaption>示例：三套软装方向，只比较颜色和材质；尺寸仍以商品页为准（ChatGPT 生成）。</figcaption>
+</figure>
 
 拿去淘宝/店里选品时：
 

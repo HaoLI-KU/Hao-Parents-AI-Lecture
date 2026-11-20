@@ -1,6 +1,12 @@
 # 可公开的课程素材
 
-按专题放在 `topics/<slug>/` 下，图片和示例分别按 `screenshots/`、`examples/`、`illustrations/` 分类。按「受众-任务-结果」给截图命名，例如 `mom-join-test-meeting.png`。截图说明放在引用它的课稿里。「和 AI 一起做事」第 1 讲先提供虚构案例，实际界面核对后再补截图。
+按专题放在 `topics/<slug>/` 下，继续使用三个目录：
+
+- `screenshots/`：真实界面截图、实际结果截图；
+- `illustrations/`：SVG、概念图、ChatGPT 生成示意图；
+- `examples/`：DXF、ZIP、PDF、代码等非图片练习文件。
+
+图片按 `NN-短描述.扩展名` 命名，例如 `01-remote-meeting.png`；一讲多图用 `NN-短描述-2`。课稿里用 `figure` 引用，图片必须有替代文字和一句图注。截图里的账号、通知、姓名、门牌和私人文件必须裁掉；真实家庭资料、CAD 图纸和账号资料留在本机，不进入这个仓库。不新增 `images/` 或更深的图片目录。
 
 中文技术书参考模板在 `topics/word-to-latex/examples/chinese-book-template/`，ZIP 和预览 PDF 也放在同一层。真实家庭和工作资料留在仓库外；发布目录只复制页面实际引用的素材。
 

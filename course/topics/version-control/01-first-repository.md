@@ -19,6 +19,11 @@ summary: 注册账号、建私有仓库，用 Harness 克隆、提交、推送�
 
 私有仓库里也只放有权上传的文件。手册先选已确认可上传的 `.tex`、Markdown 规则和示例图表。账号信息、密钥、无权上传的内部资料留在本机。妈妈先用自己的一组虚构练习文件。 [GitHub 仓库可见性说明](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories)
 
+<figure>
+<img src="../../../assets/topics/version-control/illustrations/01-local-and-remote.svg" alt="Mac 文件夹、本地 .git 提交历史和 GitHub 远端仓库之间的关系，标出 clone、commit 和 push" width="840" height="380">
+<figcaption>clone 把 GitHub 仓库复制到本机；commit 在本机记录版本；push 把提交送回 GitHub。</figcaption>
+</figure>
+
 ### 3. 认三个词，让 Harness 帮忙执行
 
 本节默认已经装好 DeepSeek Harness（先完成「和 AI 一起做事」第 2 讲）。
@@ -26,6 +31,12 @@ summary: 注册账号、建私有仓库，用 Harness 克隆、提交、推送�
 - **clone（克隆）**：把 GitHub 仓库复制到电脑，得到可以编辑的本地项目。
 - **commit（提交）**：在本地保存一份带说明的版本记录。
 - **push（推送）**：把已提交的版本送到指定的 GitHub 仓库。
+- **branch（分支）**：一条独立的修改线。可以先在自己的分支提交，确认后再合并回 `main`。
+
+<figure>
+<img src="../../../assets/topics/version-control/illustrations/02-branch-and-merge.svg" alt="main 和 feature 两条分支线，feature 上有三个提交，最后合并回 main" width="840" height="380">
+<figcaption>在 feature 分支提交，确认没有冲突或遗漏后，再合并回 main。</figcaption>
+</figure>
 
 1. 在新仓库复制地址。各自在 Mac 选一个空练习位置，让 Harness 把仓库克隆到那里。若 GitHub 要求本机登录或授权，按提示由本人完成，再让 Harness 继续。
 2. 打开克隆得到的文件夹。爸爸复制选好的手册文件，妈妈复制自己的 `index.html` 或那节课用到的练习文件。原来的本地项目仍可直接打开。复制前先看仓库里有没有 `.gitignore`；没有就建一个，至少排除 `.DS_Store`、密钥文件和私人草稿。

@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=4e45145d35">
+<link rel="stylesheet" href="../../assets/style.css?v=0e27b2396b">
 </head>
 <body class="page-session route-both">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -56,6 +56,7 @@
 <aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先分清四个名字</span></a><a href="#step-2"><span class="toc-num">02</span><span>开通火山方舟和 Seedream</span></a><a href="#step-3"><span class="toc-num">03</span><span>安装并启用 dsh-image-gen</span></a><a href="#step-4"><span class="toc-num">04</span><span>配置 Seedream Provider</span></a><a href="#step-5"><span class="toc-num">05</span><span>第一张图：虚构客厅</span></a><a href="#step-6"><span class="toc-num">06</span><span>在原图上改：只换一处</span></a><a href="#step-7"><span class="toc-num">07</span><span>软装选品：三套方案与核对</span></a><a href="#step-8"><span class="toc-num">08</span><span>费用、隐私和故障排查</span></a><a href="#step-9"><span class="toc-num">09</span><span>验收清单</span></a></nav></aside>
 <div class="lesson-body" id="session"><p>这一课只做一件事：把「用 DeepSeek Harness 生成图片」这条路跑通。先用虚构的客厅练手，再把自己的房间照片放在本机做软装方向的对比；生成图只当方向板，不当施工图，也不替代商品尺寸和材质核对。</p>
 <p>公开课稿只用虚构房间和示例文字；真实家庭照片、门牌、快递单和家人物品只在本机使用，上传前先裁掉隐私信息。</p>
+<p>本页的软装效果图由 <strong>ChatGPT 生成</strong>，只用于说明画面方向；课堂仍按下面的 Seedream 步骤生成自己的版本。</p>
 <h2 id="step-1">1. 先分清四个名字</h2>
 <p>你之前提到的「C Dream」，官方资料写作 <strong>Seedream</strong>（也见 SeeDream），是字节跳动的图像生成模型。和它相关的几个入口不是一回事：</p>
 <div class="table-wrap"><table>
@@ -128,6 +129,11 @@
 <p>先用一张虚构房间练提示词，不要上传真实家庭照片。要求写明：房间、固定不动的元素、要换的软装、光线、镜头和比例。</p>
 <div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请生成一张约 20 平方米客厅的软装示意：浅橡木地板，米白色墙，左侧落地窗，午后自然光；现有灰色布艺三人沙发、白色圆形茶几。请只把沙发换成浅米色亚麻三人沙发，增加胡桃木边柜和橄榄绿地毯；保留窗、墙、地板、光线和拍摄角度不变，其他家具不要移动。真实照片感，24mm 广角，1:1，不要添加文字。
 </code></pre></div>
+<figure>
+<img src="../../assets/topics/image-generation/screenshots/01-fictional-living-room.jpg" alt="虚构客厅：浅橡木地板、米白墙、左侧落地窗、灰色沙发、白色圆茶几和浅色地毯" width="1200" height="1200" loading="lazy">
+<figcaption>示例：虚构客厅的初始软装方向，先固定房间结构再换软装（ChatGPT 生成）。</figcaption>
+</figure>
+
 <p>生成后先看四件事：</p>
 <ul>
 <li>房间结构和窗/墙/地板有没有被改掉；</li>
@@ -145,6 +151,11 @@
 </ol>
 <div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">只改左侧沙发：换成浅米色亚麻三人沙发；保留窗帘、地板、光线、镜头角度、其他家具和房间结构不变。不要把整张图重新设计，不要添加文字。
 </code></pre></div>
+<figure>
+<img src="../../assets/topics/image-generation/screenshots/02-sofa-only-edit.jpg" alt="同一间虚构客厅，只把灰色沙发换成浅米色亚麻三人沙发，其他陈设保持不变" width="1200" height="1200" loading="lazy">
+<figcaption>示例：只把沙发换成浅米色亚麻三人沙发，窗、墙、地板、茶几和光线保持不变（ChatGPT 生成）。</figcaption>
+</figure>
+
 <ol start="4">
 <li>生成后对比新旧两版，满意就保存为新版本；不满意就退回上一版再改，不要覆盖原图。</li>
 <li>再试一次“只换地毯”或“只换落地灯”，每次都只改一个变量。</li>
@@ -158,6 +169,11 @@ B：米色羊毛地毯 + 黑色细杆落地灯 + 浅木边柜；
 C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
 每套单独一张图，真实照片感，1:1，不要添加文字。
 </code></pre></div>
+<figure>
+<img src="../../assets/topics/image-generation/screenshots/03-soft-furnishing-directions.jpg" alt="同一间客厅的三套软装方向并排：橄榄绿地毯与藤编灯、米色地毯与黑色灯、蓝灰地毯与黄铜灯" width="2100" height="700" loading="lazy">
+<figcaption>示例：三套软装方向，只比较颜色和材质；尺寸仍以商品页为准（ChatGPT 生成）。</figcaption>
+</figure>
+
 <p>拿去淘宝/店里选品时：</p>
 <ul>
 <li>先量墙面、沙发、柜子和通道尺寸，再看商品尺寸；生成图不保证比例。</li>
@@ -250,6 +266,6 @@ C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/image-generation/01-generate-and-edit.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=4e45145d35"></script>
+<script defer src="../../assets/ui.js?v=0e27b2396b"></script>
 </body>
 </html>
