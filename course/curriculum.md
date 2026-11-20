@@ -34,7 +34,7 @@
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/mac/01-new-mac.md | 把新 Mac 设置到能上远程课 | 妈妈 | active | 无 | 能联网、装软件、更新、登录 Apple 账户并进入一次远程会议 | 成功入会并共享屏幕；记下卡住的一步 | mac-first-run, software-install, apple-account, remote-meeting | 截图 |
+| 01 | topics/mac/01-new-mac.md | 把新 Mac 设置到能视频开会 | 妈妈 | active | 无 | 能联网、装软件、更新、登录 Apple 账户并进入一次视频会议 | 成功入会并共享屏幕；记下卡住的一步 | mac-first-run, software-install, apple-account, video-meeting | 截图 |
 | 02 | topics/mac/02-apps-and-email.md | 验收应用，配好邮箱并核对同步 | 妈妈 | active | Mac 01 | 能检查应用、添加邮箱并完成一次收发同步核对 | 收件箱和已发送各有一封测试邮件 | app-check, email-setup, mail-sync | 截图 |
 | 03 | topics/mac/03-shortcuts-and-sharing.md | 练快捷键、触控板与家庭共享 | 妈妈 | active | Mac 02 | 能用复制粘贴、截图、窗口操作，并验证家庭共享 | 完成一次截图；共享日历、备忘录或相簿可见 | mac-shortcuts, trackpad, family-sharing | 截图 |
 | 04 | topics/mac/04-meetings-and-mactex.md | 会议预约、微信输入法语音输入与 MacTeX | 妈妈 | active | Mac 03 | 能用微信输入法完成两种语音输入场景，并用 TeXShop 编译中文 PDF | 日历出现会议；场景 A/B 测试成功；中文 PDF 编译成功 | meeting-scheduling, wechat-ime-voice, voice-focus-test, mactex | — |

@@ -1,8 +1,8 @@
 ---
-title: 把新 Mac 设置到能上远程课
+title: 把新 Mac 设置到能视频开会
 audience: mom
 status: active
-summary: 联网、装豆包与常用软件、检查更新、登录 Apple 账户，并亲手进一次远程会议。
+summary: 联网、装豆包与常用软件、检查更新、登录 Apple 账户，并亲手进一次视频会议。
 ---
 本课按 macOS 27 编写。
 

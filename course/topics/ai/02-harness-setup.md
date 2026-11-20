@@ -9,7 +9,7 @@ summary: 安装 DeepSeek Harness、配置模型、核对本机插件，并用 Co
 ### 1. 安装并初始化 DeepSeek Harness
 
 1. 打开 [DeepSeek Harness 官方发布页](https://github.com/DeepSeek-ai/deepseek-harness/releases)，在所选版本的 Assets 中找适用于 macOS Apple Silicon 的桌面安装文件，安装到「应用程序」并打开。发布页若只显示源码或找不到对应安装文件，先核对家里已安装的桌面版及其更新入口，再继续本课。
-2. 沿用[第 1 讲](../ai/01-models-and-tools.md)使用的 DeepSeek 开放平台账户。在 Harness 的模型设置中配置自己的 API Key。远程上课时先停止屏幕共享，再由本人粘贴密钥；密钥不放进聊天、截图或课程仓库。
+2. 沿用[第 1 讲](../ai/01-models-and-tools.md)使用的 DeepSeek 开放平台账户。在 Harness 的模型设置中配置自己的 API Key。需要共享屏幕时，先停止共享，再由本人粘贴密钥；密钥不放进聊天、截图或课程仓库。
 3. 打开模型选择器，确认能看到 DeepSeek 提供方和可选模型。模型、推理强度和用量统一放到第 3 讲练。
 
 [DeepSeek Harness 模型配置说明](https://deepseek-harness.github.io/deepseek-harness/guide/providers.html) · [DeepSeek 开放平台](https://platform.deepseek.com/)

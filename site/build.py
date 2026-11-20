@@ -871,8 +871,8 @@ def home(topics, gallery):
 {gallery_section}
 <section class="wrap home-section"><div class="section-head"><div class="section-title"><p class="eyebrow">怎么用</p><h2>三步开始</h2></div></div>
 <div class="card-grid">
-<article class="card"><span class="card-kicker">01</span><h3>选专题或路径</h3><p>想系统学就按专题顺序；只想补一件事就从路径里挑一讲。两条路径不必同步。</p></article>
-<article class="card"><span class="card-kicker">02</span><h3>按步骤动手</h3><p>每讲先写清输入、步骤和预期结果。需要提示词时，照提示词块里的文字发给 AI，再自己操作。</p></article>
+<article class="card"><span class="card-kicker">01</span><h3>选专题或路径</h3><p>按自己的进度选专题或路径；想系统学就按专题顺序，只想补一件事就从路径里挑一讲。两条路径不必同步。</p></article>
+<article class="card"><span class="card-kicker">02</span><h3>按步骤动手</h3><p>每讲先写清输入、步骤和预期结果。在自己的电脑上动手；需要提示词时，照提示词块里的文字发给 AI。</p></article>
 <article class="card"><span class="card-kicker">03</span><h3>亲手核对</h3><p>AI 说得通顺不等于事情做对。打开原文件、原网页或 PDF，对照检查后再进入下一步。</p></article>
 </div></section>'''
     write_page("index.html", SITE_FULL, "爸妈的 Mac 与 AI 课：按专题或学习路径浏览，可搜索课里的操作和概念。",
