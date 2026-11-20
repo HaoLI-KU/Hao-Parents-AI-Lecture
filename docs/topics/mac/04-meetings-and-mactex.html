@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>会议预约、语音输入与 MacTeX · 爸妈的 Mac 与 AI 课</title>
-<meta name="description" content="预定会议并同步日历、试微信语音转文字，用 TeXShop 验证中文排版环境。">
+<title>会议预约、微信输入法语音输入与 MacTeX · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="预定会议并同步日历、用微信输入法完成两种语音输入场景，用 TeXShop 验证中文排版环境。">
 <meta name="theme-color" content="#f7f6f2">
 <script data-embed-nav>
 (function () {
@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=5e29d66196">
+<link rel="stylesheet" href="../../assets/style.css?v=96d8908c6f">
 </head>
 <body class="page-session route-mom">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -49,19 +49,118 @@
 <nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把 Mac 用顺</a><span aria-hidden="true">/</span><span>第 4 讲</span></nav>
 <header class="lesson-hero">
 <p class="eyebrow">专题 · 把 Mac 用顺 · 第 4 讲 · 妈妈</p>
-<h1>会议预约、语音输入与 MacTeX</h1>
-<p class="lesson-summary">预定会议并同步日历、试微信语音转文字，用 TeXShop 验证中文排版环境。</p>
+<h1>会议预约、微信输入法语音输入与 MacTeX</h1>
+<p class="lesson-summary">预定会议并同步日历、用微信输入法完成两种语音输入场景，用 TeXShop 验证中文排版环境。</p>
 </header>
 <div class="lesson-layout">
-<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>预定会议并同步日历</span></a><a href="#step-2"><span class="toc-num">02</span><span>试微信语音转文字</span></a><a href="#step-3"><span class="toc-num">03</span><span>验证 MacTeX</span></a></nav></aside>
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>预定会议并同步日历</span></a><a href="#step-2"><span class="toc-num">02</span><span>用微信输入法做语音输入</span></a><a href="#step-3"><span class="toc-num">03</span><span>验证 MacTeX</span></a></nav></aside>
 <div class="lesson-body" id="session"><p>先补前几节没完成、今天会用到的项目。腾讯会议、微信和 Apple 账户能打开后，再做下面的练习。</p>
 <h2 id="step-1">预定会议并同步日历</h2>
 <ol>
 <li>在腾讯会议 Mac 客户端主页点「预定会议」，填主题和时间，再点「预定」。从会议详情或邀请菜单复制会议号和链接。把日期、时区与链接通过邮件发给约好的家人，请对方核对在哥本哈根看到的时间。</li>
 <li>在苹果「日历」建立测试日程，用日程右上角的彩色标记选一个自己可编辑的共享日历。双击日程，在「添加备注、URL 或附件」贴入会议链接。需要指定时区时，在「日历 → 设置 → 高级」打开时区支持，再点日程日期选择上海时区。请家人在哥本哈根用自己的设备核对当地开始时间，并打开链接确认是同一场会议。 <a href="https://support.apple.com/zh-hans/guide/calendar/icalwr13-events/mac" target="_blank" rel="noopener">Apple 添加和修改日程</a></li>
 </ol>
-<h2 id="step-2">试微信语音转文字</h2>
-<p>优先练微信 Mac 客户端自带的语音转文字。打开一个测试聊天，把光标放在输入框，找语音输入的小话筒或客户端显示的快捷键。试说「明天给薄荷浇水，check the leaves」。确认中英文出现在可编辑的输入框，核对后清空。入口以现场客户端版本为准。如果只有发送语音消息的按钮，先请家人一起检查版本和设置。macOS 听写作为备用，可在「系统设置 → 键盘 → 听写」查看启用方式和快捷键。</p>
+<h2 id="step-2">用微信输入法做语音输入</h2>
+<p>这一节的技术路径是<strong>微信输入法（WeType）</strong>，不是微信 App 聊天窗口里的语音转文字。微信输入法是独立的 macOS 输入法，装好后可以在任何输入框里用快捷键说话输入。</p>
+<h4>先分清三个东西</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>是什么</th>
+<th>本课怎么用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>微信输入法</td>
+<td>独立的 macOS 输入法，可在任意输入框语音输入</td>
+<td><strong>本课使用</strong></td>
+</tr>
+<tr>
+<td>微信 App 的语音输入</td>
+<td>微信聊天窗口里的语音/转文字功能</td>
+<td>不作为本课路径，快捷键可能和微信输入法冲突</td>
+</tr>
+<tr>
+<td>macOS 听写</td>
+<td>系统自带听写</td>
+<td>只作备用；如果也用 Fn，要和微信输入法错开</td>
+</tr>
+</tbody>
+</table></div>
+<h4>安装和设置</h4>
+<ol>
+<li>打开<a href="https://wetype.weixin.qq.com/" target="_blank" rel="noopener">微信输入法官网</a>，下载 macOS 版并安装。</li>
+<li>打开「系统设置 → 键盘 → 文字输入」，确认微信输入法已经加入输入法列表；需要时切换到微信输入法。</li>
+<li>第一次使用语音输入时，按系统提示允许麦克风权限。</li>
+<li>打开微信输入法的设置，找到「语音输入」和「快捷键」。</li>
+<li>把语音输入快捷键设为 <strong>Fn</strong>。如果 Fn 被系统或其他软件占用，就在微信输入法里换成 Control 等组合，并把实际按键记下来。</li>
+<li>在语音输入设置里检查下面四项：</li>
+</ol>
+<ul>
+<li>是「按住说话」还是「按一下开始、再按一下结束」；</li>
+<li>有没有「免提 / 连续输入」模式；</li>
+<li>有没有「AI 整理 / 语音智能整理」；</li>
+<li>标点和中英文混说的设置。</li>
+</ul>
+<p>不同版本的界面可能不同，以本机实际显示为准。</p>
+<p>目标是设成：<strong>按一下 Fn 开始说话，再按一下 Fn 结束，文字进入当前输入框</strong>。如果本机版本只有“按住说话”，就按住 Fn 说话、松手结束；场景 A/B 的验证目标不变。</p>
+<h4>场景 A：在当前输入框说完就结束</h4>
+<ol>
+<li>打开「文本编辑」或「备忘录」，点进正文输入框。</li>
+<li>按一下 Fn（或按住 Fn）开始说话。</li>
+<li>说一句中英文混合的测试句：</li>
+</ol>
+<blockquote>
+<p>明天给薄荷浇水，check the leaves。</p>
+</blockquote>
+<ol start="4">
+<li>再按一下 Fn（或松手）结束语音输入。</li>
+<li>检查文字是否进入<strong>当前输入框</strong>，能否编辑、撤销。</li>
+<li>如果开启了 AI 整理，检查它有没有改掉原意；不要直接发送未核对的内容。</li>
+</ol>
+<h4>场景 B：说话中途去桌面做别的操作</h4>
+<p>这是本课最重要的验证，练的是“语音输入不依赖当前窗口一直保持前台”。</p>
+<ol>
+<li>在「文本编辑」的输入框里按 Fn，开始说话。</li>
+<li>不要点进另一个输入框；只切换到 Finder、桌面或其他普通窗口，做一两步简单操作。</li>
+<li>观察语音输入是否还在继续，原来的输入框是否还在。</li>
+<li>回到「文本编辑」的输入框，按 Fn 结束。</li>
+<li>检查文字是否仍然进入原来的输入位置。</li>
+</ol>
+<p>判断标准：</p>
+<ul>
+<li>如果本机版本支持免提/连续模式，这一场景应能完成；</li>
+<li>如果切走窗口后语音停止，记录实际现象，不要写成“已经成功”；</li>
+<li>如果文字进了错误的输入框，说明焦点变了；回到原输入框再结束；</li>
+<li>这场景对父母最重要，建议连续做两遍，确认不是偶然成功。</li>
+</ul>
+<h4>避免和系统听写、微信 App 冲突</h4>
+<ol>
+<li><strong>macOS 听写</strong>
+   - 打开「系统设置 → 键盘 → 听写」；
+   - 如果系统听写也使用 Fn，关闭它或改掉快捷键；
+   - 本课只保留微信输入法作为主路径。</li>
+<li><strong>微信 App 的语音输入</strong>
+   - 微信客户端的语音输入快捷键也可能使用 Fn；
+   - 在微信设置里关闭或改掉与 Fn 冲突的语音输入快捷键；
+   - 不需要关闭微信的语音消息功能，只要避免它抢同一个按键。</li>
+<li><strong>其他输入法</strong>
+   - 使用前确认当前输入源是微信输入法；
+   - 如果 Fn 被系统占用，按微信输入法设置换成其他键，并把实际按键记录在验收清单里。</li>
+</ol>
+<h4>验收清单</h4>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">能说出微信输入法和微信 App 语音输入的区别。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">微信输入法已安装，并已加入 macOS 输入法列表。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">麦克风权限已允许。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">已确认 Fn 的实际行为：按住说话，或按一下开始/再按一下结束。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">场景 A：说完后文字进入当前输入框。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">场景 B：中途切到桌面其他窗口，回来按 Fn 后文字仍进入原输入框。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">系统听写和微信 App 的冲突快捷键已关闭或改掉。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">AI 整理后的文字经过本人核对，没有直接发送。</span></li>
+</ul>
 <h2 id="step-3">验证 MacTeX</h2>
 <p>本节只用 Mac 上已经装好的 TeXShop，不需要 DeepSeek Harness。</p>
 <ol>
@@ -72,7 +171,7 @@
 <li>若排版报错，先看 TeXShop 日志窗口的第一条错误，记下文件名和提示。确认 MacTeX 已安装、TeXShop 是从「应用程序」打开的；修不了就记下错误，下节课一起看。</li>
 </ol>
 <p>如仍有待完成的基础操作，记下从哪一步接着做。豆包桌面版继续按需使用。工具选择与提示词的系统练习留到第 5、6 节。</p>
-<p>备查：<a href="https://meeting.tencent.com/support/topic/392/index.html" target="_blank" rel="noopener">腾讯会议预定常规会议</a> · <a href="https://support.apple.com/zh-cn/guide/mac-help/-kbdm162/mac" target="_blank" rel="noopener">Apple 听写设置</a> · <a href="https://www.tug.org/mactex/gui-link.html" target="_blank" rel="noopener">MacTeX 图形工具</a></p></div>
+<p>备查：<a href="https://meeting.tencent.com/support/topic/392/index.html" target="_blank" rel="noopener">腾讯会议预定常规会议</a> · <a href="https://wetype.weixin.qq.com/" target="_blank" rel="noopener">微信输入法官网</a> · <a href="https://support.apple.com/zh-cn/guide/mac-help/-kbdm162/mac" target="_blank" rel="noopener">Apple 听写设置</a> · <a href="https://www.tug.org/mactex/gui-link.html" target="_blank" rel="noopener">MacTeX 图形工具</a></p></div>
 </div>
 <nav class="lesson-pager" aria-label="讲次导航">
 <a class="pager-link" href="03-shortcuts-and-sharing.html"><span class="pager-label">上一讲</span><span class="pager-title">第 3 讲 · 练快捷键、触控板与家庭共享</span></a>
@@ -85,6 +184,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/mac/04-meetings-and-mactex.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=5e29d66196"></script>
+<script defer src="../../assets/ui.js?v=96d8908c6f"></script>
 </body>
 </html>
