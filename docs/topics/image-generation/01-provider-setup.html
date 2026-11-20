@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="zh-CN" data-page-dir="topics/image-generation/" data-page-path="topics/image-generation/01-generate-and-edit.html">
+<html lang="zh-CN" data-page-dir="topics/image-generation/" data-page-path="topics/image-generation/01-provider-setup.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用 Harness 生成和修改图片 · 爸妈的 Mac 与 AI 课</title>
-<meta name="description" content="配置 Seedream / 火山方舟，跑通生图、只改一处的改图和软装方向对比。">
+<title>配置 Seedream 和 dsh-image-gen · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="开通火山方舟、安装 dsh-image-gen，配置 Provider 并生成一张测试图。">
 <meta name="theme-color" content="#f7f6f2">
 <script data-embed-nav>
 (function () {
@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=0e27b2396b">
+<link rel="stylesheet" href="../../assets/style.css?v=5e29d66196">
 </head>
 <body class="page-session route-both">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -49,16 +49,14 @@
 <nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把想法画出来</a><span aria-hidden="true">/</span><span>第 1 讲</span></nav>
 <header class="lesson-hero">
 <p class="eyebrow">专题 · 把想法画出来 · 第 1 讲 · 共同</p>
-<h1>用 Harness 生成和修改图片</h1>
-<p class="lesson-summary">配置 Seedream / 火山方舟，跑通生图、只改一处的改图和软装方向对比。</p>
+<h1>配置 Seedream 和 dsh-image-gen</h1>
+<p class="lesson-summary">开通火山方舟、安装 dsh-image-gen，配置 Provider 并生成一张测试图。</p>
 </header>
 <div class="lesson-layout">
-<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先分清四个名字</span></a><a href="#step-2"><span class="toc-num">02</span><span>开通火山方舟和 Seedream</span></a><a href="#step-3"><span class="toc-num">03</span><span>安装并启用 dsh-image-gen</span></a><a href="#step-4"><span class="toc-num">04</span><span>配置 Seedream Provider</span></a><a href="#step-5"><span class="toc-num">05</span><span>第一张图：虚构客厅</span></a><a href="#step-6"><span class="toc-num">06</span><span>在原图上改：只换一处</span></a><a href="#step-7"><span class="toc-num">07</span><span>软装选品：三套方案与核对</span></a><a href="#step-8"><span class="toc-num">08</span><span>费用、隐私和故障排查</span></a><a href="#step-9"><span class="toc-num">09</span><span>验收清单</span></a></nav></aside>
-<div class="lesson-body" id="session"><p>这一课只做一件事：把「用 DeepSeek Harness 生成图片」这条路跑通。先用虚构的客厅练手，再把自己的房间照片放在本机做软装方向的对比；生成图只当方向板，不当施工图，也不替代商品尺寸和材质核对。</p>
-<p>公开课稿只用虚构房间和示例文字；真实家庭照片、门牌、快递单和家人物品只在本机使用，上传前先裁掉隐私信息。</p>
-<p>本页的软装效果图由 <strong>ChatGPT 生成</strong>，只用于说明画面方向；课堂仍按下面的 Seedream 步骤生成自己的版本。</p>
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先分清四个名字</span></a><a href="#step-2"><span class="toc-num">02</span><span>开通火山方舟和 Seedream</span></a><a href="#step-3"><span class="toc-num">03</span><span>安装并启用 dsh-image-gen</span></a><a href="#step-4"><span class="toc-num">04</span><span>配置 Seedream Provider</span></a><a href="#step-5"><span class="toc-num">05</span><span>生成一张测试图</span></a><a href="#step-6"><span class="toc-num">06</span><span>费用、隐私和故障排查</span></a><a href="#step-7"><span class="toc-num">07</span><span>验收清单</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>这一讲只做一件事：把「用 DeepSeek Harness 生成图片」的链路配置好，并用一张简单测试图确认真的跑通。软装客厅和改图放在下一讲。</p>
+<p>公开课稿只用虚构内容和示例文字；真实家庭照片、门牌、快递单和家人物品只在本机使用。</p>
 <h2 id="step-1">1. 先分清四个名字</h2>
-<p>你之前提到的「C Dream」，官方资料写作 <strong>Seedream</strong>（也见 SeeDream），是字节跳动的图像生成模型。和它相关的几个入口不是一回事：</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -125,64 +123,12 @@
 <li>保存后，回到会话输入框旁确认 Provider 是 Seedream，不要误用 ChatGPT 订阅通道。</li>
 </ol>
 <p>密钥只保存在本机 DSH 凭据里；不要为了“方便”把 Key 写进课稿、仓库、聊天或截图。</p>
-<h2 id="step-5">5. 第一张图：虚构客厅</h2>
-<p>先用一张虚构房间练提示词，不要上传真实家庭照片。要求写明：房间、固定不动的元素、要换的软装、光线、镜头和比例。</p>
-<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请生成一张约 20 平方米客厅的软装示意：浅橡木地板，米白色墙，左侧落地窗，午后自然光；现有灰色布艺三人沙发、白色圆形茶几。请只把沙发换成浅米色亚麻三人沙发，增加胡桃木边柜和橄榄绿地毯；保留窗、墙、地板、光线和拍摄角度不变，其他家具不要移动。真实照片感，24mm 广角，1:1，不要添加文字。
+<h2 id="step-5">5. 生成一张测试图</h2>
+<p>配置完成后，先不要做软装效果图。用一张最简单的图验证链路：白纸上一个红苹果，不包含文字和复杂背景。</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请生成一张极简产品图：纯白纸面上放一个红苹果，柔和自然光，正面略俯视，1:1，不要文字、不要品牌、不要其他物体。
 </code></pre></div>
-<figure>
-<img src="../../assets/topics/image-generation/screenshots/01-fictional-living-room.jpg" alt="虚构客厅：浅橡木地板、米白墙、左侧落地窗、灰色沙发、白色圆茶几和浅色地毯" width="1200" height="1200" loading="lazy">
-<figcaption>示例：虚构客厅的初始软装方向，先固定房间结构再换软装（ChatGPT 生成）。</figcaption>
-</figure>
-
-<p>生成后先看四件事：</p>
-<ul>
-<li>房间结构和窗/墙/地板有没有被改掉；</li>
-<li>沙发、边柜、地毯是不是你要的方向；</li>
-<li>光线、镜头角度是否还能和原房间对上；</li>
-<li>画面里有没有乱码文字或多余物件。</li>
-</ul>
-<p>不要一次要求“全部重新设计”。软装对比要控制变量，否则看不出是哪一件东西变了。</p>
-<h2 id="step-6">6. 在原图上改：只换一处</h2>
-<p>打开 <code>画廊 → 工作台</code>，或在画布/图库里选中刚生成的图：</p>
-<ol>
-<li>点「继续编辑（垫图）」或把图拖进画布，作为参考图。</li>
-<li>用画笔圈出要改的区域（例如沙发），或在提示词里明确位置。</li>
-<li>发一条只改一处的修改意见：</li>
-</ol>
-<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">只改左侧沙发：换成浅米色亚麻三人沙发；保留窗帘、地板、光线、镜头角度、其他家具和房间结构不变。不要把整张图重新设计，不要添加文字。
-</code></pre></div>
-<figure>
-<img src="../../assets/topics/image-generation/screenshots/02-sofa-only-edit.jpg" alt="同一间虚构客厅，只把灰色沙发换成浅米色亚麻三人沙发，其他陈设保持不变" width="1200" height="1200" loading="lazy">
-<figcaption>示例：只把沙发换成浅米色亚麻三人沙发，窗、墙、地板、茶几和光线保持不变（ChatGPT 生成）。</figcaption>
-</figure>
-
-<ol start="4">
-<li>生成后对比新旧两版，满意就保存为新版本；不满意就退回上一版再改，不要覆盖原图。</li>
-<li>再试一次“只换地毯”或“只换落地灯”，每次都只改一个变量。</li>
-</ol>
-<p>如果插件支持画布选区，优先圈出要改的地方再发指令；选区能让模型更清楚“只改这里”。如果当前通道的图生图不稳定，就先退回“文字重生成”，但把固定条件写得更具体。</p>
-<h2 id="step-7">7. 软装选品：三套方案与核对</h2>
-<p>同一房间一次生成三套方向，每套只改变软装组合：</p>
-<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">同一间客厅，保留墙、窗、地板、主沙发、光线和镜头角度不变，分别生成三套软装方向：
-A：橄榄绿地毯 + 藤编落地灯 + 胡桃木边几；
-B：米色羊毛地毯 + 黑色细杆落地灯 + 浅木边柜；
-C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
-每套单独一张图，真实照片感，1:1，不要添加文字。
-</code></pre></div>
-<figure>
-<img src="../../assets/topics/image-generation/screenshots/03-soft-furnishing-directions.jpg" alt="同一间客厅的三套软装方向并排：橄榄绿地毯与藤编灯、米色地毯与黑色灯、蓝灰地毯与黄铜灯" width="2100" height="700" loading="lazy">
-<figcaption>示例：三套软装方向，只比较颜色和材质；尺寸仍以商品页为准（ChatGPT 生成）。</figcaption>
-</figure>
-
-<p>拿去淘宝/店里选品时：</p>
-<ul>
-<li>先量墙面、沙发、柜子和通道尺寸，再看商品尺寸；生成图不保证比例。</li>
-<li>用生成图比较颜色、材质和风格，商品页的尺寸、材质、色差、安装方式和退货政策以商家为准。</li>
-<li>不要根据生成图判断“放得下”；放不下是尺寸问题，不是画面问题。</li>
-<li>真实房间照片只在本机使用；上传前裁掉门牌、家人照片、快递单等隐私信息；公开课稿只放虚构房间。</li>
-<li>生成图只作方向板，最终以实物、样板和小样为准。</li>
-</ul>
-<h2 id="step-8">8. 费用、隐私和故障排查</h2>
+<p>看到图片后确认：请求没有报错、图片能在图库或工作区打开、能说出这次使用的模型和大约费用。这张测试图只用于验收，不放进课程页面。</p>
+<h2 id="step-6">6. 费用、隐私和故障排查</h2>
 <p><strong>费用</strong></p>
 <ul>
 <li>按生成张数计费；先 Lite/1K 试构图，再用 Pro/5.5/2K 做最终图。</li>
@@ -234,16 +180,14 @@ C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
 </tr>
 </tbody>
 </table></div>
-<h2 id="step-9">9. 验收清单</h2>
+<h2 id="step-7">7. 验收清单</h2>
 <ul>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">能说清 Seedream、即梦、火山方舟和 dsh-image-gen 的区别。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">能直接说出 Seedream / SeeDream 是官方模型名称。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">火山方舟账号已开通 Seedream，API Key 只保存在本机。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">dsh-image-gen 已安装并启用，Provider 选 ByteDance Seedream / 火山方舟。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">「测试连接」通过，「拉取模型」能看到可用模型。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">用虚构客厅生成至少一张图，能说出模型、尺寸和大约费用。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">在原图上只改一处（沙发/地毯/灯），保存新版本，原图还在。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">生成三套软装方向，能说清哪些是画面方向、哪些必须去商品页核对尺寸和材质。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">真实照片没有上传公开仓库；API Key 没有进截图、聊天或课稿。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">生成一张简单测试图，能说出模型、尺寸和大约费用。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">知道 Key、真实照片和费用记录的边界。</span></li>
 </ul>
 <h4>备查</h4>
 <ul>
@@ -258,14 +202,14 @@ C：蓝灰地毯 + 黄铜落地灯 + 深色边几。
 <nav class="lesson-pager" aria-label="讲次导航">
 <span class="pager-link is-empty" aria-hidden="true"></span>
 <a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把想法画出来</span></a>
-<span class="pager-link is-empty" aria-hidden="true"></span>
+<a class="pager-link" href="02-generate-and-edit.html"><span class="pager-label">下一讲</span><span class="pager-title">第 2 讲 · 用虚构客厅练习生图和改图</span></a>
 </nav>
 </div></article></main>
 <footer class="site-footer"><div class="wrap footer-inner">
 <div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
-<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/image-generation/01-generate-and-edit.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/image-generation/01-provider-setup.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=0e27b2396b"></script>
+<script defer src="../../assets/ui.js?v=5e29d66196"></script>
 </body>
 </html>

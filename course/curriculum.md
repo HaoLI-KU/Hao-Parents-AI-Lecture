@@ -44,8 +44,8 @@
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
 | 01 | topics/ai/01-models-and-tools.md | 认识两层 AI，用自己的账户跑通 Codex | 共同 | active | 无 | 能分清界面与模型，用自己的账户跑通 Codex 并核对用量 | 收到测试回复；开放平台能看到这次用量 | ai-layers, deepseek-account, codex-setup, usage-check | 概念图 |
-| 02 | topics/ai/02-harness-setup.md | 初始化 Harness，装输入法和六个插件 | 共同 | active | AI 01 | 能初始化 Harness，安装微信输入法和指定插件并逐项核对 | Harness 登录成功；插件开关核对表 | harness-install, wechat-ime, plugin-install | 截图 |
-| 03 | topics/ai/03-effort-and-usage.md | 比较推理强度，读网页和日历 | 共同 | active | AI 02 | 能比较推理档位、核对用量，并只读网页和日历 | 两次用量记录；一次只读网页/日历操作 | effort-comparison, usage-reading, readonly-web-calendar | 截图 |
+| 02 | topics/ai/02-harness-setup.md | 初始化 Harness，装输入法和本机插件 | 共同 | active | AI 01 | 能初始化 Harness、核对本机插件，并用 Config Sync 迁移配置 | Harness 登录成功；插件开关核对表；一次配置导出/导入 | harness-install, wechat-ime, plugin-inventory, config-migration | 截图 |
+| 03 | topics/ai/03-effort-and-usage.md | 比较推理强度，读网页和本机日历 | 共同 | active | AI 02 | 能比较推理档位、核对用量，并只读网页和本机测试日程 | 两次用量记录；一次公开网页读取；一条只读本机日程 | effort-comparison, usage-reading, readonly-web, local-calendar-read | 截图 |
 
 ## 专题：word-to-latex｜把技术文档做成书
 
@@ -73,7 +73,8 @@
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/image-generation/01-generate-and-edit.md | 用 Harness 生成和修改图片 | 共同 | active | AI 02 | 能配置图像服务，生成、局部改图并做软装方向对比 | 原图；改图；三套方向 | image-provider, text-to-image, image-edit, soft-furnishing | 结果图 ×3 |
+| 01 | topics/image-generation/01-provider-setup.md | 配置 Seedream 和 dsh-image-gen | 共同 | active | AI 02 | 能开通火山方舟、配置 dsh-image-gen 并生成一张测试图 | 测试连接；模型列表；一张测试图 | image-provider, ark-api-key, plugin-config, connection-test | — |
+| 02 | topics/image-generation/02-generate-and-edit.md | 用虚构客厅练习生图和改图 | 共同 | active | 图片生成 01 | 能用虚构客厅练习生图、只改一处和软装方向对比 | 客厅图；局部改图；三套方向 | living-room, image-edit, soft-furnishing, shopping-check | 结果图 ×3 |
 
 ## 专题：version-control｜版本管理与协作
 
@@ -83,5 +84,5 @@
 
 ## 待安排
 
-- 配图阶段：按每行 `视觉` 列逐讲补图；第一轮试点是图片生成第 1 讲（3 张效果图）和版本管理第 1 讲（2 张 Git 示意图）。
+- 配图阶段：按每行 `视觉` 列逐讲补图；第一轮试点已完成：图片生成第 2 讲（3 张效果图）和版本管理第 1 讲（2 张 Git 示意图）。
 - 不把未制作的图写进学员课稿；图片构想先留在这里。
