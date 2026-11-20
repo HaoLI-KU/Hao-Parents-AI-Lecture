@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>先说清条件，选一条路线 · 爸妈的 Mac 与 AI 课</title>
-<meta name="description" content="把日期、出发地、想做的事和节奏说清，让插件给两条可比较的一日路线，再自己选一条。">
+<title>你先开口，AI 给候选 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="写清 3 个人的条件和一句 prompt，让 AI 查温室、筛日料、给下午选项；你只做选择，并知道它交回了什么。">
 <meta name="theme-color" content="#f7f6f2">
 <script data-embed-nav>
 (function () {
@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=60b0a0a17e">
+<link rel="stylesheet" href="../../assets/style.css?v=992b1090a3">
 </head>
 <body class="page-session route-both">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -49,19 +49,41 @@
 <nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把一次出门安排明白</a><span aria-hidden="true">/</span><span>第 1 讲</span></nav>
 <header class="lesson-hero">
 <p class="eyebrow">专题 · 把一次出门安排明白 · 第 1 讲 · 共同</p>
-<h1>先说清条件，选一条路线</h1>
-<p class="lesson-summary">把日期、出发地、想做的事和节奏说清，让插件给两条可比较的一日路线，再自己选一条。</p>
+<h1>你先开口，AI 给候选</h1>
+<p class="lesson-summary">写清 3 个人的条件和一句 prompt，让 AI 查温室、筛日料、给下午选项；你只做选择，并知道它交回了什么。</p>
 </header>
 <div class="lesson-layout">
-<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先写一张条件卡</span></a><a href="#step-2"><span class="toc-num">02</span><span>让插件先给两条骨架</span></a><a href="#step-3"><span class="toc-num">03</span><span>用三点比较，自己选</span></a><a href="#step-4"><span class="toc-num">04</span><span>核对骨架里每个地点</span></a><a href="#step-5"><span class="toc-num">05</span><span>把选择说回去</span></a></nav></aside>
-<div class="lesson-body" id="session"><p>这一讲不排到小时，也不做网页。先把一次出门说成插件能用的条件，再从两条路线骨架里选一条。案例用的是 2026 年 12 月 26 日、从中山公园站出发的上海一日，两个人的行程。</p>
-<figure>
-<img src="../../assets/topics/trip-planning/illustrations/01-trip-workflow.svg" alt="五步流程图：说清条件、比较骨架、排到小时、逐项核对、做成网页，底部标出案例日期和地点" width="840" height="380">
-<figcaption>示意图：案例走的五步。每一步都能回头改，改完再重跑后面的检查。</figcaption>
-</figure>
-
-<h2 id="step-1">1. 先写一张条件卡</h2>
-<p>动手前把这几项写下来，越具体越好。插件一次问清，就不用来回补。</p>
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>你写条件卡</span></a><a href="#step-2"><span class="toc-num">02</span><span>你把这段话发给 AI</span></a><a href="#step-3"><span class="toc-num">03</span><span>AI 在做：查温室、筛日料、给候选</span></a><a href="#step-4"><span class="toc-num">04</span><span>你来做选择</span></a><a href="#step-5"><span class="toc-num">05</span><span>你再说一句，进第二轮</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>这一讲只做第一轮：你写条件、发一句话；AI 去查、去筛、回来交给你；你选午饭、晚饭和下午。案例是 3 个人、12 月 26 日、从中山公园站出发的上海一日。</p>
+<p><strong>这一讲谁做什么</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>谁</th>
+<th>这一步做什么</th>
+<th>交回什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>你</strong></td>
+<td>写条件卡；发第一段 prompt；从候选里选</td>
+<td>三个选择：午饭、晚饭、下午</td>
+</tr>
+<tr>
+<td><strong>AI（DeepSeek）</strong></td>
+<td>查温室当天的开放、票价、预约；按人均和等位要求筛日料；给午饭和下午选项</td>
+<td>温室核对表 + 三组候选</td>
+</tr>
+<tr>
+<td><strong>插件脚本</strong></td>
+<td>这一轮不参与。它不搜网页，也不理解口味</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>先完成<a href="../../topics/ai/02-harness-setup.html">「AI 入门与基础」第 2 讲</a>，确认「境内旅行规划 · Trip Planner CN」已经安装并启用。插件不是自动跑的：你在 prompt 里点它的名最稳；不点名时，它也可能自己加载，但不保证。</p>
+<h2 id="step-1">1. 你写条件卡</h2>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -71,128 +93,131 @@
 </thead>
 <tbody>
 <tr>
+<td>人员</td>
+<td>3 个人（含我）</td>
+</tr>
+<tr>
 <td>日期</td>
-<td>2026 年 12 月 26 日，周六</td>
+<td>12 月 26 日，周六</td>
 </tr>
 <tr>
-<td>同行</td>
-<td>2 位成人，从中山公园站出发，晚上回中山公园站</td>
+<td>时间</td>
+<td>9:00 从中山公园站出发，20:00 前回到中山公园站</td>
 </tr>
 <tr>
-<td>想看的</td>
-<td>室内植物园；下午能坐下喝咖啡；晚饭吃日料</td>
-</tr>
-<tr>
-<td>不想做的</td>
-<td>排太满、走太远、临时找店</td>
-</tr>
-<tr>
-<td>吃饭</td>
-<td>中午江南菜，晚上日料，两餐都想订位</td>
-</tr>
-<tr>
-<td>体力</td>
-<td>一天走路控制在 6 公里左右，中间能坐</td>
-</tr>
-<tr>
-<td>预算</td>
-<td>门票加两餐，不算购物</td>
-</tr>
-</tbody>
-</table></div>
-<p>先完成<a href="../../topics/ai/02-harness-setup.html">「AI 入门与基础」第 2 讲</a>，确认「境内旅行规划 · Trip Planner CN」已经安装并启用。插件入口和按钮名称以自己电脑上的版本为准。</p>
-<h2 id="step-2">2. 让插件先给两条骨架</h2>
-<p>这一步只要路线，不要完整行程。骨架阶段改起来最便宜。</p>
-<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">这个周六（2026 年 12 月 26 日）我们两个人想在上海玩一天，从中山公园地铁站出发，晚上还回中山公园站。
-我们想看室内植物园，中午吃江南菜，下午找个地方坐下喝咖啡，晚上吃日料；不想走太赶，一天走路控制在 6 公里左右。
-请先用行程规划插件给我 2 条可比较的一日路线骨架：每条写清顺序、换乘方式、每段大概用时、午饭和晚饭落在哪里，并说明适合谁、缺点是什么。
-先不要排到小时，也不要生成网页。查不到的开放时间或订位信息写「待核对」，不要编。
-</code></pre></div>
-<p>预期结果是两条能并排看的骨架，外加一句推荐。允许它做的事只有查资料和排顺序：不订位、不付款、不生成网页。如果它直接给了一张完整时间表，就让它退回来，只保留两条骨架再比较。</p>
-<h2 id="step-3">3. 用三点比较，自己选</h2>
-<p>案例里的两条骨架是这样比的：</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th></th>
-<th>方案 A（后来选的）</th>
-<th>方案 B</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>顺序</td>
-<td>温室 → 滨江 → 黄金城道 → 鮨贯</td>
-<td>温室 → 上生新所 → 古北小店 → 鮨贯</td>
-</tr>
-<tr>
-<td>换乘</td>
-<td>地铁一次换乘，古北那段改打车</td>
-<td>地铁两次换乘，下午更像城市漫步</td>
-</tr>
-<tr>
-<td>走路</td>
-<td>约 5.2 公里（街道约 6.8），有一段 2.2 公里用打车</td>
-<td>约 6 公里，咖啡店能坐更久</td>
-</tr>
-<tr>
-<td>适合</td>
-<td>想少折腾、以室内为主</td>
-<td>想多逛街区、不介意换乘</td>
-</tr>
-</tbody>
-</table></div>
-<p>最后选 A，理由有三条：温室和滨江都在后滩，换乘少；下午最冷的时候在室内；晚饭位置固定，不用临时找店。AI 的推荐只是参考，体力和口味以同行的人为准。</p>
-<h2 id="step-4">4. 核对骨架里每个地点</h2>
-<p>骨架里的名字都要真的存在、真的开门。案例里逐项核到的是这些（2026-11-20 查证，出发前一周还要再看一次）：</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>地点</th>
-<th>要核对什么</th>
-<th>案例结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
+<td>必去</td>
 <td>上海温室花园</td>
-<td>开放时间、闭馆日、要不要预约</td>
-<td>09:00–21:00，20:30 停止入园；周一闭馆；周末票 ¥128，官方小程序预约</td>
 </tr>
 <tr>
-<td>江南晓宴（世博文化公园店）</td>
-<td>午市时间、能不能订位</td>
-<td>11:00–14:00，订 12:50 两位</td>
+<td>午饭</td>
+<td>温室花园附近</td>
 </tr>
 <tr>
-<td>Floane Cafe / 黄金城道</td>
-<td>开到几点、周末有没有座位</td>
-<td>黄金城道 743 号 101（古北路入口），08:30–18:00，下午去，先到先坐</td>
+<td>晚饭</td>
+<td>长宁区日料，人均 150 以内，等位尽量 15 分钟以内</td>
 </tr>
 <tr>
-<td>鮨贯（新虹桥商厦二楼）</td>
-<td>晚市时间、订位、位置</td>
-<td>17:30–22:00，订 18:00 两位；仙霞路 158 号</td>
+<td>下午</td>
+<td>空着，等候选</td>
+</tr>
+<tr>
+<td>偏好</td>
+<td>不太网红、能订位、不赶</td>
 </tr>
 </tbody>
 </table></div>
-<p>核对时优先看景区或餐厅自己的渠道，其次看地图上的营业信息。网上的旧攻略经常还写着几年前的营业时间，别直接抄。</p>
-<h2 id="step-5">5. 把选择说回去</h2>
-<p>选定后只用一句话交代，让插件进入下一步：</p>
-<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">就按方案 A。请继续排到小时，先给时间线草稿，不要生成网页。
+<p>条件越具体，它越少猜。尤其是人均、等位、忌口这三项，不写它就不知道该怎么筛。</p>
+<h2 id="step-2">2. 你把这段话发给 AI</h2>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">12 月 26 日周六，我们三个人从中山公园地铁站出发，9:00 出门，20:00 前回到中山公园站。
+确定要去上海温室花园，午饭就在温室附近解决；晚饭想在长宁区吃日料，三个人，人均 150 以内，
+评价稳定，不要太网红，等位尽量 15 分钟以内，最好能订位。
+温室的门票、预约、三个馆怎么逛，以及下午在温室附近还能做什么，我们都不确定。
+请先用境内旅行规划插件做三件事，先不要排到小时，也不要生成网页：
+1）核对温室当天的开放时间、票价和预约方式，给一条 2–2.5 小时的馆内顺序；
+2）给 3 家长宁区的日料候选，写清人均、招牌、点评里反复提到的优缺点、订位难度，
+   并说明哪家适合三个人慢慢吃；
+3）给 2–3 个温室附近或回长宁路上的下午安排，写清要多久、要不要预约、大概多少钱。
+查不到的写「待核对」，不要编。先不要替我订位或买票。
 </code></pre></div>
+<h2 id="step-3">3. AI 在做：查温室、筛日料、给候选</h2>
+<blockquote>
+<p><strong>AI 在做</strong>：读公园官方答疑和购票页，核对 12 月 26 日的开放时间、票价和预约方式；按人均 150 元、等位 15 分钟筛长宁的日料；再给温室附近的午饭和下午选项。</p>
+<p><strong>它不做的</strong>：不订位、不买票；查不到的写「待核对」，不编。</p>
+<p><strong>它交回</strong>：温室核对表、3 家日料、3 个午饭、3 个下午选项。</p>
+</blockquote>
+<p>它做到什么程度，看它交回的表：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>AI 交回</th>
+<th>案例里长这样</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>温室核对表</td>
+<td>12 月 26 日周六 09:00–21:00，20:30 停止入园；周末票 ¥128/人；官方小程序预约；馆内顺序 1 号馆 → 2 号馆 → 3 号馆</td>
+</tr>
+<tr>
+<td>日料候选</td>
+<td>味藏约 ¥120–150、鸟安约 ¥120–150、筑紫约 ¥160；都标了订位和排队情况</td>
+</tr>
+<tr>
+<td>午饭候选</td>
+<td>悦璞食堂（馆内）、叮当丛林（游客中心）、江南晓宴（约 ¥189，要出园）</td>
+</tr>
+<tr>
+<td>下午候选</td>
+<td>申园 + 滨江、双子山 + 滨江、只走滨江</td>
+</tr>
+</tbody>
+</table></div>
+<p>这一步的关键：<strong>AI 给的是候选，不是你替它选</strong>。它把价格、时间、排队写清楚，选择权在你。</p>
+<h2 id="step-4">4. 你来做选择</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>你选</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>午饭 悦璞食堂</td>
+<td>在温室 2 号馆内，不用出园，省时间</td>
+</tr>
+<tr>
+<td>晚饭 味藏</td>
+<td>人均在 150 内、能订位、老牌居酒屋，三个人能慢慢吃</td>
+</tr>
+<tr>
+<td>下午 申园 + 滨江</td>
+<td>顺路、平路、16:30 前能走完</td>
+</tr>
+<tr>
+<td>备选 双子山 + 滨江</td>
+<td>天气好、想登高时用；让 AI 写成「注」卡</td>
+</tr>
+</tbody>
+</table></div>
+<p>选的时候只看三件事：<strong>时间够不够、体力吃不吃得消、价格在不在预算里</strong>。口味和“想不想去”由你定，AI 不替你决定。</p>
+<h2 id="step-5">5. 你再说一句，进第二轮</h2>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">就按悦璞午饭、味藏晚饭、申园 + 滨江的下午来。请排到小时：每段交通、停留、缓冲，
+标出哪些是估算、哪些已核实，给我雨天和晚点方案。双子山 + 滨江写成备选。
+</code></pre></div>
+<p>这句话说完，就进入第二讲：AI 排时间线，你核对和订位。</p>
 <ul>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">条件卡写完了，日期、同行、想看的、不想做的都在。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">拿到了两条可比较的骨架，能说出各自适合谁。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">选定了一条，并写下三条理由。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">骨架里每个地点都核对过存在、开放时间和订位方式。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">把「就按方案 A」说回去了。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">条件卡写完了，人数、日期、时间、人均、等位都在。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">发的是第一段 prompt，明确说了“先不要排到小时、不要生成网页”。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">能说出 AI 交回了什么、它不做什么。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">午饭、晚饭、下午都做了选择，并写下理由。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">把选择说回去，进入第二轮。</span></li>
 </ul></div>
 </div>
 <nav class="lesson-pager" aria-label="讲次导航">
 <span class="pager-link is-empty" aria-hidden="true"></span>
 <a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把一次出门安排明白</span></a>
-<a class="pager-link" href="02-verify-the-day.html"><span class="pager-label">下一讲</span><span class="pager-title">第 2 讲 · 排到小时，再逐项核对</span></a>
+<a class="pager-link" href="02-verify-the-day.html"><span class="pager-label">下一讲</span><span class="pager-title">第 2 讲 · AI 排到小时，你核对和订位</span></a>
 </nav>
 </div></article></main>
 <footer class="site-footer"><div class="wrap footer-inner">
@@ -200,6 +225,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/trip-planning/01-plan-the-shape.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=60b0a0a17e"></script>
+<script defer src="../../assets/ui.js?v=992b1090a3"></script>
 </body>
 </html>

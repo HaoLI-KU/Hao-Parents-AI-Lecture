@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<name>上海一日 · 温室与古北</name>
+<Folder><name>Day 1 2026-12-26 — 温室 · 申园 · 古北</name>
+<Placemark><name>1. 中山公园站</name><Point><coordinates>121.411290,31.218310,0</coordinates></Point></Placemark>
+<Placemark><name>2. 后滩站</name><Point><coordinates>121.469400,31.174040,0</coordinates></Point></Placemark>
+<Placemark><name>3. 上海温室花园</name><Point><coordinates>121.470400,31.180260,0</coordinates></Point></Placemark>
+<Placemark><name>4. 申园</name><Point><coordinates>121.469640,31.184460,0</coordinates></Point></Placemark>
+<Placemark><name>5. 世博文化公园·后滩滨江</name><Point><coordinates>121.464950,31.182800,0</coordinates></Point></Placemark>
+<Placemark><name>6. 后滩站（回程）</name><Point><coordinates>121.469400,31.174040,0</coordinates></Point></Placemark>
+<Placemark><name>7. 娄山关路站</name><Point><coordinates>121.396760,31.213370,0</coordinates></Point></Placemark>
+<Placemark><name>8. 味藏（新虹桥商厦2F）</name><Point><coordinates>121.398900,31.208910,0</coordinates></Point></Placemark>
+<Placemark><name>9. 娄山关路站（回程）</name><Point><coordinates>121.396760,31.213370,0</coordinates></Point></Placemark>
+<Placemark><name>10. 中山公园站（回程）</name><Point><coordinates>121.411290,31.218310,0</coordinates></Point></Placemark>
+<Placemark><name>Day 1 route</name><Style><LineStyle><color>ff0000ff</color><width>3</width></LineStyle></Style><LineString><coordinates>121.411290,31.218310,0 121.469400,31.174040,0 121.470400,31.180260,0 121.469640,31.184460,0 121.464950,31.182800,0 121.469400,31.174040,0 121.396760,31.213370,0 121.398900,31.208910,0 121.396760,31.213370,0 121.411290,31.218310,0</coordinates></LineString></Placemark>
+</Folder>
+</Document></kml>

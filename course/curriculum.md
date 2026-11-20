@@ -86,9 +86,9 @@
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/trip-planning/01-plan-the-shape.md | 先说清条件，选一条路线 | 共同 | active | AI 02 | 能把日期、出发地、想做的事和节奏说清，拿到两条可比较的一日路线并选定 | 一张条件卡；选定的路线骨架和三条理由 | trip-intake, route-skeleton, stop-verification | 概念图 |
-| 02 | topics/trip-planning/02-verify-the-day.md | 排到小时，再逐项核对 | 共同 | active | 行程 01 | 能把骨架排成小时级时间线，分清估算与已核实，核对开放、预约、订位和关键换乘 | 逐小时时间线；核对表；雨天与晚点预案 | hop-check, itinerary-timeline, rain-plan | 结果图 |
-| 03 | topics/trip-planning/03-make-it-a-page.md | 做成网页，留住三样东西 | 共同 | active | 行程 02 | 能选风格生成行程网页，保存网页、离线地图和日历提醒并复盘 | 网页；KML；ICS；三条复盘 | theme-render, kml-ics, trip-retro | 结果图 |
+| 01 | topics/trip-planning/01-plan-the-shape.md | 你先开口，AI 给候选 | 共同 | active | AI 02 | 能写清 3 个人的条件和第一段 prompt，从 AI 的候选里选出午饭、晚饭和下午 | 条件卡；第一段 prompt；三个选择 | trip-intake, prompt-writing, candidate-choice | — |
+| 02 | topics/trip-planning/02-verify-the-day.md | AI 排到小时，你核对和订位 | 共同 | active | 行程 01 | 能说回选择，分清估算与已核实，完成换乘核对、订位和买票 | 时间线；已核实/估算表；订位和门票 | itinerary-timeline, hop-check, booking-handoff | — |
+| 03 | topics/trip-planning/03-make-it-a-page.md | AI 做成网页，你检查保存 | 共同 | active | 行程 02 | 能指定 zine 模板，检查 AI 交回的网页，保存网页、KML 和 ICS | zine 网页；KML；ICS；三条复盘 | theme-render, file-handoff, trip-retro | 结果图 ×2 |
 
 ## 待安排
 
