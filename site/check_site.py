@@ -1,5 +1,6 @@
 """Check generated topic pages, links, anchors and search coverage."""
 from html import unescape
+import itertools
 import json
 import re
 import sys
@@ -79,6 +80,176 @@ def check_page(page):
         check_link(page, match.group(1))
 
 
+
+CURRICULUM = ROOT / "course/curriculum.md"
+AUDIENCE_MAP = {"爸爸": "dad", "妈妈": "mom", "共同": "both"}
+CURRICULUM_FIELDS = ("讲", "文件", "标题", "受众", "状态", "前置", "学完能做到", "产出 / 验收", "覆盖点", "视觉")
+GENERIC_STEPS = {
+    "准备", "收尾", "检查清单", "妈妈清单", "小结", "总结", "下一步",
+    "检查", "练习", "备注", "备用",
+}
+
+
+def curriculum_text() -> str:
+    return CURRICULUM.read_text(encoding="utf-8") if CURRICULUM.is_file() else ""
+
+
+def split_table_cells(line):
+    return [cell.strip().strip("`") for cell in line.strip().strip("|").split("|")]
+
+
+def parse_curriculum():
+    text = curriculum_text()
+    sections = {}
+    current = None
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        match = re.match(r"^## 专题：([a-z0-9-]+)｜(.+?)\s*$", line)
+        if match:
+            slug, title = match.groups()
+            if slug in sections:
+                fail(f"课程地图重复专题：{slug}")
+            current = {"slug": slug, "title": title.strip(), "rows": []}
+            sections[slug] = current
+            continue
+        if current is None or not line.startswith("|"):
+            continue
+        cells = split_table_cells(line)
+        if "讲" not in cells or "文件" not in cells:
+            continue
+        if index + 1 >= len(lines):
+            continue
+        header = cells
+        rows = []
+        for row_line in lines[index + 2:]:
+            if not row_line.startswith("|"):
+                break
+            values = split_table_cells(row_line)
+            if not any(values):
+                continue
+            if len(values) != len(header):
+                fail(f"课程地图表格列数不一致：{row_line}")
+                continue
+            rows.append(dict(zip(header, values)))
+        current["rows"] = rows
+    return sections
+
+
+def normalise_text(value):
+    return re.sub(r"\s+", "", str(value or "")).lower()
+
+
+def text_tokens(value):
+    text = normalise_text(value)
+    tokens = set(re.findall(r"[a-z0-9_]+", text))
+    for run in re.findall(r"[\u4e00-\u9fff]+", text):
+        tokens.update(run[i:i + 2] for i in range(len(run) - 1))
+    return tokens
+
+
+def text_similarity(left, right):
+    a, b = text_tokens(left), text_tokens(right)
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def check_curriculum(topics):
+    if not CURRICULUM.is_file():
+        fail("缺少课程地图：course/curriculum.md")
+        return
+    sections = parse_curriculum()
+    topic_by_slug = {topic["slug"]: topic for topic in topics}
+    listed_slugs = []
+    sessions = {}
+    for slug, section in sections.items():
+        listed_slugs.append(slug)
+        topic = topic_by_slug.get(slug)
+        if topic is None:
+            fail(f"课程地图有未知专题：{slug}")
+            continue
+        if section["title"] != topic["title"]:
+            fail(f"课程地图专题标题不一致：{slug}「{section['title']}」≠「{topic['title']}」")
+        if not section["rows"]:
+            fail(f"课程地图专题没有讲次：{slug}")
+            continue
+        for row in section["rows"]:
+            missing = [field for field in CURRICULUM_FIELDS if not row.get(field)]
+            if missing:
+                fail(f"课程地图行缺少字段（{', '.join(missing)}）：{row.get('文件', slug)}")
+                continue
+            file_value = row["文件"].strip()
+            file_path = (ROOT / "course" / file_value).resolve()
+            try:
+                relative = file_path.relative_to(ROOT)
+            except ValueError:
+                fail(f"课程地图文件路径跳出仓库：{file_value}")
+                continue
+            matches = [session for session in topic["sessions"] if session["file"].resolve() == file_path]
+            if not matches:
+                fail(f"课程地图文件不存在于专题：{file_value}")
+                continue
+            if len(matches) > 1:
+                fail(f"课程地图文件重复：{file_value}")
+                continue
+            session = matches[0]
+            session_key = session["file"].relative_to(ROOT).as_posix()
+            if session_key in sessions:
+                fail(f"课程地图重复列出课稿：{file_value}")
+            sessions[session_key] = (section, row, session)
+            if row["讲"] != f"{session['number']:02d}":
+                fail(f"课程地图讲次编号不一致：{file_value}「{row['讲']}」≠「{session['number']:02d}」")
+            if row["标题"] != session["title"]:
+                fail(f"课程地图标题不一致：{file_value}「{row['标题']}」≠「{session['title']}」")
+            if AUDIENCE_MAP.get(row["受众"]) != session["audience"]:
+                fail(f"课程地图受众不一致：{file_value}「{row['受众']}」≠「{session['audience']}」")
+            if row["状态"] != session["status"]:
+                fail(f"课程地图状态不一致：{file_value}「{row['状态']}」≠「{session['status']}」")
+            if row["视觉"] not in {"—", "概念图", "截图", "结果图", "对照"}:
+                warn(f"课程地图视觉类型未知：{file_value}「{row['视觉']}」")
+
+    actual_slugs = [topic["slug"] for topic in topics]
+    if listed_slugs != actual_slugs:
+        fail("课程地图专题顺序与 topic.md 的 order 不一致")
+    for topic in topics:
+        for session in topic["sessions"]:
+            session_key = session["file"].relative_to(ROOT).as_posix()
+            if session_key not in sessions:
+                fail(f"课程地图漏掉讲次：{session['file'].relative_to(ROOT)}")
+    covers = {}
+    for session in sessions.values():
+        _, row, source = session
+        for tag in re.split(r"[,，]", row["覆盖点"]):
+            tag = tag.strip()
+            if not tag:
+                continue
+            covers.setdefault(tag, []).append(source)
+    for tag, sources in sorted(covers.items()):
+        if len(sources) > 1:
+            names = "、".join(source["file"].relative_to(ROOT).as_posix() for source in sources)
+            warn(f"重复覆盖点「{tag}」：{names}")
+
+    all_sessions = [session for topic in topics for session in topic["sessions"]]
+    for left, right in itertools.combinations(all_sessions, 2):
+        score = text_similarity(left["title"] + " " + left["summary"], right["title"] + " " + right["summary"])
+        if normalise_text(left["title"]) == normalise_text(right["title"]):
+            warn(f"标题重复：{left['file'].relative_to(ROOT)} 与 {right['file'].relative_to(ROOT)}")
+        elif score >= 0.55:
+            warn(f"标题/摘要相似度 {score:.2f}：{left['file'].relative_to(ROOT)} 与 {right['file'].relative_to(ROOT)}，请人工确认是否重复")
+
+    headings = {}
+    for session in all_sessions:
+        source = session["file"].relative_to(ROOT).as_posix()
+        for heading in re.findall(r"^###\s+(.+?)\s*$", session["body"], re.M):
+            normalized = re.sub(r"^\d+\.\s*", "", heading).strip()
+            if not normalized or normalized in GENERIC_STEPS:
+                continue
+            headings.setdefault(normalized, []).append(source)
+    for heading, sources in sorted(headings.items()):
+        if len(sources) > 1:
+            warn(f"步骤标题重复「{heading}」：{'、'.join(sources)}")
+
+
 def main():
     topics = build.load_topics()
     gallery = build.parse_gallery()
@@ -92,6 +263,7 @@ def main():
 
     for page in pages:
         check_page(page)
+    check_curriculum(topics)
 
     if not (DOCS / ".nojekyll").is_file():
         fail("缺少 docs/.nojekyll")

@@ -10,6 +10,7 @@
 8. 网站由 `site/build.py` 从 `course/topics/` 和 `course/gallery/` 生成；README 只维护专题总览，`docs/` 是生成物。修改课稿、专题或样式后运行 `make build && make check`；不要手改 `docs/`。保留课稿里的快捷键写法（如 `⌘C`）和课页的本节步骤、上一讲/下一讲导航；新增讲必须同时更新 README 专题总览、`skills.md` 和搜索覆盖。
 9. URL 变更直接生效；仓库和 `docs/` 都不保留旧课稿、旧目录、别名文件、重定向页或指向旧路径的过渡结构。
 10. 拾趣是独立栏目，不占专题，内容在 `course/gallery/*.md`，图片放 `assets/gallery/`；页面文案用「拾趣」，技术路径保留 `/gallery/`。公开真人姓名、单位、邮箱或原图前必须获得本人确认；`whiteboard-original.jpeg` 和赵诗雅博士的联系方式已确认公开，是明确例外。
-11. 爸爸的 CAD 工作流只做文件层（DXF）读取、计划式修改和重读校验，**禁止用 GUI 自动化向 AutoCAD 键入命令**。真实 AutoCAD 图纸、图号、位号、修改计划和报告留在本机私有目录（如 `~/CAD-Review/`），不进入仓库、截图或公开网页；审图批注只以「文件路径 + handle」引用。
+11. 课程地图是 `course/curriculum.md`，只做计划索引，不复制正文；新增/修改/删除讲次时同步地图和课稿 frontmatter，`make check` 校验；重复覆盖点、相似标题/摘要和重复步骤标题以提醒方式给出，由人判断是否合并。
+12. 爸爸的 CAD 工作流只做文件层（DXF）读取、计划式修改和重读校验，**禁止用 GUI 自动化向 AutoCAD 键入命令**。真实 AutoCAD 图纸、图号、位号、修改计划和报告留在本机私有目录（如 `~/CAD-Review/`），不进入仓库、截图或公开网页；审图批注只以「文件路径 + handle」引用。
 
 本仓库直接承载爸爸妈妈的公开 HTML 教程网站。根据两人的实际进度维护各自的学习路径。学员页以 `course/topics/` 的 Markdown 为内容源，`docs/` 由构建器生成，发布内容使用可公开的素材和占位信息。编辑前读 workflow.md，涉及站点结构或语言视觉时读 website.md 和 website-style.md。网页反馈涉及内容时回写 Markdown。

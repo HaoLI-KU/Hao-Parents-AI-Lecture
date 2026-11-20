@@ -9,6 +9,7 @@ course/topics/word-to-latex/
 course/topics/cad/
 course/topics/image-generation/
 course/topics/version-control/
+course/curriculum.md             课程地图：逐讲计划、前置、验收和覆盖点
 course/gallery/whiteboard.md     拾趣（不占专题）
 course/archive/audit-01-07.md    历史核查记录
 assets/topics/<slug>/            该专题的图片、示例和工具箱
@@ -32,11 +33,21 @@ docs/                            生成物，GitHub Pages 从这里发布
 - 跨讲引用写相对 Markdown 链接，例如 `[下一讲](02-read-a-drawing.md)`、`[上一专题](../ai/01-models-and-tools.md)`；构建器会改成网页链接。
 - 素材放 `assets/topics/<slug>/`，课稿用 `../../../assets/topics/...` 引用；构建器复制被引用的文件，并给非 HTML 素材加 `download`。
 
+## 课程地图
+
+- `course/curriculum.md` 是计划索引，不是第二份课稿；正文仍然只写在 `course/topics/<slug>/NN-slug.md`。
+- 每个专题一节，每讲一行，记录 `讲 / 文件 / 标题 / 受众 / 状态 / 前置 / 学完能做到 / 产出验收 / 覆盖点 / 视觉`。
+- 新增一讲：先在地图加行，再建课稿；改标题、受众、状态、顺序或验收时，两边一起改。
+- 删除一讲：同时删地图行和课稿，并更新 README 的讲数。
+- 新增专题：建 `topic.md`、在地图加专题段、更新 README 专题总览。
+- `make check` 校验地图和课稿是否一一对应；重复覆盖点、相似标题/摘要、重复步骤标题只提醒，不自动删课。
+- 覆盖点用具体短标签，例如 `cad-dry-run`，不要用「AI」「GitHub」这种泛词。
+
 ## 一讲怎样变成网页
 
 1. **先定小任务**：输入、动手步骤、产出、怎样确认成功。需要 AI 做具体任务时给可直接使用的提示词，写清材料、允许范围、预期结果和亲手核对办法。
 2. **补素材并确认**：只发布实际制作并核对过的图；截图裁掉账号和个人信息；真实图纸和家庭资料留在本机。
-3. **改 frontmatter 和 README**：新增讲更新 README 的专题总览和 `skills.md`；新增专题更新总览表。
+3. **改课程地图、frontmatter 和 README**：先在 `course/curriculum.md` 加/改计划，再改讲次 frontmatter；新增讲更新 README 的专题总览和 `skills.md`，新增专题更新总览表。
 4. **重建**：`make build`。
 5. **检查**：`make check`。链接、锚点、搜索覆盖、快捷键和残留有一项不过就不发布。
 6. **预览**：`make serve`，看首页、专题总览、每个专题、两条路径、课页和搜索；按 1280/1024/500px 和 200% 放大检查，打印一节长课。
@@ -73,6 +84,7 @@ docs/                            生成物，GitHub Pages 从这里发布
 改完课稿、专题、README、website、workflow、teaching、skills 后，人工读一遍：
 
 - 每个专题有 `topic.md`，每讲 frontmatter 齐全，编号唯一；
+- `course/curriculum.md` 覆盖每个专题和每一讲，标题、受众、状态与课稿一致；
 - `README.md` 的专题总览与 `course/topics/` 一致；
 - 课稿里的相对链接和 `assets/topics/` 引用都存在；
 - `skills.md` 的妈妈长期技能完整保留；
