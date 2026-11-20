@@ -1564,6 +1564,13 @@ body.route-both,
 .topic-subtitle { color: var(--ink-soft); margin: 0 0 8px; }
 .topic-summary { color: var(--muted); margin: 0 0 14px; }
 .topic-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.topic-ai {
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
 .chip-optional { color: var(--gold); border-color: var(--line-strong); background: #fbf7ec; }
 
 .path-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }

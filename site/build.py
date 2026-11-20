@@ -111,6 +111,9 @@ def load_topics():
         for field in ("title", "subtitle", "summary", "order"):
             if not meta.get(field):
                 raise SystemExit(f"{topic_file} 缺少 {field}")
+        ai_value = (meta.get("ai") or "").strip()
+        if ai_value not in ("", "practice"):
+            raise SystemExit(f"{topic_file} 的 ai 只能是 practice")
         sessions = []
         for path in sorted(directory.glob("*.md")):
             if path.name == "topic.md":
@@ -150,6 +153,7 @@ def load_topics():
             "summary": meta["summary"],
             "order": int(meta["order"]),
             "optional": meta.get("optional", "false").lower() == "true",
+            "ai_label": "用 AI" if ai_value == "practice" else "",
             "intro": intro,
             "sessions": sessions,
             "audiences": sorted({item["audience"] for item in sessions}),
@@ -658,10 +662,11 @@ def audience_chip(session):
 
 def topic_card(topic, prefix="", href=None):
     optional = '<span class="chip chip-optional">按需</span>' if topic["optional"] else ""
+    ai = f' · <span class="topic-ai">{escape(topic["ai_label"])}</span>' if topic["ai_label"] else ""
     target = href or f"{prefix}{topic_path(topic)}"
     return f'''<a class="topic-card" href="{target}">
 <span class="topic-index" aria-hidden="true">{topic['order']:02d}</span>
-<p class="eyebrow">专题 · {len(topic['sessions'])} 讲 · {topic_audience_label(topic)}</p>
+<p class="eyebrow">专题 · {len(topic['sessions'])} 讲 · {topic_audience_label(topic)}{ai}</p>
 <h2>{escape(topic['title'])}</h2>
 <p class="topic-subtitle">{escape(topic['subtitle'])}</p>
 <p class="topic-summary">{escape(topic['summary'])}</p>
@@ -705,7 +710,7 @@ def topic_page(topic):
     intro = render_body(topic["intro"], 2, "topics", "../../", TOPICS_DIR / topic["slug"] / "topic.md") if topic["intro"] else ""
     body = f'''<section class="hero hero-route route-{topic['audiences'][0] if len(topic['audiences']) == 1 else 'both'}"><div class="wrap">
 <nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><span>{escape(topic['title'])}</span></nav>
-<p class="eyebrow">专题 · {len(topic['sessions'])} 讲 · {topic_audience_label(topic)}</p>
+<p class="eyebrow">专题 · {len(topic['sessions'])} 讲 · {topic_audience_label(topic)}{f' · <span class="topic-ai">{escape(topic["ai_label"])}</span>' if topic["ai_label"] else ""}</p>
 <h1>{escape(topic['title'])}</h1>
 <p class="lead">{escape(topic['subtitle'])}</p>
 <p>{escape(topic['summary'])}</p>
@@ -727,7 +732,7 @@ def path_page(route, topics):
         rows = "".join(session_row(item, "../") for item in items)
         optional = '<span class="chip chip-optional">按需</span>' if topic["optional"] else ""
         sections.append(f'''<section class="wrap lesson-section path-section">
-<div class="section-head"><div class="section-title"><p class="eyebrow">专题 · {len(items)} 讲</p>
+<div class="section-head"><div class="section-title"><p class="eyebrow">专题 · {len(items)} 讲{f' · <span class="topic-ai">{escape(topic["ai_label"])}</span>' if topic["ai_label"] else ""}</p>
 <h2><a href="../{topic_path(topic)}">{escape(topic['title'])}</a></h2><p class="section-intro">{escape(topic['subtitle'])}</p></div><span class="section-note">{optional}</span></div>
 <div class="lesson-list">{rows}</div></section>''')
     total = len({item["slug"] for _, items in groups for item in items})

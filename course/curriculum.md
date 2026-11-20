@@ -39,7 +39,7 @@
 | 03 | topics/mac/03-shortcuts-and-sharing.md | 练快捷键、触控板与家庭共享 | 妈妈 | active | Mac 02 | 能用复制粘贴、截图、窗口操作，并验证家庭共享 | 完成一次截图；共享日历、备忘录或相簿可见 | mac-shortcuts, trackpad, family-sharing | 截图 |
 | 04 | topics/mac/04-meetings-and-mactex.md | 会议预约、微信输入法语音输入与 MacTeX | 妈妈 | active | Mac 03 | 能用微信输入法完成两种语音输入场景，并用 TeXShop 编译中文 PDF | 日历出现会议；场景 A/B 测试成功；中文 PDF 编译成功 | meeting-scheduling, wechat-ime-voice, voice-focus-test, mactex | — |
 
-## 专题：ai｜和 AI 一起做事
+## 专题：ai｜AI 入门与基础
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|

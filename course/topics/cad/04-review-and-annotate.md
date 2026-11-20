@@ -27,7 +27,7 @@ summary: 把 DXF 生成可点选的审图页，按 handle 给具体实体写批�
 4. 点编号热点，看位号、名称、图层、块名和 handle。
 5. 在文本框写批注，点「保存批注」。批注存在本机浏览器里，可「导出批注 JSON」或「复制批注」。
 
-Harness 预览是受限沙箱页面，页面自带的批注可能存不住、下载也可能被拦；要长期保存就在浏览器里打开同一份 HTML。「和 AI 一起做事」第 2 讲装过 HTML 批注插件（Installed plugins 里显示为 HTML Annotations 或 `dsh-annotate-sync`）时，也可以在预览里用「点选批注」浮层，以本机实际显示为准。
+Harness 预览是受限沙箱页面，页面自带的批注可能存不住、下载也可能被拦；要长期保存就在浏览器里打开同一份 HTML。「AI 入门与基础」第 2 讲装过 HTML 批注插件（Installed plugins 里显示为 HTML Annotations 或 `dsh-annotate-sync`）时，也可以在预览里用「点选批注」浮层，以本机实际显示为准。
 
 ### 3. 批注要挂在实体上
 

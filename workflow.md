@@ -26,7 +26,7 @@ docs/                            生成物，GitHub Pages 从这里发布
 
 ## 专题和讲次
 
-- 一个专题一个文件夹，英文 slug；`topic.md` 写 `title`、`subtitle`、`summary`、`order`，需要时加 `optional: true`（页面显示「按需」）。
+- 一个专题一个文件夹，英文 slug；`topic.md` 写 `title`、`subtitle`、`summary`、`order`，需要时加 `optional: true`（页面显示「按需」）或 `ai: practice`（专题卡显示「用 AI」）。
 - 讲次写在同一文件夹，文件名 `NN-slug.md`；frontmatter 必填 `title`、`audience`（`dad|mom|both`）、`status`（`active|followup|draft`）、`summary`。
 - 编号只决定顺序，不写进 URL 之外的展示；页面显示「第 N 讲」，不再出现 Lesson。
 - 正文从介绍段开始，`### 1. …` 是步骤；步骤会生成本节目录和搜索条目。

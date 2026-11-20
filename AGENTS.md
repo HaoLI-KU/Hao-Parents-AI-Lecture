@@ -2,7 +2,7 @@
 
 1. 先读 README.md 和 teaching.md，理解课程受众、节奏和机器起点。
 2. 内容只按专题组织：`course/topics/<英文slug>/topic.md` 定义专题，`NN-slug.md` 定义讲次。新增专题建新文件夹和 `topic.md`；给已有专题加内容就继续加 `NN-slug.md`。不要重建 `course/lessons/`、`course/practices/` 或其它与 topics 平级的课程目录。
-3. 每讲 frontmatter 必填 `title`、`audience`（`dad|mom|both`）、`status`（`active|followup|draft`）、`summary`；`topic.md` 必填 `title`、`subtitle`、`summary`、`order`、可选 `optional`。讲次编号在同一专题内唯一，顺序按文件名前缀。
+3. 每讲 frontmatter 必填 `title`、`audience`（`dad|mom|both`）、`status`（`active|followup|draft`）、`summary`；`topic.md` 必填 `title`、`subtitle`、`summary`、`order`，可选 `optional` 和 `ai: practice`（专题卡显示「用 AI」）。讲次编号在同一专题内唯一，顺序按文件名前缀。
 4. 新增或修改内容、制作或更新网页前，都读 website.md 和 website-style.md。按具体教学需要决定是否配图；未制作的图片构想不要写进学员课稿。需要指认界面操作时优先考虑可公开、已遮去个人信息的真实截图。操作步骤需要外部入口时，加入并验证官方直达链接。
 5. 示例用虚构或明确可分享的素材。仓库只放教学资料，真实家庭媒体、技术档案、密钥和账号资料留在本地私有目录。
 6. 工具或版本尚未确认时写明现场验证条件，保留低门槛替代流程。修订后检查相对链接和每条路线的任务是否明确。

@@ -9,10 +9,10 @@
 | 专题 | 讲什么 | 讲数 | 谁 |
 |---|---|---|---|
 | [把 Mac 用顺](course/topics/mac/topic.md) | Mac 基础与家庭协作 | 4 | 妈妈 |
-| [和 AI 一起做事](course/topics/ai/topic.md) | 从提问到 DeepSeek Harness | 3 | 共同 |
-| [把技术文档做成书](course/topics/word-to-latex/topic.md) | 从 Word 到可维护的中文 LaTeX | 6 | 爸爸 |
-| [和图纸对话](course/topics/cad/topic.md) | AutoCAD 工艺流程图：精确读取与修改 | 6 | 爸爸 |
-| [把想法画出来](course/topics/image-generation/topic.md) | 图片生成与改图（按需） | 2 | 共同 |
+| [AI 入门与基础](course/topics/ai/topic.md) | 从提问到 DeepSeek Harness | 3 | 共同 |
+| [把技术文档做成书](course/topics/word-to-latex/topic.md) | 从 Word 到可维护的中文 LaTeX（用 AI） | 6 | 爸爸 |
+| [和图纸对话](course/topics/cad/topic.md) | AutoCAD 工艺流程图：精确读取与修改（用 AI） | 6 | 爸爸 |
+| [把想法画出来](course/topics/image-generation/topic.md) | 图片生成与改图（用 AI，按需） | 2 | 共同 |
 | [版本管理与协作](course/topics/version-control/topic.md) | 用 GitHub 管好文件和改动（按需） | 1 | 共同 |
 
 学习路径：爸爸 15 讲（AI 3 + LaTeX 6 + 图纸 6），妈妈 7 讲（Mac 4 + AI 3）；另有生图 2 讲和版本管理 1 讲两个按需专题，两边都可以随时插入。

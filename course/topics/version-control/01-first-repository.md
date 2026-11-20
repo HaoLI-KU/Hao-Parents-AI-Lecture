@@ -26,7 +26,7 @@ summary: 注册账号、建私有仓库，用 Harness 克隆、提交、推送�
 
 ### 3. 认三个词，让 Harness 帮忙执行
 
-本节默认已经装好 DeepSeek Harness（先完成「和 AI 一起做事」第 2 讲）。
+本节默认已经装好 DeepSeek Harness（先完成「AI 入门与基础」第 2 讲）。
 
 - **clone（克隆）**：把 GitHub 仓库复制到电脑，得到可以编辑的本地项目。
 - **commit（提交）**：在本地保存一份带说明的版本记录。
