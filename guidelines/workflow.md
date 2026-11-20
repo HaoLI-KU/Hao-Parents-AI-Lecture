@@ -1,6 +1,6 @@
 # 课程和网站怎么维护
 
-这是你和协作工具共用的维护说明。审课时可直接打开对应课稿，新增专题、加讲或补素材时再查这里。
+这是你和协作工具共用的维护说明。审课时可直接打开对应课稿，新增专题、加讲或补素材时再查这里。本文件里的路径都相对仓库根目录。
 
 ```text
 course/topics/mac/               专题：topic.md + 01-….md
@@ -47,7 +47,7 @@ docs/                            生成物，GitHub Pages 从这里发布
 
 1. **先定小任务**：输入、动手步骤、产出、怎样确认成功。需要 AI 做具体任务时给可直接使用的提示词，写清材料、允许范围、预期结果和亲手核对办法。
 2. **补素材并确认**：只发布实际制作并核对过的图；截图裁掉账号和个人信息；真实图纸和家庭资料留在本机。
-3. **改课程地图、frontmatter 和 README**：先在 `course/curriculum.md` 加/改计划，再改讲次 frontmatter；新增讲更新 README 的专题总览和 `skills.md`，新增专题更新总览表。
+3. **改课程地图、frontmatter 和 README**：先在 `course/curriculum.md` 加/改计划，再改讲次 frontmatter；新增讲更新 README 的专题总览和 `guidelines/skills.md`，新增专题更新总览表。
 4. **重建**：`make build`。
 5. **检查**：`make check`。链接、锚点、搜索覆盖、快捷键和残留有一项不过就不发布。
 6. **预览**：`make serve`，看首页、专题总览、每个专题、两条路径、课页和搜索；按 1280/1024/500px 和 200% 放大检查，打印一节长课。
@@ -105,10 +105,10 @@ docs/                            生成物，GitHub Pages 从这里发布
 - `course/curriculum.md` 覆盖每个专题和每一讲，标题、受众、状态与课稿一致；
 - `README.md` 的专题总览与 `course/topics/` 一致；
 - 课稿里的相对链接和 `assets/topics/` 引用都存在；
-- `skills.md` 的妈妈长期技能完整保留；
+- `guidelines/skills.md` 的妈妈长期技能完整保留；
 - 没有 `course/lessons/`、`course/practices/` 或旧课稿残留；
 - 真实图纸、位数和审图批注没有进入仓库。
 
 做网页批注时，从右侧 Files 面板直接打开对应的 `.html` 课页（例如 `docs/topics/mac/01-new-mac.html`）；批注按文件保存，改完发送给 Agent。
 
-从[第一个专题](course/topics/mac/topic.md)开始。语言、颜色、字体和打印规则见[网站语言与视觉规范](website-style.md)。
+从[第一个专题](../course/topics/mac/topic.md)开始。语言、颜色、字体和打印规则见[网站语言与视觉规范](website-style.md)。

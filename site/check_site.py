@@ -375,7 +375,7 @@ def main():
                 text = path.read_text(encoding="utf-8")
                 if any(word in text for word in ("养花小站", "我的养花笔记", "plant-notes", "plants.json")):
                     fail(f"仍残留养花草稿：{path.relative_to(ROOT)}")
-    for name in ("README.md", "website.md", "workflow.md", "teaching.md"):
+    for name in ("README.md", "guidelines/website.md", "guidelines/workflow.md", "guidelines/teaching.md"):
         text = (ROOT / name).read_text(encoding="utf-8")
         if any(word in text for word in ("养花小站", "我的养花笔记", "plant-notes", "plants.json")):
             fail(f"规则文件仍残留养花草稿：{name}")

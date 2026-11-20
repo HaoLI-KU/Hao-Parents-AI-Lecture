@@ -12,7 +12,7 @@
 
 CAD 材料在 `topics/cad/`：`toolkit/` 是代码流工具箱（读取、修改计划、重读校验、审图页），`examples/` 是**虚构**的「糖浆配制」示例 DXF、示例计划、修改报告和审图页。真实 AutoCAD 图纸、图号、位号和审图批注一律留在本机私有目录，不进入这个仓库。
 
-首页 Hero 的线稿水印来自本人提供的白板画，整理版是 `assets/site/whiteboard-lineart.svg`，只保留人物线稿和阴阳符号；透明度、尺寸和响应式用法见 `website-style.md`。
+首页 Hero 的线稿水印来自本人提供的白板画，整理版是 `assets/site/whiteboard-lineart.svg`，只保留人物线稿和阴阳符号；透明度、尺寸和响应式用法见 `../guidelines/website-style.md`。
 
 拾趣的公开图片放在 `gallery/`：
 

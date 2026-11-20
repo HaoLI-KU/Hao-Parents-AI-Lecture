@@ -2,6 +2,8 @@
 
 网站是公开的静态站点，发布在 GitHub Pages 的 `/docs` 目录。页面由 `site/build.py` 从 `course/topics/` 的 Markdown 和 `course/gallery/` 生成；README 只维护专题总览，不要手改 `docs/`。
 
+本文件里的路径都相对仓库根目录。
+
 ## 站点结构
 
 ```text
@@ -51,7 +53,7 @@
 
 - 课稿、专题和练习素材放 `course/topics/`；图片、示例和工具放 `assets/topics/<slug>/`；构建器只复制被引用的素材。
 - `course/curriculum.md` 是仓库内的课程地图和计划索引，暂不生成公开页面；不要把它当成第二份课稿。
-- 图片分类、数量、截图隐私、AI 图署名和图注规范见 `website-style.md`；素材路径和命名见 `assets/README.md`。
+- 图片分类、数量、截图隐私、AI 图署名和图注规范见 `website-style.md`；素材路径和命名见 `../assets/README.md`。
 - 拾趣图片放 `assets/gallery/`。
 - 真实 AutoCAD 图纸、图号、位号和审图批注留在本机 `~/CAD-Review/`，不进入 `assets/`、`docs/` 或截图。公开 CAD 示例只用虚构的「糖浆配制」图纸。
 - 外部链接写清用途；发布前打开核对域名、页面用途和是否需要登录。

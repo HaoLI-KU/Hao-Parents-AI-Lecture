@@ -2,7 +2,7 @@
 
 **[打开公开课程网站](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/)** · [专题总览](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/) · [爸爸的学习路径](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/dad/) · [妈妈的学习路径](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/mom/)
 
-网站通过 GitHub Pages 发布，全站可搜索课名、步骤、正文和拾趣。课程正文按**专题**维护在 `course/topics/<英文slug>/`，网页由课稿生成。结构与规则见[工作流程](workflow.md)和[网站设计](website.md)。
+网站通过 GitHub Pages 发布，全站可搜索课名、步骤、正文和拾趣。课程正文按**专题**维护在 `course/topics/<英文slug>/`，网页由课稿生成。结构与规则见[维护指南](guidelines/README.md)：[工作流程](guidelines/workflow.md)和[网站设计](guidelines/website.md)。
 
 ## 专题
 
@@ -28,9 +28,9 @@
 
 课程之外的小作品、画和家里好玩的东西。第一件是[办公室白板上的画](course/gallery/whiteboard.md)：原画由**我的妻子赵诗雅博士**手绘，整理版线稿由 **ChatGPT** 生成；页面可以点击切换原图和线稿。
 
-备课可参照[家庭带练方式](teaching.md)和[长期技能地图](skills.md)。[AGENTS.md](AGENTS.md)与 [CLAUDE.md](CLAUDE.md)供后续维护使用。
+备课可参照[家庭带练方式](guidelines/teaching.md)和[长期技能地图](guidelines/skills.md)；维护文档都在 [guidelines/](guidelines/README.md)。[AGENTS.md](AGENTS.md)与 [CLAUDE.md](CLAUDE.md)供后续维护使用。
 
-从[第一个专题](course/topics/mac/topic.md)或[专题总览](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/)开始。目录、素材和迭代步骤见[工作流程](workflow.md)，简体中文、British English 和视觉规则见[网站语言与视觉规范](website-style.md)。
+从[第一个专题](course/topics/mac/topic.md)或[专题总览](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/)开始。目录、素材和迭代步骤见[工作流程](guidelines/workflow.md)，简体中文、British English 和视觉规则见[网站语言与视觉规范](guidelines/website-style.md)。
 
 [首版课稿核查记录（历史）](course/archive/audit-01-07.md)
 

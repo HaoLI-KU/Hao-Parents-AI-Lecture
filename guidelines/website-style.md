@@ -2,6 +2,8 @@
 
 状态：现行规范（2026-11）。视觉方向参考 [Hao Li 的公开简历站点](https://haoli-ku.github.io/Hao-Li-public-resume/)，只借设计语言，不复制其内容、照片、论文列表或检索工具栏。
 
+本文件里的路径都相对仓库根目录。
+
 ## 语言与写法
 
 - 中文一律用简体中文，页面语言设为 `zh-CN`。保留 macOS、Finder、iCloud、Codex、DeepSeek、Harness 和 LaTeX 等正式名称。
