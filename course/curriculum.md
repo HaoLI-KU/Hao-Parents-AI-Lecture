@@ -82,6 +82,14 @@
 |---|---|---|---|---|---|---|---|---|---|
 | 01 | topics/version-control/01-first-repository.md | 第一次把文件放进 GitHub 仓库 | 共同 | active | AI 02 | 能注册账号、建私有仓库，并完成 clone、commit、push | 私有仓库；提交记录；本机文件 | github-account, private-repo, clone-commit-push | 概念图 ×2 |
 
+## 专题：trip-planning｜把一次出门安排明白
+
+| 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | topics/trip-planning/01-plan-the-shape.md | 先说清条件，选一条路线 | 共同 | active | AI 02 | 能把日期、出发地、想做的事和节奏说清，拿到两条可比较的一日路线并选定 | 一张条件卡；选定的路线骨架和三条理由 | trip-intake, route-skeleton, stop-verification | 概念图 |
+| 02 | topics/trip-planning/02-verify-the-day.md | 排到小时，再逐项核对 | 共同 | active | 行程 01 | 能把骨架排成小时级时间线，分清估算与已核实，核对开放、预约、订位和关键换乘 | 逐小时时间线；核对表；雨天与晚点预案 | hop-check, itinerary-timeline, rain-plan | 结果图 |
+| 03 | topics/trip-planning/03-make-it-a-page.md | 做成网页，留住三样东西 | 共同 | active | 行程 02 | 能选风格生成行程网页，保存网页、离线地图和日历提醒并复盘 | 网页；KML；ICS；三条复盘 | theme-render, kml-ics, trip-retro | 结果图 |
+
 ## 待安排
 
 - 配图阶段：按每行 `视觉` 列逐讲补图；第一轮试点已完成：图片生成第 2 讲（3 张效果图）和版本管理第 1 讲（2 张 Git 示意图）。

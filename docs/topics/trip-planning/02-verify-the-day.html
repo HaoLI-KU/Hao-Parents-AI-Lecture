@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/trip-planning/" data-page-path="topics/trip-planning/02-verify-the-day.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>排到小时，再逐项核对 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="把选定的路线排成逐小时行程，分清估算和已核实，核对开放时间、预约、订位和关键换乘。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/trip-planning/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=60b0a0a17e">
+</head>
+<body class="page-session route-both">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-both"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把一次出门安排明白</a><span aria-hidden="true">/</span><span>第 2 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 把一次出门安排明白 · 第 2 讲 · 共同</p>
+<h1>排到小时，再逐项核对</h1>
+<p class="lesson-summary">把选定的路线排成逐小时行程，分清估算和已核实，核对开放时间、预约、订位和关键换乘。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>让它排到小时</span></a><a href="#step-2"><span class="toc-num">02</span><span>分清「估算」和「已核实」</span></a><a href="#step-3"><span class="toc-num">03</span><span>点开链接核对关键换乘</span></a><a href="#step-4"><span class="toc-num">04</span><span>核对开放时间、预约和订位</span></a><a href="#step-5"><span class="toc-num">05</span><span>写雨天备选和「晚了砍哪段」</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>骨架只说明先后顺序，还不说明几点出门、每段要多久。这一讲把它排到小时，并且把「估算」和「已核实」分开写。案例排完是 09:20 在中山公园站集合、20:00 回到中山公园站的一天。</p>
+<h2 id="step-1">1. 让它排到小时</h2>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">就按方案 A 继续。请把这一天排到小时：写清每段交通、停留时长、吃饭时间、缓冲，标出哪些是估算、哪些已经核实。
+我们坐地铁，不赶时间；午饭想在 12:50 左右，晚饭 18:00，两餐都会提前订位。
+请同时给出步行总里程和每段用时，并说明哪几段需要我自己点开地图核对。
+不要替我下单或订位；查不到的信息写「出发前再查」。
+</code></pre></div>
+<p>拿到时间线后先看三件事：每段之间有没有缓冲、温室和吃饭的时段对不对、最后一班地铁之前能不能回到起点。案例里每段交通后面都留了 5–10 分钟，滨江散步标成「可跳过」。</p>
+<h2 id="step-2">2. 分清「估算」和「已核实」</h2>
+<p>同一张时间表里，数字的可信程度不一样。案例里是这样标的：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>案例里的数字</th>
+<th>性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>温室开放时间</td>
+<td>09:00–21:00，20:30 停止入园，周一闭馆</td>
+<td>已核实（2026-11-20，出发前一周再看公告）</td>
+</tr>
+<tr>
+<td>温室门票</td>
+<td>周末票 ¥128，官方小程序预约</td>
+<td>已核实票价，当天余票另看</td>
+</tr>
+<tr>
+<td>地铁 中山公园→后滩</td>
+<td>约 35 分</td>
+<td>估算，点链接核对</td>
+</tr>
+<tr>
+<td>地铁 后滩→娄山关路</td>
+<td>约 40 分</td>
+<td>估算，点链接核对</td>
+</tr>
+<tr>
+<td>园外步行</td>
+<td>直线合计约 5.2 km，按街道约 6.8 km</td>
+<td>估算</td>
+</tr>
+<tr>
+<td>鮨贯晚市</td>
+<td>17:30–22:00</td>
+<td>已核实，订位时再确认</td>
+</tr>
+</tbody>
+</table></div>
+<p>走路里程最容易低估：坐标算的是直线，真实街道会多两到三成。案例按街道算是 6.8 km，比条件卡里的 6 km 略多，所以把滨江那 55 分钟留成随时可砍的一段。</p>
+<figure>
+<img src="../../assets/topics/trip-planning/screenshots/02-day-timeline.png" alt="案例页里一天的时间线：每行左侧是时间，中间是交通或停留，步行和地铁行右侧有地图链接图标" width="1440" height="1190" loading="lazy">
+<figcaption>案例页里的一天：交通、停留和缓冲在同一张时间线上，每一段旁边的箭头能打开地图。实际操作结果截图。</figcaption>
+</figure>
+
+<h2 id="step-3">3. 点开链接核对关键换乘</h2>
+<p>不用每段都点，但载重的那几段一定要看。案例里点开核对的是这三段：</p>
+<ol>
+<li><strong>中山公园 → 后滩</strong>：2 号线到静安寺换 7 号线。静安寺换乘通道比较长，留 8–10 分钟，别按「同站台换乘」算。</li>
+<li><strong>后滩 → 娄山关路</strong>：7 号线回静安寺换 2 号线，和上午方向相反，注意别坐过站；出站后按打车点的定位上车。</li>
+<li><strong>娄山关路 → 黄金城道</strong>：2.2 公里，案例改成打车，12 分钟左右；打不到车就走到延安西路坐公交，或者直接砍掉咖啡。</li>
+</ol>
+<p>看链接时顺便确认出口编号和打车上下车点。地图上的「预计时间」也分驾车、公交、步行，别把驾车时间当成地铁时间。</p>
+<h2 id="step-4">4. 核对开放时间、预约和订位</h2>
+<ul>
+<li><strong>温室</strong>：周一闭馆，周末 20:30 停止入园。在微信「上海世博文化公园」小程序买周末票并预约，二维码截图存相册；60 岁以上有没有优惠以小程序当天规则为准。</li>
+<li><strong>两餐</strong>：江南晓宴午市 11:00–14:00，订 12:50；鮨贯晚市 17:30–22:00，订 18:00。订位时顺口问一句当天是否营业。</li>
+<li><strong>咖啡</strong>：Floane Cafe 约 08:30–18:00，下午去，周末座位紧，先到先坐。</li>
+<li><strong>天气</strong>：出发前一周看<a href="http://www.nmc.cn/" target="_blank" rel="noopener">中央气象台</a>的预报和预警；12 月下旬上海日落约 17:00，户外段尽量排在 16:30 前。</li>
+</ul>
+<h2 id="step-5">5. 写雨天备选和「晚了砍哪段」</h2>
+<p>出门前一定会有变化，先写好两句，到时候不用现场商量：</p>
+<ul>
+<li><strong>雨天</strong>：温室出来直接吃午饭，滨江改成温室游客中心的咖啡区休息，提前去古北，黄金城道只走到咖啡店。</li>
+<li><strong>晚了</strong>：整体晚 40 分钟以上，砍掉滨江散步，从餐厅直接回后滩站。</li>
+</ul>
+<p>案例页把这两句放在一天右侧的小卡片里，出门前扫一眼就能找到。</p>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">时间线排到了小时，每段交通后面有缓冲。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">每个数字都标了「已核实」「估算」或「出发前再查」。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">点开核对过三段关键换乘，知道出口和换乘通道要走多久。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">温室门票和两餐都已预约或订位，二维码和订位记录存好。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">写好了雨天备选和「晚了砍哪段」。</span></li>
+</ul></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<a class="pager-link" href="01-plan-the-shape.html"><span class="pager-label">上一讲</span><span class="pager-title">第 1 讲 · 先说清条件，选一条路线</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把一次出门安排明白</span></a>
+<a class="pager-link" href="03-make-it-a-page.html"><span class="pager-label">下一讲</span><span class="pager-title">第 3 讲 · 做成网页，留住三样东西</span></a>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/trip-planning/02-verify-the-day.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=60b0a0a17e"></script>
+</body>
+</html>

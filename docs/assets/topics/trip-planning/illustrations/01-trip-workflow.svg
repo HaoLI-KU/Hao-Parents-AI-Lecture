@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 380" role="img" aria-labelledby="title desc">
+<title id="title">一次一日行程要走的五步</title>
+<desc id="desc">先说清条件和想要的节奏，比较两条路线骨架并选一条，把行程排到小时，逐项核对开放时间、订位和换乘，最后做成网页并保存地图和日历文件。</desc>
+<rect width="840" height="380" fill="#f7f6f2"/>
+<g font-family="system-ui, 'PingFang SC', 'Hiragino Sans GB', sans-serif" fill="#16201e">
+  <text x="40" y="40" font-size="22" font-weight="700">先把条件说清，再让插件动手</text>
+  <text x="40" y="66" font-size="16" fill="#46514e">五步都可以回头改：改了日期或地点，重跑检查再生成页面。</text>
+
+  <g>
+    <rect x="40" y="104" width="140" height="152" rx="14" fill="#ffffff" stroke="#cfccc1"/>
+    <rect x="40" y="104" width="140" height="4" rx="2" fill="#0a6b60"/>
+    <text x="60" y="138" font-size="13" fill="#626d6a" font-family="ui-monospace, 'SF Mono', Menlo, monospace">01</text>
+    <text x="60" y="170" font-size="19" font-weight="700">说清条件</text>
+    <text x="60" y="200" font-size="13.5" fill="#46514e">日期 · 同行人</text>
+    <text x="60" y="221" font-size="13" fill="#46514e">想看的、不想做的</text>
+  </g>
+
+  <g>
+    <rect x="200" y="104" width="140" height="152" rx="14" fill="#ffffff" stroke="#cfccc1"/>
+    <rect x="200" y="104" width="140" height="4" rx="2" fill="#0a6b60"/>
+    <text x="220" y="138" font-size="13" fill="#626d6a" font-family="ui-monospace, 'SF Mono', Menlo, monospace">02</text>
+    <text x="220" y="170" font-size="19" font-weight="700">比较骨架</text>
+    <text x="220" y="200" font-size="13.5" fill="#46514e">两条路线里选一条</text>
+    <text x="220" y="221" font-size="13" fill="#46514e">看顺序与换乘</text>
+  </g>
+
+  <g>
+    <rect x="360" y="104" width="140" height="152" rx="14" fill="#e4f1ee" stroke="#cfccc1"/>
+    <rect x="360" y="104" width="140" height="4" rx="2" fill="#0a6b60"/>
+    <text x="380" y="138" font-size="13" fill="#626d6a" font-family="ui-monospace, 'SF Mono', Menlo, monospace">03</text>
+    <text x="380" y="170" font-size="19" font-weight="700">排到小时</text>
+    <text x="380" y="200" font-size="13" fill="#46514e">交通、停留、吃饭</text>
+    <text x="380" y="221" font-size="13" fill="#46514e">每段留出缓冲</text>
+  </g>
+
+  <g>
+    <rect x="520" y="104" width="140" height="152" rx="14" fill="#ffffff" stroke="#cfccc1"/>
+    <rect x="520" y="104" width="140" height="4" rx="2" fill="#0a6b60"/>
+    <text x="540" y="138" font-size="13" fill="#626d6a" font-family="ui-monospace, 'SF Mono', Menlo, monospace">04</text>
+    <text x="540" y="170" font-size="19" font-weight="700">逐项核对</text>
+    <text x="540" y="200" font-size="13" fill="#46514e">开放时间 · 订位</text>
+    <text x="540" y="221" font-size="13" fill="#46514e">点开链接核对</text>
+  </g>
+
+  <g>
+    <rect x="680" y="104" width="140" height="152" rx="14" fill="#ffffff" stroke="#cfccc1"/>
+    <rect x="680" y="104" width="140" height="4" rx="2" fill="#0a6b60"/>
+    <text x="700" y="138" font-size="13" fill="#626d6a" font-family="ui-monospace, 'SF Mono', Menlo, monospace">05</text>
+    <text x="700" y="170" font-size="19" font-weight="700">做成网页</text>
+    <text x="700" y="200" font-size="13" fill="#46514e">选风格、打开检查</text>
+    <text x="700" y="221" font-size="13" fill="#46514e">存网页与地图</text>
+  </g>
+
+  <g stroke="#0a6b60" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M180 180h14m-6-5 6 5-6 5"/>
+    <path d="M340 180h14m-6-5 6 5-6 5"/>
+    <path d="M500 180h14m-6-5 6 5-6 5"/>
+    <path d="M660 180h14m-6-5 6 5-6 5"/>
+  </g>
+
+  <rect x="40" y="292" width="780" height="52" rx="12" fill="#e4f1ee"/>
+  <text x="64" y="323" font-size="15" fill="#06443e">案例：2026-12-26 上海一日 · 温室花园、后滩滨江与古北，两个人从中山公园站出发。</text>
+</g>
+</svg>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/trip-planning/" data-page-path="topics/trip-planning/03-make-it-a-page.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>做成网页，留住三样东西 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="选一种页面风格生成行程网页，检查后保存网页、离线地图和日历提醒，并做三条复盘。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/trip-planning/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=60b0a0a17e">
+</head>
+<body class="page-session route-both">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-both"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">把一次出门安排明白</a><span aria-hidden="true">/</span><span>第 3 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 把一次出门安排明白 · 第 3 讲 · 共同</p>
+<h1>做成网页，留住三样东西</h1>
+<p class="lesson-summary">选一种页面风格生成行程网页，检查后保存网页、离线地图和日历提醒，并做三条复盘。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>挑一种页面风格</span></a><a href="#step-2"><span class="toc-num">02</span><span>生成并检查</span></a><a href="#step-3"><span class="toc-num">03</span><span>存三样东西</span></a><a href="#step-4"><span class="toc-num">04</span><span>放回仓库或自己的目录</span></a><a href="#step-5"><span class="toc-num">05</span><span>三条复盘</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>行程核对完，就可以做成网页。网页是给家人看的：出门前在手机上看一眼，知道几点出门、下一段怎么走。做好后还要把日期和地点相关的三样文件留住，别只留一张截图。</p>
+<h2 id="step-1">1. 挑一种页面风格</h2>
+<p>插件提供几种页面风格，比如插画、手账、闪屏。它们的区别只在版式和配色，行程内容不变。案例选了插画风格，因为字大、一天的分段清楚，在手机上发给家人也好读。</p>
+<p>一次只做一种。做完打开看过，觉得不合适再换，不要一次做成好几版。</p>
+<h2 id="step-2">2. 生成并检查</h2>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">请把这份行程做成网页，用插画风格，中文。
+页面里要有：封面、一天的时间线、每段地图链接、行前清单和雨天备选。
+生成后告诉我文件在哪里，并一起给我离线地图（KML）和日历提醒（ICS）。
+做好后先自己检查一遍有没有空白、占位文字或打不开的链接，再让我打开看。
+</code></pre></div>
+<p>打开页面后按这个顺序看：</p>
+<ol>
+<li><strong>封面</strong>：日期、起点、路线能不能一眼读完。</li>
+<li><strong>一天</strong>：每段的时间和交通对不对，点两三个地图链接，看是否落在正确的地点。</li>
+<li><strong>附录</strong>：行前清单、订位记录、预算在不在。</li>
+<li><strong>手机</strong>：用手机宽度再看一遍，字有没有被切掉，按钮能不能点。</li>
+</ol>
+<p>页面右上角有〔生成长图〕，可以把整卷行程存成一张图发到家庭群；某一天也能单独存。</p>
+<figure>
+<img src="../../assets/topics/trip-planning/screenshots/03-trip-page-cover.jpg" alt="案例页封面：深色标题「一室春」，下面是日期、英文标题和「温室 · 滨江 · 古北」的路线说明，背景是黄昏城市天际线" width="1440" height="900" loading="lazy">
+<figcaption>案例页的封面：日期、标题和路线一行读完。实际操作结果截图。</figcaption>
+</figure>
+
+<h2 id="step-3">3. 存三样东西</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+<th>怎么用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网页（<code>.html</code>）</td>
+<td>发给家人，手机浏览器直接打开</td>
+<td>单独一个文件，不依赖网络；也可以先存成长图</td>
+</tr>
+<tr>
+<td>离线地图（<code>.kml</code>）</td>
+<td>把当天所有点导入地图 App</td>
+<td>高德、百度或 Organic Maps 导入收藏点，景区信号差时备用</td>
+</tr>
+<tr>
+<td>日历提醒（<code>.ics</code>）</td>
+<td>预约、订位、出发前复核</td>
+<td>双击导入日历，提醒会按日期出现</td>
+</tr>
+</tbody>
+</table></div>
+<p>案例的三样文件都在这里：</p>
+<ul>
+<li><a href="../../assets/topics/trip-planning/examples/shanghai-2026-12-26/trip-illustrated.html">打开案例网页</a></li>
+<li><a href="../../assets/topics/trip-planning/examples/shanghai-2026-12-26/plan.geo.json" download>下载行程计划（JSON）</a></li>
+<li><a href="../../assets/topics/trip-planning/examples/shanghai-2026-12-26/trip.kml" download>下载离线地图（KML）</a></li>
+<li><a href="../../assets/topics/trip-planning/examples/shanghai-2026-12-26/gates.ics" download>下载日历提醒（ICS）</a></li>
+</ul>
+<h2 id="step-4">4. 放回仓库或自己的目录</h2>
+<p>课程里的案例放在 <code>assets/topics/trip-planning/examples/</code>，谁都能打开看。自己的真实行程不一样：里面有出发时间、常去的地方和订位记录，放在本机一个固定文件夹里就好，不推到公开仓库。</p>
+<p>要长期保留时，一个日期一个文件夹，把网页、地图、日历和计划文件放在一起。下次改行程只改计划文件，再重新生成网页和地图，别在网页上手改。</p>
+<h2 id="step-5">5. 三条复盘</h2>
+<p>做完当天就能写，三句话够了：</p>
+<ol>
+<li><strong>哪里估错了</strong>：案例初稿估 5.4 km，按真实街道算是 6.8 km，所以把黄金城道那 2.2 公里改成了打车。</li>
+<li><strong>出发前还要再查什么</strong>：温室当天有没有临时闭馆、两家餐厅是否营业、地铁有没有调整。</li>
+<li><strong>下次少问什么</strong>：这次已经把「从中山公园站出发、两餐要订位、走路不超过 6 公里」写进条件卡，下次直接复用。</li>
+</ol>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">生成了一种风格的网页，并打开检查过封面、一天和附录。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">在手机上又看了一遍，字没有被切掉。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">网页、KML 和 ICS 三样都保存好了。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">真实行程放在本机目录，没有推到公开仓库。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">写下了三条复盘。</span></li>
+</ul></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<a class="pager-link" href="02-verify-the-day.html"><span class="pager-label">上一讲</span><span class="pager-title">第 2 讲 · 排到小时，再逐项核对</span></a>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回把一次出门安排明白</span></a>
+<span class="pager-link is-empty" aria-hidden="true"></span>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/trip-planning/03-make-it-a-page.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=60b0a0a17e"></script>
+</body>
+</html>
