@@ -34,6 +34,15 @@
 
 [首版课稿核查记录（历史）](course/archive/audit-01-07.md)
 
+## 许可与引用
+
+- **代码**（`site/`、`assets/topics/cad/toolkit/` 等）：[MIT](LICENSE)。
+- **课程文字、原创插图和站点文案**：[CC BY 4.0](LICENSE-CONTENT.md)。转载或改编请署名并链接回本仓库。
+- **第三方素材**（字体、行程插件示例、白板原图和 AI 生成图）：按各自条款，见 [THIRD-PARTY.md](THIRD-PARTY.md)。
+- **引用格式**：[CITATION.cff](CITATION.cff)；GitHub 仓库页的 "Cite this repository" 会读取它。
+
+建议署名：Hao Li，《爸妈的 Mac 与 AI 课》，<https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture>，CC BY 4.0。
+
 ## 本地预览与发布
 
 页面由 `site/build.py` 从 `course/topics/` 和 `course/gallery/` 生成；README 只维护专题总览，`docs/` 是生成物，不要手改。首次使用时安装依赖：

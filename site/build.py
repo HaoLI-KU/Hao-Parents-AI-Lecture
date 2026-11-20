@@ -280,7 +280,7 @@ def write_page(path, title, description, body, active, route=None,
 <footer class="site-footer"><div class="wrap footer-inner">
 <div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>{SITE_FULL}</strong><small>{SITE_TAGLINE}</small></span></div>
 <nav class="footer-nav" aria-label="页脚导航">{footer_nav}</nav>
-<p class="footer-copy" lang="en-GB">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · All rights reserved.</p>
+<p class="footer-copy" lang="zh-CN">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · 内容 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · 代码 <a href="https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 </div></footer>
 {script_tags}
 </body>

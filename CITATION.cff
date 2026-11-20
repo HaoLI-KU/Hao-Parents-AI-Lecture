@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this course, please cite it as below."
+type: generic
+title: "爸妈的 Mac 与 AI 课"
+abstract: "A public family course on macOS, AI tools, LaTeX, CAD drawing review, image generation and trip planning."
+authors:
+  - family-names: "Li"
+    given-names: "Hao"
+    email: "hli@sdu.dk"
+repository-code: "https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture"
+url: "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/"
+license: MIT
+license-url: "https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture/blob/main/LICENSE"
+date-released: "2026-11-20"
+notes: "Course text and original images are licensed under CC BY 4.0; code is MIT. See LICENSE-CONTENT.md and THIRD-PARTY.md."
