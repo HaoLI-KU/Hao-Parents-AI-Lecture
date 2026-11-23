@@ -92,7 +92,7 @@ make clean                      # 清理 .DS_Store 和 __pycache__
 
 技术栈：Python 3 + `Markdown==3.9`，无前端框架；生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿、专题文件和重建后的网页，再推送到 `main`。
 
-CAD 图纸专题使用外部 CADCraft App 和 CLI；课程不把二进制放进仓库，安装步骤见课稿第 1 讲。
+CAD 图纸专题使用外部 CADCraft App 和 CLI；课程默认由父亲用自然语言交代任务、Harness 执行命令，父亲负责核对。课程不把二进制放进仓库，安装步骤见课稿第 1 讲。
 
 做网页批注时，从右侧 Files 面板直接打开对应的课页文件（例如 `docs/topics/mac/01-new-mac.html`）；批注按文件保存，改完发送给 Agent 即可。
 

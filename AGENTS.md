@@ -62,7 +62,7 @@
 
 ## CAD 工作流
 
-13. 爸爸的 CAD 工作流使用外部 CADCraft App + cadcraft-cli，在文件层读取、修改和校验 DWG/DXF；**禁止 GUI 自动化，包括向 AutoCAD 键入命令**。真实图纸、图号、位号、修改记录和预览留在本机 `~/CAD-Work/`，不进入仓库、截图或公开网页。课程第 1 讲负责从零安装 App 和 CLI；仓库不提交二进制。
+13. 爸爸的 CAD 工作流使用外部 CADCraft App + cadcraft-cli，在文件层读取、修改和校验 DWG/DXF；**禁止 GUI 自动化，包括向 AutoCAD 键入命令**。真实图纸、图号、位号、修改记录和预览留在本机 `~/CAD-Work/`，不进入仓库、截图或公开网页。课程第 1 讲负责从零安装 App 和 CLI；日常默认由父亲用自然语言交代任务、Harness 执行 CLI，工作区规则放在 `~/CAD-Work/AGENTS.md`（课程模板 `assets/topics/cad/examples/CAD-Work-AGENTS.md`）。仓库不提交二进制。
 
 ## 常用命令
 

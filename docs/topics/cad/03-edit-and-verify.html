@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>按 handle 改图，写副本并核对 · 爸妈的 Mac 与 AI 课</title>
-<meta name="description" content="先做保真门槛，再用 attedit、properties.set、move、erase 修改副本，另存为新文件并重读验证。">
+<meta name="description" content="用三段自然语言完成「先计划、再执行、最后核对」；Harness 运行 attedit、properties.set、move、erase 和 saveas，父亲只确认和核对。">
 <meta name="theme-color" content="#f7f6f2">
 <script data-embed-nav>
 (function () {
@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=8ac238e0af">
+<link rel="stylesheet" href="../../assets/style.css?v=bb90dc3c6a">
 </head>
 <body class="page-session route-dad">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -50,149 +50,84 @@
 <header class="lesson-hero">
 <p class="eyebrow">专题 · 和图纸对话 · 第 3 讲 · 爸爸</p>
 <h1>按 handle 改图，写副本并核对</h1>
-<p class="lesson-summary">先做保真门槛，再用 attedit、properties.set、move、erase 修改副本，另存为新文件并重读验证。</p>
+<p class="lesson-summary">用三段自然语言完成「先计划、再执行、最后核对」；Harness 运行 attedit、properties.set、move、erase 和 saveas，父亲只确认和核对。</p>
 </header>
 <div class="lesson-layout">
-<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>复制一份工作副本</span></a><a href="#step-2"><span class="toc-num">02</span><span>先做保真门槛</span></a><a href="#step-3"><span class="toc-num">03</span><span>找 handle</span></a><a href="#step-4"><span class="toc-num">04</span><span>修改副本</span></a><a href="#step-5"><span class="toc-num">05</span><span>另存为新文件</span></a><a href="#step-6"><span class="toc-num">06</span><span>重读验证</span></a><a href="#step-7"><span class="toc-num">07</span><span>失败时怎么退</span></a><a href="#step-8"><span class="toc-num">08</span><span>检查清单</span></a></nav></aside>
-<div class="lesson-body" id="session"><p>这一讲开始动图。顺序固定：<strong>先检查保真，再改副本，最后重读验证</strong>。原件和 <code>originals/</code> 里的文件永远不覆盖。</p>
-<h2 id="step-1">1. 复制一份工作副本</h2>
-<pre><code class="language-sh">cp ~/CAD-Work/originals/sample-pfd.dxf ~/CAD-Work/work/sample-pfd.dxf
-</code></pre>
-<p>后面所有修改都只对 <code>work/sample-pfd.dxf</code> 做。</p>
-<h2 id="step-2">2. 先做保真门槛</h2>
-<p>CADCraft 保存时会重写文件；它没有建模的对象可能不会被保留。改图前先让它原样往返一次：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad roundtrip ~/CAD-Work/work/sample-pfd.dxf \
-  --same-format --out ~/CAD-Work/work/roundtrip-sample
-</code></pre>
-<p>打开 <code>~/CAD-Work/work/roundtrip-sample/report.md</code>，看 <code>Lost</code> 列和分类：</p>
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>第一段：只要计划</span></a><a href="#step-2"><span class="toc-num">02</span><span>第二段：确认后执行</span></a><a href="#step-3"><span class="toc-num">03</span><span>第三段：重读核对</span></a><a href="#step-4"><span class="toc-num">04</span><span>备查命令：修改与核对</span></a><a href="#step-5"><span class="toc-num">05</span><span>失败时怎么退</span></a><a href="#step-6"><span class="toc-num">06</span><span>检查清单</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>这一讲开始动图。你只需要说三段话：<strong>先要计划，确认后执行，最后核对</strong>。命令由 Harness 运行；它必须先给你 handle、当前值、目标值和保真门槛，等你说「执行」才动手。</p>
+<h2 id="step-1">1. 第一段：只要计划</h2>
+<p>在 <code>~/CAD-Work</code> 工作区里发：</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">工作区是 ~/CAD-Work/。请只读 originals/sample-pfd.dxf，不要修改任何文件。
+先把原件复制成 work/sample-pfd.dxf（只复制，不修改）。
+然后给我一份修改计划，目标是：
+- 把 V-101 的 NAME 从「原料储罐」改成「原料罐」；
+- 把图名「糖浆配制工艺流程图」改成「糖浆配制流程（审核版）」；
+- 把 V-101 移到 EQ-REVIEW 图层；
+- 把 TI-101 下移 10 个单位；
+- 删除 TI-102。
+计划里每条写：handle、当前值、目标值、将运行的命令、如何核对。
+还要先说明保真门槛怎么做。现在不要执行任何修改，等我确认。
+</code></pre></div>
+<p>它应该先运行 <code>info</code>/<code>texts</code>/<code>drawing.inspect</code> 找 handle，然后给出计划。你要逐条确认：</p>
 <ul>
-<li><strong>geometry、objects、table records、layouts 有 Lost</strong>：这张图不要改，只做只读分析；</li>
-<li>只有 <code>header</code> 变量丢失：记下来，可以继续；</li>
-<li>完全没丢：可以进入下一步。</li>
+<li>handle 对不对（可以让它在 App 里说出位置）；</li>
+<li>改的值是不是你要的；</li>
+<li>有没有顺带改别的东西；</li>
+<li>删除的对象是不是确定要删。</li>
 </ul>
-<p>示例图是虚构的简单 PFD，预计只在 header 上有差异；看到 geometry 丢失就停下。</p>
-<p>把结论写进 <code>notes/</code>：这次门禁通过/不通过、丢失了哪一类。</p>
-<h2 id="step-3">3. 找 handle</h2>
-<p>先用 <code>texts</code> 找要改的文字或块属性：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf --cmd 'texts {&quot;contains&quot;:&quot;糖浆&quot;}'
+<p>如果它直接开始改，立刻说「停，先只给计划」。</p>
+<h2 id="step-2">2. 第二段：确认后执行</h2>
+<p>确认计划后发：</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">按刚才的计划执行。只改 work/ 的副本，不碰 originals/。
+先对 work/sample-pfd.dxf 跑 roundtrip --same-format，把报告目录放在 work/roundtrip-sample；
+如果 geometry、objects、table records 或 layouts 有丢失，就停下报告，不要继续。
+保真通过后按顺序执行修改，saveas 到 work/sample-pfd-edit-&lt;今天日期&gt;.dxf，version 2018。
+每一步报告实际运行的命令和 JSON 结果；不要用 --in-place。
+</code></pre></div>
+<p>它会运行 <code>attedit</code>、<code>properties.set</code>、<code>move</code>、<code>erase</code>、<code>saveas</code>。看到 <code>error</code> 就让它停下；看到 <code>nonPortableFonts</code> 是字体提示，不是保存失败。</p>
+<h2 id="step-3">3. 第三段：重读核对</h2>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">重读 work/sample-pfd-edit-&lt;日期&gt;.dxf，不要修改它。请核对：
+1. 实体数应是 61（原来 62，删除 1 个）；
+2. V-101 的 NAME 是「原料罐」，图层是 EQ-REVIEW；
+3. 图名是「糖浆配制流程（审核版）」；
+4. TI-101 的 y 坐标从 440 变成 430；
+5. TI-102 已不存在；
+6. 导出修改前后两张 PNG 到 preview/；
+7. 报告 originals/sample-pfd.dxf 的 sha256，确认原件没变。
+把每条检查的实际命令和结果写进 notes/sample-pfd-修改.md。
+</code></pre></div>
+<p>打开前后两张 PNG，在 CADCraft App 里对照图层、位号、文字和位置。原件哈希应与第一讲记录的一致。</p>
+<h2 id="step-4">4. 备查命令：修改与核对</h2>
+<p>计划阶段：</p>
+<pre><code class="language-sh">cp ~/CAD-Work/originals/sample-pfd.dxf ~/CAD-Work/work/sample-pfd.dxf
+~/CAD-Work/tools/cad info ~/CAD-Work/work/sample-pfd.dxf
 ~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf --cmd 'texts {&quot;contains&quot;:&quot;V-101&quot;}'
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf --cmd 'drawing.inspect {&quot;entities&quot;:true,&quot;limit&quot;:80}'
 </code></pre>
-<p>用 <code>drawing.inspect</code> 核对图层和位置：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf --cmd 'drawing.inspect {&quot;entities&quot;:true,&quot;limit&quot;:80}'
-</code></pre>
-<p>示例里可用：</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>要改什么</th>
-<th>handle</th>
-<th>依据</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>设备 NAME</td>
-<td><code>E4</code>（TAG = V-101）</td>
-<td><code>texts</code> 的 Attribute 行</td>
-</tr>
-<tr>
-<td>图名文字</td>
-<td><code>D5</code></td>
-<td><code>texts</code> 的 Text 行</td>
-</tr>
-<tr>
-<td>仪表 TI-101</td>
-<td><code>114</code></td>
-<td><code>drawing.inspect</code> 的 Block Reference</td>
-</tr>
-<tr>
-<td>仪表 TI-102</td>
-<td><code>123</code></td>
-<td>只用来演示删除，示例可删</td>
-</tr>
-</tbody>
-</table></div>
-<h2 id="step-4">4. 修改副本</h2>
-<p><strong>改块属性</strong>用 <code>attedit</code>，不要用 <code>properties.set</code> 改 <code>text</code>：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
+<p>执行阶段：</p>
+<pre><code class="language-sh">~/CAD-Work/tools/cad roundtrip ~/CAD-Work/work/sample-pfd.dxf --same-format --out ~/CAD-Work/work/roundtrip-sample
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
   --cmd 'attedit {&quot;handle&quot;:&quot;E4&quot;,&quot;values&quot;:{&quot;NAME&quot;:&quot;原料罐&quot;}}'
-</code></pre>
-<p><strong>改文字</strong>：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
   --cmd 'properties.set {&quot;handles&quot;:[&quot;D5&quot;],&quot;text&quot;:&quot;糖浆配制流程（审核版）&quot;}'
-</code></pre>
-<p><strong>改图层</strong>：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
   --cmd 'properties.set {&quot;handles&quot;:[&quot;E4&quot;],&quot;layer&quot;:&quot;EQ-REVIEW&quot;}'
-</code></pre>
-<p><strong>移动</strong>：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
   --cmd 'move {&quot;handles&quot;:[&quot;114&quot;],&quot;delta&quot;:[0,-10]}'
-</code></pre>
-<p><strong>删除</strong>（先确认 handle 和对象，示例里 TI-102 是 <code>123</code>）：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
   --cmd 'erase {&quot;handles&quot;:[&quot;123&quot;]}'
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
+  --cmd 'saveas {&quot;path&quot;:&quot;work/sample-pfd-edit-20261123.dxf&quot;,&quot;version&quot;:2018}'
 </code></pre>
-<p>每一步都会打印 JSON 结果，例如 <code>{"changed":1}</code>、<code>{"moved":1}</code>、<code>{"erased":1}</code>。看到 <code>error</code> 就停下，不要继续叠加修改。</p>
-<h2 id="step-5">5. 另存为新文件</h2>
-<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd.dxf \
-  --cmd 'saveas {&quot;path&quot;:&quot;/Users/你的用户名/CAD-Work/work/sample-pfd-edit-20261123.dxf&quot;,&quot;version&quot;:2018}'
-</code></pre>
-<p>把路径换成自己的 <code>$HOME</code> 路径；不要用 <code>--in-place</code>，不要写到 <code>originals/</code>。</p>
-<p>命令会打印 <code>nonPortableFonts</code> 警告，列出这台 Mac 有、Windows AutoCAD 未必有的字体。这是提示，不是保存失败；只要 <code>path</code> 和 <code>version</code> 正确就可以继续。</p>
-<h2 id="step-6">6. 重读验证</h2>
+<p>核对阶段：</p>
 <pre><code class="language-sh">~/CAD-Work/tools/cad info ~/CAD-Work/work/sample-pfd-edit-20261123.dxf
-~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd-edit-20261123.dxf \
-  --cmd 'texts {&quot;contains&quot;:&quot;原料罐&quot;}'
-~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd-edit-20261123.dxf \
-  --cmd 'texts {&quot;contains&quot;:&quot;审核版&quot;}'
-~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd-edit-20261123.dxf \
-  --cmd 'drawing.inspect {&quot;entities&quot;:true,&quot;limit&quot;:80}'
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd-edit-20261123.dxf --cmd 'texts {&quot;contains&quot;:&quot;原料罐&quot;}'
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd-edit-20261123.dxf --cmd 'texts {&quot;contains&quot;:&quot;审核版&quot;}'
+~/CAD-Work/tools/cad run ~/CAD-Work/work/sample-pfd-edit-20261123.dxf --cmd 'drawing.inspect {&quot;entities&quot;:true,&quot;limit&quot;:80}'
+~/CAD-Work/tools/cad convert ~/CAD-Work/work/sample-pfd-edit-20261123.dxf ~/CAD-Work/preview/sample-pfd-edit.png
+shasum -a 256 ~/CAD-Work/originals/sample-pfd.dxf
 </code></pre>
-<p>逐项确认：</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>检查</th>
-<th>预期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>实体数</td>
-<td>删除 1 个后应是 61（示例 62 起）</td>
-</tr>
-<tr>
-<td>属性 NAME</td>
-<td>新值「原料罐」</td>
-</tr>
-<tr>
-<td>图名文字</td>
-<td>新值「糖浆配制流程（审核版）」</td>
-</tr>
-<tr>
-<td>E4 图层</td>
-<td><code>EQ-REVIEW</code></td>
-</tr>
-<tr>
-<td>114 位置</td>
-<td>y 从 440 到 430</td>
-</tr>
-<tr>
-<td>123</td>
-<td>已不存在</td>
-</tr>
-</tbody>
-</table></div>
-<p>再导一张修改后的预览：</p>
-<pre><code class="language-sh">~/CAD-Work/tools/cad convert ~/CAD-Work/work/sample-pfd-edit-20261123.dxf \
-  ~/CAD-Work/preview/sample-pfd-edit.png
-</code></pre>
-<p>最后确认原件没变：</p>
-<pre><code class="language-sh">shasum -a 256 ~/CAD-Work/originals/sample-pfd.dxf
-</code></pre>
-<p>哈希应与第一讲记录的一致。</p>
-<h2 id="step-7">7. 失败时怎么退</h2>
+<h2 id="step-5">5. 失败时怎么退</h2>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -202,34 +137,42 @@
 </thead>
 <tbody>
 <tr>
+<td>Harness 直接改图</td>
+<td>说「停，先只给计划」；让它恢复/重来，只改副本</td>
+</tr>
+<tr>
 <td><code>attedit</code> 报 unknown tag</td>
-<td>用 <code>texts</code> 确认属性标签拼写；标签大小写可能不敏感，但值要看清</td>
+<td>让它用 <code>texts</code> 核对属性标签拼写，不要猜</td>
 </tr>
 <tr>
 <td><code>properties.set</code> 输出 changed 但文字没变</td>
-<td>很可能改的是块参照而不是属性；改用 <code>attedit</code></td>
+<td>很可能改的是块参照而不是属性；让它改用 <code>attedit</code></td>
 </tr>
 <tr>
 <td>实体数不对</td>
-<td>可能重复执行了同一命令；回到修改前的副本重来</td>
+<td>可能重复执行了命令；从修改前的副本重来</td>
 </tr>
 <tr>
 <td>保真门槛报 geometry/objects 丢失</td>
-<td>这张图只读分析，不要交付修改</td>
+<td>这张图只读分析，不交付修改</td>
 </tr>
 <tr>
 <td>预览里中文缺字</td>
 <td>放大确认；必要时设置 <code>CADCRAFT_FONTALT</code>/<code>CADCRAFT_FONTFALLBACK</code></td>
 </tr>
+<tr>
+<td>原件哈希变了</td>
+<td>立即停止，检查是否写到了 <code>originals/</code>；用备份恢复</td>
+</tr>
 </tbody>
 </table></div>
-<h2 id="step-8">检查清单</h2>
+<h2 id="step-6">检查清单</h2>
 <ul>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">只在 <code>work/</code> 的副本上修改。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">roundtrip 门槛已做并记录结论。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">每个 handle 都先核对过对象。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">块属性用 <code>attedit</code>，文字用 <code>properties.set</code>。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>saveas</code> 指定了 <code>version:2018</code> 和新文件名。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">我先要了计划，没有让它直接改。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">计划里每条都有 handle、当前值、目标值。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">保真门槛已做并记录结论。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">我只在 <code>work/</code> 副本上修改。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">修改用 <code>attedit</code>/<code>properties.set</code>/<code>move</code>/<code>erase</code>，另存 2018。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">重读确认实体数、新值、图层和位置。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">原件 sha256 未变。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">修改前后各有一张预览。</span></li>
@@ -248,6 +191,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/cad/03-edit-and-verify.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="zh-CN">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · 内容 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · 代码 <a href="https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=8ac238e0af"></script>
+<script defer src="../../assets/ui.js?v=bb90dc3c6a"></script>
 </body>
 </html>

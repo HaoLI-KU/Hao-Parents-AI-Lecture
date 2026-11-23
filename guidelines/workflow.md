@@ -88,7 +88,8 @@ docs/                            生成物，GitHub Pages 从这里发布
 
 - 使用外部 **CADCraft App + cadcraft-cli**；仓库不提交二进制，安装步骤写在 CAD 专题第 1 讲。
 - 示例只放虚构的 `assets/topics/cad/examples/sample-pfd.dxf` 和它的预览图；真实图纸、台账、修改记录和截图只在本机 `~/CAD-Work/`。
-- 读写走 CLI 的 `info`、`run --cmd`（`drawing.inspect`/`texts`/`attedit`/`properties.set`/`move`/`erase`）、`convert` 和 `saveas`；改图前先做 `roundtrip` 保真门槛。
+- 课程默认自然语言：父亲说任务，Harness 执行 `info`、`run --cmd`（`drawing.inspect`/`texts`/`attedit`/`properties.set`/`move`/`erase`）、`convert` 和 `saveas`；命令块是备查/手动兜底。
+- 工作区必须放 `CAD-Work-AGENTS.md` 模板（安装讲第 4 步），固定只读原件、先计划后执行、保真门槛和报告要求。
 - 禁止 GUI 自动化，包括向 AutoCAD 键入命令；AutoCAD 只作为人工目视核对的备选。
 
 ## 嵌入式浏览器

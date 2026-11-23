@@ -718,7 +718,7 @@ def topic_page(topic):
 </div></section>
 <section class="wrap lesson-section"><div class="section-head"><div class="section-title"><p class="eyebrow">讲次</p><h2>按顺序</h2></div><span class="section-note">{len(topic['sessions'])} 讲</span></div>
 <div class="lesson-list">{rows}</div>
-</section>{('<section class="wrap lesson-section lesson-section-drafts"><div class="section-title"><h2>专题说明</h2></div>' + intro + '</section>') if intro else ''}'''
+</section>{('<section class="wrap lesson-section topic-intro"><div class="section-title"><h2>专题说明</h2></div>' + intro + '</section>') if intro else ''}'''
     write_page(f"topics/{topic['slug']}/index.html", topic["title"], topic["summary"],
                body, "topics", page_type="topics")
 

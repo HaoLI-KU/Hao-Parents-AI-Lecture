@@ -38,7 +38,7 @@
 - [ ] 将通过检查的步骤写入 `word-to-latex` Skill，把稳定规则、重要决定和可重复测试放到各自的文件；未验证的做法先留作问题。
 - [ ] 安装并启用 Harness 插件市场与本机插件，用微信输入法口述一条提示词，核对插件开关，并用 Config Sync 备份/迁移配置。
 - [ ] 让 Harness 读取公开网页；在已授权的本机 Calendar 自动化环境中只读指定测试日程，或由本人提供日程文字，核对域名、日期、时区与权限边界。
-- [ ] 从官网安装 CADCraft App 和同版本 cadcraft-cli，建 `~/CAD-Work/`，用 `info` 和 `texts` 读取一张虚构图纸。
+- [ ] 从官网安装 CADCraft App 和同版本 cadcraft-cli，建 `~/CAD-Work/`，放好 `AGENTS.md`，用一句自然语言让 Harness 读取一张虚构图纸。
 - [ ] 用 `drawing.inspect` 读出图层、块、属性、文字和 handle，抽 3 个 handle 在 App 里核对。
 - [ ] 批量整理 3–5 张关联图纸的只读台账，让 AI 只列跨图疑点，逐条判定。
 - [ ] 改图前做 `roundtrip` 保真门槛；用 `attedit` 改属性、`properties.set` 改文字/图层、`move`/`erase`，另存 2018 副本并重读验证。

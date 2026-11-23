@@ -62,10 +62,10 @@
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/cad/01-install-and-inspect.md | 装好 CADCraft 和命令行，先看一张图 | 爸爸 | active | AI 02 | 能从官网安装 CADCraft App 和 cadcraft-cli，建工作目录并读取、预览第一张图 | CLI 版本 0.20.1；info/texts 输出；PNG 预览 | cadcraft-install, cadcraft-info, cad-preview | 结果图 |
-| 02 | topics/cad/02-read-a-drawing.md | 让 Harness 读懂图层、块和文字 | 爸爸 | active | CAD 01 | 能读出图层、块、属性、文字和 handle，并让每条结论指回证据 | 阅读记录；3 个 handle 核对 | cad-layers, cad-blocks-attributes, cad-handles | — |
-| 03 | topics/cad/03-edit-and-verify.md | 按 handle 改图，写副本并核对 | 爸爸 | active | CAD 02 | 能先过保真门槛，再改文字/属性/图层/位置/删除，另存并重读验证 | 修改副本；前后预览；校验记录 | cad-attedit, cad-save-verify, cad-roundtrip | — |
-| 04 | topics/cad/04-batch-and-deliver.md | 批量梳理、跨图核对与交付 | 爸爸 | active | CAD 03 | 能批量只读台账、列跨图疑点、选一张修改并交付 | 台账；疑点清单；交付目录 | cad-batch, cad-cross-check, cad-delivery | — |
+| 01 | topics/cad/01-install-and-inspect.md | 装好 CADCraft 和命令行，先看一张图 | 爸爸 | active | AI 02 | 能一次性安装 App/CLI、放好工作区规则，并用一句话让 Harness 读取和预览第一张图 | CLI 版本 0.20.1；AGENTS.md 被读到；info/texts 输出；PNG 预览 | cadcraft-install, cadcraft-info, cad-preview | 结果图 |
+| 02 | topics/cad/02-read-a-drawing.md | 让 Harness 读懂图层、块和文字 | 爸爸 | active | CAD 01 | 能用自然语言让 Harness 读出图层、块、属性、文字和 handle，并让每条结论指回证据 | 阅读记录；3 个 handle 核对 | cad-layers, cad-blocks-attributes, cad-handles | — |
+| 03 | topics/cad/03-edit-and-verify.md | 按 handle 改图，写副本并核对 | 爸爸 | active | CAD 02 | 能用三段自然语言完成「先计划、再执行、后核对」，只改副本并验证 | 修改副本；前后预览；校验记录 | cad-attedit, cad-save-verify, cad-roundtrip | — |
+| 04 | topics/cad/04-batch-and-deliver.md | 批量梳理、跨图核对与交付 | 爸爸 | active | CAD 03 | 能用自然语言让 Harness 批量只读台账、列跨图疑点、选一张修改并交付 | 台账；疑点清单；交付目录 | cad-batch, cad-cross-check, cad-delivery | — |
 
 ## 专题：image-generation｜把想法画出来
 
