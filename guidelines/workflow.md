@@ -12,7 +12,7 @@ course/topics/version-control/
 course/curriculum.md             课程地图：逐讲计划、前置、验收和覆盖点
 course/gallery/whiteboard.md     拾趣（不占专题）
 course/archive/audit-01-07.md    历史核查记录
-assets/topics/<slug>/            该专题的图片、示例和工具箱
+assets/topics/<slug>/            该专题的图片、示例和工具
 assets/gallery/                  拾趣图片
 assets/site/                     全站侧脸插画、图标、线稿
 site/build.py                    从 topics 和 gallery 生成网页
@@ -41,7 +41,7 @@ docs/                            生成物，GitHub Pages 从这里发布
 - 删除一讲：同时删地图行和课稿，并更新 README 的讲数。
 - 新增专题：建 `topic.md`、在地图加专题段、更新 README 专题总览。
 - `make check` 校验地图和课稿是否一一对应；重复覆盖点、相似标题/摘要、重复步骤标题只提醒，不自动删课。
-- 覆盖点用具体短标签，例如 `cad-dry-run`，不要用「AI」「GitHub」这种泛词。
+- 覆盖点用具体短标签，例如 `cad-roundtrip`，不要用「AI」「GitHub」这种泛词。
 
 ## 一讲怎样变成网页
 
@@ -84,12 +84,12 @@ docs/                            生成物，GitHub Pages 从这里发布
 - CSS/JS 引用带内容版本号 `?v=`；改样式、脚本或课稿后重新构建。
 - 外部链接自动加 `target="_blank" rel="noopener"`；发布前抽查官方域名和页面用途。
 
-## CAD 工具箱
+## CAD 工作流
 
-- 位置：`assets/topics/cad/toolkit/`；示例在 `assets/topics/cad/examples/`。
-- 改工具后运行 `python3 cad.py selftest`，再跑 `make build`，让课稿里的下载文件和示例同步。
-- 工作流只做 DXF 文件层：`inventory`、`check-plan`、`apply`（dry-run/写副本/重读校验）、`review`、`convert`；不要写 GUI 自动化。
-- 真实图纸、清单、计划、报告只在本机 `~/CAD-Review/`；公开示例必须是虚构的。
+- 使用外部 **CADCraft App + cadcraft-cli**；仓库不提交二进制，安装步骤写在 CAD 专题第 1 讲。
+- 示例只放虚构的 `assets/topics/cad/examples/sample-pfd.dxf` 和它的预览图；真实图纸、台账、修改记录和截图只在本机 `~/CAD-Work/`。
+- 读写走 CLI 的 `info`、`run --cmd`（`drawing.inspect`/`texts`/`attedit`/`properties.set`/`move`/`erase`）、`convert` 和 `saveas`；改图前先做 `roundtrip` 保真门槛。
+- 禁止 GUI 自动化，包括向 AutoCAD 键入命令；AutoCAD 只作为人工目视核对的备选。
 
 ## 嵌入式浏览器
 

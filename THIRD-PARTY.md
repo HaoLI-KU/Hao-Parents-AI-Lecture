@@ -31,4 +31,8 @@
 
 ## 依赖
 
-`site/requirements.txt` 和 `assets/topics/cad/toolkit/requirements.txt` 列出的第三方库按各自许可使用，本仓库不包含它们的源码。
+`site/requirements.txt` 列出的第三方库按各自许可使用，本仓库不包含它们的源码。
+
+## CADCraft
+
+CADCraft App 与 `cadcraft-cli` 是外部工具，按 MIT 或 Apache-2.0 发布（Copyright (c) 2026 ArtCraft Team and the CADCraft contributors），不随本仓库分发。课程只提供虚构示例和安装说明。

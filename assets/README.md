@@ -10,7 +10,7 @@
 
 中文技术书参考模板在 `topics/word-to-latex/examples/chinese-book-template/`，ZIP 和预览 PDF 也放在同一层。真实家庭和工作资料留在仓库外；发布目录只复制页面实际引用的素材。
 
-CAD 材料在 `topics/cad/`：`toolkit/` 是代码流工具箱（读取、修改计划、重读校验、审图页），`examples/` 是**虚构**的「糖浆配制」示例 DXF、示例计划、修改报告和审图页。真实 AutoCAD 图纸、图号、位号和审图批注一律留在本机私有目录，不进入这个仓库。
+CAD 材料在 `topics/cad/`：`examples/` 只有**虚构**的「糖浆配制」示例 DXF 和用 CADCraft 生成的预览图。CADCraft App/CLI 是外部工具，不放进仓库；安装步骤在课稿第 1 讲。真实 CAD 图纸、图号、位号和修改记录一律留在本机 `~/CAD-Work/`，不进入这个仓库。
 
 首页 Hero 的线稿水印来自本人提供的白板画，整理版是 `assets/site/whiteboard-lineart.svg`，只保留人物线稿和阴阳符号；透明度、尺寸和响应式用法见 `../guidelines/website-style.md`。
 

@@ -62,7 +62,7 @@
 
 ## CAD 工作流
 
-13. 爸爸的 CAD 工作流只做文件层（DXF）读取、计划式修改和重读校验，**禁止用 GUI 自动化向 AutoCAD 键入命令**。真实 AutoCAD 图纸、图号、位号、修改计划和报告留在本机私有目录（如 `~/CAD-Review/`），不进入仓库、截图或公开网页；审图批注只以「文件路径 + handle」引用。
+13. 爸爸的 CAD 工作流使用外部 CADCraft App + cadcraft-cli，在文件层读取、修改和校验 DWG/DXF；**禁止 GUI 自动化，包括向 AutoCAD 键入命令**。真实图纸、图号、位号、修改记录和预览留在本机 `~/CAD-Work/`，不进入仓库、截图或公开网页。课程第 1 讲负责从零安装 App 和 CLI；仓库不提交二进制。
 
 ## 常用命令
 
@@ -73,7 +73,7 @@
 | `make check` | 只检查 |
 | `make serve` | 本地预览 `http://localhost:8000` |
 | `make clean` | 清理 `.DS_Store` 和 `__pycache__` |
-| `cd assets/topics/cad/toolkit && .venv-cad/bin/python cad.py selftest` | CAD 工具箱自检 |
+| `cd assets/topics/cad && ls examples` | 查看虚构 CAD 示例 |
 
 ## 维护入口
 

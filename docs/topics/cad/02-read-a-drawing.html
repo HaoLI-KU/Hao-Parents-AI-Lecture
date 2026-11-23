@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>精确读懂一张图 · 爸妈的 Mac 与 AI 课</title>
-<meta name="description" content="用清单和覆盖报告把一张图的图层、块、属性、文字和图框读到可核对的程度，再回到 AutoCAD 逐项确认。">
+<title>让 Harness 读懂图层、块和文字 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="用 info、texts 和 drawing.inspect 读出图层、块、属性、文字和 handle，让每条结论都能指回证据。">
 <meta name="theme-color" content="#f7f6f2">
 <script data-embed-nav>
 (function () {
@@ -29,7 +29,7 @@
 })();
 </script>
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../../assets/style.css?v=42f5fc2741">
+<link rel="stylesheet" href="../../assets/style.css?v=8ac238e0af">
 </head>
 <body class="page-session route-dad">
 <a class="skip-link" href="#main">跳到正文</a>
@@ -49,121 +49,112 @@
 <nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">和图纸对话</a><span aria-hidden="true">/</span><span>第 2 讲</span></nav>
 <header class="lesson-hero">
 <p class="eyebrow">专题 · 和图纸对话 · 第 2 讲 · 爸爸</p>
-<h1>精确读懂一张图</h1>
-<p class="lesson-summary">用清单和覆盖报告把一张图的图层、块、属性、文字和图框读到可核对的程度，再回到 AutoCAD 逐项确认。</p>
+<h1>让 Harness 读懂图层、块和文字</h1>
+<p class="lesson-summary">用 info、texts 和 drawing.inspect 读出图层、块、属性、文字和 handle，让每条结论都能指回证据。</p>
 </header>
 <div class="lesson-layout">
-<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先看覆盖报告</span></a><a href="#step-2"><span class="toc-num">02</span><span>图层：清单 vs 图层管理器</span></a><a href="#step-3"><span class="toc-num">03</span><span>块、属性与位号</span></a><a href="#step-4"><span class="toc-num">04</span><span>文字与图框</span></a><a href="#step-5"><span class="toc-num">05</span><span>让 Harness 做一次「带证据的复述」</span></a><a href="#step-6"><span class="toc-num">06</span><span>写一页「这张图读到了什么」</span></a><a href="#step-7"><span class="toc-num">07</span><span>检查清单</span></a></nav></aside>
-<div class="lesson-body" id="session"><p>上一讲生成了第一份清单。这一讲不急着改图，先把「读得准」这件事做扎实：清单里的每个结论都要能指回文件里的某个 handle，覆盖报告里没有读到的部分要明确说出来。</p>
-<h2 id="step-1">1. 先看覆盖报告</h2>
-<p>打开 <code>inventory/&lt;图号&gt;.json</code>，看 <code>coverage</code>：</p>
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>先看总览</span></a><a href="#step-2"><span class="toc-num">02</span><span>读文字和块属性</span></a><a href="#step-3"><span class="toc-num">03</span><span>读实体和 handle</span></a><a href="#step-4"><span class="toc-num">04</span><span>让 Harness 带着证据复述</span></a><a href="#step-5"><span class="toc-num">05</span><span>在 App 里核对</span></a><a href="#step-6"><span class="toc-num">06</span><span>关于块属性的一个坑</span></a><a href="#step-7"><span class="toc-num">07</span><span>检查清单</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>上一讲装好了工具，也看到了一张图。这一讲练「读准」：先把图里的结构读出来，AI 的每条结论都要能指回某个 handle、图层或原文。</p>
+<h2 id="step-1">1. 先看总览</h2>
+<pre><code class="language-sh">~/CAD-Work/tools/cad info ~/CAD-Work/originals/sample-pfd.dxf
+</code></pre>
+<p>重点看：</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>字段</th>
 <th>含义</th>
-<th>为什么要看</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>layers</code> / <code>layers_with_entities</code></td>
-<td>图层总数与有实体的图层数</td>
-<td>两者差太多，说明有大量空图层或图层表被清理过</td>
+<td><code>entityCount</code></td>
+<td>模型和布局里的实体数</td>
 </tr>
 <tr>
-<td><code>block_definitions</code> / <code>block_inserts</code></td>
-<td>块定义数与块引用数</td>
-<td>定义多、引用少，可能有未使用块库</td>
+<td><code>counts</code></td>
+<td>按类型计数：Line、Polyline、Text、MText、Block Reference 等</td>
 </tr>
 <tr>
-<td><code>entity_types</code></td>
-<td>出现过的实体类型数</td>
-<td>类型太少要警惕代理对象或外部参照</td>
+<td><code>layers</code></td>
+<td>图层名、颜色、线型、开/关、冻结、锁定</td>
 </tr>
 <tr>
-<td><code>xrefs</code></td>
-<td>未绑定的外部参照</td>
-<td>不为空说明图纸不完整</td>
+<td><code>blocks</code></td>
+<td>块定义名</td>
 </tr>
 <tr>
-<td><code>proxy_objects</code></td>
-<td>代理对象数</td>
-<td>大于 0 说明有 AutoCAD 自定义对象，几何可能读不全</td>
-</tr>
-<tr>
-<td><code>texts</code></td>
-<td>文字条数</td>
-<td>与图纸上的文字量做直觉对照</td>
+<td><code>readNotes</code> / <code>skipped</code></td>
+<td>读取时跳过了什么；不为空要先弄清原因</td>
 </tr>
 </tbody>
 </table></div>
-<p>再看 <code>warnings</code>。每一条要么解释清楚，要么在 <code>notes/</code> 里记下「为什么暂时不影响」。</p>
-<h2 id="step-2">2. 图层：清单 vs 图层管理器</h2>
-<ol>
-<li>在 AutoCAD 打开原图，打开图层管理器，记下图层总数。</li>
-<li>对照清单里的图层表：逐一核对名称、颜色、线型、开/关、冻结、锁定。</li>
-<li>找一两个实体较多的图层，关闭其他图层，数一遍图元，和清单里的实体数对照。</li>
-<li>如果清单里有原图没有的图层，或原图有清单里没有的图层，先查是不是换了版本或打开了别的图。</li>
-</ol>
-<h2 id="step-3">3. 块、属性与位号</h2>
-<p>设备与仪表通常以块参照出现，位号在块的属性里。</p>
-<ol>
-<li>打开 <code>.md</code> 的设备、仪表清单，每条有 handle、TAG、NAME、块名和插入点。</li>
-<li>在 AutoCAD 里选中同一台设备，看属性面板里的 TAG 和 NAME 是否与清单一致。</li>
-<li>核对 <code>block_attrib_tags</code>：每个块的属性标签是否齐全；缺少 NAME 或 TAG 的块要单独记下来。</li>
-<li>抽 3 个位号，把 handle 记进笔记。下一讲做跨图核对时，handle 就是证据。</li>
-</ol>
-<h2 id="step-4">4. 文字与图框</h2>
-<ol>
-<li>清单里的 <code>texts</code> 保留原始字符串、图层、位置和 handle；中文是 DXF 里的原文，不是渲染图上的字。</li>
-<li><code>title_block</code> 是标为 <code>TITLE</code> 图层的文字；如果你的图框在别的图层，用 <code>--title-layer</code> 重新生成清单：</li>
-</ol>
-<pre><code class="language-sh">.venv-cad/bin/python toolkit/cad.py inventory dxf/&lt;图号&gt;.dxf -o inventory --title-layer 图框
+<p>如果 <code>readNotes</code> 或 <code>skipped</code> 非空，先把内容记进 <code>notes/</code>，不要继续往下猜。</p>
+<h2 id="step-2">2. 读文字和块属性</h2>
+<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/originals/sample-pfd.dxf --cmd 'texts {&quot;limit&quot;:500}'
 </code></pre>
-<p>清单和审图页都支持 <code>--title-layer</code>；图框不在 <code>TITLE</code> 图层时，先按图层表确认它的图层名再重跑。</p>
-<ol start="3">
-<li>图名、图号、版本、日期四项必须和原图逐字一致；有一位不同都要记下来。</li>
-</ol>
-<h2 id="step-5">5. 让 Harness 做一次「带证据的复述」</h2>
-<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">当前工作区是 CAD-Review/。请只读 inventory/&lt;图号&gt;.json 和 .md，不要打开或修改 dxf/、original/ 里的图纸。
-请按下面的顺序复述，每条都带证据（handle、文字原文或图层名）：
-1. 这张图的图名、图号、版本、日期；
-2. 图层完整性：图层总数、有实体的图层、零实体图层；
-3. 块与属性：每类设备的块名、属性标签是否齐全；
-4. 设备、仪表位号清单；
-5. 文字里有没有明显的图框信息、说明、管线号；
-6. 覆盖报告的缺口：外部参照、代理对象、空图层、编码或字体问题。
-不要推断工艺连接，不要补猜缺失位号；文件里没有的写「无法从文件确认」。
+<p>每一行是一条文字：<code>handle</code>、<code>type</code>、<code>layer</code>、<code>text</code>、插入点、字号和样式。块属性会多一个 <code>tag</code>，例如设备 <code>E4</code> 上的 <code>TAG = V-101</code>、<code>NAME = 原料储罐</code>。</p>
+<p>可以用过滤缩小范围：</p>
+<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/originals/sample-pfd.dxf --cmd 'texts {&quot;layer&quot;:&quot;TITLE&quot;}'
+~/CAD-Work/tools/cad run ~/CAD-Work/originals/sample-pfd.dxf --cmd 'texts {&quot;contains&quot;:&quot;V-101&quot;}'
+</code></pre>
+<h2 id="step-3">3. 读实体和 handle</h2>
+<p><code>drawing.inspect</code> 返回实体、图层、几何和 handle。图纸大时一定加 <code>limit</code>，不要一次打印全部：</p>
+<pre><code class="language-sh">~/CAD-Work/tools/cad run ~/CAD-Work/originals/sample-pfd.dxf --cmd 'drawing.inspect {&quot;entities&quot;:true,&quot;limit&quot;:80}'
+</code></pre>
+<p>先看清三类东西：</p>
+<ul>
+<li><code>type</code>：Block Reference / Polyline / Line / Text / MText；</li>
+<li><code>layer</code>：这个实体在哪一层；</li>
+<li><code>handle</code>：以后修改时用它定位，不能靠「大概在那个位置」。</li>
+</ul>
+<h2 id="step-4">4. 让 Harness 带着证据复述</h2>
+<p>把输出交给 Harness 时，先把规矩说清楚：</p>
+<div class="prompt"><div class="prompt-head"><span class="prompt-label">提示词</span><button class="prompt-copy" type="button" aria-label="复制提示词">复制</button></div><pre><code class="language-text">当前工作区是 ~/CAD-Work/。请只读 originals/sample-pfd.dxf，不要修改任何文件。
+请用 tools/cad 读取这张图，先报告你实际运行了哪几条命令。
+然后回答：
+1. 实体数、图层数、块定义数；
+2. 每个图层的名字和用途（只根据图层名和该层实体判断）；
+3. 设备、仪表的位号与名称，每条给出 handle；
+4. 图框里的图名、图号、版本、日期，每条给出 handle；
+5. readNotes/skipped 里有没有需要先处理的内容。
+不要推断管线连接，不要补猜缺失位号；文件里没有的写「无法从文件确认」。
 </code></pre></div>
-<h2 id="step-6">6. 写一页「这张图读到了什么」</h2>
-<p>在 <code>notes/&lt;图号&gt;-阅读.md</code> 记录：</p>
-<pre><code class="language-markdown"># &lt;图号&gt; 阅读记录
-- 文件与版本：
-- 图层：共 __ 层，有实体 __ 层，零实体 __ 层
-- 块：定义 __ 个，引用 __ 次；属性缺失：__
-- 设备：__ 台；仪表：__ 个
-- 图框：图名 __、图号 __、版本 __、日期 __
-- 未解决：外部参照 / 代理对象 / 编码 / 字体 / 其他
-- 我核对过的 handle：__
+<p>Harness 的每条结论都应该能对回 <code>texts</code> 或 <code>drawing.inspect</code> 里的一行。对不上就让它重读，不要接受「看起来像」。</p>
+<h2 id="step-5">5. 在 App 里核对</h2>
+<p>打开 CADCraft App，打开同一张 DXF：</p>
+<ol>
+<li>看图层管理器，图层数应与 <code>info</code> 一致；</li>
+<li>选中一台设备，看属性里的 TAG/NAME 是否与 <code>texts</code> 一致；</li>
+<li>抽 3 个 handle，在 <code>drawing.inspect</code> 输出里找到对应实体，并确认几何位置。</li>
+</ol>
+<p>把手动核对结果写进 <code>~/CAD-Work/notes/sample-pfd-阅读.md</code>：</p>
+<pre><code class="language-markdown"># sample-pfd 阅读记录
+- 实体/图层/块：
+- 设备位号与 handle：
+- 仪表位号与 handle：
+- 图框信息：
+- readNotes/skipped：
+- 我核对过的 3 个 handle：
 </code></pre>
+<h2 id="step-6">6. 关于块属性的一个坑</h2>
+<p><code>texts</code> 里块属性的 <code>handle</code> 是<strong>块参照的 handle</strong>，不是属性自己的独立 handle。下一讲修改属性时要对这个 handle 用 <code>attedit</code>，不能用 <code>properties.set</code> 改 <code>text</code>。先记住这条，下一讲会实测对比。</p>
 <h2 id="step-7">检查清单</h2>
 <ul>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">能说清覆盖报告里每个字段的含义。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">图层总数、有实体图层数与原图对照过。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">抽 3 个位号，TAG、NAME、handle 与原图一致。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">图名、图号、版本、日期逐字核对。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>warnings</code> 每条都有处理或记录。</span></li>
-<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">写完了 <code>notes/&lt;图号&gt;-阅读.md</code>。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>info</code> 的实体数、图层数、块数与 App 对得上。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>texts</code> 能看到设备/仪表位号和图框文字。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">抽 3 个 handle，在 <code>drawing.inspect</code> 里找到并核对位置。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>readNotes</code>/<code>skipped</code> 已记录或解释。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">写完了 <code>notes/sample-pfd-阅读.md</code>。</span></li>
 <li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">没有把 AI 的推断当成文件事实。</span></li>
 </ul>
-<p>上一讲：<a href="../../topics/cad/01-convert-to-dxf.html">把 DWG 变成可精确读取的 DXF</a> · 下一讲：<a href="../../topics/cad/03-batch-and-cross-check.html">批量台账与跨图核对</a>。</p>
-<p>备查：<a href="https://ezdxf.mozman.at/docs/concepts/index.html" target="_blank" rel="noopener">ezdxf 图层与块</a> · <a href="../../assets/topics/cad/toolkit/README.md" download>工具箱说明</a></p></div>
+<p>上一讲：<a href="../../topics/cad/01-install-and-inspect.html">装好 CADCraft 和命令行</a> · 下一讲：<a href="../../topics/cad/03-edit-and-verify.html">按 handle 改图并核对</a>。</p>
+<p>备查：<a href="https://github.com/storytold/cadcraft/blob/main/docs/cli.md" target="_blank" rel="noopener">CLI 文档</a> · <a href="https://github.com/storytold/cadcraft/blob/main/docs/mcp.md" target="_blank" rel="noopener">MCP 文档</a></p></div>
 </div>
 <nav class="lesson-pager" aria-label="讲次导航">
-<a class="pager-link" href="01-convert-to-dxf.html"><span class="pager-label">上一讲</span><span class="pager-title">第 1 讲 · 把 DWG 变成可精确读取的 DXF</span></a>
+<a class="pager-link" href="01-install-and-inspect.html"><span class="pager-label">上一讲</span><span class="pager-title">第 1 讲 · 装好 CADCraft 和命令行，先看一张图</span></a>
 <a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回和图纸对话</span></a>
-<a class="pager-link" href="03-batch-and-cross-check.html"><span class="pager-label">下一讲</span><span class="pager-title">第 3 讲 · 批量台账与跨图核对</span></a>
+<a class="pager-link" href="03-edit-and-verify.html"><span class="pager-label">下一讲</span><span class="pager-title">第 3 讲 · 按 handle 改图，写副本并核对</span></a>
 </nav>
 </div></article></main>
 <footer class="site-footer"><div class="wrap footer-inner">
@@ -171,6 +162,6 @@
 <nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/cad/02-read-a-drawing.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
 <p class="footer-copy" lang="zh-CN">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · 内容 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · 代码 <a href="https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 </div></footer>
-<script defer src="../../assets/ui.js?v=42f5fc2741"></script>
+<script defer src="../../assets/ui.js?v=8ac238e0af"></script>
 </body>
 </html>

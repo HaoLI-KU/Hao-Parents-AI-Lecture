@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-CN" data-page-dir="topics/cad/" data-page-path="topics/cad/01-install-and-inspect.html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>装好 CADCraft 和命令行，先看一张图 · 爸妈的 Mac 与 AI 课</title>
+<meta name="description" content="从零安装 CADCraft App 和 cadcraft-cli，建好私有工作目录，用命令行读取第一张虚构图纸并导出预览。">
+<meta name="theme-color" content="#f7f6f2">
+<script data-embed-nav>
+(function () {
+  var site = "https://haoli-ku.github.io/Hao-Parents-AI-Lecture/";
+  var dir = "topics/cad/";
+  var embedded = false;
+  try { embedded = window.top !== window.self; } catch (error) { embedded = true; }
+  if (!embedded) return;
+  var base = document.createElement("base");
+  base.href = site + dir;
+  document.head.appendChild(base);
+  document.addEventListener("click", function (event) {
+    if (event.button !== 0 || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var link = event.target && event.target.closest ? event.target.closest("a[href]") : null;
+    if (!link || link.hasAttribute("download")) return;
+    if (link.target && link.target !== "_self") return;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) return;
+    event.preventDefault();
+    window.location.assign(new URL(href, site + dir).href);
+  }, true);
+})();
+</script>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/style.css?v=8ac238e0af">
+</head>
+<body class="page-session route-dad">
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header" data-site-header>
+<div class="wrap header-inner">
+<a class="brand" href="../../index.html"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-text"><span class="brand-name">爸妈的 AI 课</span><span class="brand-role">家庭课程</span></span></a>
+<nav class="site-nav" id="siteNav" aria-label="主导航"><a href="../../index.html">首页</a><a href="../../topics/index.html" class="is-active" aria-current="true">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a></nav>
+<form class="header-search" action="../../search.html" method="get" role="search">
+<label class="sr-only" for="header-q">搜索课程</label>
+<input id="header-q" name="q" type="search" placeholder="搜索课程" autocomplete="off">
+<button type="submit">搜索</button>
+</form>
+<button class="menu-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="siteNav"><span class="menu-icon" aria-hidden="true"></span></button>
+</div>
+</header>
+<main id="main"><article class="lesson-page route-dad"><div class="wrap">
+<nav class="breadcrumb" aria-label="面包屑"><a href="../../index.html">首页</a><span aria-hidden="true">/</span><a href="../index.html">专题</a><span aria-hidden="true">/</span><a href="index.html">和图纸对话</a><span aria-hidden="true">/</span><span>第 1 讲</span></nav>
+<header class="lesson-hero">
+<p class="eyebrow">专题 · 和图纸对话 · 第 1 讲 · 爸爸</p>
+<h1>装好 CADCraft 和命令行，先看一张图</h1>
+<p class="lesson-summary">从零安装 CADCraft App 和 cadcraft-cli，建好私有工作目录，用命令行读取第一张虚构图纸并导出预览。</p>
+</header>
+<div class="lesson-layout">
+<aside class="toc" aria-label="本节步骤"><p class="toc-title">本节步骤</p><nav class="toc-nav"><a href="#step-1"><span class="toc-num">01</span><span>建工作目录</span></a><a href="#step-2"><span class="toc-num">02</span><span>安装 CADCraft App</span></a><a href="#step-3"><span class="toc-num">03</span><span>安装 cadcraft-cli</span></a><a href="#step-4"><span class="toc-num">04</span><span>下载课程示例图纸</span></a><a href="#step-5"><span class="toc-num">05</span><span>第一次读取和预览</span></a><a href="#step-6"><span class="toc-num">06</span><span>安装失败时先查这几件事</span></a><a href="#step-7"><span class="toc-num">07</span><span>检查清单</span></a></nav></aside>
+<div class="lesson-body" id="session"><p>这一讲从零开始：不要求电脑里已经装过 CADCraft，也不要求会用终端。我们装两个东西：</p>
+<ul>
+<li><strong>CADCraft App</strong>：你用来打开图纸、目视核对；</li>
+<li><strong>cadcraft-cli</strong>：让 Harness 读取和修改图纸的命令行工具。它和 App 是同一个版本，不需要打开窗口。</li>
+</ul>
+<p>图纸仍然只在副本上操作。真实图纸只放在本机的 <code>~/CAD-Work/</code>，不进课程仓库。</p>
+<h2 id="step-1">1. 建工作目录</h2>
+<p>打开「终端」，或者在 Harness 里让它执行下面这行：</p>
+<pre><code class="language-sh">mkdir -p ~/CAD-Work/{tools,config,originals,work,preview,notes}
+</code></pre>
+<p>目录用途：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>放什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>originals/</code></td>
+<td>原件副本，只读，不覆盖</td>
+</tr>
+<tr>
+<td><code>work/</code></td>
+<td>修改后的新文件和中间副本</td>
+</tr>
+<tr>
+<td><code>preview/</code></td>
+<td>PNG/PDF 预览</td>
+</tr>
+<tr>
+<td><code>notes/</code></td>
+<td>读图记录、台账、核对结果</td>
+</tr>
+<tr>
+<td><code>tools/</code></td>
+<td>命令行工具</td>
+</tr>
+<tr>
+<td><code>config/</code></td>
+<td>CADCraft 的设置和日志，和系统设置隔离</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="step-2">2. 安装 CADCraft App</h2>
+<ol>
+<li>打开 <a href="https://getartcraft.com/apps/cadcraft" target="_blank" rel="noopener">CADCraft 官网</a>，或直接打开 <a href="https://github.com/storytold/cadcraft/releases/latest" target="_blank" rel="noopener">GitHub 最新版本</a>。</li>
+<li>在 macOS 下载区找 <strong><code>cadcraft-0.20.1-macos-universal.dmg</code></strong>。<code>universal</code> 表示 Apple 芯片和 Intel 都能用；这一讲的步骤按 0.20.1 写，下载到更新版本时文件名里的版本号会不同。</li>
+<li>核对下载是否完整。把 <code>SHA256SUMS.txt</code> 也下载到「下载」目录，然后在终端运行：</li>
+</ol>
+<pre><code class="language-sh">cd ~/Downloads
+shasum -a 256 cadcraft-0.20.1-macos-universal.dmg
+grep cadcraft-0.20.1-macos-universal.dmg SHA256SUMS.txt
+</code></pre>
+<p>两行哈希必须完全一样。不一样就重新下载，不要继续安装。</p>
+<ol start="4">
+<li>双击 DMG，把 <strong>CADCraft</strong> 拖进「应用程序」，然后在 Finder 边栏推出安装镜像。</li>
+<li>第一次打开时，如果 macOS 提示「无法验证开发者」，在 Finder 的「应用程序」里右键 CADCraft →「打开」，或到「系统设置 → 隐私与安全性」点「仍要打开」。</li>
+<li>打开后看菜单「CADCraft → 关于 CADCraft」，确认版本是 <strong>0.20.1</strong>。CADCraft 要求 macOS 11 或更新；系统太旧时先升级系统。</li>
+</ol>
+<p>App 只用于看图和核对；下面的命令行工具才是 AI 读取和修改图纸的入口。</p>
+<h2 id="step-3">3. 安装 cadcraft-cli</h2>
+<ol>
+<li>在同一个 release 页面下载 <strong><code>cadcraft-cli-0.20.1-macos-universal.zip</code></strong> 和 <code>SHA256SUMS.txt</code>。</li>
+<li>核对：</li>
+</ol>
+<pre><code class="language-sh">cd ~/Downloads
+shasum -a 256 cadcraft-cli-0.20.1-macos-universal.zip
+grep cadcraft-cli-0.20.1-macos-universal.zip SHA256SUMS.txt
+</code></pre>
+<ol start="3">
+<li>解压到工作目录，保留里面的 LICENSE、README 和字体许可文件：</li>
+</ol>
+<pre><code class="language-sh">unzip -q ~/Downloads/cadcraft-cli-0.20.1-macos-universal.zip -d ~/CAD-Work/tools
+chmod +x ~/CAD-Work/tools/cadcraft-cli-0.20.1-macos-universal/cadcraft-cli
+</code></pre>
+<ol start="4">
+<li>如果提示「无法打开」或「已损坏」，去掉下载隔离标记（只对这一份工具）：</li>
+</ol>
+<pre><code class="language-sh">xattr -d com.apple.quarantine ~/CAD-Work/tools/cadcraft-cli-0.20.1-macos-universal/cadcraft-cli
+</code></pre>
+<ol start="5">
+<li>建一个包装脚本，固定配置目录，以后不用每次写长路径：</li>
+</ol>
+<pre><code class="language-sh">cat &gt; ~/CAD-Work/tools/cad &lt;&lt;'SH'
+#!/bin/sh
+export CADCRAFT_CONFIG_DIR=&quot;$HOME/CAD-Work/config&quot;
+exec &quot;$HOME/CAD-Work/tools/cadcraft-cli-0.20.1-macos-universal/cadcraft-cli&quot; &quot;$@&quot;
+SH
+chmod +x ~/CAD-Work/tools/cad
+~/CAD-Work/tools/cad --version
+</code></pre>
+<p>最后一行应输出 <code>cadcraft-cli 0.20.1</code>。App 和 CLI 的版本必须一致；不一致就以 release 页面为准重新下载。</p>
+<h2 id="step-4">4. 下载课程示例图纸</h2>
+<p>把课程里的虚构示例下载到 <code>originals/</code>：<a href="../../assets/topics/cad/examples/sample-pfd.dxf" download>sample-pfd.dxf</a>。也可以用终端：</p>
+<pre><code class="language-sh">cp ~/Downloads/sample-pfd.dxf ~/CAD-Work/originals/
+</code></pre>
+<p>这张图是虚构的「糖浆配制工艺流程图」，可以用它练手；不要拿真实图纸做第一次安装测试。</p>
+<p>放进 <code>originals/</code> 后记下原件的哈希，后面核对修改是否动过原件时要用：</p>
+<pre><code class="language-sh">shasum -a 256 ~/CAD-Work/originals/sample-pfd.dxf
+</code></pre>
+<p>把输出记在 <code>~/CAD-Work/notes/sample-pfd-阅读.md</code> 开头。</p>
+<h2 id="step-5">5. 第一次读取和预览</h2>
+<pre><code class="language-sh">~/CAD-Work/tools/cad info ~/CAD-Work/originals/sample-pfd.dxf
+~/CAD-Work/tools/cad run ~/CAD-Work/originals/sample-pfd.dxf --cmd 'texts {&quot;limit&quot;:5}'
+~/CAD-Work/tools/cad convert ~/CAD-Work/originals/sample-pfd.dxf ~/CAD-Work/preview/sample-pfd.png
+</code></pre>
+<ul>
+<li><code>info</code> 输出实体数、图层、块、文字样式和 <code>readNotes</code>/<code>skipped</code>；</li>
+<li><code>texts</code> 输出文字和块属性，带 handle；</li>
+<li><code>convert</code> 生成一张 PNG，用「预览」打开，确认中文、图框和管线都能看见。</li>
+</ul>
+<p>示例预期：<strong>62 个实体、9 个图层、9 个块</strong>，<code>texts</code> 里能看到「糖浆配制工艺流程图」。</p>
+<figure>
+  <img src="../../assets/topics/cad/examples/sample-pfd.png"
+       alt="CADCraft 渲染的虚构糖浆配制工艺流程图，黑线白底，标有 V-101、P-101、E-101、R-101、T-101 等位号"
+       width="2000" height="1000" loading="lazy">
+  <figcaption>用 CADCraft 渲染的虚构示例图；这张图只用于练习，不对应真实装置。</figcaption>
+</figure>
+
+<h2 id="step-6">6. 安装失败时先查这几件事</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>先检查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>哈希不一致</td>
+<td>下载中断或文件不对；重新下载，别跳过校验</td>
+</tr>
+<tr>
+<td>App 打不开</td>
+<td>右键「打开」；系统设置允许；macOS 是否 11 以上</td>
+</tr>
+<tr>
+<td>CLI 提示无法执行</td>
+<td><code>chmod +x</code>；去掉 quarantine；确认路径是 <code>~/CAD-Work/tools/...</code> 而不是 App 内部文件</td>
+</tr>
+<tr>
+<td><code>cad: command not found</code></td>
+<td>用完整路径 <code>~/CAD-Work/tools/cad</code>，不要只写 <code>cad</code></td>
+</tr>
+<tr>
+<td>中文显示成方块</td>
+<td>在预览里放大看；必要时在 App 里设置字体回退，或在 <code>cad</code> 脚本里加 <code>CADCRAFT_FONTFALLBACK</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="step-7">检查清单</h2>
+<ul>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>~/CAD-Work/</code> 六个目录已建好。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">CADCraft App 能打开，「关于」显示 0.20.1。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">CLI 和 App 版本一致，<code>cad --version</code> 成功。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text">示例 DXF 已放进 <code>originals/</code>。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>cad info</code> 显示 62 个实体、9 个图层。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>cad run ... texts</code> 能看到文字和 handle。</span></li>
+<li class="task"><span class="task-box" aria-hidden="true"></span><span class="task-text"><code>preview/sample-pfd.png</code> 已生成并能看见中文。</span></li>
+</ul>
+<p>下一讲：<a href="../../topics/cad/02-read-a-drawing.html">让 Harness 读懂图层、块和文字</a>。</p>
+<p>备查：<a href="https://getartcraft.com/apps/cadcraft" target="_blank" rel="noopener">CADCraft 官网</a> · <a href="https://github.com/storytold/cadcraft/releases/latest" target="_blank" rel="noopener">最新版本</a> · <a href="https://github.com/storytold/cadcraft/blob/main/docs/cli.md" target="_blank" rel="noopener">CLI 文档</a></p></div>
+</div>
+<nav class="lesson-pager" aria-label="讲次导航">
+<span class="pager-link is-empty" aria-hidden="true"></span>
+<a class="pager-link pager-home" href="index.html"><span class="pager-label">专题</span><span class="pager-title">返回和图纸对话</span></a>
+<a class="pager-link" href="02-read-a-drawing.html"><span class="pager-label">下一讲</span><span class="pager-title">第 2 讲 · 让 Harness 读懂图层、块和文字</span></a>
+</nav>
+</div></article></main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<div class="footer-brand"><span class="brand-mark" aria-hidden="true">AI</span><span><strong>爸妈的 Mac 与 AI 课</strong><small>家庭课程 · 持续更新</small></span></div>
+<nav class="footer-nav" aria-label="页脚导航"><a href="../../index.html">首页</a><a href="../../topics/index.html">专题</a><a href="../../dad/index.html">爸爸</a><a href="../../mom/index.html">妈妈</a><a href="../../gallery/index.html">拾趣</a><a href="../../search.html">搜索</a><a href="https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/cad/01-install-and-inspect.html" target="_blank" rel="noopener">在浏览器打开</a></nav>
+<p class="footer-copy" lang="zh-CN">© 2026 Hao Li · <a href="mailto:hli@sdu.dk">hli@sdu.dk</a> · 内容 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · 代码 <a href="https://github.com/HaoLI-KU/Hao-Parents-AI-Lecture/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+</div></footer>
+<script defer src="../../assets/ui.js?v=8ac238e0af"></script>
+</body>
+</html>

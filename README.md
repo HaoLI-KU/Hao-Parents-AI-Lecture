@@ -8,7 +8,7 @@
 
 ## 这是什么
 
-这是给爸爸妈妈做的家庭 AI 课，也是一份公开的课程网站。课程正文按**专题**维护在 `course/topics/<英文slug>/`，每讲是一份 Markdown；`site/build.py` 把它们生成静态页面，发布在 GitHub Pages。内容覆盖 Mac 基础、AI 工具与 DeepSeek Harness、中文 LaTeX、AutoCAD 图纸审阅、图片生成、版本管理和行程规划。
+这是给爸爸妈妈做的家庭 AI 课，也是一份公开的课程网站。课程正文按**专题**维护在 `course/topics/<英文slug>/`，每讲是一份 Markdown；`site/build.py` 把它们生成静态页面，发布在 GitHub Pages。内容覆盖 Mac 基础、AI 工具与 DeepSeek Harness、中文 LaTeX、CAD 图纸（CADCraft）、图片生成、版本管理和行程规划。
 
 ## 怎么学
 
@@ -25,12 +25,12 @@
 | [把 Mac 用顺](course/topics/mac/topic.md) | Mac 基础与家庭协作 | 4 | 妈妈 |
 | [AI 入门与基础](course/topics/ai/topic.md) | 从提问到 DeepSeek Harness | 3 | 共同 |
 | [把技术文档做成书](course/topics/word-to-latex/topic.md) | 从 Word 到可维护的中文 LaTeX（用 AI） | 6 | 爸爸 |
-| [和图纸对话](course/topics/cad/topic.md) | AutoCAD 工艺流程图：精确读取与修改（用 AI） | 6 | 爸爸 |
+| [和图纸对话](course/topics/cad/topic.md) | 用 CADCraft 读懂、修改和核对工艺流程图（用 AI） | 4 | 爸爸 |
 | [把想法画出来](course/topics/image-generation/topic.md) | 图片生成与改图（用 AI，按需） | 2 | 共同 |
 | [版本管理与协作](course/topics/version-control/topic.md) | 用 GitHub 管好文件和改动（按需） | 1 | 共同 |
 | [把一次出门安排明白](course/topics/trip-planning/topic.md) | 用行程规划插件做一日行程（用 AI，按需） | 3 | 共同 |
 
-学习路径：爸爸主路径 15 讲（AI 3 + LaTeX 6 + 图纸 6），妈妈主路径 7 讲（Mac 4 + AI 3）；算上生图 2 讲、版本管理 1 讲和行程规划 3 讲三个按需专题，两条路径分别显示 21 讲和 13 讲，按需专题两边都可以随时插入。
+学习路径：爸爸主路径 13 讲（AI 3 + LaTeX 6 + 图纸 4），妈妈主路径 7 讲（Mac 4 + AI 3）；算上生图 2 讲、版本管理 1 讲和行程规划 3 讲三个按需专题，两条路径分别显示 19 讲和 13 讲，按需专题两边都可以随时插入。
 
 逐讲的顺序、前置、学完能做到、产出验收和覆盖点见[课程地图](course/curriculum.md)。可以从[第一个专题](course/topics/mac/topic.md)或[专题总览](https://haoli-ku.github.io/Hao-Parents-AI-Lecture/topics/)开始。
 
@@ -92,13 +92,7 @@ make clean                      # 清理 .DS_Store 和 __pycache__
 
 技术栈：Python 3 + `Markdown==3.9`，无前端框架；生成的页面在 `docs/`，GitHub Pages 从 `main` 分支的 `/docs` 发布。修改网站后，提交课稿、专题文件和重建后的网页，再推送到 `main`。
 
-CAD 工具箱自带自检，改工具后运行：
-
-```sh
-cd assets/topics/cad/toolkit
-python3 -m venv .venv-cad && .venv-cad/bin/python -m pip install -r requirements.txt
-.venv-cad/bin/python cad.py selftest
-```
+CAD 图纸专题使用外部 CADCraft App 和 CLI；课程不把二进制放进仓库，安装步骤见课稿第 1 讲。
 
 做网页批注时，从右侧 Files 面板直接打开对应的课页文件（例如 `docs/topics/mac/01-new-mac.html`）；批注按文件保存，改完发送给 Agent 即可。
 
@@ -123,7 +117,7 @@ python3 -m venv .venv-cad && .venv-cad/bin/python -m pip install -r requirements
 
 ## 许可与引用
 
-- **代码**（`site/`、`assets/topics/cad/toolkit/` 等）：[MIT](LICENSE)。
+- **代码**（`site/` 等）：[MIT](LICENSE)。
 - **课程文字、原创插图和站点文案**：[CC BY 4.0](LICENSE-CONTENT.md)。转载或改编请署名并链接回本仓库。
 - **第三方素材**（字体、行程插件示例、白板原图和 AI 生成图）：按各自条款，见 [THIRD-PARTY.md](THIRD-PARTY.md)。
 - **引用格式**：[CITATION.cff](CITATION.cff)；GitHub 仓库页的 "Cite this repository" 会读取它。

@@ -62,12 +62,10 @@
 
 | 讲 | 文件 | 标题 | 受众 | 状态 | 前置 | 学完能做到 | 产出 / 验收 | 覆盖点 | 视觉 |
 |---|---|---|---|---|---|---|---|---|---|
-| 01 | topics/cad/01-convert-to-dxf.md | 把 DWG 变成可精确读取的 DXF | 爸爸 | active | 无 | 能建立私有目录，把 DWG 转 DXF 并生成清单和覆盖报告 | DXF；inventory；coverage 报告 | dwg-dxf, cad-inventory, coverage-report | 结果图 |
-| 02 | topics/cad/02-read-a-drawing.md | 精确读懂一张图 | 爸爸 | active | CAD 01 | 能读懂图层、块、属性、文字和图框，并回到 AutoCAD 核对 | 一页读图记录；AutoCAD 核对 | cad-layers, blocks-attributes, title-block | 结果图 |
-| 03 | topics/cad/03-batch-and-cross-check.md | 批量台账与跨图核对 | 爸爸 | active | CAD 02 | 能批量整理关联图纸，列出疑点并沉淀核对规则 | 台账；疑点清单；规则 | cad-batch, cross-drawing-check, rule-capture | 结果图 |
-| 04 | topics/cad/04-review-and-annotate.md | 审图页与批注讨论 | 爸爸 | active | CAD 03 | 能生成审图页，按 handle 写批注并让 Harness 回应 | 审图页；批注记录 | review-sheet, entity-annotation, handle-evidence | 结果图 |
-| 05 | topics/cad/05-plan-and-dry-run.md | 修改计划与 dry-run | 爸爸 | active | CAD 04 | 能写出带 handle 和修改前状态的计划，并先做 dry-run | JSON 计划；dry-run 差异 | change-plan, plan-validation, dry-run | 概念图 |
-| 06 | topics/cad/06-apply-and-verify.md | 应用、验证与交付 | 爸爸 | active | CAD 05 | 能应用计划、重读校验、核对未涉及实体并交付 | 新 DXF；校验报告；AutoCAD 核对 | apply-plan, reread-verify, cad-delivery, rollback | 结果图 |
+| 01 | topics/cad/01-install-and-inspect.md | 装好 CADCraft 和命令行，先看一张图 | 爸爸 | active | AI 02 | 能从官网安装 CADCraft App 和 cadcraft-cli，建工作目录并读取、预览第一张图 | CLI 版本 0.20.1；info/texts 输出；PNG 预览 | cadcraft-install, cadcraft-info, cad-preview | 结果图 |
+| 02 | topics/cad/02-read-a-drawing.md | 让 Harness 读懂图层、块和文字 | 爸爸 | active | CAD 01 | 能读出图层、块、属性、文字和 handle，并让每条结论指回证据 | 阅读记录；3 个 handle 核对 | cad-layers, cad-blocks-attributes, cad-handles | — |
+| 03 | topics/cad/03-edit-and-verify.md | 按 handle 改图，写副本并核对 | 爸爸 | active | CAD 02 | 能先过保真门槛，再改文字/属性/图层/位置/删除，另存并重读验证 | 修改副本；前后预览；校验记录 | cad-attedit, cad-save-verify, cad-roundtrip | — |
+| 04 | topics/cad/04-batch-and-deliver.md | 批量梳理、跨图核对与交付 | 爸爸 | active | CAD 03 | 能批量只读台账、列跨图疑点、选一张修改并交付 | 台账；疑点清单；交付目录 | cad-batch, cad-cross-check, cad-delivery | — |
 
 ## 专题：image-generation｜把想法画出来
 
